@@ -1,0 +1,59 @@
+[
+    {
+        "id": 1,
+        "firstName": "lala",
+        "lastName": "lulu",
+        "nik": "1230048987587887",
+        "email" : "lalalulu@gmail.com",
+        "password" : 12345678,
+        "birthDate": 1033285558,
+        "sex" : "female",
+        "address" : "Br. Baturiti",
+        "internalNotes" : "coba",
+        "role" : "admin",
+        "alive" : true
+    },
+    {
+        "id": 2,
+        "firstName": "Kuka",
+        "lastName": "Kuki",
+        "nik": "1002123661987870",
+        "email" : "kukakuki@gmail.com",
+        "password" : 987654321,
+        "birthDate": 1033285558,
+        "sex" : "male",
+        "address" : "Tabanan",
+        "internalNotes" : "coba",
+        "role" : "member",
+        "alive" : true
+    },
+
+    {
+        "id": 3,
+        "firstName": "Yura",
+        "lastName": "yuri",
+        "nik": "1002379716970091",
+        "email" : "yuraaja@gmail.com",
+        "password" : 7788,
+        "birthDate": 1033285558,
+        "sex" : "female",
+        "address" : "Br. Baturiti",
+        "internalNotes" : "",
+        "role" : "MEMBER",
+        "alive" : true
+    },
+    {
+        "id" : 4,
+        "firstName" : "Karin",
+        "lastName" : "saja",
+        "nik" : "1002841878126378",
+        "email" : "kararirin@gmail.com",
+        "password" : 121212,
+        "birthDate" :1033285558,
+        "sex" : "female",
+        "address" : "Tabanan",
+        "internalNotes" : "aassaswejinu",
+        "role" : "ADMIN"
+
+    }
+]
