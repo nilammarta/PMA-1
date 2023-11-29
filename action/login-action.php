@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/../assets/jsonHelper.php";
+
 //$data = [
 //  [
 //    "email" => 'lalalulu@gmail.com',
@@ -12,35 +14,22 @@
 //  ]
 //];
 
-// Load data into json
-function loadDataIntoJson(string $fileName): null|array
-{
-  $path = __DIR__ . "/../assets/json/" . $fileName;
-  if (file_exists($path)) {
-    $data = file_get_contents($path);
-    $results = json_decode($data, true);
-    if ($results == null) {
-      return [];
-    }
-    return $results;
-  }
-  return [];
-}
-$jsonData = loadDataIntoJson("persons.json");
-
+$jsonData = loadDataIntoJson("/../assets/json/persons.json");
 
 // function untuk mengecek apakah email dan password yang di input cocok atau tidak
-function check(array $tempData): bool
+function check(array $tempData): array|null
 {
   for ($i = 0; $i < count($tempData); $i++) {
     if ($_POST["email"] == $tempData[$i]["email"] && $_POST["password"] == $tempData[$i]["password"]) {
-      return true;
+      return $tempData[$i];
     }
   }
-  return false;
+  return null;
 }
 
-//function untuk redirect page
+$user = check($jsonData);
+
+// function untuk redirect page
 function redirect($url, $getParams)
 {
   header('Location: ' . $url . '?' . $getParams);
@@ -48,11 +37,14 @@ function redirect($url, $getParams)
 }
 
 // conditionals untuk meng-redirect page contoh dari login menuju dashboard
-if (check($jsonData)) {
-  header('Location: ../dashboard.php');
-  die();
+if (check($jsonData) != null) {
+//  header('Location: ../dashboard.php');
+//  die();
+    redirect("../dashboard.php", $user["id"]);
 } else {
   //  header('Location: ../login.php?error=1');
   //  die();
   redirect("../login.php", "error=1");
 }
+
+

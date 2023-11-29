@@ -129,8 +129,8 @@
                 class="btn btn-menu p-0"
                 type="button"
                 data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasScrolling"
-                aria-controls="offcanvasScrolling"
+                data-bs-target="#staticBackdrop"
+                aria-controls="staticBackdrop"
               >
                 <ion-icon class="icon-menu" name="menu-outline"></ion-icon>
               </button>
@@ -138,11 +138,10 @@
               <!-- Side Bar -->
               <div
                 class="offcanvas offcanvas-start"
-                data-bs-scroll="true"
-                data-bs-backdrop="false"
+                data-bs-backdrop="static"
                 tabindex="-1"
-                id="offcanvasScrolling"
-                aria-labelledby="offcanvasScrollingLabel"
+                id="staticBackdrop"
+                aria-labelledby="staticBackdropLabel"
               >
                 <div class="offcanvas-header">
                   <img
@@ -152,7 +151,7 @@
                   />
                   <h5
                     class="offcanvas-title heading-2 m-0"
-                    id="offcanvasScrollingLabel"
+                    id="staticBackdropLabel"
                   >
                     PERMAP
                   </h5>
@@ -160,6 +159,7 @@
                     class="btn--close"
                     type="button"
                     data-bs-dismiss="offcanvas"
+                    aria-label="Close"
                   >
                     <ion-icon class="icon-header" name="close"></ion-icon>
                   </button>
@@ -168,7 +168,7 @@
                   <nav class="main-nav">
                     <ul class="main-nav-list">
                       <li class="nav-item">
-                        <a class="main-nav-link" href="#"
+                        <a class="main-nav-link" href="dashboard.html"
                           ><ion-icon
                             name="file-tray-full-outline"
                             class="nav-icon"
@@ -177,7 +177,7 @@
                         >
                       </li>
                       <li class="nav-item nav-open">
-                        <a class="main-nav-link" href="#"
+                        <a class="main-nav-link" href="persons.html"
                           ><ion-icon
                             name="people-outline"
                             class="nav-icon"
@@ -193,7 +193,7 @@
                     <nav class="main-nav">
                       <ul class="main-nav-list">
                         <li class="nav-item">
-                          <a class="main-nav-link" href="#"
+                          <a class="main-nav-link" href="myProfil.html"
                             ><ion-icon
                               name="person-circle-outline"
                               class="nav-icon"

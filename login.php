@@ -105,6 +105,7 @@
     <link href="assets/css/general.css" rel="stylesheet" />
     <link href="assets/css/login.css" rel="stylesheet" />
 
+<!--      ini di gunakan untuk menambahkan title menggunakan php  -->
     <title><?php echo "LOGIN - Person Management app"; ?></title>
   </head>
   <body>
@@ -134,7 +135,6 @@
                       src="assets/img/Permap-logo-2.svg"
                       alt="permap logo"
                     />
-                    <!-- <img class="logo" src="Img/Permap-logo.png" alt="logo" /> -->
                     <h2 class="heading-2">
                       <!-- <span>PERMAP</span> <br /> -->
                       Person Management App
@@ -144,6 +144,7 @@
                     Masuk Ke Halaman Administrasi
                   </h6>
 
+                  <!-- agar inputan form dapat di baca dan di simpan oleh server maka tambahkan name dan method -->
                   <form name="login-form" class="login-form" action="action/login-action.php" method="post">
                     <div class="mb-3">
                       <label for="exampleFormControlInput1" class="form-label"
@@ -186,6 +187,7 @@
                       <p class="question">Forget password?</p>
                     </div>
 
+                    <!-- bagian code php yang digunakan untuk menampilkan validasi ketika email & password salah -->
                     <?php if(isset($_GET["error"]) && $_GET["error"] == 1){?>
                       <div class="alert alert-danger" role="alert">
                         Sorry, your email address or password is not correct, Please try again!
@@ -194,6 +196,7 @@
                     <button
                       class="btn btn-outline-light login-btn"
                       type="submit"
+                      name="login"
                     >
                       Login
                     </button>

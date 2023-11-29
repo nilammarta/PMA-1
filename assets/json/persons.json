@@ -53,7 +53,7 @@
         "sex" : "female",
         "address" : "Tabanan",
         "internalNotes" : "aassaswejinu",
-        "role" : "ADMIN"
-
+        "role" : "ADMIN",
+        "alive" : true
     }
 ]

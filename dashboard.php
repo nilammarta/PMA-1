@@ -1,3 +1,10 @@
+<?php
+include ("assets/jsonHelper.php");
+include ("action/dashboard-action.php");
+$jsonData = loadDataIntoJson("assets/json/persons.json");
+$user = userLogin($jsonData);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -98,7 +105,7 @@
       sizes="16x16"
       href="assets/favicon/favicon-16x16.png"
     />
-    <!-- <link rel="manifest" href="favicon/manifest.json" /> -->
+    <link rel="manifest" href="assets/favicon/manifest.json" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
     <meta name="theme-color" content="#ffffff" />
@@ -128,8 +135,8 @@
                 class="btn btn-menu p-0"
                 type="button"
                 data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasScrolling"
-                aria-controls="offcanvasScrolling"
+                data-bs-target="#staticBackdrop"
+                aria-controls="staticBackdrop"
               >
                 <ion-icon class="icon-menu" name="menu-outline"></ion-icon>
               </button>
@@ -137,11 +144,10 @@
               <!-- Side Bar -->
               <div
                 class="offcanvas offcanvas-start"
-                data-bs-scroll="true"
-                data-bs-backdrop="false"
+                data-bs-backdrop="static"
                 tabindex="-1"
-                id="offcanvasScrolling"
-                aria-labelledby="offcanvasScrollingLabel"
+                id="staticBackdrop"
+                aria-labelledby="staticBackdropLabel"
               >
                 <div class="offcanvas-header">
                   <img
@@ -151,7 +157,7 @@
                   />
                   <h5
                     class="offcanvas-title heading-2 m-0"
-                    id="offcanvasScrollingLabel"
+                    id="staticBackdropLabel"
                   >
                     PERMAP
                   </h5>
@@ -159,6 +165,7 @@
                     class="btn--close"
                     type="button"
                     data-bs-dismiss="offcanvas"
+                    aria-label="Close"
                   >
                     <ion-icon class="icon-header" name="close"></ion-icon>
                   </button>
@@ -223,7 +230,11 @@
               ></ion-icon>
             </div>
             <div class="d-none d-lg-block">
-              <div class="user-email btn-header">lalagemoy@gmail.com</div>
+              <div class="user-email btn-header">
+                  <?php echo $user["email"] ?>
+<!--                  lalagemoy@gmail.com-->
+              </div>
+              </div>
             </div>
           </div>
         </div>
@@ -236,7 +247,7 @@
             <nav class="main-nav">
               <ul class="main-nav-list">
                 <li class="nav-item nav-open">
-                  <a class="main-nav-link" href="dashboard.html"
+                  <a class="main-nav-link" href="dashboard.php"
                     ><ion-icon
                       name="file-tray-full-outline"
                       class="nav-icon"
@@ -245,7 +256,7 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="main-nav-link" href="persons.html"
+                  <a class="main-nav-link" href="persons.php"
                     ><ion-icon
                       name="people-outline"
                       class="nav-icon"
@@ -261,7 +272,7 @@
               <nav class="main-nav">
                 <ul class="main-nav-list">
                   <li class="nav-item">
-                    <a class="main-nav-link" href="myProfil.html"
+                    <a class="main-nav-link" href="myProfil.php"
                       ><ion-icon
                         name="person-circle-outline"
                         class="nav-icon"
@@ -303,7 +314,7 @@
                         130
                       </h3>
 
-                      <a href="persons.html" class="card-subtitle mb-2"
+                      <a href="persons.php" class="card-subtitle mb-2"
                         >Persons</a
                       >
                     </div>
