@@ -10,5 +10,5 @@ function loadDataIntoJson(string $fileName): null|array
         }
         return $results;
     }
-    return [];
+    return null;
 }

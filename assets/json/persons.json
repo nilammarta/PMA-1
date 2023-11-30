@@ -10,7 +10,7 @@
         "sex" : "female",
         "address" : "Br. Baturiti",
         "internalNotes" : "coba",
-        "role" : "admin",
+        "role" : "ADMIN",
         "alive" : true
     },
     {
@@ -24,7 +24,7 @@
         "sex" : "male",
         "address" : "Tabanan",
         "internalNotes" : "coba",
-        "role" : "member",
+        "role" : "MEMBER",
         "alive" : true
     },
 
@@ -49,6 +49,20 @@
         "nik" : "1002841878126378",
         "email" : "kararirin@gmail.com",
         "password" : 121212,
+        "birthDate" :1033285558,
+        "sex" : "female",
+        "address" : "Tabanan",
+        "internalNotes" : "aassaswejinu",
+        "role" : "ADMIN",
+        "alive" : true
+    },
+    {
+        "id" : 5,
+        "firstName" : "Nana",
+        "lastName" : "Lani",
+        "nik" : "1002841878126378",
+        "email" : "nana@gmail.com",
+        "password" : 1002,
         "birthDate" :1033285558,
         "sex" : "female",
         "address" : "Tabanan",

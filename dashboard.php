@@ -1,8 +1,6 @@
 <?php
 include ("assets/jsonHelper.php");
 include ("action/dashboard-action.php");
-$jsonData = loadDataIntoJson("assets/json/persons.json");
-$user = userLogin($jsonData);
 ?>
 
 <!DOCTYPE html>
@@ -231,7 +229,14 @@ $user = userLogin($jsonData);
             </div>
             <div class="d-none d-lg-block">
               <div class="user-email btn-header">
-                  <?php echo $user["email"] ?>
+<!--                  dengan menggubakan id -->
+<!--                  --><?php //if (isset($_GET["id"]) && $_GET["id"] > 0){
+//                      $user = userLogin();
+//                             echo "<span>";
+//                             echo  $user["email"];
+//                             echo "</span>";
+//                  }?>
+
 <!--                  lalagemoy@gmail.com-->
               </div>
               </div>

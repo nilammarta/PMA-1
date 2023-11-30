@@ -1,6 +1,8 @@
-<?php 
-  $appName = "PERSONS - Person Management App";
+<?php
+    include ("action/persons-action.php");
+    $appName = "PERSONS - Person Management App";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -166,7 +168,7 @@
                   <nav class="main-nav">
                     <ul class="main-nav-list">
                       <li class="nav-item">
-                        <a class="main-nav-link" href="dashboard.html"
+                        <a class="main-nav-link" href="dashboard.php"
                           ><ion-icon
                             name="file-tray-full-outline"
                             class="nav-icon"
@@ -175,7 +177,7 @@
                         >
                       </li>
                       <li class="nav-item nav-open">
-                        <a class="main-nav-link" href="persons.html"
+                        <a class="main-nav-link" href="persons.php"
                           ><ion-icon
                             name="people-outline"
                             class="nav-icon"
@@ -191,7 +193,7 @@
                     <nav class="main-nav">
                       <ul class="main-nav-list">
                         <li class="nav-item">
-                          <a class="main-nav-link" href="myProfil.html"
+                          <a class="main-nav-link" href="myProfile.php"
                             ><ion-icon
                               name="person-circle-outline"
                               class="nav-icon"
@@ -236,7 +238,7 @@
             <nav class="main-nav">
               <ul class="main-nav-list">
                 <li class="nav-item">
-                  <a class="main-nav-link" href="dashboard.html"
+                  <a class="main-nav-link" href="dashboard.php"
                     ><ion-icon
                       name="file-tray-full-outline"
                       class="nav-icon"
@@ -245,7 +247,7 @@
                   >
                 </li>
                 <li class="nav-item nav-open">
-                  <a class="main-nav-link" href="persons.html"
+                  <a class="main-nav-link" href="persons.php"
                     ><ion-icon
                       name="people-outline"
                       class="nav-icon"
@@ -261,7 +263,7 @@
               <nav class="main-nav">
                 <ul class="main-nav-list">
                   <li class="nav-item">
-                    <a class="main-nav-link" href="myProfil.html"
+                    <a class="main-nav-link" href="myProfile.php"
                       ><ion-icon
                         name="person-circle-outline"
                         class="nav-icon"
@@ -289,10 +291,11 @@
             <nav class="navbar bg-body-tertiary p-0">
               <div class="container-fluid nav p-0">
                 <h2 class="heading-2 m-0 p-3">PERSONS</h2>
-                <form class="d-sm-flex p-3" role="search">
+                <form name="search-form" class="d-sm-flex p-3" role="search" action="#search" method="get">
                   <div class="d-flex mb-2">
                     <label for="search-input"></label>
                     <input
+                      name="search"
                       id="search-input"
                       class="form-control me-1"
                       type="search"
@@ -337,288 +340,83 @@
 
             <!-- add -->
             <div class="d-flex">
-              <button
-                class="table-btn btn-primary btn-lg btn-add p-3 mt-5"
+              <a
+                href="create.php"
+                class="table-btn btn-primary btn-lg btn-add p-3 mt-5 btn-link"
                 type="button"
               >
-                <a
-                  href="create.html"
-                  class="btn-link d-flex align-items-center"
-                  role="button"
-                >
                   <ion-icon class="add-icon me-2" name="person-add"></ion-icon>
                   Add
-                </a>
-              </button>
+              </a>
             </div>
 
             <!-- table -->
-            <div class="table-data mt-4">
+            <div class="table-data mt-4" id="search">
               <div class="table-responsive">
                 <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">No</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Name</th>
-                      <th scope="col" colspan="2">Role</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td scope="row">1</td>
-                      <td>lalalulu@gmail.com</td>
-                      <td>Lala Lulu</td>
-                      <td>ADMIN</td>
-                      <td>
-                        <div class="d-grid gap-2 d-flex justify-content-md-end">
-                          <a
-                            class="btn btn-outline-light me-md-2 btn-table"
-                            type="button"
-                            href="view.html"
-                            role="button"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="eye-sharp"
-                            ></ion-icon>
-                          </a>
-                          <a
-                            class="btn btn-outline-light btn-table"
-                            type="button"
-                            href="edit.html"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="create-sharp"
-                            ></ion-icon>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">2</td>
-                      <td>jacob@gmail.com</td>
-                      <td>Thornton Jcob</td>
-                      <td>MEMBER</td>
-                      <td>
-                        <div class="d-grid gap-2 d-flex justify-content-md-end">
-                          <a
-                            class="btn btn-outline-light me-md-2 btn-table"
-                            type="button"
-                            href="view.html"
-                            role="button"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="eye-sharp"
-                            ></ion-icon>
-                          </a>
-                          <a
-                            class="btn btn-outline-light btn-table"
-                            type="button"
-                            href="edit.html"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="create-sharp"
-                            ></ion-icon>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">3</td>
-                      <td>larry@gmail.com</td>
-                      <td>Larry Laura</td>
-                      <td>MEMBER</td>
-                      <td>
-                        <div class="d-grid gap-2 d-flex justify-content-md-end">
-                          <a
-                            class="btn btn-outline-light me-md-2 btn-table"
-                            type="button"
-                            href="view.html"
-                            role="button"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="eye-sharp"
-                            ></ion-icon>
-                          </a>
-                          <a
-                            class="btn btn-outline-light btn-table"
-                            type="button"
-                            href="edit.html"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="create-sharp"
-                            ></ion-icon>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">4</td>
-                      <td>yura@gmail.com</td>
-                      <td>Yura Lala</td>
-                      <td>MEMBER</td>
-                      <td>
-                        <div class="d-grid gap-2 d-flex justify-content-md-end">
-                          <a
-                            class="btn btn-outline-light me-md-2 btn-table"
-                            type="button"
-                            href="view.html"
-                            role="button"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="eye-sharp"
-                            ></ion-icon>
-                          </a>
-                          <a
-                            class="btn btn-outline-light btn-table"
-                            type="button"
-                            href="edit.html"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="create-sharp"
-                            ></ion-icon>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">5</td>
-                      <td>kuki@gmail.com</td>
-                      <td>Kuka Kuki</td>
-                      <td>MEMBER</td>
-                      <td>
-                        <div class="d-grid gap-2 d-flex justify-content-md-end">
-                          <a
-                            class="btn btn-light me-md-2 btn-table"
-                            type="button"
-                            href="view.html"
-                            role="button"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="eye-sharp"
-                            ></ion-icon>
-                          </a>
-                          <a
-                            class="btn btn-light btn-table"
-                            type="button"
-                            href="edit.html"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="create-sharp"
-                            ></ion-icon>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">6</td>
-                      <td>kuki@gmail.com</td>
-                      <td>Kuka Kuki</td>
-                      <td>MEMBER</td>
-                      <td>
-                        <div class="d-grid gap-2 d-flex justify-content-md-end">
-                          <a
-                            class="btn btn-light me-md-2 btn-table"
-                            type="button"
-                            href="view.html"
-                            role="button"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="eye-sharp"
-                            ></ion-icon>
-                          </a>
-                          <a
-                            class="btn btn-light btn-table"
-                            type="button"
-                            href="edit.html"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="create-sharp"
-                            ></ion-icon>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">7</td>
-                      <td>kuki@gmail.com</td>
-                      <td>Kuka Kuki</td>
-                      <td>MEMBER</td>
-                      <td>
-                        <div class="d-grid gap-2 d-flex justify-content-md-end">
-                          <a
-                            class="btn btn-light me-md-2 btn-table"
-                            type="button"
-                            href="view.html"
-                            role="button"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="eye-sharp"
-                            ></ion-icon>
-                          </a>
-                          <a
-                            class="btn btn-light btn-table"
-                            type="button"
-                            href="edit.html"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="create-sharp"
-                            ></ion-icon>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td scope="row">8</td>
-                      <td>kuki@gmail.com</td>
-                      <td>Kuka Kuki</td>
-                      <td>MEMBER</td>
-                      <td>
-                        <div class="d-grid gap-2 d-flex justify-content-md-end">
-                          <a
-                            class="btn btn-light me-md-2 btn-table"
-                            type="button"
-                            href="view.html"
-                            role="button"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="eye-sharp"
-                            ></ion-icon>
-                          </a>
-                          <a
-                            class="btn btn-light btn-table"
-                            type="button"
-                            href="edit.html"
-                          >
-                            <ion-icon
-                              class="btn-icon"
-                              name="create-sharp"
-                            ></ion-icon>
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
+
+                  <?php
+                    if (isset($_GET["search"])){
+                        $persons = searchPerson();
+                    }else{
+                        $persons = personsData();
+                    }
+
+                    if ($persons == null){ ?>
+                      <div class="alert alert-secondary" role="alert">
+                        Data is not found !
+                      </div>
+                    <?php }
+
+                    for($i = 0; $i < count($persons); $i++) {?>
+                        <thead>
+                          <tr>
+                          <th scope="col">No</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Name</th>
+                            <th scope="col" colspan="2">Role</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr>
+                            <td><?php echo $i+1 ?></td>
+                            <td><?php echo $persons[$i]["email"] ?></td>
+                            <td><?php echo $persons[$i]["firstName"] . " " . $persons[$i]["lastName"]?></td>
+                            <td><?php echo $persons[$i]["role"] ?></td>
+                            <td>
+                              <div class="d-grid gap-2 d-flex justify-content-md-end">
+                                <a
+                                  class="btn btn-outline-light me-md-2 btn-table"
+                                  type="button"
+                                  href="view.php"
+                                  role="button"
+                                >
+                                  <ion-icon
+                                    class="btn-icon"
+                                    name="eye-sharp"
+                                  ></ion-icon>
+                                </a>
+                                <a
+                                  class="btn btn-outline-light btn-table"
+                                  type="button"
+                                  href="edit.php"
+                                >
+                                  <ion-icon
+                                    class="btn-icon"
+                                    name="create-sharp"
+                                  ></ion-icon>
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                    <?php } ?>
                 </table>
               </div>
             </div>
 
-            <!-- Pagination -->
+            <!--Pagination -->
             <div class="page">
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
