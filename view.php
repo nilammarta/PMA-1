@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['userEmail'])) {
+    header("Location: login-action.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -168,7 +176,7 @@
                   <nav class="main-nav">
                     <ul class="main-nav-list">
                       <li class="nav-item">
-                        <a class="main-nav-link" href="dashboard.html"
+                        <a class="main-nav-link" href="dashboard.php"
                           ><ion-icon
                             name="file-tray-full-outline"
                             class="nav-icon"
@@ -177,7 +185,7 @@
                         >
                       </li>
                       <li class="nav-item nav-open">
-                        <a class="main-nav-link" href="persons.html"
+                        <a class="main-nav-link" href="persons.php"
                           ><ion-icon
                             name="people-outline"
                             class="nav-icon"
@@ -193,7 +201,7 @@
                     <nav class="main-nav">
                       <ul class="main-nav-list">
                         <li class="nav-item">
-                          <a class="main-nav-link" href="myProfil.html"
+                          <a class="main-nav-link" href="myProfile.php"
                             ><ion-icon
                               name="person-circle-outline"
                               class="nav-icon"
@@ -202,7 +210,7 @@
                           >
                         </li>
                         <li class="nav-item">
-                          <a class="main-nav-link cta" href="#"
+                          <a class="main-nav-link cta" href="logout.php"
                             ><ion-icon
                               name="log-out-outline"
                               class="nav-icon"
@@ -224,7 +232,9 @@
               ></ion-icon>
             </div>
             <div class="d-none d-lg-block">
-              <div class="user-email btn-header">lalagemoy@gmail.com</div>
+              <div class="user-email btn-header">
+                  <?php echo $_SESSION['userEmail'] ?>
+              </div>
             </div>
           </div>
         </div>
@@ -238,7 +248,7 @@
             <nav class="main-nav">
               <ul class="main-nav-list">
                 <li class="nav-item">
-                  <a class="main-nav-link" href="dashboard.html"
+                  <a class="main-nav-link" href="dashboard.php"
                     ><ion-icon
                       name="file-tray-full-outline"
                       class="nav-icon"
@@ -247,7 +257,7 @@
                   >
                 </li>
                 <li class="nav-item nav-open">
-                  <a class="main-nav-link" href="persons.html"
+                  <a class="main-nav-link" href="persons.php"
                     ><ion-icon
                       name="people-outline"
                       class="nav-icon"
@@ -263,7 +273,7 @@
               <nav class="main-nav">
                 <ul class="main-nav-list">
                   <li class="nav-item">
-                    <a class="main-nav-link" href="myProfil.html"
+                    <a class="main-nav-link" href="myProfile.php"
                       ><ion-icon
                         name="person-circle-outline"
                         class="nav-icon"
@@ -272,7 +282,7 @@
                     >
                   </li>
                   <li class="nav-item">
-                    <a class="main-nav-link cta" href="#"
+                    <a class="main-nav-link cta" href="logout.php"
                       ><ion-icon
                         name="log-out-outline"
                         class="nav-icon"
@@ -327,7 +337,7 @@
                           <td>lalagemoy@gmail.com</td>
                         </tr>
                         <tr>
-                          <td>Birth date</td>
+                          <td>Birthdate</td>
                           <td>&#58;</td>
                           <td>10 january 2023</td>
                         </tr>
@@ -351,14 +361,14 @@
                     <div class="card-body btn-card">
                       <a
                         class="btn btn-secondary me-2"
-                        href="persons.html"
+                        href="persons.php"
                         role="button"
                         ><ion-icon name="arrow-back-sharp"></ion-icon
                       ></a>
 
                       <a
                         class="btn btn-primary me-2"
-                        href="edit.html"
+                        href="edit.php"
                         role="button"
                         ><ion-icon name="create"></ion-icon> EDIT</a
                       >

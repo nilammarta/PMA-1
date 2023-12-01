@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['userEmail'])) {
+    header("Location: login-action.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -167,7 +175,7 @@
                   <nav class="main-nav">
                     <ul class="main-nav-list">
                       <li class="nav-item">
-                        <a class="main-nav-link" href="dashboard.html"
+                        <a class="main-nav-link" href="dashboard.php"
                           ><ion-icon
                             name="file-tray-full-outline"
                             class="nav-icon"
@@ -176,7 +184,7 @@
                         >
                       </li>
                       <li class="nav-item nav-open">
-                        <a class="main-nav-link" href="persons.html"
+                        <a class="main-nav-link" href="persons.php"
                           ><ion-icon
                             name="people-outline"
                             class="nav-icon"
@@ -192,7 +200,7 @@
                     <nav class="main-nav">
                       <ul class="main-nav-list">
                         <li class="nav-item">
-                          <a class="main-nav-link" href="myProfil.html"
+                          <a class="main-nav-link" href="myProfile.php"
                             ><ion-icon
                               name="person-circle-outline"
                               class="nav-icon"
@@ -201,7 +209,7 @@
                           >
                         </li>
                         <li class="nav-item">
-                          <a class="main-nav-link cta" href="#"
+                          <a class="main-nav-link cta" href="logout.php"
                             ><ion-icon
                               name="log-out-outline"
                               class="nav-icon"
@@ -223,7 +231,9 @@
               ></ion-icon>
             </div>
             <div class="d-none d-lg-block">
-              <div class="user-email btn-header">lalagemoy@gmail.com</div>
+              <div class="user-email btn-header">
+                  <?php echo $_SESSION['userEmail'] ?>
+              </div>
             </div>
           </div>
         </div>
@@ -237,7 +247,7 @@
             <nav class="main-nav">
               <ul class="main-nav-list">
                 <li class="nav-item">
-                  <a class="main-nav-link" href="dashboard.html"
+                  <a class="main-nav-link" href="dashboard.php"
                     ><ion-icon
                       name="file-tray-full-outline"
                       class="nav-icon"
@@ -246,7 +256,7 @@
                   >
                 </li>
                 <li class="nav-item nav-open">
-                  <a class="main-nav-link" href="persons.html"
+                  <a class="main-nav-link" href="persons.php"
                     ><ion-icon
                       name="people-outline"
                       class="nav-icon"
@@ -262,7 +272,7 @@
               <nav class="main-nav">
                 <ul class="main-nav-list">
                   <li class="nav-item">
-                    <a class="main-nav-link" href="#"
+                    <a class="main-nav-link" href="myProfile.php"
                       ><ion-icon
                         name="person-circle-outline"
                         class="nav-icon"
@@ -271,7 +281,7 @@
                     >
                   </li>
                   <li class="nav-item">
-                    <a class="main-nav-link cta" href="#"
+                    <a class="main-nav-link cta" href="logout.php"
                       ><ion-icon
                         name="log-out-outline"
                         class="nav-icon"
@@ -476,7 +486,7 @@
                       <div class="btn-create">
                         <a
                           type="submit"
-                          href="view.html"
+                          href="view.php"
                           class="btn btn-primary btn-save me-3"
                         >
                           Save
@@ -484,7 +494,7 @@
                         <a
                           type="reset"
                           class="btn btn-secondary btn-cancel"
-                          href="view.html"
+                          href="view.php"
                         >
                           Cancel
                         </a>
