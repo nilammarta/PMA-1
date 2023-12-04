@@ -377,7 +377,7 @@ if (!isset($_SESSION['userEmail'])) {
                         type="button"
                         class="btn btn-danger"
                         data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop"
+                        data-bs-target="#exampleModal"
                       >
                         <ion-icon name="trash"></ion-icon> DELETE
                       </button>
@@ -385,22 +385,17 @@ if (!isset($_SESSION['userEmail'])) {
                       <!-- Modal -->
                       <div
                         class="modal fade"
-                        id="staticBackdrop"
-                        data-bs-backdrop="static"
-                        data-bs-keyboard="false"
+                        id="exampleModal"
                         tabindex="-1"
-                        aria-labelledby="staticBackdropLabel"
+                        aria-labelledby="exampleModalLabel"
                         aria-hidden="true"
                       >
                         <div class="modal-dialog modal-dialog-centered">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h1
-                                class="modal-title fs-5"
-                                id="staticBackdropLabel"
-                              >
+                              <h4 class="modal-title" id="exampleModalLabel">
                                 Delete Person
-                              </h1>
+                              </h4>
                               <button
                                 type="button"
                                 class="btn-close"
@@ -408,9 +403,7 @@ if (!isset($_SESSION['userEmail'])) {
                                 aria-label="Close"
                               ></button>
                             </div>
-                            <div class="modal-body">
-                              Are you sure to delete this person?
-                            </div>
+                            <div class="modal-body">Are you sure want to delete this person?</div>
                             <div class="modal-footer">
                               <button
                                 type="button"
@@ -419,7 +412,10 @@ if (!isset($_SESSION['userEmail'])) {
                               >
                                 NO
                               </button>
-                              <button type="button" class="btn btn-primary">
+                              <button
+                                type="button"
+                                class="btn btn-primary"
+                              >
                                 YES
                               </button>
                             </div>

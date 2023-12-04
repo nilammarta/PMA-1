@@ -5,6 +5,11 @@ if (!isset($_SESSION['userEmail'])) {
     header("Location: login.php");
     exit();
 }
+
+include("action/common-action.php");
+$persons = personsData();
+
+include("action/dashboard-action.php");
 ?>
 
 <!DOCTYPE html>
@@ -244,7 +249,6 @@ if (!isset($_SESSION['userEmail'])) {
       </div>
     </div>
   </div>
-  </div>
 </header>
 <main>
   <section class="main-section d-flex flex-row">
@@ -256,8 +260,8 @@ if (!isset($_SESSION['userEmail'])) {
               <a class="main-nav-link" href="dashboard.php"
               >
                 <ion-icon
-                  name="file-tray-full-outline"
-                  class="nav-icon"
+                        name="file-tray-full-outline"
+                        class="nav-icon"
                 ></ion-icon>
                 Dashboard</a
               >
@@ -266,8 +270,8 @@ if (!isset($_SESSION['userEmail'])) {
               <a class="main-nav-link" href="persons.php"
               >
                 <ion-icon
-                  name="people-outline"
-                  class="nav-icon"
+                        name="people-outline"
+                        class="nav-icon"
                 ></ion-icon>
                 Persons</a
               >
@@ -283,8 +287,8 @@ if (!isset($_SESSION['userEmail'])) {
                 <a class="main-nav-link" href="myProfile.php"
                 >
                   <ion-icon
-                    name="person-circle-outline"
-                    class="nav-icon"
+                          name="person-circle-outline"
+                          class="nav-icon"
                   ></ion-icon>
                   My Profile</a
                 >
@@ -323,7 +327,9 @@ if (!isset($_SESSION['userEmail'])) {
                 <div class="card-body">
                   <h3 class="card-title">
                     <ion-icon class="card-icon" name="people"></ion-icon>
-                    130
+                      <?php
+                      echo count($persons);
+                      ?>
                   </h3>
 
                   <a href="persons.php" class="card-subtitle mb-2"
@@ -340,9 +346,12 @@ if (!isset($_SESSION['userEmail'])) {
                             class="card-icon"
                             name="accessibility"
                     ></ion-icon>
-                    100
+                      <?php
+                      $adult = getCountPersons("adult");
+                      echo $adult;
+                      ?>
                   </h3>
-                  <a href="#" class="card-subtitle mb-2"
+                  <a href="persons.php?adult" class="card-subtitle mb-2"
                   >In Productive Ages</a
                   >
                 </div>
@@ -353,9 +362,12 @@ if (!isset($_SESSION['userEmail'])) {
                 <div class="card-body">
                   <h3 class="card-title">
                     <ion-icon class="card-icon" name="man"></ion-icon>
-                    20
+                      <?php
+                      $passed = getCountPersons("passedAway");
+                      echo $passed;
+                      ?>
                   </h3>
-                  <a href="#" class="card-subtitle mb-2">Passed Away</a>
+                  <a href="persons.php?passedAway" class="card-subtitle mb-2">Passed Away</a>
                 </div>
               </div>
             </div>
@@ -367,9 +379,12 @@ if (!isset($_SESSION['userEmail'])) {
                             class="card-icon"
                             name="people-circle-outline"
                     ></ion-icon>
-                    10
+                      <?php
+                      $child = getCountPersons("child");
+                      echo $child;
+                      ?>
                   </h3>
-                  <a href="#" class="card-subtitle mb-2">Children</a>
+                  <a href="persons.php?children" class="card-subtitle mb-2">Children</a>
                 </div>
               </div>
             </div>
@@ -378,9 +393,12 @@ if (!isset($_SESSION['userEmail'])) {
                 <div class="card-body">
                   <h3 class="card-title">
                     <ion-icon class="card-icon" name="body"></ion-icon>
-                    75
+                      <?php
+                      $male = getCountPersons("male");
+                      echo $male;
+                      ?>
                   </h3>
-                  <a href="#" class="card-subtitle mb-2">Male</a>
+                  <a href="persons.php?male" class="card-subtitle mb-2">Male</a>
                 </div>
               </div>
             </div>
@@ -389,9 +407,12 @@ if (!isset($_SESSION['userEmail'])) {
                 <div class="card-body">
                   <h3 class="card-title">
                     <ion-icon class="card-icon" name="woman"></ion-icon>
-                    55
+                      <?php
+                      $female = getCountPersons("female");
+                      echo $female;
+                      ?>
                   </h3>
-                  <a href="#" class="card-subtitle mb-2">Female</a>
+                  <a href="persons.php?female" class="card-subtitle mb-2">Female</a>
                 </div>
               </div>
             </div>

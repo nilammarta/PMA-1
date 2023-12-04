@@ -29,7 +29,7 @@
 
 .btn-dropdown {
   width: 100%;
-  background-color: #a7aaff;
+  /*background-color: #a7aaff;*/
   background-color: #ae98ff;
 
   /* background-color: #d3eca8; */
@@ -38,15 +38,27 @@
 .btn-dropdown:hover,
 .btn-dropdown:active {
   background-color: #5c54b6;
+  border: none;
   /* background-color: #ae98ff; */
 }
 
-.dropdown-item {
+.dropdown-item{
+  background-color: #d4c6f1;
+}
+
+.dropdown-item:hover{
+  background-color: #fff;
+}
+
+.btn-dropdown-item {
   font-family: inherit;
   font-weight: 500;
   padding: 1.2rem 2.4rem;
-  background-color: #d4c6f1;
   color: #2c0066;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: start;
 }
 
 .btn-add {

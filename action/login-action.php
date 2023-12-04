@@ -4,7 +4,6 @@ require_once __DIR__ . "/../assets/jsonHelper.php";
 
 session_start();
 
-
 $jsonData = loadDataIntoJson("/../assets/json/persons.json");
 
 if (isset($_POST['login'])) {

@@ -40,7 +40,7 @@
         "address" : "Br. Baturiti",
         "internalNotes" : "",
         "role" : "MEMBER",
-        "alive" : true
+        "alive" : false
     },
     {
         "id" : 4,
@@ -54,7 +54,7 @@
         "address" : "Tabanan",
         "internalNotes" : "aassaswejinu",
         "role" : "ADMIN",
-        "alive" : true
+        "alive" : false
     },
     {
         "id" : 5,
@@ -65,6 +65,48 @@
         "password" : 1002,
         "birthDate" :1606813735,
         "sex" : "f",
+        "address" : "Tabanan",
+        "internalNotes" : "aassaswejinu",
+        "role" : "ADMIN",
+        "alive" : true
+    },
+    {
+        "id" : 6,
+        "firstName" : "Kiko",
+        "lastName" : "lula",
+        "nik" : "1002841878126378",
+        "email" : "kiko@gmail.com",
+        "password" : 123,
+        "birthDate" :1606813735,
+        "sex" : "m",
+        "address" : "Tabanan",
+        "internalNotes" : "aassaswejinu",
+        "role" : "ADMIN",
+        "alive" : true
+    },
+    {
+        "id" : 7,
+        "firstName" : "Suki",
+        "lastName" : "suka",
+        "nik" : "1002841878126378",
+        "email" : "suki@gmail.com",
+        "password" : 3344,
+        "birthDate" :1033285558,
+        "sex" : "f",
+        "address" : "Tabanan",
+        "internalNotes" : "aassaswejinu",
+        "role" : "ADMIN",
+        "alive" : true
+    },
+    {
+        "id" : 8,
+        "firstName" : "Dawa",
+        "lastName" : "hawa",
+        "nik" : "1002841878126378",
+        "email" : "dawa@gmail.com",
+        "password" : 3344,
+        "birthDate" :1033285558,
+        "sex" : "m",
         "address" : "Tabanan",
         "internalNotes" : "aassaswejinu",
         "role" : "ADMIN",
