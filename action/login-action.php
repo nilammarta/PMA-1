@@ -15,6 +15,7 @@ if (isset($_POST['login'])) {
 //  die();
         $_SESSION['userEmail'] = $_POST['email'];
         $_SESSION['username'] = cek($jsonData)['firstName'];
+//        $_SESSION['lastname'] = cek($jsonData)['lastName'];
         header("Location: ../dashboard.php");
         exit();
 
@@ -27,7 +28,7 @@ if (isset($_POST['login'])) {
 function cek(array $tempData): array|null
 {
     for ($i = 0; $i < count($tempData); $i++) {
-        if ($_POST["email"] == $tempData[$i]["email"] && $_POST["password"] == $tempData[$i]["password"]) {
+        if ($_POST["email"] == $tempData[$i]["email"] && $_POST["password"] == $tempData[$i]["password"] && $tempData[$i]["alive"] == true) {
 //            $_SESSION['userEmail'] = $_POST['email'];
             return $tempData[$i];
         }

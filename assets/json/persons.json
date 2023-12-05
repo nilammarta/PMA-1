@@ -11,7 +11,8 @@
         "address" : "Br. Baturiti",
         "internalNotes" : "coba",
         "role" : "ADMIN",
-        "alive" : true
+        "alive" : true,
+        "lastLoggedIn": null
     },
     {
         "id": 2,

@@ -243,7 +243,6 @@ include("action/dashboard-action.php");
         <div class="d-none d-lg-block">
           <div class="user-email btn-header">
               <?php echo $_SESSION['userEmail'] ?>
-            <!--                  lalagemoy@gmail.com-->
           </div>
         </div>
       </div>
@@ -287,17 +286,18 @@ include("action/dashboard-action.php");
                 <a class="main-nav-link" href="myProfile.php"
                 >
                   <ion-icon
-                          name="person-circle-outline"
-                          class="nav-icon"
+                    name="person-circle-outline"
+                    class="nav-icon"
                   ></ion-icon>
                   My Profile</a
                 >
               </li>
               <li class="nav-item">
+
                 <a class="main-nav-link cta" href="logout.php">
                   <ion-icon
-                    name="log-out-outline"
-                    class="nav-icon"
+                          name="log-out-outline"
+                          class="nav-icon"
                   ></ion-icon>
                   Logout
                 </a>
@@ -317,7 +317,7 @@ include("action/dashboard-action.php");
                 echo $_SESSION['username'];
             } ?>!, Welcome in Dashboard
         </p>
-        <p class="card-text">Last update: 2 january 2024</p>
+        <p class="card-text">Last Activity : <strong> Tuesday, 2 january 2024 10:45 AM </strong></p>
 
         <!-- widget -->
         <div class="widget">
@@ -352,8 +352,7 @@ include("action/dashboard-action.php");
                       ?>
                   </h3>
                   <a href="persons.php?adult" class="card-subtitle mb-2"
-                  >In Productive Ages</a
-                  >
+                  >In Productive Ages</a>
                 </div>
               </div>
             </div>

@@ -4,7 +4,9 @@ require_once __DIR__ . "/../assets/jsonHelper.php";
 function searchPerson(array $persons): array|null
 {
 //    $persons = loadDataIntoJson("/../assets/json/persons.json");
-    $search = $_GET['search'];
+    $searchInput = $_GET['search'];
+//    var_dump($searchInput);
+    $search = urldecode($searchInput);
     $results = [];
     $resultsLastName = [];
     if (isset($search)) {
@@ -87,3 +89,21 @@ function filter(string $filter): array|null
     }
 }
 
+// paginated data
+function getPaginatedData(array $data, int $page, int $limit): array
+{
+//   untuk mendapatkan jumlah halaman yang di perlukan dengan membagi antara banyak data dengan limit yang di tentukan
+    $totalPage = ceil((float)count($data) / (float)$limit);
+//   untuk mendapatkan index dari data person yang akan di mulai dari setiap halaman
+    $indexStart = ($page - 1) * $limit;
+    $length = $limit;
+    if (($indexStart + $limit) > count($data)) {
+        $length = count($data) - $indexStart;
+    }
+
+    return [
+        "totalPage" => $totalPage,
+        "pagingData" => array_slice($data, $indexStart, $length),
+        "currentPage" => $page,
+    ];
+}
