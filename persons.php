@@ -333,9 +333,9 @@ $appName = "PERSONS - Person Management App";
                     <ion-icon name="search-outline"></ion-icon>
                   </button>
                 </div>
-                <!-- dropdown filter person -->
-
               </form>
+
+              <!-- dropdown filter person -->
               <div class="dropdown me-4 p-3">
                 <button
                         class="btn btn-secondary dropdown-toggle btn-dropdown"
@@ -347,39 +347,42 @@ $appName = "PERSONS - Person Management App";
                   <ion-icon name="filter"></ion-icon>
                 </button>
 
-                <form name="filter" method="get">
+<!--                <form name="filter" method="get">-->
                   <ul class="dropdown-menu">
                     <li>
-                      <a class="dropdown-item" href="#table">
-                        <button name="adult" class="btn-dropdown-item">
+                      <a class="dropdown-item" href="?adult">
+<!--                        <button name="adult" class="btn-dropdown-item">-->
                           Adult
-                        </button>
+<!--                        </button>-->
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#table">
-                        <button name="children" class="btn-dropdown-item"> Children</button>
+                      <a class="dropdown-item" href="?children">
+                        Children
+<!--                        <button name="children" class="btn-dropdown-item"> Children</button>-->
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#table">
-                        <button name="male" class="btn-dropdown-item"> Male</button>
+                      <a class="dropdown-item" href="?male">
+                        Male
+<!--                        <button name="male" class="btn-dropdown-item"> Male</button>-->
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#table">
-                        <button name="female" class="btn-dropdown-item">Female</button>
+                      <a class="dropdown-item" href="?female">
+                        Female
+<!--                        <button name="female" class="btn-dropdown-item">Female</button>-->
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#table">
-                        <button name="passedAway" class="btn-dropdown-item">
+                      <a class="dropdown-item" href="?passesAway">
+<!--                        <button name="passedAway" class="btn-dropdown-item">-->
                           Passed Away
-                        </button>
+<!--                        </button>-->
                       </a>
                     </li>
                   </ul>
-                </form>
+<!--                </form>-->
               </div>
             </div>
           </div>
@@ -405,7 +408,6 @@ $appName = "PERSONS - Person Management App";
                 <?php
                 if (isset($_GET["adult"])) {
                     $persons = filter("adult");
-
                 } else if (isset($_GET['children'])) {
                     $persons = filter('child');
                 } else if (isset($_GET["male"])) {
@@ -415,6 +417,7 @@ $appName = "PERSONS - Person Management App";
                 } else if (isset($_GET["passedAway"])) {
                     $persons = filter("passedAway");
                 } else {
+//                    $persons = loadDataIntoJson("assets/json/persons.json");
                     $persons = personsData();
                 }
 
@@ -435,7 +438,7 @@ $appName = "PERSONS - Person Management App";
                   <tbody>
                   <?php
                   $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
-                  $limit = 3;
+                  $limit = 2;
 
                   $previous = $page - 1;
                   $next = $page + 1;
@@ -458,7 +461,7 @@ $appName = "PERSONS - Person Management App";
                             <a
                               class="btn btn-outline-light me-md-2 btn-table"
                               type="button"
-                              href="view.php"
+                              href="view.php?persons=<?php echo$persons[$number - 2]["id"]?>"
                               role="button"
                             >
                               <ion-icon
@@ -467,13 +470,13 @@ $appName = "PERSONS - Person Management App";
                               ></ion-icon>
                             </a>
                             <a
-                              class="btn btn-outline-light btn-table"
-                              type="button"
-                              href="edit.php"
+                                    class="btn btn-outline-light btn-table"
+                                    type="button"
+                                    href="edit.php"
                             >
                               <ion-icon
-                                class="btn-icon"
-                                name="create-sharp"
+                                      class="btn-icon"
+                                      name="create-sharp"
                               ></ion-icon>
                             </a>
                           </form>
@@ -535,61 +538,79 @@ $appName = "PERSONS - Person Management App";
                     <?php } ?>
                 <?php } ?>
             </table>
-            <?php if (isset($_GET["search"]) == null) {
-              if (isset($_GET["adult"])){
-                $filter = "?adult&";
-              }elseif (isset($_GET["children"])){
-                $filter = "?children&";
-              }elseif (isset($_GET["male"])){
-                $filter = "?male&";
-              }elseif (isset($_GET["female"])){
-                $filter = "?female&";
-              }elseif (isset($_GET["passedAway"])) {
-                $filter = "?passedAway&";
-              }else{
-                $filter = "?";
-              }
+              <?php if (isset($_GET["search"]) == null) {
+                  if (isset($_GET["adult"])) {
+                      $filter = "?adult&";
+                  } elseif (isset($_GET["children"])) {
+                      $filter = "?children&";
+                  } elseif (isset($_GET["male"])) {
+                      $filter = "?male&";
+                  } elseif (isset($_GET["female"])) {
+                      $filter = "?female&";
+                  } elseif (isset($_GET["passedAway"])) {
+                      $filter = "?passedAway&";
+                  } else {
+                      $filter = "?";
+                  }
 
 
-              ?>
-              <!--Pagination -->
-              <div class="page">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                      <a class="page-link"
+                  ?>
+                <!--Pagination -->
+                <div class="page">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item">
                           <?php if ($page > 1) { ?>
-                            href='<?php echo $filter?>page=<?php echo $previous?>'
+                            <a class="page-link"
+                               href='<?php echo $filter ?>page=<?php echo $previous ?>'
+                            >
+                              <ion-icon
+                                      class="page-icon"
+                                      name="caret-back-outline"
+                              ></ion-icon>
+                            </a>
                           <?php } ?>
-                      >
-                        <ion-icon
-                                class="page-icon"
-                                name="caret-back-outline"
-                        ></ion-icon>
-                      </a>
-                    </li>
+                      </li>
 
-                      <?php for ($i = 1; $i <= $data["totalPage"]; $i++) { ?>
-                        <li class="page-item active">
-                          <a class="page-link" href="<?php echo $filter?>page=<?php echo $i ?>"> <?php echo $i ?> </a>
-                        </li>
-                      <?php } ?>
-                    <li class="page-item">
-                      <a class="page-link" <?php if ($page < $data["totalPage"]) {?>
-                          href='<?php echo $filter?>page=<?php echo $next?>'
-                      <?php } ?>
-                      >
-                        <ion-icon
-                                class="page-icon"
-                                name="caret-forward-outline"
-                        ></ion-icon
-                        >
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            <?php } ?>
+                        <?php for ($i = 1; $i <= $data["totalPage"]; $i++) {
+                          if (isset($_GET['page']) == null && $i == 1){?>
+                            <li class="page-item active">
+                              <a class="page-link"
+                                 href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                              </a>
+                            </li>
+                          <?php }else if ($_GET["page"] == $i) {?>
+                            <li class="page-item active">
+                              <a class="page-link"
+                                 href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                              </a>
+                            </li>
+                          <?php }else { ?>
+                            <li class="page-item">
+                              <a class="page-link"
+                                 href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                              </a>
+                            </li>
+                          <?php } ?>
+                        <?php } ?>
+                      <li class="page-item">
+                          <?php if ($page < $data["totalPage"]) { ?>
+                            <a class="page-link"
+                               href='<?php echo $filter ?>page=<?php echo $next ?>'
+
+                            >
+                              <ion-icon
+                                      class="page-icon"
+                                      name="caret-forward-outline"
+                              ></ion-icon
+                              >
+                            </a>
+                          <?php } ?>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              <?php } ?>
           </div>
         </div>
       </div>

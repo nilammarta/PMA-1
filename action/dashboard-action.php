@@ -54,3 +54,12 @@ function getCountPersons(string $filter):int|null
         return null;
     }
 }
+
+function lastActivity(int|null $time):string
+{
+    if ($time != null){
+        return date('l, j F Y,  H:i A', $time);
+    }else{
+        return "-";
+    }
+}

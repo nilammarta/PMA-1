@@ -4,7 +4,7 @@ require_once __DIR__ . "/../assets/jsonHelper.php";
 
 session_start();
 
-$jsonData = loadDataIntoJson("/../assets/json/persons.json");
+$jsonData = loadDataIntoJson("persons.json");
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
@@ -15,7 +15,7 @@ if (isset($_POST['login'])) {
 //  die();
         $_SESSION['userEmail'] = $_POST['email'];
         $_SESSION['username'] = cek($jsonData)['firstName'];
-//        $_SESSION['lastname'] = cek($jsonData)['lastName'];
+        $_SESSION['logout'] = cek($jsonData)['lastLoggedIn'];
         header("Location: ../dashboard.php");
         exit();
 
@@ -44,4 +44,6 @@ function redirect($url, $getParams)
 }
 
 
-
+$userLogin['birthDate']= 1033285558;
+$time = date('m/d/Y', 1033285558);
+echo $time;

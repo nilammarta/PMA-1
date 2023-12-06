@@ -5,6 +5,8 @@ if (!isset($_SESSION['userEmail'])) {
     header("Location: login-action.php");
     exit();
 }
+
+include ("action/common-action.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -287,8 +289,7 @@ if (!isset($_SESSION['userEmail'])) {
                         name="log-out-outline"
                         class="nav-icon"
                       ></ion-icon>
-                      Logout</a
-                    >
+                      Logout</a>
                   </li>
                 </ul>
               </nav>
@@ -316,46 +317,49 @@ if (!isset($_SESSION['userEmail'])) {
                   <div class="table-responsive">
                     <table class="table mb-0">
                       <tbody>
+                      <?php if (isset($_GET["persons"])){
+                          $thePerson = user($_GET['persons']);
+                      } ?>
                         <tr>
                           <td class="card-label">First name</td>
-                          <td>&#58;</td>
-                          <td>Lala</td>
+                          <td>:</td>
+                          <td><?php echo $thePerson["firstName"] ?></td>
                         </tr>
                         <tr>
                           <td>Last name</td>
-                          <td>&#58;</td>
-                          <td>Lulu</td>
+                          <td>:</td>
+                          <td><?php echo $thePerson['lastName'] ?></td>
                         </tr>
                         <tr>
                           <td>NIK</td>
-                          <td>&#58;</td>
-                          <td>1001267392823094</td>
+                          <td>:</td>
+                          <td><?php echo $thePerson['nik'] ?></td>
                         </tr>
                         <tr>
                           <td>Email</td>
-                          <td>&#58;</td>
-                          <td>lalagemoy@gmail.com</td>
+                          <td>:</td>
+                          <td><?php echo $thePerson['email'] ?></td>
                         </tr>
                         <tr>
                           <td>Birthdate</td>
-                          <td>&#58;</td>
-                          <td>10 january 2023</td>
+                          <td>:</td>
+                          <td><?php echo date('d/F/Y', $thePerson['birthDate']) ?></td>
                         </tr>
                         <tr>
                           <td>Sex</td>
-                          <td>&#58;</td>
-                          <td>Female</td>
+                          <td>:</td>
+                          <td><?php echo gender($thePerson['sex']) ?></td>
                         </tr>
                         <tr>
                           <td>Address</td>
-                          <td>&#58;</td>
-                          <td>Br.Baturiti, Kec.Baturiti, Tabanan-Bali</td>
+                          <td>:</td>
+                          <td><?php echo $thePerson['address']?></td>
                         </tr>
                       </tbody>
                     </table>
                     <div class="card-body card-body-2">
-                      <h6 class="card-title">Internal notes &#58;</h6>
-                      <div class="card-text">coba</div>
+                      <h6 class="card-title">Internal notes :</h6>
+                      <div class="card-text"><?php echo $thePerson['internalNotes'] ?></div>
                     </div>
 
                     <div class="card-body btn-card">

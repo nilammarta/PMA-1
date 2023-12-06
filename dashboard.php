@@ -317,7 +317,7 @@ include("action/dashboard-action.php");
                 echo $_SESSION['username'];
             } ?>!, Welcome in Dashboard
         </p>
-        <p class="card-text">Last Activity : <strong> Tuesday, 2 january 2024 10:45 AM </strong></p>
+        <p class="card-text">Last Activity : <strong> <?php echo lastActivity($_SESSION['logout']) ?> </strong></p>
 
         <!-- widget -->
         <div class="widget">
