@@ -315,20 +315,18 @@ include("action/common-action.php");
               <h5 class="form-text pb-2 mb-4">EDIT PROFILE</h5>
                 <?php
                 $userLogin = userLogin($_SESSION['userEmail']);
-                //                    $birthDate = date('Y-m-d', $userLogin['birthDate']);
                 ?>
               <div class="mb-3 row">
                 <label
-                        for="inputFistname"
-                        class="col-sm-2 col-form-label form-label"
-                >Fist name</label
-                >
+                  for="inputFirstname"
+                  class="col-sm-2 col-form-label form-label"
+                >Fist name</label>
                 <div class="col-sm-10">
                   <input
-                          type="text"
-                          class="form-control"
-                          id="inputFistname"
-                          value="<?php echo $userLogin["firstName"] ?>"
+                    type="text"
+                    class="form-control"
+                    id="inputFirstname"
+                    value="<?php echo $userLogin["firstName"] ?>"
                   />
                 </div>
               </div>
@@ -341,10 +339,10 @@ include("action/common-action.php");
                 >
                 <div class="col-sm-10">
                   <input
-                          type="text"
-                          class="form-control"
-                          id="inputLastname"
-                          value="<?php echo $userLogin['lastName'] ?>"
+                    type="text"
+                    class="form-control"
+                    id="inputLastname"
+                    value="<?php echo $userLogin['lastName'] ?>"
                   />
                 </div>
               </div>
@@ -357,18 +355,18 @@ include("action/common-action.php");
                 >
                 <div class="col-sm-10">
                   <input
-                          type="number"
-                          class="form-control"
-                          id="inputNIK"
-                          value="<?php echo $userLogin['nik'] ?>"
+                    type="number"
+                    class="form-control"
+                    id="inputNIK"
+                    value="<?php echo $userLogin['nik'] ?>"
                   />
                 </div>
               </div>
 
               <div class="mb-3 row">
                 <label
-                        for="inputEmail"
-                        class="col-sm-2 col-form-label form-label"
+                  for="inputEmail"
+                  class="col-sm-2 col-form-label form-label"
                 >Email</label
                 >
                 <div class="col-sm-10">
@@ -399,16 +397,16 @@ include("action/common-action.php");
 
               <div class="mb-3 row">
                 <label
-                        for="inputAddress"
-                        class="col-sm-2 col-form-label form-label"
+                  for="inputAddress"
+                  class="col-sm-2 col-form-label form-label"
                 >Address</label
                 >
                 <div class="col-sm-10">
                   <input
-                          type="text"
-                          class="form-control"
-                          id="inputAddress"
-                          value="<?php echo $userLogin['address'] ?>"
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                    value="<?php echo $userLogin['address'] ?>"
                   />
                 </div>
               </div>
@@ -442,9 +440,7 @@ include("action/common-action.php");
                   class="form-control"
                   id="exampleFormControlTextarea1"
                   rows="3"
-                >
-                <?php echo $userLogin['internalNotes'] ?>
-                </textarea>
+                ><?php echo $userLogin['internalNotes'] ?></textarea>
               </div>
 
               <div class="row justify-content-center mt-5">

@@ -347,42 +347,41 @@ $appName = "PERSONS - Person Management App";
                   <ion-icon name="filter"></ion-icon>
                 </button>
 
-<!--                <form name="filter" method="get">-->
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a class="dropdown-item" href="?adult">
-<!--                        <button name="adult" class="btn-dropdown-item">-->
-                          Adult
-<!--                        </button>-->
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="?children">
-                        Children
-<!--                        <button name="children" class="btn-dropdown-item"> Children</button>-->
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="?male">
-                        Male
-<!--                        <button name="male" class="btn-dropdown-item"> Male</button>-->
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="?female">
-                        Female
-<!--                        <button name="female" class="btn-dropdown-item">Female</button>-->
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="?passesAway">
-<!--                        <button name="passedAway" class="btn-dropdown-item">-->
-                          Passed Away
-<!--                        </button>-->
-                      </a>
-                    </li>
-                  </ul>
-<!--                </form>-->
+                <!--<form name="filter" method="get">-->
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="?adult">
+<!--                      <button name="adult" class="btn-dropdown-item">-->
+                      In Productive Ages
+<!--                      </button>-->
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="?children">
+                      Children
+                      <!--<button name="children" class="btn-dropdown-item"> Children</button>-->
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="?male">
+                      Male
+                      <!--<button name="male" class="btn-dropdown-item"> Male</button>-->
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="?female">
+                      Female
+                      <!--<button name="female" class="btn-dropdown-item">Female</button>-->
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="?passedAway">
+                      <!--<button name="passedAway" class="btn-dropdown-item">-->
+                      Passed Away
+                      <!--</button>-->
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -392,9 +391,9 @@ $appName = "PERSONS - Person Management App";
         <!-- add -->
         <div class="d-flex">
           <a
-                  href="create.php"
-                  class="table-btn btn-primary btn-lg btn-add p-3 mt-5 btn-link"
-                  type="button"
+            href="create.php"
+            class="table-btn btn-primary btn-lg btn-add p-3 mt-5 btn-link"
+            type="button"
           >
             <ion-icon class="add-icon me-2" name="person-add"></ion-icon>
             Add
@@ -417,28 +416,27 @@ $appName = "PERSONS - Person Management App";
                 } else if (isset($_GET["passedAway"])) {
                     $persons = filter("passedAway");
                 } else {
-//                    $persons = loadDataIntoJson("assets/json/persons.json");
                     $persons = personsData();
                 }
 
                 if ($persons == null) { ?>
-                  <div class="alert alert-secondary" role="alert">
+                  <div class="alert alert-warning mx-5" role="alert">
                     Data is empty!
                   </div>
                 <?php } elseif ($_GET["search"] == null && $persons != null) { ?>
                   <thead>
-                  <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Name</th>
-                    <th scope="col" colspan="2">Role</th>
-                  </tr>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Name</th>
+                      <th scope="col" colspan="2">Role</th>
+                    </tr>
                   </thead>
 
                   <tbody>
                   <?php
                   $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
-                  $limit = 2;
+                  $limit = 3;
 
                   $previous = $page - 1;
                   $next = $page + 1;
@@ -449,7 +447,6 @@ $appName = "PERSONS - Person Management App";
                   $number = ($page - 1) * $limit + 1;
 
                   for ($i = 0; $i < count($personsData); $i++) { ?>
-
                     <tr>
                       <td><?php echo $number++ ?></td>
                       <td><?php echo $personsData[$i]["email"] ?></td>
@@ -458,25 +455,27 @@ $appName = "PERSONS - Person Management App";
                       <td>
                         <div class="d-grid gap-2 d-flex justify-content-md-end">
                           <form name="person" method="post">
+                            <?php if (isset($_GET['search']) == null){ ?>
+                              <a
+                                class="btn btn-outline-light me-md-2 btn-table"
+                                type="button"
+                                href="view.php?<?php echo $_GET['search']?>&person=<?php echo $persons[$number - 2]["id"] ?>"
+                                role="button"
+                              >
+                                <ion-icon
+                                  class="btn-icon"
+                                  name="eye-sharp"
+                                ></ion-icon>
+                              </a>
+                            <?php } ?>
                             <a
-                              class="btn btn-outline-light me-md-2 btn-table"
+                              class="btn btn-outline-light btn-table"
                               type="button"
-                              href="view.php?persons=<?php echo$persons[$number - 2]["id"]?>"
-                              role="button"
+                              href="edit.php"
                             >
                               <ion-icon
                                 class="btn-icon"
-                                name="eye-sharp"
-                              ></ion-icon>
-                            </a>
-                            <a
-                                    class="btn btn-outline-light btn-table"
-                                    type="button"
-                                    href="edit.php"
-                            >
-                              <ion-icon
-                                      class="btn-icon"
-                                      name="create-sharp"
+                                name="create-sharp"
                               ></ion-icon>
                             </a>
                           </form>
@@ -488,7 +487,7 @@ $appName = "PERSONS - Person Management App";
                 <?php } elseif ($_GET['search'] != null && $persons != null) {
                     $searchResults = searchPerson($persons);
                     if ($searchResults == null) { ?>
-                      <div class="alert alert-secondary" role="alert">
+                      <div class="alert alert-warning mx-5" role="alert">
                         Search results is not found!
                       </div>
                     <?php } else { ?>
@@ -500,61 +499,59 @@ $appName = "PERSONS - Person Management App";
                         <th scope="col" colspan="2">Role</th>
                       </tr>
                       </thead>
-                        <?php for ($i = 0; $i < count($searchResults); $i++) { ?>
+                      <?php for ($i = 0; $i < count($searchResults); $i++) { ?>
                         <tbody>
-                        <tr>
-                          <td><?php echo $i + 1 ?></td>
-                          <td><?php echo $searchResults[$i]["email"] ?></td>
-                          <td><?php echo $searchResults[$i]["firstName"] . " " . $searchResults[$i]["lastName"] ?></td>
-                          <td><?php echo $searchResults[$i]["role"] ?></td>
-                          <td>
-                            <div class="d-grid gap-2 d-flex justify-content-md-end">
-                              <a
-                                      class="btn btn-outline-light me-md-2 btn-table"
-                                      type="button"
-                                      href="view.php"
-                                      role="button"
-                              >
-                                <ion-icon
-                                        class="btn-icon"
-                                        name="eye-sharp"
-                                ></ion-icon>
-                              </a>
-                              <a
-                                      class="btn btn-outline-light btn-table"
-                                      type="button"
-                                      href="edit.php"
-                              >
-                                <ion-icon
-                                        class="btn-icon"
-                                        name="create-sharp"
-                                ></ion-icon>
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
+                          <tr>
+                            <td><?php echo $i + 1 ?></td>
+                            <td><?php echo $searchResults[$i]["email"] ?></td>
+                            <td><?php echo $searchResults[$i]["firstName"] . " " . $searchResults[$i]["lastName"] ?></td>
+                            <td><?php echo $searchResults[$i]["role"] ?></td>
+                            <td>
+                              <div class="d-grid gap-2 d-flex justify-content-md-end">
+                                <a
+                                  class="btn btn-outline-light me-md-2 btn-table"
+                                  type="button"
+                                  href="view.php?search=<?php echo$_GET['search']?>&person=<?php echo $searchResults[$i]["id"] ?>"
+                                  role="button"
+                                >
+                                  <ion-icon
+                                    class="btn-icon"
+                                    name="eye-sharp"
+                                  ></ion-icon>
+                                </a>
+                                <a
+                                  class="btn btn-outline-light btn-table"
+                                  type="button"
+                                  href="edit.php"
+                                >
+                                  <ion-icon
+                                    class="btn-icon"
+                                    name="create-sharp"
+                                  ></ion-icon>
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
                         </tbody>
-                        <?php } ?>
+                      <?php } ?>
                     <?php } ?>
                 <?php } ?>
             </table>
-              <?php if (isset($_GET["search"]) == null) {
-                  if (isset($_GET["adult"])) {
-                      $filter = "?adult&";
-                  } elseif (isset($_GET["children"])) {
-                      $filter = "?children&";
-                  } elseif (isset($_GET["male"])) {
-                      $filter = "?male&";
-                  } elseif (isset($_GET["female"])) {
-                      $filter = "?female&";
-                  } elseif (isset($_GET["passedAway"])) {
-                      $filter = "?passedAway&";
-                  } else {
-                      $filter = "?";
-                  }
+            <?php if (isset($_GET["search"]) == null) {
+                if (isset($_GET["adult"])) {
+                    $filter = "?adult&";
+                } elseif (isset($_GET["children"])) {
+                    $filter = "?children&";
+                } elseif (isset($_GET["male"])) {
+                    $filter = "?male&";
+                } elseif (isset($_GET["female"])) {
+                    $filter = "?female&";
+                } elseif (isset($_GET["passedAway"])) {
+                    $filter = "?passedAway&";
+                } else {
+                    $filter = "?";
+                } ?>
 
-
-                  ?>
                 <!--Pagination -->
                 <div class="page">
                   <nav aria-label="Page navigation example">
@@ -572,45 +569,47 @@ $appName = "PERSONS - Person Management App";
                           <?php } ?>
                       </li>
 
-                        <?php for ($i = 1; $i <= $data["totalPage"]; $i++) {
-                          if (isset($_GET['page']) == null && $i == 1){?>
-                            <li class="page-item active">
-                              <a class="page-link"
-                                 href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                              </a>
-                            </li>
-                          <?php }else if ($_GET["page"] == $i) {?>
-                            <li class="page-item active">
-                              <a class="page-link"
-                                 href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                              </a>
-                            </li>
-                          <?php }else { ?>
-                            <li class="page-item">
-                              <a class="page-link"
-                                 href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                              </a>
-                            </li>
-                          <?php } ?>
-                        <?php } ?>
-                      <li class="page-item">
-                          <?php if ($page < $data["totalPage"]) { ?>
-                            <a class="page-link"
-                               href='<?php echo $filter ?>page=<?php echo $next ?>'
+                      <?php if ($data['totalPage'] > 1) {
+                          for ($i = 1; $i <= $data["totalPage"]; $i++) {
+                              if (isset($_GET['page']) == null && $i == 1) {
+                                  ?>
+                                <li class="page-item active">
+                                  <a class="page-link"
+                                     href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                  </a>
+                                </li>
+                              <?php } else if ($_GET["page"] == $i) { ?>
+                                <li class="page-item active">
+                                  <a class="page-link"
+                                     href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                  </a>
+                                </li>
+                              <?php } else { ?>
+                                <li class="page-item">
+                                  <a class="page-link"
+                                     href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                  </a>
+                                </li>
+                              <?php } ?>
+                          <?php }
+                      } ?>
 
-                            >
-                              <ion-icon
-                                      class="page-icon"
-                                      name="caret-forward-outline"
-                              ></ion-icon
-                              >
-                            </a>
-                          <?php } ?>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-              <?php } ?>
+                    <li class="page-item">
+                        <?php if ($page < $data["totalPage"]) { ?>
+                          <a class="page-link"
+                             href='<?php echo $filter ?>page=<?php echo $next ?>'
+                          >
+                            <ion-icon
+                              class="page-icon"
+                              name="caret-forward-outline"
+                            ></ion-icon>
+                          </a>
+                        <?php } ?>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            <?php } ?>
           </div>
         </div>
       </div>
