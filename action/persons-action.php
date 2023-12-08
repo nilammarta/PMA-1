@@ -1,11 +1,9 @@
 <?php
 require_once __DIR__ . "/../assets/jsonHelper.php";
 
-function searchPerson(array $persons): array|null
+function searchPerson(array $persons, string $searchInput): array|null
 {
 //    $persons = loadDataIntoJson("/../assets/json/persons.json");
-    $searchInput = $_GET['search'];
-//    var_dump($searchInput);
     $search = urldecode($searchInput);
     $results = [];
     $resultsLastName = [];

@@ -371,26 +371,26 @@ include("action/common-action.php");
                 >
                 <div class="col-sm-10">
                   <input
-                          type="email"
-                          class="form-control"
-                          id="inputEmail"
-                          value="<?php echo $userLogin['email'] ?>"
+                    type="email"
+                    class="form-control"
+                    id="inputEmail"
+                    value="<?php echo $userLogin['email'] ?>"
                   />
                 </div>
               </div>
 
               <div class="mb-3 row">
                 <label
-                        for="inputBirthdate"
-                        class="col-sm-2 col-form-label form-label"
+                  for="inputBirthdate"
+                  class="col-sm-2 col-form-label form-label"
                 >Birth date</label
                 >
                 <div class="col-sm-10">
                   <input
-                          type="date"
-                          class="form-control"
-                          id="inputBirthdate"
-                          value="<?php echo date('Y-m-d', $userLogin['birthDate']) ?>"
+                    type="date"
+                    class="form-control"
+                    id="inputBirthdate"
+                    value="<?php echo date('Y-m-d', $userLogin['birthDate']) ?>"
                   />
                 </div>
               </div>

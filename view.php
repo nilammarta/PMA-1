@@ -367,24 +367,33 @@ include("action/common-action.php");
                         </table>
                         <div class="card-body card-body-2">
                           <h6 class="card-title">Internal notes :</h6>
-                          <div class="card-text"><?php echo$thePerson['internalNotes']?></div>
+                          <div class="card-text"><?php echo $thePerson['internalNotes'] ?></div>
                         </div>
 
                         <div class="card-body btn-card">
-                            <?php if (isset($_GET['search'])) { ?>
-                              <a class="btn btn-secondary me-2" href="persons.php?search=<?php echo $_GET['search'] ?>"
-                                 role="button">
-                                <ion-icon name="arrow-back-sharp"></ion-icon>
-                              </a>
-                            <?php } else { ?>
-                              <a
-                                      class="btn btn-secondary me-2"
-                                      href="persons.php"
-                                      role="button"
-                              >
-                                <ion-icon name="arrow-back-sharp"></ion-icon>
-                              </a>
-                            <?php } ?>
+                            <?php
+                            if (isset($_GET["adult"])) {
+                                $get = "adult&";
+                            } elseif (isset($_GET["children"])) {
+                                $get = "children&";
+                            } elseif (isset($_GET["male"])) {
+                                $get = "male&";
+                            } elseif (isset($_GET["female"])) {
+                                $get = "female&";
+                            } elseif (isset($_GET["passedAway"])) {
+                                $get = "passedAway&";
+                            } elseif (isset($_GET["search"])) {
+                                $get = "search=". $_GET['search'] . "&";
+                            } else {
+                                $get = "";
+                            }
+                            ?>
+
+                          <a class="btn btn-secondary me-2"
+                             href="persons.php?<?php echo $get?>page=<?php echo $_GET['page'] ?>"
+                             role="button">
+                            <ion-icon name="arrow-back-sharp"></ion-icon>
+                          </a>
 
                           <a
                             class="btn btn-primary me-2"

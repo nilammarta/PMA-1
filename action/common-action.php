@@ -9,8 +9,10 @@ function personsData(): array
 // function untuk mengecek umur user
 function checkAge(int $date): int
 {
-    $total = time() - $date;
-    return floor($total / (60 * 60 * 24 * 365));
+//    untuk mendapatkan selisih timestamp dari waktu saat ini dengan timestamp tgl lahirnya
+    $age = time() - $date;
+//    floor digunakan untuk pembulatan keatas
+    return floor($age / (60 * 60 * 24 * 365)); // (menit, jam, hari, tahun)
 }
 
 function convertStringIntoDate(string $format, string $birthDate): int|null
