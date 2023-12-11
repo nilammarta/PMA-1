@@ -7,7 +7,7 @@ if (!isset($_SESSION['userEmail'])) {
 }
 
 include("action/common-action.php");
-$persons = personsData();
+$persons = GetPersonsData();
 
 include("action/dashboard-action.php");
 ?>
@@ -351,7 +351,7 @@ include("action/dashboard-action.php");
                       echo $adult;
                       ?>
                   </h3>
-                  <a href="persons.php?adult" class="card-subtitle mb-2"
+                  <a href="persons.php?search=&filter=productive" class="card-subtitle mb-2"
                   >In Productive Ages</a>
                 </div>
               </div>
@@ -366,7 +366,7 @@ include("action/dashboard-action.php");
                       echo $passed;
                       ?>
                   </h3>
-                  <a href="persons.php?passedAway" class="card-subtitle mb-2">Passed Away</a>
+                  <a href="persons.php?search=&filter=passedAway" class="card-subtitle mb-2">Passed Away</a>
                 </div>
               </div>
             </div>
@@ -383,7 +383,7 @@ include("action/dashboard-action.php");
                       echo $child;
                       ?>
                   </h3>
-                  <a href="persons.php?children" class="card-subtitle mb-2">Children</a>
+                  <a href="persons.php?search=&filter=children" class="card-subtitle mb-2">Children</a>
                 </div>
               </div>
             </div>
@@ -397,7 +397,7 @@ include("action/dashboard-action.php");
                       echo $male;
                       ?>
                   </h3>
-                  <a href="persons.php?male" class="card-subtitle mb-2">Male</a>
+                  <a href="persons.php?search=&filter=male" class="card-subtitle mb-2">Male</a>
                 </div>
               </div>
             </div>
@@ -411,7 +411,7 @@ include("action/dashboard-action.php");
                       echo $female;
                       ?>
                   </h3>
-                  <a href="persons.php?female" class="card-subtitle mb-2">Female</a>
+                  <a href="persons.php?search=&filter=female" class="card-subtitle mb-2">Female</a>
                 </div>
               </div>
             </div>

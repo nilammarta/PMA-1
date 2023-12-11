@@ -305,7 +305,7 @@ if (!isset($_SESSION['userEmail'])) {
             <div class="row justify-content-center">
               <!-- <div class="col-12 col-md-10 col-lg-11 col-xxl-6"> -->
               <div class="col-12">
-                <form class="create-form needs-validation p-4 mb-5">
+                <form class="create-form p-4 mb-5" method="post" action="">
                   <h5 class="form-text pb-2 mb-4">
                     Add new person data in the form below:
                   </h5>
@@ -317,6 +317,7 @@ if (!isset($_SESSION['userEmail'])) {
                         >
 
                         <input
+                          name="firstName"
                           id="FirstnameInput"
                           type="text"
                           class="form-control"
@@ -331,6 +332,7 @@ if (!isset($_SESSION['userEmail'])) {
                           >Last name &#42;
                         </label>
                         <input
+                          name="lastName"
                           id="LastnameInput"
                           type="text"
                           class="form-control"
@@ -345,6 +347,7 @@ if (!isset($_SESSION['userEmail'])) {
                           >NIK &#42;</label
                         >
                         <input
+                          name="nik"
                           id="nikInput"
                           type="number"
                           class="form-control"
@@ -359,6 +362,7 @@ if (!isset($_SESSION['userEmail'])) {
                           >Email &#42;</label
                         >
                         <input
+                          name="email"
                           type="email"
                           class="form-control"
                           id="exampleInputEmail1"
@@ -372,6 +376,7 @@ if (!isset($_SESSION['userEmail'])) {
                           >Password &#42;</label
                         >
                         <input
+                          name="password"
                           type="password"
                           class="form-control"
                           id="exampleInputPassword1"
@@ -386,6 +391,7 @@ if (!isset($_SESSION['userEmail'])) {
                         </label>
 
                         <input
+                          name="birthDate"
                           id="birthDateInput"
                           type="date"
                           class="form-control"
@@ -399,6 +405,7 @@ if (!isset($_SESSION['userEmail'])) {
                           >Sex &#42;
                         </label>
                         <select
+                          name="sex"
                           id="exampleSexInput"
                           class="form-select"
                           aria-label="Default select example"
@@ -415,6 +422,7 @@ if (!isset($_SESSION['userEmail'])) {
                           >Address &#42;
                         </label>
                         <input
+                          name="address"
                           id="addressInput"
                           type="text"
                           class="form-control"
@@ -431,6 +439,7 @@ if (!isset($_SESSION['userEmail'])) {
                           >Internal notes</label
                         >
                         <textarea
+                          name="internalNotes"
                           class="form-control"
                           id="exampleFormControlTextarea1"
                           rows="3"
@@ -442,6 +451,7 @@ if (!isset($_SESSION['userEmail'])) {
                           >Role &#42;</label
                         >
                         <select
+                          name="role"
                           id="exampleRoleInput"
                           class="form-select"
                           aria-label="Default select example"
@@ -459,6 +469,7 @@ if (!isset($_SESSION['userEmail'])) {
                         class="form-check form-switch mb-5 d-flex flex-row align-items-end gap-3"
                       >
                         <input
+                          name="alive"
                           class="form-check-input"
                           type="checkbox"
                           role="switch"

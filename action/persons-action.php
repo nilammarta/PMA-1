@@ -38,8 +38,8 @@ function searchPerson(array $persons, string $searchInput): array|null
 // filtering persons
 function filter(string $filter): array|null
 {
-    $persons = personsData();
-    if ($filter == "adult") {
+    $persons = GetPersonsData();
+    if ($filter == "productive") {
         $adult = [];
         foreach ($persons as $person) {
             if (checkAge($person["birthDate"]) > 15 && $person["alive"] == true) {
@@ -47,7 +47,7 @@ function filter(string $filter): array|null
             }
         }
         return $adult;
-    } elseif ($filter == "child") {
+    } elseif ($filter == "children") {
         $child = [];
         foreach ($persons as $person) {
             if (checkAge($person["birthDate"]) <= 15 && $person["alive"] == true) {
@@ -82,6 +82,9 @@ function filter(string $filter): array|null
         }
         return $passed;
 
+    }elseif ($filter == "allPersons"){
+        return GetPersonsData();
+
     } else {
         return null;
     }
@@ -104,4 +107,21 @@ function getPaginatedData(array $data, int $page, int $limit): array
         "pagingData" => array_slice($data, $indexStart, $length),
         "currentPage" => $page,
     ];
+}
+
+function getFilter(string $filter): string
+{
+    if ($filter == "productive"){
+        return "In Productive Age";
+    } elseif ($filter == "children"){
+        return "Children";
+    } else if ($filter == "male"){
+        return "Male";
+    } else if ($filter == "female"){
+        return "Female";
+    }else if ($filter == "passedAway"){
+        return "PassedAway";
+    }else{
+        return "Filter";
+    }
 }

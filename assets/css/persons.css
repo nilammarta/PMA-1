@@ -11,47 +11,44 @@
   box-shadow: 0 0 0 0.2rem rgba(66, 0, 153, 0.788);
 }
 
-.navbar-brand:hover,
-.navbar-brand:active {
-  color: #343a40;
-}
-
 .btn-search {
   background-color: #ae98ff;
   /* background-color: #a7aaff; */
-  color: #160033;
-  font-weight: 700;
+  color: #2c0066;
+  font-weight: 500;
 }
 
 .btn-search:hover {
   background-color: #5c54b6;
+  color: #f0f0ff;
 }
 
-.btn-dropdown {
-  width: 100%;
+.select-filter {
   /*background-color: #a7aaff;*/
   background-color: #ae98ff;
 
   /* background-color: #d3eca8; */
 }
 
-.btn-dropdown:hover,
-.btn-dropdown:active {
-  background-color: #5c54b6;
-  border: none;
-  /* background-color: #ae98ff; */
-}
+  /*.select-item:hover,*/
+  /*.select-filter:active {*/
+  /*  background-color: #5c54b6;*/
+  /*  border: none;*/
+  /*  !* background-color: #ae98ff; *!*/
+  /*}*/
 
-.dropdown-menu{
-  background-color: #d4c6f1;
-}
 
-.dropdown-item:hover{
-  background-color: #fff;
+
+
+.search-form{
   color: #2c0066;
 }
 
-.dropdown-item {
+.form-select{
+  color: #2c0066;
+}
+
+.select-item {
   font-family: inherit;
   font-weight: 500;
   padding: 1.2rem 2.4rem;
@@ -60,6 +57,10 @@
   background: none;
   width: 100%;
   text-align: start;
+}
+
+.selected{
+  font-weight: 400;
 }
 
 .btn-add {

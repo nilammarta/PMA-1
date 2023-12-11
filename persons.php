@@ -322,75 +322,33 @@ $appName = "PERSONS - Person Management App";
                 <div class="d-flex mb-2">
                   <label for="search-input"></label>
                   <input
-                          name="search"
-                          id="search-input"
-                          class="form-control me-1"
-                          type="search"
-                          placeholder="Search"
-                          value="<?php echo $_GET['search']; ?>"
-                          aria-label="Search"
+                    name="search"
+                    id="search-input"
+                    class="form-control me-1"
+                    type="search"
+                    placeholder="Search"
+                    value="<?php echo $_GET['search']; ?>"
+                    aria-label="Search"
                   />
-                  <button class="btn btn-search me-2" type="submit">
-                    <ion-icon name="search-outline"></ion-icon>
-                  </button>
+                  <select name="filter" class="form-select select-filter ms-1" aria-label="Default select example">
+                    <option name="filter" class="select-item selected" value="<?php echo $_GET['filter'] ?>" selected><?php if (isset($_GET['filter'])){
+                          echo getFilter($_GET['filter']);
+                        } else {
+                          echo "Filter";
+                        } ?></option>
+                    <option class="select-item" value="allPersons">All Persons Data</option>
+                    <option name="filter" class="select-item" value="productive">In Productive Age</option>
+                    <option name="filter" class="select-item" value="children">Children</option>
+                    <option name="filter" class="select-item" value="male">Male</option>
+                    <option name="filter" class="select-item" value="female">Female</option>
+                    <option name="filter" class="select-item" value="passedAway">Passed Away</option>
+                  </select>
                 </div>
-              </form>
 
-              <!-- dropdown filter person -->
-              <div class="dropdown me-4 p-3">
-                <button
-                        class="btn btn-secondary dropdown-toggle btn-dropdown"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                >
-                  Filter Person
-                  <ion-icon name="filter"></ion-icon>
+                <button class="btn btn-search mb-2 ms-2" type="submit">
+                  <ion-icon name="search-outline"></ion-icon> search
                 </button>
-
-                <!--<form name="filter" method="get">-->
-                <ul class="dropdown-menu">
-                  <li>
-                    <a class="dropdown-item" href="?adult">
-                      <!--                      <button name="adult" class="btn-dropdown-item">-->
-                      In Productive Ages
-                      <!--                      </button>-->
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="?children">
-                      Children
-                      <!--<button name="children" class="btn-dropdown-item"> Children</button>-->
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="?male">
-                      Male
-                      <!--<button name="male" class="btn-dropdown-item"> Male</button>-->
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="?female">
-                      Female
-                      <!--<button name="female" class="btn-dropdown-item">Female</button>-->
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="?passedAway">
-                      <!--<button name="passedAway" class="btn-dropdown-item">-->
-                      Passed Away
-                      <!--</button>-->
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="persons.php">
-                      <!--<button name="passedAway" class="btn-dropdown-item">-->
-                      All Persons
-                      <!--</button>-->
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              </form>
             </div>
           </div>
         </nav>
@@ -413,20 +371,12 @@ $appName = "PERSONS - Person Management App";
           <div class="table-responsive">
 
               <?php
-              if (isset($_GET["adult"])) {
-                  $persons = filter("adult");
-              } else if (isset($_GET['children'])) {
-                  $persons = filter('child');
-              } else if (isset($_GET["male"])) {
-                  $persons = filter("male");
-              } else if (isset($_GET["female"])) {
-                  $persons = filter("female");
-              } else if (isset($_GET["passedAway"])) {
-                  $persons = filter("passedAway");
-              } elseif (isset($_GET['search'])) {
-                  $persons = searchPerson(personsData(), $_GET['search']);
+              if (isset($_GET['search'])!= null && isset($_GET['filter']) != null){
+                  $persons = searchPerson(filter($_GET['filter']), $_GET['search']);
+              } else if (isset($_GET["filter"])) {
+                 $persons = filter($_GET["filter"]);
               } else {
-                  $persons = personsData();
+                  $persons = GetPersonsData();
               }
 
               if ($_GET["search"] != null && $persons == null) { ?>
@@ -446,162 +396,148 @@ $appName = "PERSONS - Person Management App";
                   $next = $page + 1;
 
                   $data = getPaginatedData($persons, $page, $limit);
+
                   $personsData = $data["pagingData"];
 
                   $number = ($page - 1) * $limit + 1; ?>
 
-<!--                  Pengecekan untuk halaman page jika page yang ada di url lebih besar dari total page-->
+                <!--                  Pengecekan untuk halaman page jika page yang ada di url lebih besar dari total page-->
                   <?php if ($data['totalPage'] < $_GET['page']) { ?>
-                    <div class="alert alert-warning mx-5" role="alert">
-                      Page (<?php echo $_GET['page'] ?>) is not found!
-                    </div>
+                  <div class="alert alert-warning mx-5" role="alert">
+                    Page (<?php echo $_GET['page'] ?>) is not found!
+                  </div>
                   <?php } else { ?>
-                    <table class="table table-hover">
-                      <tbody>
+                  <table class="table table-hover">
+                    <tbody>
 
-                      <thead>
+                    <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Name</th>
+                      <th scope="col" colspan="2">Role</th>
+                    </tr>
+                    </thead>
+
+                    <?php for ($i = 0; $i < count($personsData); $i++) { ?>
                       <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Name</th>
-                        <th scope="col" colspan="2">Role</th>
+                        <td><?php echo $number++ ?></td>
+                        <td><?php echo $personsData[$i]["email"] ?></td>
+                        <td><?php echo $personsData[$i]["firstName"] . " " . $personsData[$i]["lastName"] ?></td>
+                        <td><?php echo $personsData[$i]["role"] ?></td>
+                        <td>
+                          <div class="d-grid gap-2 d-flex justify-content-md-end">
+<!--                            <form name="person" method="post"> -->
+                                <?php
+                                if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
+                                    $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
+                                } else {
+                                    $get = "";
+                                }
+
+                                if (isset($_GET['page']) == null) {
+                                    $page = 1;
+                                } else {
+                                    $page = $_GET['page'];
+                                }
+
+                                ?>
+                              <a
+                                class="btn btn-outline-light me-md-2 btn-table"
+                                type="button"
+                                href="view.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $persons[$number - 2]["id"] ?>"
+                                role="button"
+                              >
+                                <ion-icon
+                                  class="btn-icon"
+                                  name="eye-sharp"
+                                ></ion-icon>
+                              </a>
+                              <a
+                                class="btn btn-outline-light btn-table"
+                                type="button"
+                                href="edit.php"
+                              >
+                                <ion-icon
+                                  class="btn-icon"
+                                  name="create-sharp"
+                                ></ion-icon>
+                              </a>
+<!--                            </form>-->
+                          </div>
+                        </td>
                       </tr>
-                      </thead>
+                    <?php } ?>
+                    </tbody>
+                  </table>
 
-                      <?php for ($i = 0; $i < count($personsData); $i++) { ?>
-                        <tr>
-                          <td><?php echo $number++ ?></td>
-                          <td><?php echo $personsData[$i]["email"] ?></td>
-                          <td><?php echo $personsData[$i]["firstName"] . " " . $personsData[$i]["lastName"] ?></td>
-                          <td><?php echo $personsData[$i]["role"] ?></td>
-                          <td>
-                            <div class="d-grid gap-2 d-flex justify-content-md-end">
-                              <form name="person" method="post">
-                                  <?php
-                                  if (isset($_GET["adult"])) {
-                                      $get = "adult&";
-                                  } elseif (isset($_GET["children"])) {
-                                      $get = "children&";
-                                  } elseif (isset($_GET["male"])) {
-                                      $get = "male&";
-                                  } elseif (isset($_GET["female"])) {
-                                      $get = "female&";
-                                  } elseif (isset($_GET["passedAway"])) {
-                                      $get = "passedAway&";
-                                  } elseif (isset($_GET["search"])) {
-                                      $get = "search=" . $_GET['search'] . "&";
-                                  } else {
-                                      $get = "";
-                                  }
+                  <!--Pagination -->
+                  <div class="page">
+                    <nav aria-label="Page navigation example">
+<!--                        --><?php //
+                        if (isset($_GET['search']) != null && isset($_GET['filter']) != null){
+                          $url = "?search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
 
-                                  if (isset($_GET['page']) == null) {
-                                      $page = 1;
-                                  } else {
-                                      $page = $_GET['page'];
-                                  }
 
-                                  ?>
-                                <a
-                                        class="btn btn-outline-light me-md-2 btn-table"
-                                        type="button"
-                                        href="view.php?<?php echo $get ?><?php echo $_GET[$get] ?>page=<?php echo $page ?>&person=<?php echo $persons[$number - 2]["id"] ?>"
-                                        role="button"
-                                >
-                                  <ion-icon
-                                          class="btn-icon"
-                                          name="eye-sharp"
-                                  ></ion-icon>
-                                </a>
-                                <a
-                                        class="btn btn-outline-light btn-table"
-                                        type="button"
-                                        href="edit.php"
-                                >
-                                  <ion-icon
-                                          class="btn-icon"
-                                          name="create-sharp"
-                                  ></ion-icon>
-                                </a>
-                              </form>
-                            </div>
-                          </td>
-                        </tr>
-                      <?php } ?>
-                      </tbody>
-                    </table>
+                        } else {
+                            $url = "?";
+                        } ?>
+                      <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <?php if ($page > 1) { ?>
+                              <a class="page-link"
+                                 href='<?php echo $url ?>page=<?php echo $previous ?>'
+                              >
+                                <ion-icon
+                                        class="page-icon"
+                                        name="caret-back-outline"
+                                ></ion-icon>
+                              </a>
+                            <?php } ?>
+                        </li>
 
-                    <!--Pagination -->
-                    <div class="page">
-                      <nav aria-label="Page navigation example">
-                          <?php
-                          if (isset($_GET["adult"])) {
-                              $filter = "?adult&";
-                          } elseif (isset($_GET["children"])) {
-                              $filter = "?children&";
-                          } elseif (isset($_GET["male"])) {
-                              $filter = "?male&";
-                          } elseif (isset($_GET["female"])) {
-                              $filter = "?female&";
-                          } elseif (isset($_GET["passedAway"])) {
-                              $filter = "?passedAway&";
-                          } elseif (isset($_GET["search"])) {
-                              $filter = "?search=" . $_GET['search'] . "&";
-                          } else {
-                              $filter = "?";
+                          <?php if ($data['totalPage'] > 1) {
+                              for ($i = 1; $i <= $data["totalPage"]; $i++) {
+//                                untuk memberi warna pada halaman pertama saat membuka page
+                                  if (isset($_GET['page']) == null && $i == 1) { ?>
+                                    <li class="page-item active">
+                                      <a class="page-link"
+                                         href="<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                      </a>
+                                    </li>
+<!--                              untuk memberikn warna pada halaman saat ini        -->
+                                  <?php } else if ($_GET["page"] == $i) { ?>
+                                    <li class="page-item active">
+                                      <a class="page-link"
+                                         href="<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                      </a>
+                                    </li>
+<!--                              untuk membuat banyak halaman yang di perlukan        -->
+                                  <?php } else { ?>
+                                    <li class="page-item">
+                                      <a class="page-link"
+                                         href="<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                      </a>
+                                    </li>
+                                  <?php } ?>
+                              <?php }
                           } ?>
-                        <ul class="pagination justify-content-center">
-                          <li class="page-item">
-                              <?php if ($page > 1) { ?>
-                                <a class="page-link"
-                                   href='<?php echo $filter ?>page=<?php echo $previous ?>'
-                                >
-                                  <ion-icon
-                                          class="page-icon"
-                                          name="caret-back-outline"
-                                  ></ion-icon>
-                                </a>
-                              <?php } ?>
-                          </li>
 
-                            <?php if ($data['totalPage'] > 1) {
-                                for ($i = 1; $i <= $data["totalPage"]; $i++) {
-                                    if (isset($_GET['page']) == null && $i == 1) { ?>
-                                      <li class="page-item active">
-                                        <a class="page-link"
-                                           href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                        </a>
-                                      </li>
-                                    <?php } else if ($_GET["page"] == $i) { ?>
-                                      <li class="page-item active">
-                                        <a class="page-link"
-                                           href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                        </a>
-                                      </li>
-                                    <?php } else { ?>
-                                      <li class="page-item">
-                                        <a class="page-link"
-                                           href="<?php echo $filter ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                        </a>
-                                      </li>
-                                    <?php } ?>
-                                <?php }
-                            } ?>
-
-                          <li class="page-item">
-                              <?php if ($page < $data["totalPage"]) { ?>
-                                <a class="page-link"
-                                   href='<?php echo $filter ?>page=<?php echo $next ?>'
-                                >
-                                  <ion-icon
-                                          class="page-icon"
-                                          name="caret-forward-outline"
-                                  ></ion-icon>
-                                </a>
-                              <?php } ?>
-                          </li>
-                        </ul>
-                      </nav>
-                    </div>
+                        <li class="page-item">
+                            <?php if ($page < $data["totalPage"]) { ?>
+                              <a class="page-link"
+                                 href='<?php echo $url ?>page=<?php echo $next ?>'
+                              >
+                                <ion-icon
+                                        class="page-icon"
+                                        name="caret-forward-outline"
+                                ></ion-icon>
+                              </a>
+                            <?php } ?>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
                   <?php } ?>
               <?php } ?>
           </div>

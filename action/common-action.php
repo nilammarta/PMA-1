@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../assets/jsonHelper.php";
 
-function personsData(): array
+function GetPersonsData(): array
 {
     return loadDataIntoJson("persons.json");
 }
@@ -28,7 +28,7 @@ function convertStringIntoDate(string $format, string $birthDate): int|null
 
 function userLogin($email):array
 {
-    $persons = personsData();
+    $persons = GetPersonsData();
     for ($i =0; $i < count($persons); $i++){
         if($persons[$i]["email"] == $email){
             return $persons[$i];
@@ -48,7 +48,7 @@ function gender(string $gender):string
 
 function user(int $id):array
 {
-    $persons = personsData();
+    $persons = GetPersonsData();
     foreach ($persons as $person){
         if ($person['id'] == $id){
             return $person;

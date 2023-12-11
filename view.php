@@ -372,25 +372,15 @@ include("action/common-action.php");
 
                         <div class="card-body btn-card">
                             <?php
-                            if (isset($_GET["adult"])) {
-                                $get = "adult&";
-                            } elseif (isset($_GET["children"])) {
-                                $get = "children&";
-                            } elseif (isset($_GET["male"])) {
-                                $get = "male&";
-                            } elseif (isset($_GET["female"])) {
-                                $get = "female&";
-                            } elseif (isset($_GET["passedAway"])) {
-                                $get = "passedAway&";
-                            } elseif (isset($_GET["search"])) {
-                                $get = "search=". $_GET['search'] . "&";
+                            if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
+                                $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
                             } else {
-                                $get = "";
+                                $url = "";
                             }
                             ?>
 
                           <a class="btn btn-secondary me-2"
-                             href="persons.php?<?php echo $get?>page=<?php echo $_GET['page'] ?>"
+                             href="persons.php?<?php echo $url?>page=<?php echo $_GET['page']?>"
                              role="button">
                             <ion-icon name="arrow-back-sharp"></ion-icon>
                           </a>
