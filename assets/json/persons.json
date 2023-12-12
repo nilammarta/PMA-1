@@ -12,7 +12,7 @@
         "internalNotes": "coba",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1702257393
+        "lastLoggedIn": 1702359649
     },
     {
         "id": 2,
@@ -27,7 +27,7 @@
         "internalNotes": "mencoba internal notes",
         "role": "MEMBER",
         "alive": true,
-        "lastLoggedIn": 1702014668
+        "lastLoggedIn": 1702359515
     },
     {
         "id": 3,

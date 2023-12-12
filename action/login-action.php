@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../assets/jsonHelper.php";
-
+require_once __DIR__ . "/common-action.php";
 
 session_start();
 
@@ -35,15 +35,3 @@ function cek(array $tempData): array|null
     }
     return null;
 }
-
-// function untuk redirect page
-function redirect($url, $getParams)
-{
-    header('Location: ' . $url . '?' . $getParams);
-    die();
-}
-
-
-$userLogin['birthDate']= 1033285558;
-$time = date('m/d/Y', 1033285558);
-echo $time;

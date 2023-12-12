@@ -8,7 +8,7 @@ if (!isset($_SESSION['userEmail'])) {
 require_once __DIR__ . "/action/common-action.php";
 require_once __DIR__ . "/assets/jsonHelper.php";
 
-$persons = GetPersonsData();
+$persons = getPersonsData();
 
 // masukkan data 'lastLoggedIn' ke persons json
 for ($i=0; $i<count($persons); $i++){

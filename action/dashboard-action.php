@@ -5,7 +5,7 @@ require_once __DIR__ . "/common-action.php";
 // function for filtering person
 function getCountPersons(string $filter):int|null
 {
-    $persons = GetPersonsData();
+    $persons = getPersonsData();
     if ($filter == "adult"){
         $adult = [];
         foreach ($persons as $person){

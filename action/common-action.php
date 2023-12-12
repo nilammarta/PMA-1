@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../assets/jsonHelper.php";
 
-function GetPersonsData(): array
+function getPersonsData(): array
 {
     return loadDataIntoJson("persons.json");
 }
@@ -28,7 +28,7 @@ function convertStringIntoDate(string $format, string $birthDate): int|null
 
 function userLogin($email):array
 {
-    $persons = GetPersonsData();
+    $persons = getPersonsData();
     for ($i =0; $i < count($persons); $i++){
         if($persons[$i]["email"] == $email){
             return $persons[$i];
@@ -48,11 +48,18 @@ function gender(string $gender):string
 
 function user(int $id):array
 {
-    $persons = GetPersonsData();
+    $persons = getPersonsData();
     foreach ($persons as $person){
         if ($person['id'] == $id){
             return $person;
         }
     }
     return [];
+}
+
+// function untuk redirect page
+function redirect($url, $getParams)
+{
+    header('Location: ' . $url . '?' . $getParams);
+    die();
 }

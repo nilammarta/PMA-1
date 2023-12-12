@@ -38,7 +38,7 @@ function searchPerson(array $persons, string $searchInput): array|null
 // filtering persons
 function filter(string $filter): array|null
 {
-    $persons = GetPersonsData();
+    $persons = getPersonsData();
     if ($filter == "productive") {
         $adult = [];
         foreach ($persons as $person) {
@@ -83,7 +83,7 @@ function filter(string $filter): array|null
         return $passed;
 
     }elseif ($filter == "allPersons"){
-        return GetPersonsData();
+        return getPersonsData();
 
     } else {
         return null;
