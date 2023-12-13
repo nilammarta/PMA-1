@@ -317,21 +317,22 @@ if (!isset($_SESSION['userEmail'])) {
               <h5 class="form-text pb-2 mb-4">
                 Add new person data in the form below:
               </h5>
+
               <form name="newPerson" class="needs-validation" method="post" action="action/create-action.php">
                 <div class="d-lg-flex gap-lg-3 gap-xl-5">
                   <div class="form-1">
                     <div class="mb-3">
                       <label for="FirstnameInput" class="form-label"
-                      >First name &#42;</label
-                      >
+                      >First name &#42;</label>
                       <input
-                              name="firstName"
-                              id="FirstnameInput"
-                              type="text"
-                              class="form-control"
-                              placeholder="first name"
-                              aria-label="First name"
-                              required
+                        name="firstName"
+                        id="FirstnameInput"
+                        type="text"
+                        class="form-control"
+                        placeholder="first name"
+                        aria-label="First name"
+                        value="<?php echo $_POST["firstName"] ?>"
+                        required
                       />
 
                       <div class="valid-feedback">
@@ -344,13 +345,13 @@ if (!isset($_SESSION['userEmail'])) {
                       >Last name &#42;
                       </label>
                       <input
-                              name="lastName"
-                              id="LastnameInput"
-                              type="text"
-                              class="form-control"
-                              placeholder="last name"
-                              aria-label="Last name"
-                              required
+                        name="lastName"
+                        id="LastnameInput"
+                        type="text"
+                        class="form-control"
+                        placeholder="last name"
+                        aria-label="Last name"
+                        required
                       />
                       <div class="invalid-feedback">
                         Please type the correct NIK, at least 16 characters
@@ -362,31 +363,25 @@ if (!isset($_SESSION['userEmail'])) {
                       >NIK &#42;</label
                       >
                       <input
-                              name="nik"
-                              id="nikInput"
-                              type="text"
-                              class="form-control mb-2"
-                              placeholder="Nomor Induk Kependudukan"
-                              aria-label="NIK"
-                          <?php if ($_POST['nikError']) { ?>
-                            value="<?php echo $_POST['nik'] ?>"
-                          <?php } ?>
-                              required
-                      />
-
-                        <?php if (isset($_GET["nikError"]) && $_GET["nikError"] == 1) { ?>
-                          <div class="alert alert-danger" role="alert">
-                            Please type the correct NIK, at least 16 characters
-                          </div>
-<!--                          <div class="invalid-feedback">-->
-<!--                            Please type the correct NIK, at least 16 characters-->
-<!--                          </div>-->
-
-                        <?php } else if (isset($_GET['nikError']) && $_GET['nikExists']) { ?>
-                          <div class="alert alert-danger" role="alert">
-                            NIK is already exists in database, please type another NIK
-                          </div>
+                        name="nik"
+                        id="nikInput"
+                        type="text"
+                        class="form-control mb-2 <?php if (isset($_GET['nikError'])){?>
+                          is-invalid
+                        <?php } ?>"
+                        placeholder="Nomor Induk Kependudukan"
+                        aria-label="NIK"
+                        maxlength="16"
+                        <?php if ($_POST['nikError']) { ?>
+                          value="<?php echo $_POST['nik'] ?>"
                         <?php } ?>
+                        required
+                      />
+                      <?php if (isset($_GET["nikError"]) && $_GET["nikError"] == 1) {?>
+                        <p class="error"> Please type the correct NIK with numeric value, at least 16 characters!</p>
+                      <?php } else if (isset($_GET['nikError']) && $_GET['nikError'] == "nikExists") { ?>
+                        <p class="error"> NIK is already exists in database, please type another NIK! </p>
+                      <?php } ?>
                     </div>
 
                     <div class="mb-3">
@@ -394,27 +389,37 @@ if (!isset($_SESSION['userEmail'])) {
                       >Email &#42;</label
                       >
                       <input
-                              name="email"
-                              type="email"
-                              class="form-control"
-                              id="exampleInputEmail1"
-                              aria-describedby="emailHelp"
-                              placeholder="name@example.com"
-                              required
+                        name="email"
+                        type="email"
+                        class="form-control mb-2 <?php if (isset($_GET['emailError'])){ ?>
+                          is-invalid
+                        <?php } ?>"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="name@example.com"
+                        required
                       />
+                      <?php if (isset($_GET['emailError']) && $_GET['emailError'] == 1){?>
+                      <p class="error"> Email is already exists in database, please input another email</p>
+                      <?php } ?>
                     </div>
                     <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label"
-                      >Password &#42;</label
-                      >
+                      <label for="exampleInputPassword1" class="form-label">
+                        Password &#42;</label>
                       <input
-                              name="password"
-                              type="password"
-                              class="form-control"
-                              id="exampleInputPassword1"
-                              placeholder="password"
-                              required
+                        name="password"
+                        type="password"
+                        class="form-control mb-2 <?php if (isset($_GET['passError'])){?>
+                          is-invalid
+                        <?php } ?>"
+                        id="exampleInputPassword1"
+                        placeholder="password"
+                        required
                       />
+
+                      <?php if (isset($_GET['passError'])){?>
+                        <p class="error"> Password must have min 8 characters and max 16 characters</p>
+                      <?php } ?>
                     </div>
 
                     <div class="mb-3">
@@ -423,11 +428,11 @@ if (!isset($_SESSION['userEmail'])) {
                       </label>
 
                       <input
-                              name="birthDate"
-                              id="birthDateInput"
-                              type="date"
-                              class="form-control"
-                              required
+                        name="birthDate"
+                        id="birthDateInput"
+                        type="date"
+                        class="form-control"
+                        required
                       />
                     </div>
                   </div>
@@ -437,11 +442,11 @@ if (!isset($_SESSION['userEmail'])) {
                       >Sex &#42;
                       </label>
                       <select
-                              name="sex"
-                              id="exampleSexInput"
-                              class="form-select"
-                              aria-label="Default select example"
-                              required
+                        name="sex"
+                        id="exampleSexInput"
+                        class="form-select"
+                        aria-label="Default select example"
+                        required
                       >
                         <option selected disabled value="">choose...</option>
                         <option class="option-value" value="1">Male</option>
@@ -454,13 +459,13 @@ if (!isset($_SESSION['userEmail'])) {
                       >Address &#42;
                       </label>
                       <input
-                              name="address"
-                              id="addressInput"
-                              type="text"
-                              class="form-control"
-                              placeholder="address"
-                              aria-label="Last name"
-                              required
+                        name="address"
+                        id="addressInput"
+                        type="text"
+                        class="form-control"
+                        placeholder="address"
+                        aria-label="Last name"
+                        required
                       />
                     </div>
 
@@ -468,13 +473,12 @@ if (!isset($_SESSION['userEmail'])) {
                       <label
                               for="exampleFormControlTextarea1"
                               class="form-label"
-                      >Internal notes</label
-                      >
+                      >Internal notes</label>
                       <textarea
-                              name="internalNotes"
-                              class="form-control"
-                              id="exampleFormControlTextarea1"
-                              rows="3"
+                        name="internalNotes"
+                        class="form-control"
+                        id="exampleFormControlTextarea1"
+                        rows="3"
                       ></textarea>
                     </div>
 
@@ -487,6 +491,7 @@ if (!isset($_SESSION['userEmail'])) {
                               id="exampleRoleInput"
                               class="form-select"
                               aria-label="Default select example"
+                              required
                       >
                         <option selected disabled value="">choose...</option>
                         <option class="option-value" value="ADMIN">Admin</option>
@@ -516,7 +521,6 @@ if (!isset($_SESSION['userEmail'])) {
                     </div>
                   </div>
                 </div>
-                  <?php var_dump($_POST['nik']); ?>
 
 
                 <div class="row justify-content-center mt-5">

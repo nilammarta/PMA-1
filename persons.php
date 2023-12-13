@@ -331,7 +331,7 @@ $appName = "PERSONS - Person Management App";
                         aria-label="Search"
                       />
                       <select name="filter" class="form-select select-filter me-2 mb-2" aria-label="Default select example">
-                        <option name="filter" class="select-item selected" value="<?php echo $_GET['filter'] ?>"selected><?php if (isset($_GET['filter'])){
+                        <option name="filter" class="select-item selected" value="<?php echo $_GET['filter'] ?>" selected><?php if (isset($_GET['filter'])){
                               echo getFilter($_GET['filter']);
                             } else {
                               echo "Filter";
