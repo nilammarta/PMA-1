@@ -331,7 +331,11 @@ $appName = "PERSONS - Person Management App";
                         aria-label="Search"
                       />
                       <select name="filter" class="form-select select-filter me-2 mb-2" aria-label="Default select example">
-                        <option name="filter" class="select-item selected" value="<?php echo $_GET['filter'] ?>" selected><?php if (isset($_GET['filter'])){
+                        <option name="filter" class="select-item selected" value="<?php if (isset($_GET['filter'])){
+                          echo $_GET['filter'];
+                        }else{
+                          echo "allPersons";
+                        } ?>" selected><?php if (isset($_GET['filter'])){
                               echo getFilter($_GET['filter']);
                             } else {
                               echo "Filter";
@@ -430,7 +434,7 @@ $appName = "PERSONS - Person Management App";
                                     if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                                         $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
                                     } else {
-                                        $get = "";
+                                        $url = "";
                                     }
 
                                     if (isset($_GET['page']) == null) {
@@ -438,12 +442,11 @@ $appName = "PERSONS - Person Management App";
                                     } else {
                                         $page = $_GET['page'];
                                     }
-
                                     ?>
                                   <a
                                     class="btn btn-outline-light me-md-2 btn-table"
                                     type="button"
-                                    href="view.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $persons[$number - 2]["id"] ?>"
+                                    href="view.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]["id"]?>"
                                     role="button"
                                   >
                                     <ion-icon

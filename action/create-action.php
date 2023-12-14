@@ -62,16 +62,18 @@ function isEmailExists($newEmail): string|null
     return $newEmail;
 }
 
+function checkFormatEmail($newEmail):string | null
+{
+    if (preg_match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^", $newEmail)){
+        return $newEmail;
+    }else{
+        return null;
+    }
 
-//if (checkNik($_POST['nik']) == null){
-//    redirect("../create.php", "nikError=1");
-//}elseif (isNikExits($_POST['nik'])){
-//    redirect("../create.php", "nikError=nikExists");
-//}else if (checkPassword($_POST['password']) == null){
-//    redirect("../create.php", "passError=1");
-//}
+}
 
-//tampung error terlebih dahulu baru redirect
+
+//tampung error yang terjadi pada inputan form
 function error($nik, $password, $email):array
 {
     $error = [];
@@ -88,32 +90,43 @@ function error($nik, $password, $email):array
     }
 
     if (isEmailExists($email) == null){
+        $error [] = "emailError=emailExists";
+    }
+
+    if (checkFormatEmail($email) == null){
         $error [] = "emailError=1";
     }
     return $error;
 }
 
-$errorData = error($_POST['nik'], $_POST['password'], $_POST['email']);
-if (count($errorData) != null){
-//    foreach ($errorData as $error) {
-    $params = implode("&", $errorData);
-//    }
-
-    redirect("../create.php", $params);
+function convertSwitchValue($value):bool
+{
+    if ($value == "on"){
+        return true;
+    }else{
+        return false;
+    }
 }
 
+function getInputData():array
+{
+   $input = [];
+   $input [] = "first=". $_POST['firstName'];
+   $input [] = "last=" . $_POST['lastName'];
+   $input [] = "nik=" . $_POST['nik'];
+   $input [] = "email=" . $_POST['email'];
+   $input [] = "birthDate=" . $_POST['birthDate'];
+   $input [] = "sex=" . $_POST['sex'];
+   $input [] = "address=" . $_POST['address'];
+   $input [] = 'notes=' . $_POST['internalNotes'];
+   $input [] = 'alive=' . $_POST['alive'];
 
-//if (checkNik($_POST['nik']) == null){
-//    redirect("../create.php", "nikError=1&");
-//}
 
+    return $input;
+}
 
-
-
-//var_dump($newPerson);
-
-
-function saveData()
+// function to save new data person
+function saveData():bool
 {
     $persons = getPersonsData();
     $newPerson = [
@@ -123,16 +136,27 @@ function saveData()
         "nik" => $_POST["nik"],
         "email" => $_POST['email'],
         "password" => $_POST['password'],
-        "birthDate" =>$_POST['birthDate'],
+        "birthDate" =>convertStringIntoDate('Y-m-d', $_POST['birthDate']),
         "sex" => $_POST['sex'],
         "address" => $_POST['address'],
         "internalNotes" => $_POST['internalNotes'],
         "role" => $_POST['role'],
-        "alive" => $_POST['alive'],
+        "alive" => convertSwitchValue($_POST['value']),
         "lastLoggedIn" => null
     ];
 
     $persons [] = $newPerson;
     saveDataIntoJson($persons);
+    return true;
 }
 
+$errorData = error($_POST['nik'], $_POST['password'], $_POST['email']);
+if (count($errorData) != null){
+    $params = implode("&", $errorData);
+    $inputData = implode("&", getInputData());
+    redirect("../create.php", $params . "&" . $inputData);
+}else{
+    if (saveData()) {
+        redirect("../create.php", "saved");
+    }
+}

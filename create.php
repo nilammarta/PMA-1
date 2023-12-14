@@ -192,8 +192,7 @@ if (!isset($_SESSION['userEmail'])) {
                               name="people-outline"
                               class="nav-icon"
                       ></ion-icon>
-                      Persons</a
-                    >
+                      Persons</a>
                   </li>
                 </ul>
               </nav>
@@ -331,7 +330,9 @@ if (!isset($_SESSION['userEmail'])) {
                         class="form-control"
                         placeholder="first name"
                         aria-label="First name"
-                        value="<?php echo $_POST["firstName"] ?>"
+                        value="<?php if (isset($_GET['nikError']) || isset($_GET['emailError']) || isset($_GET['passError'])){
+                              echo $_GET['first'];
+                          } ?>"
                         required
                       />
 
@@ -351,6 +352,9 @@ if (!isset($_SESSION['userEmail'])) {
                         class="form-control"
                         placeholder="last name"
                         aria-label="Last name"
+                        value="<?php if (isset($_GET['last'])){
+                          echo $_GET['last'];
+                        } ?>"
                         required
                       />
                       <div class="invalid-feedback">
@@ -366,22 +370,23 @@ if (!isset($_SESSION['userEmail'])) {
                         name="nik"
                         id="nikInput"
                         type="text"
-                        class="form-control mb-2 <?php if (isset($_GET['nikError'])){?>
+                        class="form-control mb-2 <?php if (isset($_GET['nikError'])) { ?>
                           is-invalid
                         <?php } ?>"
                         placeholder="Nomor Induk Kependudukan"
                         aria-label="NIK"
                         maxlength="16"
                         <?php if ($_POST['nikError']) { ?>
-                          value="<?php echo $_POST['nik'] ?>"
-                        <?php } ?>
+                        value="<?php if (isset($_GET['nik'])){
+                              echo $_GET['nik'];
+                        } ?>"
                         required
                       />
-                      <?php if (isset($_GET["nikError"]) && $_GET["nikError"] == 1) {?>
-                        <p class="error"> Please type the correct NIK with numeric value, at least 16 characters!</p>
-                      <?php } else if (isset($_GET['nikError']) && $_GET['nikError'] == "nikExists") { ?>
-                        <p class="error"> NIK is already exists in database, please type another NIK! </p>
-                      <?php } ?>
+                        <?php if (isset($_GET["nikError"]) && $_GET["nikError"] == 1) { ?>
+                          <p class="error"> Please type the correct NIK with numeric value, at least 16 characters!</p>
+                        <?php } else if (isset($_GET['nikError']) && $_GET['nikError'] == "nikExists") { ?>
+                          <p class="error"> NIK is already exists in database, please type another NIK! </p>
+                        <?php } ?>
                     </div>
 
                     <div class="mb-3">
@@ -391,17 +396,22 @@ if (!isset($_SESSION['userEmail'])) {
                       <input
                         name="email"
                         type="email"
-                        class="form-control mb-2 <?php if (isset($_GET['emailError'])){ ?>
+                        class="form-control mb-2 <?php if (isset($_GET['emailError'])) { ?>
                           is-invalid
                         <?php } ?>"
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
                         placeholder="name@example.com"
+                        value="<?php if (isset($_GET['email'])){
+                          echo $_GET['email'];
+                        } ?>"
                         required
                       />
-                      <?php if (isset($_GET['emailError']) && $_GET['emailError'] == 1){?>
-                      <p class="error"> Email is already exists in database, please input another email</p>
-                      <?php } ?>
+                        <?php if (isset($_GET['emailError']) && $_GET['emailError'] == "emailExists") { ?>
+                          <p class="error"> Email is already exists in database, please input another email</p>
+                        <?php }elseif (isset($_GET['emailError']) && $_GET['emailError'] == 1) {?>
+                          <p class="error">Email format is not correct, please type again!</p>
+                        <?php } ?>
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputPassword1" class="form-label">
@@ -409,7 +419,7 @@ if (!isset($_SESSION['userEmail'])) {
                       <input
                         name="password"
                         type="password"
-                        class="form-control mb-2 <?php if (isset($_GET['passError'])){?>
+                        class="form-control mb-2 <?php if (isset($_GET['passError'])) { ?>
                           is-invalid
                         <?php } ?>"
                         id="exampleInputPassword1"
@@ -417,9 +427,9 @@ if (!isset($_SESSION['userEmail'])) {
                         required
                       />
 
-                      <?php if (isset($_GET['passError'])){?>
-                        <p class="error"> Password must have min 8 characters and max 16 characters</p>
-                      <?php } ?>
+                        <?php if (isset($_GET['passError'])) { ?>
+                          <p class="error"> Password must have min 8 characters and max 16 characters</p>
+                        <?php } ?>
                     </div>
 
                     <div class="mb-3">
@@ -432,10 +442,14 @@ if (!isset($_SESSION['userEmail'])) {
                         id="birthDateInput"
                         type="date"
                         class="form-control"
+                        value="<?php if (isset($_GET['birthDate'])){
+                          echo $_GET['birthDate'];
+                        } ?>"
                         required
                       />
                     </div>
                   </div>
+
                   <div class="form-2">
                     <div class="mb-3">
                       <label for="exampleSexInput" class="form-label"
@@ -448,9 +462,15 @@ if (!isset($_SESSION['userEmail'])) {
                         aria-label="Default select example"
                         required
                       >
-                        <option selected disabled value="">choose...</option>
-                        <option class="option-value" value="1">Male</option>
-                        <option class="option-value" value="2">Female</option>
+                        <?php if (isset($_GET['sex'])){?>
+                          <option selected value="<?php echo $_GET['sex'];?>">
+                              <?php echo gender($_GET['sex']);?>
+                          </option>
+                        <?php }else ?>
+                          <option selected disabled value="">choose...</option>
+                        <?php } ?>
+                        <option class="option-value" value="m">Male</option>
+                        <option class="option-value" value="f">Female</option>
                       </select>
                     </div>
 
@@ -465,33 +485,37 @@ if (!isset($_SESSION['userEmail'])) {
                         class="form-control"
                         placeholder="address"
                         aria-label="Last name"
+                        value="<?php if (isset($_GET['address'])) {
+                          echo $_GET['address'];
+                        }?> "
                         required
                       />
                     </div>
 
                     <div class="mb-3">
                       <label
-                              for="exampleFormControlTextarea1"
-                              class="form-label"
+                        for="exampleFormControlTextarea1"
+                        class="form-label"
                       >Internal notes</label>
                       <textarea
                         name="internalNotes"
                         class="form-control"
                         id="exampleFormControlTextarea1"
                         rows="3"
-                      ></textarea>
+                      ><?php if (isset($_GET['notes'])){
+                          echo $_GET['notes'];
+                          } ?></textarea>
                     </div>
 
                     <div class="mb-3">
                       <label for="exampleRoleInput" class="form-label"
-                      >Role &#42;</label
-                      >
+                      >Role &#42;</label>
                       <select
-                              name="role"
-                              id="exampleRoleInput"
-                              class="form-select"
-                              aria-label="Default select example"
-                              required
+                        name="role"
+                        id="exampleRoleInput"
+                        class="form-select"
+                        aria-label="Default select example"
+                        required
                       >
                         <option selected disabled value="">choose...</option>
                         <option class="option-value" value="ADMIN">Admin</option>
@@ -503,38 +527,44 @@ if (!isset($_SESSION['userEmail'])) {
                     </div>
 
                     <div
-                            class="form-check form-switch mb-5 d-flex flex-row align-items-end gap-3"
+                      class="form-check form-switch mb-5 d-flex flex-row align-items-end gap-3"
                     >
                       <input
-                              name="alive"
-                              class="form-check-input"
-                              type="checkbox"
-                              role="switch"
-                              id="flexSwitchCheckChecked"
-                              checked
+                        name="alive"
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckChecked"
+                        checked
                       />
                       <label
-                              class="form-check-label"
-                              for="flexSwitchCheckChecked"
+                        class="form-check-label"
+                        for="flexSwitchCheckChecked"
                       >This person is alive</label
                       >
                     </div>
                   </div>
                 </div>
 
+                <?php if (isset($_GET['saved'])){?>
+                  <div class="alert alert-success saved mt-4" role="alert">
+                      Person Data has been saved!
+                  </div>
+                <?php } ?>
 
-                <div class="row justify-content-center mt-5">
+                <div class="row justify-content-center mt-1">
                   <div class="col-12">
                     <div class="btn-create">
                       <button
-                              type="submit"
-                              class="btn btn-primary btn-save me-3"
+                        type="submit"
+                        class="btn btn-primary btn-save me-3"
                       >
                         Save
                       </button>
+
                       <button
-                              type="reset"
-                              class="btn btn-secondary btn-cancel"
+                        type="reset"
+                        class="btn btn-secondary btn-cancel"
                       >
                         Cancel
                       </button>

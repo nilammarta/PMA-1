@@ -348,7 +348,7 @@ include("action/dashboard-action.php");
                                 name="accessibility"
                         ></ion-icon>
                           <?php
-                          $adult = getCountPersons("adult");
+                          $adult = getCountPersons("adult", $persons);
                           echo $adult;
                           ?>
                       </h3>
@@ -363,7 +363,7 @@ include("action/dashboard-action.php");
                       <h3 class="card-title">
                         <ion-icon class="card-icon" name="man"></ion-icon>
                           <?php
-                          $passed = getCountPersons("passedAway");
+                          $passed = getCountPersons("passedAway", $persons);
                           echo $passed;
                           ?>
                       </h3>
@@ -380,7 +380,7 @@ include("action/dashboard-action.php");
                                 name="people-circle-outline"
                         ></ion-icon>
                           <?php
-                          $child = getCountPersons("child");
+                          $child = getCountPersons("child", $persons);
                           echo $child;
                           ?>
                       </h3>
@@ -394,7 +394,7 @@ include("action/dashboard-action.php");
                       <h3 class="card-title">
                         <ion-icon class="card-icon" name="body"></ion-icon>
                           <?php
-                          $male = getCountPersons("male");
+                          $male = getCountPersons("male", $persons);
                           echo $male;
                           ?>
                       </h3>
@@ -408,7 +408,7 @@ include("action/dashboard-action.php");
                       <h3 class="card-title">
                         <ion-icon class="card-icon" name="woman"></ion-icon>
                           <?php
-                          $female = getCountPersons("female");
+                          $female = getCountPersons("female", $persons);
                           echo $female;
                           ?>
                       </h3>

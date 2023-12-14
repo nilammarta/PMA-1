@@ -12,7 +12,7 @@
         "internalNotes": "coba",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1702359649
+        "lastLoggedIn": 1702540909
     },
     {
         "id": 2,
@@ -27,7 +27,7 @@
         "internalNotes": "mencoba internal notes",
         "role": "MEMBER",
         "alive": true,
-        "lastLoggedIn": 1702359515
+        "lastLoggedIn": 1702525571
     },
     {
         "id": 3,
@@ -117,6 +117,66 @@
         "internalNotes": "aassaswejinu",
         "role": "ADMIN",
         "alive": true,
+        "lastLoggedIn": null
+    },
+    {
+        "id": 9,
+        "firstName": "jala",
+        "lastName": "jula",
+        "nik": "1200987719928762",
+        "email": "jula@gmail.com",
+        "password": "jula123456",
+        "birthDate": 1286692433,
+        "sex": "m",
+        "address": "Baturiti, Tabanan",
+        "internalNotes": "bagai sang surya menyinari dunia \r\n",
+        "role": "MEMBER",
+        "alive": false,
+        "lastLoggedIn": null
+    },
+    {
+        "id": 10,
+        "firstName": "lajsh",
+        "lastName": "asnjd",
+        "nik": "1237716237817278",
+        "email": "lasj@gmail.com",
+        "password": "lash12346781",
+        "birthDate": 1035359781,
+        "sex": "m",
+        "address": "nbsdbuu",
+        "internalNotes": "",
+        "role": "MEMBER",
+        "alive": false,
+        "lastLoggedIn": null
+    },
+    {
+        "id": 11,
+        "firstName": "agata",
+        "lastName": "chealsea",
+        "nik": "1209099037407917",
+        "email": "agatah@gmail.com",
+        "password": "12099776331",
+        "birthDate": 1039682017,
+        "sex": "f",
+        "address": "jakarta",
+        "internalNotes": "",
+        "role": "MEMBER",
+        "alive": false,
+        "lastLoggedIn": null
+    },
+    {
+        "id": 12,
+        "firstName": "hana",
+        "lastName": "bungaaaa",
+        "nik": "1141782001985510",
+        "email": "hanabungaa@gmail.com",
+        "password": "1290bcahysna",
+        "birthDate": 1039685480,
+        "sex": "f",
+        "address": "asdbgvd",
+        "internalNotes": "",
+        "role": "MEMBER",
+        "alive": false,
         "lastLoggedIn": null
     }
 ]
