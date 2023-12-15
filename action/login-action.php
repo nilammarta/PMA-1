@@ -5,6 +5,8 @@ require_once __DIR__ . "/common-action.php";
 session_start();
 
 $jsonData = loadDataIntoJson("persons.json");
+// var_dump($jsonData);
+
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];

@@ -3,7 +3,7 @@
 require_once __DIR__ . "/common-action.php";
 require_once __DIR__ . "/../assets/jsonHelper.php";
 
-
+session_start();
 
 function generateId($persons): int
 {
@@ -50,16 +50,16 @@ function checkPassword($newPassword):string|null
 }
 
 // validate Email
-function isEmailExists($newEmail): string|null
+function isEmailExists($newEmail): bool
 {
     $persons = getPersonsData();
     foreach ($persons as $person){
         if ($person['email'] == $newEmail){
 //            echo "Email is already exists in database, please input another email";
-            return null;
+            return true;
         }
     }
-    return $newEmail;
+    return false;
 }
 
 function checkFormatEmail($newEmail):string | null
@@ -72,33 +72,6 @@ function checkFormatEmail($newEmail):string | null
 
 }
 
-
-//tampung error yang terjadi pada inputan form
-function error($nik, $password, $email):array
-{
-    $error = [];
-    if (checkNik($nik) == null){
-        $error [] = "nikError=1";
-    }
-
-    if (isNikExits($nik) == true){
-        $error [] = "nikError=nikExists";
-    }
-
-    if (checkPassword($password) == null){
-        $error [] = "passError=1";
-    }
-
-    if (isEmailExists($email) == null){
-        $error [] = "emailError=emailExists";
-    }
-
-    if (checkFormatEmail($email) == null){
-        $error [] = "emailError=1";
-    }
-    return $error;
-}
-
 function convertSwitchValue($value):bool
 {
     if ($value == "on"){
@@ -108,22 +81,51 @@ function convertSwitchValue($value):bool
     }
 }
 
-function getInputData():array
+/**
+ * ['nik'] => [
+ *   'max' => 'Panjang karakter tidak boleh lebih dari x',
+ *   'duplicate' => 'NIK sudah ada'
+ * ],
+ * ['email'] => [
+ *   'format' => 'Format tidak sesuai'
+ * ]
+ *
+ *
+ * @param $nik
+ * @param $password
+ * @param $email
+ * @return array
+ */
+
+//tampung error yang terjadi pada inputan form
+function validate($nik, $password, $email):array
 {
-   $input = [];
-   $input [] = "first=". $_POST['firstName'];
-   $input [] = "last=" . $_POST['lastName'];
-   $input [] = "nik=" . $_POST['nik'];
-   $input [] = "email=" . $_POST['email'];
-   $input [] = "birthDate=" . $_POST['birthDate'];
-   $input [] = "sex=" . $_POST['sex'];
-   $input [] = "address=" . $_POST['address'];
-   $input [] = 'notes=' . $_POST['internalNotes'];
-   $input [] = 'alive=' . $_POST['alive'];
+    $validate = [];
+    if (checkNik($nik) == null) {
+        $validate['nik'] = "Please type the correct NIK, at least 16 characters and only numeric NIK is allowed";
 
+    }
 
-    return $input;
+    if (isNikExits($nik) == true) {
+        $validate['nik'] = "NIK is already exists in database please type another NIK";
+    }
+
+    if (checkPassword($password) == null) {
+        $validate['password'] = "Password must have a minimum of 8 characters and maximum 16 characters";
+    }
+
+    if (isEmailExists($email) == true) {
+        $validate['email'] = "Email address is already exists in database, please type another email";
+    }
+
+    if (checkFormatEmail($email) == null) {
+        $validate['email'] = "Email format is not correct, please type again";
+
+    }
+
+    return $validate;
 }
+
 
 // function to save new data person
 function saveData():bool
@@ -150,11 +152,36 @@ function saveData():bool
     return true;
 }
 
-$errorData = error($_POST['nik'], $_POST['password'], $_POST['email']);
+function inputData ():array
+{
+    return [
+        "firstName" => $_POST['firstName'],
+        "lastName" => $_POST['lastName'],
+        "nik" => $_POST['nik'],
+        "email" => $_POST['email'],
+        "password" => $_POST['password'],
+        "birthDate" => $_POST['birthDate'],
+        "sex" => $_POST['sex'],
+        "address" => $_POST['address'],
+        "internalNotes" => $_POST['internalNotes'],
+        "role" => $_POST['role'],
+        "alive" => $_POST['value']
+    ];
+}
+
+
+// tutup session sebelum redirect
+$errorData = validate($_POST['nik'], $_POST['password'], $_POST['email']);
 if (count($errorData) != null){
-    $params = implode("&", $errorData);
-    $inputData = implode("&", getInputData());
-    redirect("../create.php", $params . "&" . $inputData);
+    $_SESSION['nik'] = $errorData["nik"];
+//    $_SESSION['nikExists'] = $errorData['nik']['duplicate'];
+    $_SESSION['email'] = $errorData['email'];
+//    $_SESSION['emailExists'] = $errorData['email']['duplicate'];
+    $_SESSION['password'] = $errorData['password'];
+    $_SESSION['dataInput'] = inputData();
+
+    header("Location: ../create.php");
+    exit();
 }else{
     if (saveData()) {
         redirect("../create.php", "saved");

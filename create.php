@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['userEmail'])) {
-    header("Location: login-action.php");
+    header("Location: action/login-action.php");
     exit();
 }
 ?>
@@ -330,9 +330,9 @@ if (!isset($_SESSION['userEmail'])) {
                         class="form-control"
                         placeholder="first name"
                         aria-label="First name"
-                        value="<?php if (isset($_GET['nikError']) || isset($_GET['emailError']) || isset($_GET['passError'])){
-                              echo $_GET['first'];
-                          } ?>"
+                        value="<?php if (isset($_SESSION['dataInput'])) {
+                          echo $_SESSION['dataInput']['nik'];
+                        }?>"
                         required
                       />
 
@@ -352,8 +352,8 @@ if (!isset($_SESSION['userEmail'])) {
                         class="form-control"
                         placeholder="last name"
                         aria-label="Last name"
-                        value="<?php if (isset($_GET['last'])){
-                          echo $_GET['last'];
+                        value="<?php if (isset($_SESSION['dataInput'])){
+                          echo $_SESSION['dataInput']['lastName'];
                         } ?>"
                         required
                       />
@@ -370,23 +370,20 @@ if (!isset($_SESSION['userEmail'])) {
                         name="nik"
                         id="nikInput"
                         type="text"
-                        class="form-control mb-2 <?php if (isset($_GET['nikError'])) { ?>
+                        class="form-control mb-2 <?php if (isset($_SESSION['nik'])) { ?>
                           is-invalid
                         <?php } ?>"
                         placeholder="Nomor Induk Kependudukan"
                         aria-label="NIK"
                         maxlength="16"
-                        <?php if ($_POST['nikError']) { ?>
-                        value="<?php if (isset($_GET['nik'])){
-                              echo $_GET['nik'];
-                        } ?>"
+                        value="<?php if (isset($_SESSION['dataInput'])) {
+                          echo $_SESSION['dataInput']['nik'];
+                        }?>"
                         required
                       />
-                        <?php if (isset($_GET["nikError"]) && $_GET["nikError"] == 1) { ?>
-                          <p class="error"> Please type the correct NIK with numeric value, at least 16 characters!</p>
-                        <?php } else if (isset($_GET['nikError']) && $_GET['nikError'] == "nikExists") { ?>
-                          <p class="error"> NIK is already exists in database, please type another NIK! </p>
-                        <?php } ?>
+                      <?php if (isset($_GET['saved']) == null) {?>
+                        <p class="error"> <?php echo $_SESSION['nik'];?> </p>
+                      <?php } ?>
                     </div>
 
                     <div class="mb-3">
@@ -396,21 +393,19 @@ if (!isset($_SESSION['userEmail'])) {
                       <input
                         name="email"
                         type="email"
-                        class="form-control mb-2 <?php if (isset($_GET['emailError'])) { ?>
+                        class="form-control mb-2 <?php if (isset($_SESSION['email'])) { ?>
                           is-invalid
                         <?php } ?>"
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
                         placeholder="name@example.com"
-                        value="<?php if (isset($_GET['email'])){
-                          echo $_GET['email'];
-                        } ?>"
+                        value="<?php
+                          echo $_SESSION['dataInput']['email'];
+                        ?>"
                         required
                       />
-                        <?php if (isset($_GET['emailError']) && $_GET['emailError'] == "emailExists") { ?>
-                          <p class="error"> Email is already exists in database, please input another email</p>
-                        <?php }elseif (isset($_GET['emailError']) && $_GET['emailError'] == 1) {?>
-                          <p class="error">Email format is not correct, please type again!</p>
+                        <?php if (isset($_GET['saved']) == null){?>
+                          <p class="error"> <?php echo $_SESSION['email']; ?> </p>
                         <?php } ?>
                     </div>
                     <div class="mb-3">
@@ -419,17 +414,19 @@ if (!isset($_SESSION['userEmail'])) {
                       <input
                         name="password"
                         type="password"
-                        class="form-control mb-2 <?php if (isset($_GET['passError'])) { ?>
+                        class="form-control mb-2 <?php if (isset($_SESSION['password'])) { ?>
                           is-invalid
                         <?php } ?>"
                         id="exampleInputPassword1"
                         placeholder="password"
+                        value="<?php if (isset($_SESSION['dataInput'])) {
+                          echo $_SESSION['dataInput']['password'];
+                        } ?>"
                         required
                       />
-
-                        <?php if (isset($_GET['passError'])) { ?>
-                          <p class="error"> Password must have min 8 characters and max 16 characters</p>
-                        <?php } ?>
+                      <?php if (isset($_GET['saved']) == null){ ?>
+                        <p class="error"><?php echo $_SESSION['password']; ?></p>
+                      <?php } ?>
                     </div>
 
                     <div class="mb-3">
@@ -442,9 +439,9 @@ if (!isset($_SESSION['userEmail'])) {
                         id="birthDateInput"
                         type="date"
                         class="form-control"
-                        value="<?php if (isset($_GET['birthDate'])){
-                          echo $_GET['birthDate'];
-                        } ?>"
+                        value="<?php if (isset($_SESSION['dataInput'])) {
+                          echo $_SESSION['dataInput']['birthDate'];
+                        }?>"
                         required
                       />
                     </div>
@@ -462,11 +459,14 @@ if (!isset($_SESSION['userEmail'])) {
                         aria-label="Default select example"
                         required
                       >
-                        <?php if (isset($_GET['sex'])){?>
-                          <option selected value="<?php echo $_GET['sex'];?>">
-                              <?php echo gender($_GET['sex']);?>
+                        <?php if (isset($_SESSION['dataInput'])){ ?>
+                          <option selected value="<?php echo $_SESSION['dataInput']['sex'];?>"><?php if ($_SESSION['sex'] == "f"){
+                            echo "Female";
+                            }else{
+                            echo "Male";
+                            }?>
                           </option>
-                        <?php }else ?>
+                        <?php }else{ ?>
                           <option selected disabled value="">choose...</option>
                         <?php } ?>
                         <option class="option-value" value="m">Male</option>
@@ -485,9 +485,9 @@ if (!isset($_SESSION['userEmail'])) {
                         class="form-control"
                         placeholder="address"
                         aria-label="Last name"
-                        value="<?php if (isset($_GET['address'])) {
-                          echo $_GET['address'];
-                        }?> "
+                        value="<?php if (isset($_SESSION['dataInput'])){
+                          echo $_SESSION['dataInput']['address'];
+                        } ?>"
                         required
                       />
                     </div>
@@ -502,8 +502,8 @@ if (!isset($_SESSION['userEmail'])) {
                         class="form-control"
                         id="exampleFormControlTextarea1"
                         rows="3"
-                      ><?php if (isset($_GET['notes'])){
-                          echo $_GET['notes'];
+                      ><?php if (isset($_SESSION['dataInput'])){
+                        echo $_SESSION['dataInput']['internalNotes'];
                           } ?></textarea>
                     </div>
 
@@ -517,7 +517,15 @@ if (!isset($_SESSION['userEmail'])) {
                         aria-label="Default select example"
                         required
                       >
-                        <option selected disabled value="">choose...</option>
+                        <?php if (isset($_SESSION['dataInput'])){ ?>
+                            <option selected value="<?php echo $_SESSION['dataInput']['role']?>"><?php if ($_SESSION['dataInput']['role'] == 'ADMIN'){
+                              echo "ADMIN";
+                            }else{
+                              echo 'MEMBER';
+                            }?></option>
+                        <?php }else{ ?>
+                          <option selected disabled value="">choose...</option>
+                        <?php } ?>
                         <option class="option-value" value="ADMIN">Admin</option>
                         <option class="option-value" value="MEMBER">Member</option>
                       </select>
@@ -595,5 +603,11 @@ if (!isset($_SESSION['userEmail'])) {
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"
 ></script>
+<?php
+unset($_SESSION['nik']);
+unset($_SESSION['password']);
+unset($_SESSION['email']);
+unset($_SESSION['dataInput']);
+?>
 </body>
 </html>
