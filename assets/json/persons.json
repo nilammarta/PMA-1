@@ -12,7 +12,7 @@
         "internalNotes": "coba",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1702634834
+        "lastLoggedIn": 1702886710
     },
     {
         "id": 2,
@@ -27,7 +27,7 @@
         "internalNotes": "mencoba internal notes",
         "role": "MEMBER",
         "alive": true,
-        "lastLoggedIn": 1702633623
+        "lastLoggedIn": 1702890383
     },
     {
         "id": 3,
@@ -121,47 +121,32 @@
     },
     {
         "id": 9,
-        "firstName": "jala",
-        "lastName": "jula",
-        "nik": "1200987719928762",
-        "email": "jula@gmail.com",
-        "password": "jula123456",
-        "birthDate": 1286692433,
-        "sex": "m",
-        "address": "Baturiti, Tabanan",
-        "internalNotes": "bagai sang surya menyinari dunia \r\n",
-        "role": "MEMBER",
-        "alive": false,
-        "lastLoggedIn": null
-    },
-    {
-        "id": 10,
-        "firstName": "agata",
-        "lastName": "chealsea",
-        "nik": "1209099037407917",
-        "email": "agatah@gmail.com",
-        "password": "12099776331",
-        "birthDate": 1039682017,
-        "sex": "f",
-        "address": "jakarta",
-        "internalNotes": "",
-        "role": "MEMBER",
-        "alive": false,
-        "lastLoggedIn": null
-    },
-    {
-        "id": 11,
         "firstName": "Nadine",
         "lastName": "Aurelia",
-        "nik": "1141738230482329",
+        "nik": "1000212008872000",
         "email": "nadineaurelia@gmail.com",
-        "password": "nadine123",
-        "birthDate": 1040376394,
+        "password": "nadine1234",
+        "birthDate": 1166580472,
         "sex": "f",
         "address": "Denpasar",
         "internalNotes": "",
         "role": "MEMBER",
-        "alive": false,
-        "lastLoggedIn": null
+        "alive": true,
+        "lastLoggedIn": 1702876150
+    },
+    {
+        "id": 10,
+        "firstName": "Agatha",
+        "lastName": "Chelsea",
+        "nik": "1230912732800097",
+        "email": "agathachelsea@gmail.com",
+        "password": "agathachelsea12",
+        "birthDate": 1008643306,
+        "sex": "f",
+        "address": "Jakarta",
+        "internalNotes": "",
+        "role": "MEMBER",
+        "alive": true,
+        "lastLoggedIn": 1702873974
     }
 ]

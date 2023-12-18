@@ -457,7 +457,7 @@ $appName = "PERSONS - Person Management App";
                                   <a
                                     class="btn btn-outline-light btn-table"
                                     type="button"
-                                    href="edit.php"
+                                    href="edit.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]["id"]?>"
                                   >
                                     <ion-icon
                                       class="btn-icon"

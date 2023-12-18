@@ -323,7 +323,7 @@ include("action/common-action.php");
                   </div>
 
                     <?php if (isset($_GET["person"])) {
-                        $thePerson = user($_GET['person']);
+                        $thePerson = getUserById($_GET['person']);
                         if ($thePerson != null) { ?>
                           <div class="table-responsive">
                             <table class="table mb-0">
@@ -387,7 +387,7 @@ include("action/common-action.php");
 
                               <a
                                 class="btn btn-primary me-2"
-                                href="edit.php?person<?php echo $_GET['person'] ?>"
+                                href="edit.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
                                 role="button"
                               >
                                 <ion-icon name="create"></ion-icon>

@@ -5,115 +5,119 @@ if (!isset($_SESSION['userEmail'])) {
     header("Location: login-action.php");
     exit();
 }
+
+$_SESSION['personId'] = $_GET['person'];
+
+require_once __DIR__ . "/action/common-action.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
-      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
     />
 
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
     />
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
+            type="module"
+            src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
     ></script>
     <script
-      nomodule=""
-      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
+            nomodule=""
+            src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
     ></script>
 
     <link
-      rel="apple-touch-icon"
-      sizes="57x57"
-      href="assets/favicon/apple-icon-57x57.png"
+            rel="apple-touch-icon"
+            sizes="57x57"
+            href="assets/favicon/apple-icon-57x57.png"
     />
     <link
-      rel="apple-touch-icon"
-      sizes="60x60"
-      href="assets/favicon/apple-icon-60x60.png"
+            rel="apple-touch-icon"
+            sizes="60x60"
+            href="assets/favicon/apple-icon-60x60.png"
     />
     <link
-      rel="apple-touch-icon"
-      sizes="72x72"
-      href="assets/favicon/apple-icon-72x72.png"
+            rel="apple-touch-icon"
+            sizes="72x72"
+            href="assets/favicon/apple-icon-72x72.png"
     />
     <link
-      rel="apple-touch-icon"
-      sizes="76x76"
-      href="assets/favicon/apple-icon-76x76.png"
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="assets/favicon/apple-icon-76x76.png"
     />
     <link
-      rel="apple-touch-icon"
-      sizes="114x114"
-      href="assets/favicon/apple-icon-114x114.png"
+            rel="apple-touch-icon"
+            sizes="114x114"
+            href="assets/favicon/apple-icon-114x114.png"
     />
     <link
-      rel="apple-touch-icon"
-      sizes="120x120"
-      href="assets/favicon/apple-icon-120x120.png"
+            rel="apple-touch-icon"
+            sizes="120x120"
+            href="assets/favicon/apple-icon-120x120.png"
     />
     <link
-      rel="apple-touch-icon"
-      sizes="144x144"
-      href="assets/favicon/apple-icon-144x144.png"
+            rel="apple-touch-icon"
+            sizes="144x144"
+            href="assets/favicon/apple-icon-144x144.png"
     />
     <link
-      rel="apple-touch-icon"
-      sizes="152x152"
-      href="assets/favicon/apple-icon-152x152.png"
+            rel="apple-touch-icon"
+            sizes="152x152"
+            href="assets/favicon/apple-icon-152x152.png"
     />
     <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="assets/favicon/apple-icon-180x180.png"
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="assets/favicon/apple-icon-180x180.png"
     />
     <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="assets/favicon/android-icon-192x192.png"
+            rel="icon"
+            type="image/png"
+            sizes="192x192"
+            href="assets/favicon/android-icon-192x192.png"
     />
     <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="assets/favicon/favicon-32x32.png"
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="assets/favicon/favicon-32x32.png"
     />
     <link
-      rel="icon"
-      type="image/png"
-      sizes="96x96"
-      href="assets/favicon/favicon-96x96.png"
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="assets/favicon/favicon-96x96.png"
     />
     <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="assets/favicon/favicon-16x16.png"
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="assets/favicon/favicon-16x16.png"
     />
-    <link rel="manifest" href="assets/favicon/manifest.json" />
-    <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-    <meta name="theme-color" content="#ffffff" />
+    <link rel="manifest" href="assets/favicon/manifest.json"/>
+    <meta name="msapplication-TileColor" content="#ffffff"/>
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png"/>
+    <meta name="theme-color" content="#ffffff"/>
 
-    <link href="assets/css/general.css" rel="stylesheet" />
-    <link href="assets/query/query.css" rel="stylesheet" />
-    <link href="assets/css/create.css" rel="stylesheet" />
+    <link href="assets/css/general.css" rel="stylesheet"/>
+    <link href="assets/query/query.css" rel="stylesheet"/>
+    <link href="assets/css/create.css" rel="stylesheet"/>
 
     <title>EDIT - Person Management App</title>
   </head>
@@ -123,9 +127,9 @@ if (!isset($_SESSION['userEmail'])) {
         <div class="d-flex justify-content-between align-items-center">
           <div class="logo-box d-flex align-items-center gap-2">
             <img
-              class="logo-img"
-              src="assets/img/Permap-logo-2.png"
-              alt="permap logo"
+                    class="logo-img"
+                    src="assets/img/Permap-logo-2.png"
+                    alt="permap logo"
             />
             <h5 class="heading-2 logo-text m-0">PERMAP</h5>
           </div>
@@ -133,40 +137,40 @@ if (!isset($_SESSION['userEmail'])) {
           <div class="d-flex justify-content-end align-items-center">
             <div class="d-lg-none">
               <button
-                class="btn btn-menu p-0"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#staticBackdrop"
-                aria-controls="staticBackdrop"
+                      class="btn btn-menu p-0"
+                      type="button"
+                      data-bs-toggle="offcanvas"
+                      data-bs-target="#staticBackdrop"
+                      aria-controls="staticBackdrop"
               >
                 <ion-icon class="icon-menu" name="menu-outline"></ion-icon>
               </button>
 
               <!-- Side Bar -->
               <div
-                class="offcanvas offcanvas-start"
-                data-bs-backdrop="static"
-                tabindex="-1"
-                id="staticBackdrop"
-                aria-labelledby="staticBackdropLabel"
+                      class="offcanvas offcanvas-start"
+                      data-bs-backdrop="static"
+                      tabindex="-1"
+                      id="staticBackdrop"
+                      aria-labelledby="staticBackdropLabel"
               >
                 <div class="offcanvas-header">
                   <img
-                    class="logo-img"
-                    src="assets/img/Permap-logo-2.png"
-                    alt="permap logo"
+                          class="logo-img"
+                          src="assets/img/Permap-logo-2.png"
+                          alt="permap logo"
                   />
                   <h5
-                    class="offcanvas-title heading-2 m-0"
-                    id="staticBackdropLabel"
+                          class="offcanvas-title heading-2 m-0"
+                          id="staticBackdropLabel"
                   >
                     PERMAP
                   </h5>
                   <button
-                    class="btn--close"
-                    type="button"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"
+                          class="btn--close"
+                          type="button"
+                          data-bs-dismiss="offcanvas"
+                          aria-label="Close"
                   >
                     <ion-icon class="icon-header" name="close"></ion-icon>
                   </button>
@@ -176,18 +180,20 @@ if (!isset($_SESSION['userEmail'])) {
                     <ul class="main-nav-list">
                       <li class="nav-item">
                         <a class="main-nav-link" href="dashboard.php"
-                          ><ion-icon
-                            name="file-tray-full-outline"
-                            class="nav-icon"
+                        >
+                          <ion-icon
+                                  name="file-tray-full-outline"
+                                  class="nav-icon"
                           ></ion-icon>
                           Dashboard</a
                         >
                       </li>
                       <li class="nav-item nav-open">
                         <a class="main-nav-link" href="persons.php"
-                          ><ion-icon
-                            name="people-outline"
-                            class="nav-icon"
+                        >
+                          <ion-icon
+                                  name="people-outline"
+                                  class="nav-icon"
                           ></ion-icon>
                           Persons</a
                         >
@@ -201,18 +207,20 @@ if (!isset($_SESSION['userEmail'])) {
                       <ul class="main-nav-list">
                         <li class="nav-item">
                           <a class="main-nav-link" href="myProfile.php"
-                            ><ion-icon
-                              name="person-circle-outline"
-                              class="nav-icon"
+                          >
+                            <ion-icon
+                                    name="person-circle-outline"
+                                    class="nav-icon"
                             ></ion-icon>
                             My Profile</a
                           >
                         </li>
                         <li class="nav-item">
                           <a class="main-nav-link cta" href="logout.php"
-                            ><ion-icon
-                              name="log-out-outline"
-                              class="nav-icon"
+                          >
+                            <ion-icon
+                                    name="log-out-outline"
+                                    class="nav-icon"
                             ></ion-icon>
                             Logout</a
                           >
@@ -226,8 +234,8 @@ if (!isset($_SESSION['userEmail'])) {
 
             <div class="user-box">
               <ion-icon
-                class="user-icon btn-header"
-                name="person-circle-outline"
+                      class="user-icon btn-header"
+                      name="person-circle-outline"
               ></ion-icon>
             </div>
             <div class="d-none d-lg-block">
@@ -248,18 +256,20 @@ if (!isset($_SESSION['userEmail'])) {
               <ul class="main-nav-list">
                 <li class="nav-item">
                   <a class="main-nav-link" href="dashboard.php"
-                    ><ion-icon
-                      name="file-tray-full-outline"
-                      class="nav-icon"
+                  >
+                    <ion-icon
+                            name="file-tray-full-outline"
+                            class="nav-icon"
                     ></ion-icon>
                     Dashboard</a
                   >
                 </li>
                 <li class="nav-item nav-open">
                   <a class="main-nav-link" href="persons.php"
-                    ><ion-icon
-                      name="people-outline"
-                      class="nav-icon"
+                  >
+                    <ion-icon
+                            name="people-outline"
+                            class="nav-icon"
                     ></ion-icon>
                     Persons</a
                   >
@@ -273,18 +283,20 @@ if (!isset($_SESSION['userEmail'])) {
                 <ul class="main-nav-list">
                   <li class="nav-item">
                     <a class="main-nav-link" href="myProfile.php"
-                      ><ion-icon
-                        name="person-circle-outline"
-                        class="nav-icon"
+                    >
+                      <ion-icon
+                              name="person-circle-outline"
+                              class="nav-icon"
                       ></ion-icon>
                       My Profile</a
                     >
                   </li>
                   <li class="nav-item">
                     <a class="main-nav-link cta" href="logout.php"
-                      ><ion-icon
-                        name="log-out-outline"
-                        class="nav-icon"
+                    >
+                      <ion-icon
+                              name="log-out-outline"
+                              class="nav-icon"
                       ></ion-icon>
                       Logout</a
                     >
@@ -304,204 +316,232 @@ if (!isset($_SESSION['userEmail'])) {
             <div class="row justify-content-center">
               <!-- <div class="col-12 col-md-10 col-lg-11 col-xxl-6"> -->
               <div class="col-12">
-                <form class="create-form needs-validation p-4 mb-5">
-                  <h5 class="form-text pb-2 mb-4">
-                    Edit person data in the form below:
-                  </h5>
-                  <div class="d-lg-flex gap-lg-3 gap-xl-5">
-                    <div class="form-1">
-                      <div class="mb-3">
-                        <label for="FirstnameInput" class="form-label"
-                          >First name &#42;</label
-                        >
+                <?php if (isset($_GET['person'])) {
+                    $thePerson = getUserById($_GET['person']);
+                    $_SESSION['personEdit'] = $thePerson;
+                    var_dump($_SESSION['personEdit']);
+                    ?>
+                    <form name="editPerson" class="create-form needs-validation p-4 mb-5" method="post" action="action/edit-action.php">
+                      <h5 class="form-text pb-2 mb-4">
+                        Edit person data in the form below:
+                      </h5>
+                      <div class="d-lg-flex gap-lg-3 gap-xl-5">
+                        <div class="form-1">
+                          <div class="mb-3">
+                            <label for="FirstnameInput" class="form-label"
+                            >First name &#42;</label
+                            >
 
-                        <input
-                          id="FirstnameInput"
-                          type="text"
-                          class="form-control"
-                          placeholder="first name"
-                          value="Lala"
-                          aria-label="First name"
-                          required
-                        />
+                            <input
+                              id="FirstnameInput"
+                              name="firstName"
+                              type="text"
+                              class="form-control"
+                              placeholder="first name"
+                              value="<?php echo $_SESSION['personEdit']['firstName'] ?>"
+                              aria-label="First name"
+                              required
+                            />
+                          </div>
 
-                        <!-- <div class="invalid-tooltip">Type the valid First name</div> -->
-                      </div>
+                          <div class="mb-3">
+                            <label for="LastnameInput" class="form-label"
+                            >Last name &#42;
+                            </label>
+                            <input
+                              id="LastnameInput"
+                              name="lastName"
+                              type="text"
+                              class="form-control"
+                              placeholder="last name"
+                              value="<?php echo $thePerson['lastName']; ?>"
+                              aria-label="Last name"
+                              required
+                            />
+                          </div>
 
-                      <div class="mb-3">
-                        <label for="LastnameInput" class="form-label"
-                          >Last name &#42;
-                        </label>
-                        <input
-                          id="LastnameInput"
-                          type="text"
-                          class="form-control"
-                          placeholder="last name"
-                          value="Lulu"
-                          aria-label="Last name"
-                          required
-                        />
-                      </div>
+                          <div class="mb-3">
+                            <label for="nikInput" class="form-label"
+                            >NIK &#42;</label
+                            >
+                            <input
+                              id="nikInput"
+                              name="nik"
+                              type="text"
+                              class="form-control"
+                              placeholder="Nomor Induk Kependudukan"
+                              value="<?php echo $_SESSION['personEdit']['nik']; ?>"
+                              aria-label="NIK"
+                              maxlength="16"
+                              required
+                            />
+                          </div>
 
-                      <div class="mb-3">
-                        <label for="nikInput" class="form-label"
-                          >NIK &#42;</label
-                        >
-                        <input
-                          id="nikInput"
-                          type="number"
-                          class="form-control"
-                          placeholder="Nomor Induk Kependudukan"
-                          value="1001267392823094"
-                          aria-label="NIK"
-                          required
-                        />
-                      </div>
+                          <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label"
+                            >Email &#42;</label
+                            >
+                            <input
+                              type="email"
+                              name="email"
+                              class="form-control"
+                              id="exampleInputEmail1"
+                              aria-describedby="emailHelp"
+                              placeholder="name@example.com"
+                              value="<?php echo $thePerson['email']; ?>"
+                              required
+                            />
+                          </div>
 
-                      <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label"
-                          >Email &#42;</label
-                        >
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="exampleInputEmail1"
-                          aria-describedby="emailHelp"
-                          placeholder="name@example.com"
-                          value="lalagemoy@gmail.com"
-                          required
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label"
-                          >Password &#42;</label
-                        >
-                        <input
-                          type="password"
-                          class="form-control"
-                          id="exampleInputPassword1"
-                          placeholder="password"
-                          value="1234567890"
-                          required
-                        />
-                      </div>
+                          <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label"
+                            >Password &#42;</label
+                            >
+                            <input
+                              type="password"
+                              name="password"
+                              class="form-control"
+                              id="exampleInputPassword1"
+                              placeholder="password"
+                              value="<?php echo $thePerson['password']; ?>"
+                              required
+                            />
+                          </div>
 
-                      <div class="mb-3">
-                        <label for="birthDateInput" class="form-label">
-                          Birth date &#42;
-                        </label>
+                          <div class="mb-3">
+                            <label for="birthDateInput" class="form-label">
+                              Birth date &#42;
+                            </label>
 
-                        <input
-                          id="birthDateInput"
-                          type="date"
-                          class="form-control"
-                          value="2001-01-10"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div class="form-2">
-                      <div class="mb-3">
-                        <label for="exampleSexInput" class="form-label"
-                          >Sex &#42;
-                        </label>
-                        <select
-                          id="exampleSexInput"
-                          class="form-select"
-                          aria-label="Default select example"
-                          required
-                        >
-                          <option selected>Female</option>
-                          <option class="option-value" value="1">Male</option>
-                          <!-- <option class="option-value" value="2">Female</option> -->
-                        </select>
-                      </div>
+                            <input
+                              id="birthDateInput"
+                              name="birthDate"
+                              type="date"
+                              class="form-control"
+                              value="<?php echo date('Y-m-d', $thePerson['birthDate']); ?>"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="form-2">
+                          <div class="mb-3">
+                            <label for="exampleSexInput" class="form-label"
+                            >Sex &#42;
+                            </label>
+                            <select
+                              id="exampleSexInput"
+                              class="form-select"
+                              aria-label="Default select example"
+                              required
+                            >
+                              <option selected
+                                value="<?php echo $thePerson['sex'] == "f" ? "f" : "m" ?>"><?php echo gender($thePerson['sex'])?>
+                              </option>
+                              <?php if ($thePerson['sex'] == "f"){ ?>
+                                <option class="option-value" value="m">Male</option>
+                              <?php }else {?>
+                                <option class="option-value" value="f">Female</option>
+                              <?php } ?>
+                            </select>
+                          </div>
 
-                      <div class="mb-3">
-                        <label for="addressInput" class="form-label"
-                          >Address &#42;
-                        </label>
-                        <input
-                          id="addressInput"
-                          type="text"
-                          class="form-control"
-                          placeholder="address"
-                          value="Br.Baturiti, Kec.Baturiti Tabanan-Bali"
-                          aria-label="Last name"
-                          required
-                        />
-                      </div>
+                          <div class="mb-3">
+                            <label for="addressInput" class="form-label"
+                            >Address &#42;
+                            </label>
+                            <input
+                              id="addressInput"
+                              type="text"
+                              class="form-control"
+                              placeholder="address"
+                              value="<?php echo $thePerson['address'] ?>"
+                              aria-label="Last name"
+                              required
+                            />
+                          </div>
 
-                      <div class="mb-3">
-                        <label
-                          for="exampleFormControlTextarea1"
-                          class="form-label"
-                          >Internal notes</label
-                        >
-                        <textarea
-                          class="form-control"
-                          id="exampleFormControlTextarea1"
-                          rows="3"
-                        ></textarea>
-                      </div>
+                          <div class="mb-3">
+                            <label
+                              for="exampleFormControlTextarea1"
+                              class="form-label"
+                            >Internal notes</label>
+                            <textarea
+                              class="form-control"
+                              id="exampleFormControlTextarea1"
+                              rows="3"
+                            ><?php echo $thePerson['internalNotes'] ?></textarea>
+                          </div>
 
-                      <div class="mb-3">
-                        <label for="exampleRoleInput" class="form-label"
-                          >Role &#42;</label
-                        >
-                        <select
-                          id="exampleRoleInput"
-                          class="form-select"
-                          aria-label="Default select example"
-                        >
-                          <option selected>Admin</option>
-                          <option class="option-value" value="2">Member</option>
-                        </select>
-                        <div class="invalid-feedback">
-                          Please select a valid state.
+                          <div class="mb-3">
+                            <label for="exampleRoleInput" class="form-label"
+                            >Role &#42;</label>
+                            <select
+                              id="exampleRoleInput"
+                              class="form-select"
+                              aria-label="Default select example"
+                            >
+                              <option selected
+                                  value="<?php echo $thePerson['role'] == "ADMIN" ? "ADMIN" : "MEMBER" ?>">
+                                  <?php echo $thePerson['role'] == "ADMIN" ? 'ADMIN' : "MEMBER" ?></option>
+                              <?php if ($thePerson['role'] == "ADMIN"){ ?>
+                                <option class="option-value" value="MEMBER">Member</option>
+                              <?php }else{ ?>
+                                <option class="option-value" value="ADMIN">ADMIN</option>
+                              <?php } ?>
+                            </select>
+                            <div class="invalid-feedback">
+                              Please select a valid state.
+                            </div>
+                          </div>
+
+                          <div
+                            class="form-check form-switch mb-5 d-flex flex-row align-items-end gap-3"
+                          >
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              id="flexSwitchCheckChecked"
+                              <?php if ($thePerson['alive'] == true){
+                                echo "checked";
+                              }?>
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexSwitchCheckChecked"
+                            >This person is alive</label
+                            >
+                          </div>
                         </div>
                       </div>
 
-                      <div
-                        class="form-check form-switch mb-5 d-flex flex-row align-items-end gap-3"
-                      >
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          role="switch"
-                          id="flexSwitchCheckChecked"
-                          checked
-                        />
-                        <label
-                          class="form-check-label"
-                          for="flexSwitchCheckChecked"
-                          >This person is alive</label
-                        >
-                      </div>
-                    </div>
-                  </div>
+                      <div class="row justify-content-center mt-5">
+                        <div class="col-12">
+                          <div class="btn-create">
+                            <?php if (isset($_GET['search']) != null && isset($_GET['filter']) != null){
+                              $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
+                            }else{
+                              $url = "";
+                            }?>
 
-                  <div class="row justify-content-center mt-5">
-                    <div class="col-12">
-                      <div class="btn-create">
-                        <a
-                          type="submit"
-                          href="view.php"
-                          class="btn btn-primary btn-save me-3"
-                        >
-                          Save
-                        </a>
-                        <a
-                          type="reset"
-                          class="btn btn-secondary btn-cancel"
-                          href="view.php"
-                        >
-                          Cancel
-                        </a>
+                            <button
+                              type="submit"
+                              class="btn btn-primary btn-save me-3"
+                            >
+                              Save
+                            </button>
+                            <a
+                              type="reset"
+                              class="btn btn-secondary btn-cancel"
+                              href="persons.php?<?php echo $url ?>page=<?php echo $_GET['page'] ?>"
+                            >
+                              Cancel
+                            </a>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </form>
+                    </form>
+                <?php } ?>
               </div>
             </div>
           </div>
@@ -509,20 +549,20 @@ if (!isset($_SESSION['userEmail'])) {
       </section>
     </main>
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
     ></script>
 
     <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
     ></script>
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-      crossorigin="anonymous"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
     ></script>
   </body>
 </html>

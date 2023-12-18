@@ -6,6 +6,13 @@ function getPersonsData(): array
     return loadDataIntoJson("persons.json");
 }
 
+// function untuk redirect page
+function redirect($url, $getParams)
+{
+    header('Location: ' . $url . '?' . $getParams);
+    die();
+}
+
 // function untuk mengecek umur user
 function checkAge(int $date): int
 {
@@ -26,16 +33,7 @@ function userLogin($email):array
     return [];
 }
 
-function gender(string $gender):string
-{
-    if($gender == "f"){
-        return "Female";
-    }else{
-        return "Male";
-    }
-}
-
-function user(int $id):array
+function getUserById(int $id):array
 {
     $persons = getPersonsData();
     foreach ($persons as $person){
@@ -46,12 +44,90 @@ function user(int $id):array
     return [];
 }
 
-// function untuk redirect page
-function redirect($url, $getParams)
+function gender(string $gender):string
 {
-    header('Location: ' . $url . '?' . $getParams);
-    die();
+    if($gender == "f"){
+        return "Female";
+    }else{
+        return "Male";
+    }
 }
+
+function isNikExits(string $nik, int|null $id):bool
+{
+    $personsData = getPersonsData();
+    foreach ($personsData as $person){
+        if ($id == null) {
+            if ($person['nik'] == $nik) {
+                return true;
+            }
+        }else{
+            if ($person['nik'] == $nik && $person['id'] != $id){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// validate NIK
+function checkNik (string $nik):string|null
+{
+    if (strlen($nik) == 16 && preg_match("/^[0-9]*$/", $nik)){
+        return $nik;
+    } else {
+        return null;
+    }
+}
+
+// Validate Password
+function checkPassword($newPassword):string|null
+{
+    if (strlen($newPassword) > 16 || strlen($newPassword) < 8){
+//        echo "Password must have min 8 characters and max 16 characters";
+        return null;
+    }else{
+        return $newPassword;
+    }
+}
+
+// validate Email
+function isEmailExists(string $newEmail, int|null $id): bool
+{
+    $persons = getPersonsData();
+    foreach ($persons as $person){
+        if ($id == null) {
+            if ($person['email'] == $newEmail) {
+                return true;
+            }
+        }else{
+            if ($person['email'] == $newEmail && $person['id'] != $id){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function checkFormatEmail($newEmail):string | null
+{
+    if (preg_match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^", $newEmail)){
+        return $newEmail;
+    }else{
+        return null;
+    }
+
+}
+
+function convertSwitchValue($value):bool
+{
+    if ($value == "on"){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 
 //function to convert input string
 function convertStringIntoDate(string $format, string $birthDate): int|null

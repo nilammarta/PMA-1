@@ -16,71 +16,6 @@ function generateId($persons): int
     return $id;
 }
 
-function isNikExits(string $nik):bool
-{
-    $personsData = getPersonsData();
-    foreach ($personsData as $person){
-        if($person['nik'] == $nik){
-            return true;
-        }
-    }
-    return false;
-}
-
-// validate NIK
-function checkNik (string $nik):string|null
-{
-    if (strlen($nik) == 16 && preg_match("/^[0-9]*$/", $nik)){
-       return $nik;
-    } else {
-        return null;
-    }
-}
-
-
-// Validate Password
-function checkPassword($newPassword):string|null
-{
-    if (strlen($newPassword) > 16 || strlen($newPassword) < 8){
-//        echo "Password must have min 8 characters and max 16 characters";
-        return null;
-    }else{
-        return $newPassword;
-    }
-}
-
-// validate Email
-function isEmailExists($newEmail): bool
-{
-    $persons = getPersonsData();
-    foreach ($persons as $person){
-        if ($person['email'] == $newEmail){
-//            echo "Email is already exists in database, please input another email";
-            return true;
-        }
-    }
-    return false;
-}
-
-function checkFormatEmail($newEmail):string | null
-{
-    if (preg_match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^", $newEmail)){
-        return $newEmail;
-    }else{
-        return null;
-    }
-
-}
-
-function convertSwitchValue($value):bool
-{
-    if ($value == "on"){
-        return true;
-    }else{
-        return false;
-    }
-}
-
 /**
  * ['nik'] => [
  *   'max' => 'Panjang karakter tidak boleh lebih dari x',
@@ -98,15 +33,14 @@ function convertSwitchValue($value):bool
  */
 
 //tampung error yang terjadi pada inputan form
-function validate($nik, $password, $email):array
+function validate(string $nik, string $password, string $email):array
 {
     $validate = [];
     if (checkNik($nik) == null) {
         $validate['nik'] = "Please type the correct NIK, at least 16 characters and only numeric NIK is allowed";
-
     }
 
-    if (isNikExits($nik) == true) {
+    if (isNikExits($nik, null) == true) {
         $validate['nik'] = "NIK is already exists in database please type another NIK";
     }
 
@@ -114,7 +48,7 @@ function validate($nik, $password, $email):array
         $validate['password'] = "Password must have a minimum of 8 characters and maximum 16 characters";
     }
 
-    if (isEmailExists($email) == true) {
+    if (isEmailExists($email, null) == true) {
         $validate['email'] = "Email address is already exists in database, please type another email";
     }
 
@@ -126,15 +60,14 @@ function validate($nik, $password, $email):array
     return $validate;
 }
 
-
 // function to save new data person
 function saveData():bool
 {
     $persons = getPersonsData();
     $newPerson = [
         "id" => generateId($persons),
-        "firstName" => $_POST['firstName'],
-        "lastName" => $_POST['lastName'],
+        "firstName" => ucfirst($_POST['firstName']),
+        "lastName" => ucfirst($_POST['lastName']),
         "nik" => $_POST["nik"],
         "email" => $_POST['email'],
         "password" => $_POST['password'],
@@ -143,7 +76,7 @@ function saveData():bool
         "address" => $_POST['address'],
         "internalNotes" => $_POST['internalNotes'],
         "role" => $_POST['role'],
-        "alive" => convertSwitchValue($_POST['value']),
+        "alive" => convertSwitchValue($_POST['alive']),
         "lastLoggedIn" => null
     ];
 
@@ -165,14 +98,12 @@ function inputData ():array
         "address" => $_POST['address'],
         "internalNotes" => $_POST['internalNotes'],
         "role" => $_POST['role'],
-        "alive" => $_POST['value']
+        "alive" => $_POST['alive']
     ];
 }
 
-
-// tutup session sebelum redirect
 $errorData = validate($_POST['nik'], $_POST['password'], $_POST['email']);
-if (count($errorData) != null){
+if (count($errorData) != 0){
     $_SESSION['nik'] = $errorData["nik"];
 //    $_SESSION['nikExists'] = $errorData['nik']['duplicate'];
     $_SESSION['email'] = $errorData['email'];
@@ -183,6 +114,10 @@ if (count($errorData) != null){
     header("Location: ../create.php");
     exit();
 }else{
+    unset($_SESSION['nik']);
+    unset($_SESSION['email']);
+    unset($_SESSION['password']);
+    unset($_SESSION['dataInput']);
     if (saveData()) {
         redirect("../create.php", "saved");
     }
