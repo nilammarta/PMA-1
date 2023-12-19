@@ -370,7 +370,7 @@ if (!isset($_SESSION['userEmail'])) {
                             name="nik"
                             id="nikInput"
                             type="text"
-                            class="form-control mb-2 <?php if (isset($_SESSION['nik'])) { ?>
+                            class="form-control mb-2 <?php if (isset($_SESSION['nikError'])) { ?>
                               is-invalid
                             <?php } ?>"
                             placeholder="Nomor Induk Kependudukan"
@@ -382,7 +382,7 @@ if (!isset($_SESSION['userEmail'])) {
                             required
                           />
                           <?php if (isset($_GET['saved']) == null) {?>
-                            <p class="error"> <?php echo $_SESSION['nik'];?> </p>
+                            <p class="error"> <?php echo $_SESSION['nikError'];?> </p>
                           <?php } ?>
                         </div>
 
@@ -393,7 +393,7 @@ if (!isset($_SESSION['userEmail'])) {
                           <input
                             name="email"
                             type="email"
-                            class="form-control mb-2 <?php if (isset($_SESSION['email'])) { ?>
+                            class="form-control mb-2 <?php if (isset($_SESSION['emailError'])) { ?>
                               is-invalid
                             <?php } ?>"
                             id="exampleInputEmail1"
@@ -405,7 +405,7 @@ if (!isset($_SESSION['userEmail'])) {
                             required
                           />
                             <?php if (isset($_GET['saved']) == null){?>
-                              <p class="error"> <?php echo $_SESSION['email']; ?> </p>
+                              <p class="error"> <?php echo $_SESSION['emailError']; ?> </p>
                             <?php } ?>
                         </div>
                         <div class="mb-3">
@@ -414,7 +414,7 @@ if (!isset($_SESSION['userEmail'])) {
                           <input
                             name="password"
                             type="password"
-                            class="form-control mb-2 <?php if (isset($_SESSION['password'])) { ?>
+                            class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) { ?>
                               is-invalid
                             <?php } ?>"
                             id="exampleInputPassword1"
@@ -425,7 +425,7 @@ if (!isset($_SESSION['userEmail'])) {
                             required
                           />
                           <?php if (isset($_GET['saved']) == null){ ?>
-                            <p class="error"><?php echo $_SESSION['password']; ?></p>
+                            <p class="error"><?php echo $_SESSION['passwordError']; ?></p>
                           <?php } ?>
                         </div>
 
@@ -527,8 +527,8 @@ if (!isset($_SESSION['userEmail'])) {
                             <?php }else{ ?>
                               <option selected disabled value="">choose...</option>
                             <?php } ?>
-                            <option class="option-value" value="ADMIN">Admin</option>
-                            <option class="option-value" value="MEMBER">Member</option>
+                            <option class="option-value" value="ADMIN">ADMIN</option>
+                            <option class="option-value" value="MEMBER">MEMBER</option>
                           </select>
                           <div class="invalid-feedback">
                             Please select a valid state.
@@ -549,8 +549,7 @@ if (!isset($_SESSION['userEmail'])) {
                           <label
                             class="form-check-label"
                             for="flexSwitchCheckChecked"
-                          >This person is alive</label
-                          >
+                          >This person is alive</label>
                         </div>
                       </div>
                     </div>
@@ -607,9 +606,9 @@ if (!isset($_SESSION['userEmail'])) {
             crossorigin="anonymous"
     ></script>
     <?php
-    unset($_SESSION['nik']);
-    unset($_SESSION['password']);
-    unset($_SESSION['email']);
+    unset($_SESSION['nikError']);
+    unset($_SESSION['passwordError']);
+    unset($_SESSION['emailError']);
     unset($_SESSION['dataInput']);
     ?>
   </body>

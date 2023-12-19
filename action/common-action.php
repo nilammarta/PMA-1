@@ -80,17 +80,6 @@ function checkNik (string $nik):string|null
     }
 }
 
-// Validate Password
-function checkPassword($newPassword):string|null
-{
-    if (strlen($newPassword) > 16 || strlen($newPassword) < 8){
-//        echo "Password must have min 8 characters and max 16 characters";
-        return null;
-    }else{
-        return $newPassword;
-    }
-}
-
 // validate Email
 function isEmailExists(string $newEmail, int|null $id): bool
 {
@@ -119,6 +108,18 @@ function checkFormatEmail($newEmail):string | null
 
 }
 
+
+// Validate Password
+function checkPassword($newPassword):string|null
+{
+    if (strlen($newPassword) > 16 || strlen($newPassword) < 8){
+//        echo "Password must have min 8 characters and max 16 characters";
+        return null;
+    }else{
+        return $newPassword;
+    }
+}
+
 function convertSwitchValue($value):bool
 {
     if ($value == "on"){
@@ -139,4 +140,21 @@ function convertStringIntoDate(string $format, string $birthDate): int|null
     } else {
         return null;
     }
+}
+
+function inputData ():array
+{
+    return [
+        "firstName" => $_POST['firstName'],
+        "lastName" => $_POST['lastName'],
+        "nik" => $_POST['nik'],
+        "email" => $_POST['email'],
+        "password" => $_POST['password'],
+        "birthDate" => $_POST['birthDate'],
+        "sex" => $_POST['sex'],
+        "address" => $_POST['address'],
+        "internalNotes" => $_POST['internalNotes'],
+        "role" => $_POST['role'],
+        "alive" => $_POST['alive']
+    ];
 }

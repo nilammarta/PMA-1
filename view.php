@@ -364,6 +364,22 @@ include("action/common-action.php");
                                 <td><?php echo $thePerson['address'] ?></td>
                               </tr>
                               </tbody>
+                              <tr>
+                                <td>Role</td>
+                                <td>:</td>
+                                <td><?php echo $thePerson['role'] ?></td>
+                              </tr>
+                              </tbody>
+                              <tr>
+                                <td>Status</td>
+                                <td>:</td>
+                                <td><?php if ($thePerson['alive'] == true){
+                                  echo "Alive";
+                                }else {
+                                  echo "Passed away";
+                                } ?></td>
+                              </tr>
+                              </tbody>
                             </table>
                             <div class="card-body card-body-2">
                               <h6 class="card-title">Internal notes :</h6>

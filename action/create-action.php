@@ -85,38 +85,19 @@ function saveData():bool
     return true;
 }
 
-function inputData ():array
-{
-    return [
-        "firstName" => $_POST['firstName'],
-        "lastName" => $_POST['lastName'],
-        "nik" => $_POST['nik'],
-        "email" => $_POST['email'],
-        "password" => $_POST['password'],
-        "birthDate" => $_POST['birthDate'],
-        "sex" => $_POST['sex'],
-        "address" => $_POST['address'],
-        "internalNotes" => $_POST['internalNotes'],
-        "role" => $_POST['role'],
-        "alive" => $_POST['alive']
-    ];
-}
-
 $errorData = validate($_POST['nik'], $_POST['password'], $_POST['email']);
 if (count($errorData) != 0){
-    $_SESSION['nik'] = $errorData["nik"];
-//    $_SESSION['nikExists'] = $errorData['nik']['duplicate'];
-    $_SESSION['email'] = $errorData['email'];
-//    $_SESSION['emailExists'] = $errorData['email']['duplicate'];
-    $_SESSION['password'] = $errorData['password'];
+    $_SESSION['nikError'] = $errorData["nik"];
+    $_SESSION['emailError'] = $errorData['email'];
+    $_SESSION['passwordError'] = $errorData['password'];
     $_SESSION['dataInput'] = inputData();
 
     header("Location: ../create.php");
     exit();
 }else{
-    unset($_SESSION['nik']);
-    unset($_SESSION['email']);
-    unset($_SESSION['password']);
+    unset($_SESSION['nikError']);
+    unset($_SESSION['emailError']);
+    unset($_SESSION['passwordError']);
     unset($_SESSION['dataInput']);
     if (saveData()) {
         redirect("../create.php", "saved");
