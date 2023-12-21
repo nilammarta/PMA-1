@@ -6,6 +6,12 @@ if (!isset($_SESSION['userEmail'])) {
     exit();
 }
 
+
+unset($_SESSION['page']);
+unset($_SESSION['filter']);
+unset($_SESSION['search']);
+unset($_SESSION['personId']);
+
 include("action/common-action.php");
 ?>
 <!DOCTYPE html>
@@ -17,96 +23,96 @@ include("action/common-action.php");
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
-            href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
     />
 
     <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
     />
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script
-            type="module"
-            src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
+      type="module"
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
     ></script>
     <script
-            nomodule=""
-            src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
+      nomodule=""
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
     ></script>
 
     <link
-            rel="apple-touch-icon"
-            sizes="57x57"
-            href="assets/favicon/apple-icon-57x57.png"
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="assets/favicon/apple-icon-57x57.png"
     />
     <link
-            rel="apple-touch-icon"
-            sizes="60x60"
-            href="assets/favicon/apple-icon-60x60.png"
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="assets/favicon/apple-icon-60x60.png"
     />
     <link
-            rel="apple-touch-icon"
-            sizes="72x72"
-            href="assets/favicon/apple-icon-72x72.png"
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="assets/favicon/apple-icon-72x72.png"
     />
     <link
-            rel="apple-touch-icon"
-            sizes="76x76"
-            href="assets/favicon/apple-icon-76x76.png"
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="assets/favicon/apple-icon-76x76.png"
     />
     <link
-            rel="apple-touch-icon"
-            sizes="114x114"
-            href="assets/favicon/apple-icon-114x114.png"
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="assets/favicon/apple-icon-114x114.png"
     />
     <link
-            rel="apple-touch-icon"
-            sizes="120x120"
-            href="assets/favicon/apple-icon-120x120.png"
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="assets/favicon/apple-icon-120x120.png"
     />
     <link
-            rel="apple-touch-icon"
-            sizes="144x144"
-            href="assets/favicon/apple-icon-144x144.png"
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="assets/favicon/apple-icon-144x144.png"
     />
     <link
-            rel="apple-touch-icon"
-            sizes="152x152"
-            href="assets/favicon/apple-icon-152x152.png"
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="assets/favicon/apple-icon-152x152.png"
     />
     <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="assets/favicon/apple-icon-180x180.png"
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/favicon/apple-icon-180x180.png"
     />
     <link
-            rel="icon"
-            type="image/png"
-            sizes="192x192"
-            href="assets/favicon/android-icon-192x192.png"
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="assets/favicon/android-icon-192x192.png"
     />
     <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="assets/favicon/favicon-32x32.png"
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/favicon/favicon-32x32.png"
     />
     <link
-            rel="icon"
-            type="image/png"
-            sizes="96x96"
-            href="assets/favicon/favicon-96x96.png"
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="assets/favicon/favicon-96x96.png"
     />
     <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="assets/favicon/favicon-16x16.png"
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/favicon/favicon-16x16.png"
     />
     <link rel="manifest" href="assets/favicon/manifest.json"/>
     <meta name="msapplication-TileColor" content="#ffffff"/>
@@ -322,174 +328,179 @@ include("action/common-action.php");
                     </h3>
                   </div>
 
-                    <?php if (isset($_GET["person"])) {
-                        $thePerson = getUserById($_GET['person']);
-                        if ($thePerson != null) { ?>
-                          <div class="table-responsive">
-                            <table class="table mb-0">
-                              <tbody>
-                              <tr>
-                                <td class="card-label">First name</td>
-                                <td>:</td>
-                                <td><?php echo $thePerson["firstName"] ?></td>
-                              </tr>
-                              <tr>
-                                <td>Last name</td>
-                                <td>:</td>
-                                <td><?php echo $thePerson['lastName'] ?></td>
-                              </tr>
-                              <tr>
-                                <td>NIK</td>
-                                <td>:</td>
-                                <td><?php echo $thePerson['nik'] ?></td>
-                              </tr>
-                              <tr>
-                                <td>Email</td>
-                                <td>:</td>
-                                <td><?php echo $thePerson['email'] ?></td>
-                              </tr>
-                              <tr>
-                                <td>Birthdate</td>
-                                <td>:</td>
-                                <td><?php echo date('d F Y', $thePerson['birthDate']) ?></td>
-                              </tr>
-                              <tr>
-                                <td>Sex</td>
-                                <td>:</td>
-                                <td><?php echo gender($thePerson['sex']) ?></td>
-                              </tr>
-                              <tr>
-                                <td>Address</td>
-                                <td>:</td>
-                                <td><?php echo $thePerson['address'] ?></td>
-                              </tr>
-                              </tbody>
-                              <tr>
-                                <td>Role</td>
-                                <td>:</td>
-                                <td><?php echo $thePerson['role'] ?></td>
-                              </tr>
-                              </tbody>
-                              <tr>
-                                <td>Status</td>
-                                <td>:</td>
-                                <td><?php if ($thePerson['alive'] == true){
-                                  echo "Alive";
-                                }else {
-                                  echo "Passed away";
-                                } ?></td>
-                              </tr>
-                              </tbody>
-                            </table>
-                            <div class="card-body card-body-2">
-                              <h6 class="card-title">Internal notes :</h6>
-                              <div class="card-text"><?php echo $thePerson['internalNotes'] ?></div>
-                            </div>
+                  <?php if (isset($_GET["person"])) {
+                      $thePerson = getUserById($_GET['person']);
+                      if ($thePerson != null) { ?>
+                        <div class="table-responsive">
+                          <table class="table mb-0">
+                            <tbody>
+                            <tr>
+                              <td class="card-label">First name</td>
+                              <td>:</td>
+                              <td><?php echo $thePerson["firstName"] ?></td>
+                            </tr>
+                            <tr>
+                              <td>Last name</td>
+                              <td>:</td>
+                              <td><?php echo $thePerson['lastName'] ?></td>
+                            </tr>
+                            <tr>
+                              <td>NIK</td>
+                              <td>:</td>
+                              <td><?php echo $thePerson['nik'] ?></td>
+                            </tr>
+                            <tr>
+                              <td>Email</td>
+                              <td>:</td>
+                              <td><?php echo $thePerson['email'] ?></td>
+                            </tr>
+                            <tr>
+                              <td>Birthdate</td>
+                              <td>:</td>
+                              <td><?php echo date('d F Y', $thePerson['birthDate']) ?></td>
+                            </tr>
+                            <tr>
+                              <td>Gender</td>
+                              <td>:</td>
+                              <td><?php echo gender($thePerson['sex']) ?></td>
+                            </tr>
+                            <tr>
+                              <td>Address</td>
+                              <td>:</td>
+                              <td><?php echo $thePerson['address'] ?></td>
+                            </tr>
+                            </tbody>
+                            <tr>
+                              <td>Role</td>
+                              <td>:</td>
+                              <td><?php echo $thePerson['role'] ?></td>
+                            </tr>
+                            </tbody>
+                            <tr>
+                              <td>Status</td>
+                              <td>:</td>
+                              <td><?php if ($thePerson['alive'] == true){
+                                echo "Alive";
+                              }else {
+                                echo "Passed away";
+                              } ?></td>
+                            </tr>
+                            </tbody>
+                          </table>
+                          <div class="card-body card-body-2">
+                            <h6 class="card-title">Internal notes :</h6>
+                            <div class="card-text"><?php echo $thePerson['internalNotes'] ?></div>
+                          </div>
 
-                            <div class="card-body btn-card">
-                                <?php
-                                if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
-                                    $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
-                                } else {
-                                    $url = "";
-                                }
-                                ?>
+                          <div class="card-body btn-card">
+                              <?php
+                              if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
+                                  $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
+                              } else {
+                                  $url = "";
+                              }
+                              ?>
 
-                              <a class="btn btn-secondary me-2"
-                                 href="persons.php?<?php echo $url?>page=<?php echo $_GET['page']?>"
-                                 role="button">
-                                <ion-icon name="arrow-back-sharp"></ion-icon>
-                              </a>
+                            <a class="btn btn-secondary me-2"
+                               href="persons.php?<?php echo $url?>page=<?php echo $_GET['page']?>"
+                               role="button">
+                              <ion-icon name="arrow-back-sharp"></ion-icon>
+                            </a>
 
-                              <a
-                                class="btn btn-primary me-2"
-                                href="edit.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
-                                role="button"
-                              >
-                                <ion-icon name="create"></ion-icon>
-                                EDIT
-                              </a>
+                            <a
+                              class="btn btn-primary me-2"
+                              href="edit.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
+                              role="button"
+                            >
+                              <ion-icon name="create"></ion-icon>
+                              EDIT
+                            </a>
 
-                              <button
-                                type="button"
-                                class="btn btn-danger"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                              >
-                                <ion-icon name="trash"></ion-icon>
-                                DELETE
-                              </button>
+                            <button
+                              type="button"
+                              class="btn btn-danger"
+                              data-bs-toggle="modal"
+                              data-bs-target="#exampleModal"
+                            >
+                              <ion-icon name="trash"></ion-icon>
+                              DELETE
+                            </button>
 
-                              <!-- Modal -->
-                              <div
-                                class="modal fade"
-                                id="exampleModal"
-                                tabindex="-1"
-                                aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
-                              >
-                                <div class="modal-dialog modal-dialog-centered">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title" id="exampleModalLabel">
-                                        Delete Person
-                                      </h4>
-                                      <button
-                                        type="button"
-                                        class="btn-close"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"
-                                      ></button>
-                                    </div>
-                                    <div class="modal-body">Are you sure want to delete this person?</div>
-                                    <div class="modal-footer">
-                                      <button
-                                        type="button"
-                                        class="btn btn-secondary"
-                                        data-bs-dismiss="modal"
-                                      >
-                                        NO
-                                      </button>
-                                      <button
-                                        type="button"
-                                        class="btn btn-primary"
-                                      >
-                                        YES
-                                      </button>
-                                    </div>
+                            <!-- Modal -->
+                            <div
+                              class="modal fade"
+                              id="exampleModal"
+                              tabindex="-1"
+                              aria-labelledby="exampleModalLabel"
+                              aria-hidden="true"
+                            >
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title" id="exampleModalLabel">
+                                      Delete Person
+                                    </h4>
+                                    <button
+                                      type="button"
+                                      class="btn-close"
+                                      data-bs-dismiss="modal"
+                                      aria-label="Close"
+                                    ></button>
+                                  </div>
+                                  <div class="modal-body">Are you sure want to delete this person?</div>
+                                  <div class="modal-footer">
+                                    <button
+                                      type="button"
+                                      class="btn btn-secondary"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      NO
+                                    </button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-primary"
+                                    >
+                                      <a role="button" class="btn-modal" href="action/delete-action.php">YES</a>
+                                    </button>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        <?php } else { ?>
-                          <div class="alert alert-warning mb-0" role="alert">
-                            Person data is not found!
-                          </div>
-                        <?php } ?>
-                    <?php } ?>
+                        </div>
+                      <?php } else { ?>
+                        <div class="alert alert-warning mb-0" role="alert">
+                          Person data is not found!
+                        </div>
+                      <?php } ?>
+                  <?php } ?>
                 </div>
               </div>
             </div>
+            <?php if (isset($_GET['saved'])) { ?>
+              <div class="alert alert-success saved mt-4" role="alert">
+                Person Data updated successfully!
+              </div>
+            <?php } ?>
           </div>
         </div>
       </section>
     </main>
     <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
     ></script>
 
     <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
     ></script>
     <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
     ></script>
   </body>
 </html>

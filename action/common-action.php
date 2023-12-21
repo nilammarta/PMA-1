@@ -105,7 +105,6 @@ function checkFormatEmail($newEmail):string | null
     }else{
         return null;
     }
-
 }
 
 
@@ -113,7 +112,6 @@ function checkFormatEmail($newEmail):string | null
 function checkPassword($newPassword):string|null
 {
     if (strlen($newPassword) > 16 || strlen($newPassword) < 8){
-//        echo "Password must have min 8 characters and max 16 characters";
         return null;
     }else{
         return $newPassword;
@@ -130,7 +128,7 @@ function convertSwitchValue($value):bool
 }
 
 
-//function to convert input string
+// function to convert input string
 function convertStringIntoDate(string $format, string $birthDate): int|null
 {
     $dateFormat = date_create_from_format($format, $birthDate);

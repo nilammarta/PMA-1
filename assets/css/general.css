@@ -251,3 +251,7 @@ body {
   color: #3d3d3d;
   background: none;
 }
+
+.alert{
+  text-align: center;
+}

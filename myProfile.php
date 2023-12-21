@@ -245,21 +245,21 @@ include("action/common-action.php");
         </div>
       </div>
     </header>
+
     <main>
-      <sction class="main-section d-flex flex-row">
+      <section class="main-section d-flex flex-row">
         <div class="sidebar d-none d-lg-flex flex-column gap-5">
           <div class="sidebar-content">
             <nav class="main-nav">
               <ul class="main-nav-list">
                 <li class="nav-item">
-                  <a class="main-nav-link" href="dashboard.php"
-                  >
+                  <a class="main-nav-link" href="dashboard.php">
                     <ion-icon
                       name="file-tray-full-outline"
                       class="nav-icon"
                     ></ion-icon>
-                    Dashboard</a
-                  >
+                    Dashboard
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a class="main-nav-link" href="persons.php"
@@ -303,6 +303,7 @@ include("action/common-action.php");
             </div>
           </div>
         </div>
+
         <div class="main-content">
           <div class="profile m-3 m-md-4">
             <div class="content-title">
@@ -314,7 +315,7 @@ include("action/common-action.php");
                 <form class="create-form needs-validation p-4 mb-5">
                   <h5 class="form-text pb-2 mb-4">EDIT PROFILE</h5>
                     <?php
-                    $userLogin = userLogin($_SESSION['userEmail']);
+                      $userLogin = userLogin($_SESSION['userEmail']);
                     ?>
                   <div class="mb-3 row">
                     <label
@@ -333,8 +334,8 @@ include("action/common-action.php");
 
                   <div class="mb-3 row">
                     <label
-                            for="inputLastname"
-                            class="col-sm-2 col-form-label form-label"
+                      for="inputLastname"
+                      class="col-sm-2 col-form-label form-label"
                     >Last name</label
                     >
                     <div class="col-sm-10">
@@ -349,8 +350,8 @@ include("action/common-action.php");
 
                   <div class="mb-3 row">
                     <label
-                            for="inputNIK"
-                            class="col-sm-2 col-form-label form-label"
+                      for="inputNIK"
+                      class="col-sm-2 col-form-label form-label"
                     >NIK</label
                     >
                     <div class="col-sm-10">
@@ -419,12 +420,12 @@ include("action/common-action.php");
                     </label>
                     <div class="col-sm-10">
                       <select
-                              id="inputSex"
-                              class="form-select"
-                              aria-label="Default select example"
-                              required
+                        id="inputSex"
+                        class="form-select"
+                        aria-label="Default select example"
+                        required
                       >
-                        <option selected><?php echo gender($userLogin['sex']) ?></option>
+                        <option selected></option>
                         <option class="option-value" value="2"><?php if ($userLogin['sex'] == "f"){
                               echo "Male";
                             }else{
@@ -466,7 +467,7 @@ include("action/common-action.php");
             </div>
           </div>
         </div>
-      </sction>
+      </section>
     </main>
     <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

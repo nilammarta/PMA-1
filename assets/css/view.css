@@ -64,3 +64,8 @@
 .modal-footer {
   border-top: none;
 }
+
+.btn-modal{
+  text-decoration: none;
+  color: #ffffff;
+}

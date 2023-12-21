@@ -48,20 +48,12 @@ function saveUpdateData(int $id): bool
             $persons[$i]['role'] = $_POST['role'];
             $persons[$i]['alive'] = convertSwitchValue($_POST['alive']);
 
-//            var_dump($persons);
             saveDataIntoJson($persons);
             return true;
         }
     }
     return false;
 }
-
-
-//saveUpdateData($_SESSION['personId']);
-
-//echo $_POST['nik'];
-//echo $_POST['firstName'];
-//echo "data";
 
 $errorData = editValidate($_POST['nik'], $_POST['email'], $_POST['password'], $_SESSION['personId']);
 if (count($errorData) != 0){
@@ -75,8 +67,17 @@ if (count($errorData) != 0){
     header("Location: ../edit.php");
     exit();
 }else{
+    unset($_SESSION['inputData']);
+    unset($_SESSION['nikError']);
+    unset($_SESSION['emailError']);
+    unset($_SESSION['passwordError']);
     $saved = saveUpdateData($_SESSION['personId']);
     if($saved) {
-        redirect("../edit.php", "saved=1");
+        if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
+            $url = "search=" . $_SESSION['search'] . "&filter=" . $_SESSION['filter'] . "&";
+        } else {
+            $url = "";
+        }
+        redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=1");
     }
 }

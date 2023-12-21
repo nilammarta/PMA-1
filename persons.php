@@ -7,6 +7,11 @@ if (!isset($_SESSION['userEmail'])) {
     exit();
 }
 
+unset($_SESSION['personId']);
+unset($_SESSION['page']);
+unset($_SESSION['filter']);
+unset($_SESSION['search']);
+
 include("action/common-action.php");
 include("action/persons-action.php");
 $appName = "PERSONS - Person Management App";
@@ -197,8 +202,8 @@ $appName = "PERSONS - Person Management App";
                         <a class="main-nav-link" href="persons.php"
                         >
                           <ion-icon
-                                  name="people-outline"
-                                  class="nav-icon"
+                            name="people-outline"
+                            class="nav-icon"
                           ></ion-icon>
                           Persons</a
                         >
@@ -214,8 +219,8 @@ $appName = "PERSONS - Person Management App";
                           <a class="main-nav-link" href="myProfile.php"
                           >
                             <ion-icon
-                                    name="person-circle-outline"
-                                    class="nav-icon"
+                              name="person-circle-outline"
+                              class="nav-icon"
                             ></ion-icon>
                             My Profile</a
                           >
@@ -224,8 +229,8 @@ $appName = "PERSONS - Person Management App";
                           <a class="main-nav-link cta" href="logout.php"
                           >
                             <ion-icon
-                                    name="log-out-outline"
-                                    class="nav-icon"
+                              name="log-out-outline"
+                              class="nav-icon"
                             ></ion-icon>
                             Logout</a
                           >
@@ -263,8 +268,8 @@ $appName = "PERSONS - Person Management App";
                   <a class="main-nav-link" href="dashboard.php"
                   >
                     <ion-icon
-                            name="file-tray-full-outline"
-                            class="nav-icon"
+                      name="file-tray-full-outline"
+                      class="nav-icon"
                     ></ion-icon>
                     Dashboard</a
                   >
@@ -273,8 +278,8 @@ $appName = "PERSONS - Person Management App";
                   <a class="main-nav-link" href="persons.php"
                   >
                     <ion-icon
-                            name="people-outline"
-                            class="nav-icon"
+                      name="people-outline"
+                      class="nav-icon"
                     ></ion-icon>
                     Persons</a
                   >
@@ -290,8 +295,8 @@ $appName = "PERSONS - Person Management App";
                     <a class="main-nav-link" href="myProfile.php"
                     >
                       <ion-icon
-                              name="person-circle-outline"
-                              class="nav-icon"
+                        name="person-circle-outline"
+                        class="nav-icon"
                       ></ion-icon>
                       My Profile</a
                     >
@@ -300,8 +305,8 @@ $appName = "PERSONS - Person Management App";
                     <a class="main-nav-link cta" href="logout.php"
                     >
                       <ion-icon
-                              name="log-out-outline"
-                              class="nav-icon"
+                        name="log-out-outline"
+                        class="nav-icon"
                       ></ion-icon>
                       Logout</a
                     >
@@ -361,9 +366,9 @@ $appName = "PERSONS - Person Management App";
             <!-- add -->
             <div class="d-flex">
               <a
-                      href="create.php"
-                      class="table-btn btn-primary btn-lg btn-add p-3 mt-5 btn-link"
-                      type="button"
+                href="create.php"
+                class="table-btn btn-primary btn-lg btn-add p-3 mt-5 btn-link"
+                type="button"
               >
                 <ion-icon class="add-icon me-2" name="person-add"></ion-icon>
                 Add
@@ -383,11 +388,11 @@ $appName = "PERSONS - Person Management App";
                   }
 
                   if ($_GET["search"] != null && $persons == null) { ?>
-                    <div class="alert alert-warning mx-5" role="alert">
+                    <div class="alert alert-danger mx-5" role="alert">
                       Search result is not found!
                     </div>
                   <?php } elseif ($persons == null) { ?>
-                    <div class="alert alert-warning mx-5" role="alert">
+                    <div class="alert alert-danger mx-5" role="alert">
                       Data is empty!
                     </div>
                   <?php } else { ?>
@@ -406,7 +411,7 @@ $appName = "PERSONS - Person Management App";
 
                     <!--                  Pengecekan untuk halaman page jika page yang ada di url lebih besar dari total page-->
                       <?php if ($data['totalPage'] < $_GET['page']) { ?>
-                      <div class="alert alert-warning mx-5" role="alert">
+                      <div class="alert alert-danger mx-5" role="alert">
                         Page (<?php echo $_GET['page'] ?>) is not found!
                       </div>
                       <?php } else { ?>
@@ -510,7 +515,7 @@ $appName = "PERSONS - Person Management App";
                                              href="<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
                                           </a>
                                         </li>
-    <!--                              untuk membuat banyak halaman yang di perlukan        -->
+    <!--                              untuk membuat banyak halaman yang di perlukan -->
                                       <?php } else { ?>
                                         <li class="page-item">
                                           <a class="page-link"
@@ -524,11 +529,11 @@ $appName = "PERSONS - Person Management App";
                             <li class="page-item">
                                 <?php if ($page < $data["totalPage"]) { ?>
                                   <a class="page-link"
-                                     href='<?php echo $url ?>page=<?php echo $next ?>'
+                                    href='<?php echo $url ?>page=<?php echo $next ?>'
                                   >
                                     <ion-icon
-                                            class="page-icon"
-                                            name="caret-forward-outline"
+                                      class="page-icon"
+                                      name="caret-forward-outline"
                                     ></ion-icon>
                                   </a>
                                 <?php } ?>
@@ -545,20 +550,20 @@ $appName = "PERSONS - Person Management App";
       </section>
     </main>
     <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
     ></script>
 
     <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
     ></script>
     <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
     ></script>
   </body>
 </html>

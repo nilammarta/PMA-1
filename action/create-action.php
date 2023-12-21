@@ -100,6 +100,6 @@ if (count($errorData) != 0){
     unset($_SESSION['passwordError']);
     unset($_SESSION['dataInput']);
     if (saveData()) {
-        redirect("../create.php", "saved");
+        redirect("../create.php", "saved=1");
     }
 }

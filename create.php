@@ -124,9 +124,9 @@ if (!isset($_SESSION['userEmail'])) {
         <div class="d-flex justify-content-between align-items-center">
           <div class="logo-box d-flex align-items-center gap-2">
             <img
-                    class="logo-img"
-                    src="assets/img/Permap-logo-2.png"
-                    alt="permap logo"
+              class="logo-img"
+              src="assets/img/Permap-logo-2.png"
+              alt="permap logo"
             />
             <h5 class="heading-2 logo-text m-0">PERMAP</h5>
           </div>
@@ -134,40 +134,40 @@ if (!isset($_SESSION['userEmail'])) {
           <div class="d-flex justify-content-end align-items-center">
             <div class="d-lg-none">
               <button
-                      class="btn btn-menu p-0"
-                      type="button"
-                      data-bs-toggle="offcanvas"
-                      data-bs-target="#staticBackdrop"
-                      aria-controls="staticBackdrop"
+                class="btn btn-menu p-0"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#staticBackdrop"
+                aria-controls="staticBackdrop"
               >
                 <ion-icon class="icon-menu" name="menu-outline"></ion-icon>
               </button>
 
               <!-- Side Bar -->
               <div
-                      class="offcanvas offcanvas-start"
-                      data-bs-backdrop="static"
-                      tabindex="-1"
-                      id="staticBackdrop"
-                      aria-labelledby="staticBackdropLabel"
+                class="offcanvas offcanvas-start"
+                data-bs-backdrop="static"
+                tabindex="-1"
+                id="staticBackdrop"
+                aria-labelledby="staticBackdropLabel"
               >
                 <div class="offcanvas-header">
                   <img
-                          class="logo-img"
-                          src="assets/img/Permap-logo-2.png"
-                          alt="permap logo"
+                    class="logo-img"
+                    src="assets/img/Permap-logo-2.png"
+                    alt="permap logo"
                   />
                   <h5
-                          class="offcanvas-title heading-2 m-0"
-                          id="staticBackdropLabel"
+                    class="offcanvas-title heading-2 m-0"
+                    id="staticBackdropLabel"
                   >
                     PERMAP
                   </h5>
                   <button
-                          class="btn--close"
-                          type="button"
-                          data-bs-dismiss="offcanvas"
-                          aria-label="Close"
+                    class="btn--close"
+                    type="button"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
                   >
                     <ion-icon class="icon-header" name="close"></ion-icon>
                   </button>
@@ -179,8 +179,8 @@ if (!isset($_SESSION['userEmail'])) {
                         <a class="main-nav-link" href="dashboard.php"
                         >
                           <ion-icon
-                                  name="file-tray-full-outline"
-                                  class="nav-icon"
+                            name="file-tray-full-outline"
+                            class="nav-icon"
                           ></ion-icon>
                           Dashboard</a
                         >
@@ -189,8 +189,8 @@ if (!isset($_SESSION['userEmail'])) {
                         <a class="main-nav-link" href="persons.php"
                         >
                           <ion-icon
-                                  name="people-outline"
-                                  class="nav-icon"
+                            name="people-outline"
+                            class="nav-icon"
                           ></ion-icon>
                           Persons</a>
                       </li>
@@ -205,8 +205,8 @@ if (!isset($_SESSION['userEmail'])) {
                           <a class="main-nav-link" href="myProfile.php"
                           >
                             <ion-icon
-                                    name="person-circle-outline"
-                                    class="nav-icon"
+                              name="person-circle-outline"
+                              class="nav-icon"
                             ></ion-icon>
                             My Profile</a
                           >
@@ -215,8 +215,8 @@ if (!isset($_SESSION['userEmail'])) {
                           <a class="main-nav-link cta" href="logout.php"
                           >
                             <ion-icon
-                                    name="log-out-outline"
-                                    class="nav-icon"
+                              name="log-out-outline"
+                              class="nav-icon"
                             ></ion-icon>
                             Logout</a
                           >
@@ -461,17 +461,22 @@ if (!isset($_SESSION['userEmail'])) {
                           >
                             <?php if (isset($_SESSION['dataInput'])){ ?>
                               <option selected value="<?php echo $_SESSION['dataInput']['sex'];?>">
-                                  <?php if ($_SESSION['sex'] == "f"){
+                                  <?php if ($_SESSION['dataInput']['sex'] == "f"){
                                 echo "Female";
                                 }else{
                                 echo "Male";
                                 }?>
                               </option>
+                              <?php if ($_SESSION['dataInput']['sex'] == "f"){ ?>
+                                <option class="option-value" value="m">Male</option>
+                              <?php }else{ ?>
+                                <option class="option-value" value="f">Female</option>
+                              <?php } ?>
                             <?php }else{ ?>
                               <option selected disabled value="">choose...</option>
+                              <option class="option-value" value="m">Male</option>
+                              <option class="option-value" value="f">Female</option>
                             <?php } ?>
-                            <option class="option-value" value="m">Male</option>
-                            <option class="option-value" value="f">Female</option>
                           </select>
                         </div>
 
@@ -523,12 +528,19 @@ if (!isset($_SESSION['userEmail'])) {
                                   echo "ADMIN";
                                 }else{
                                   echo 'MEMBER';
-                                }?></option>
+                                }?>
+                                </option>
+
+                                <?php if ($_SESSION['dataInput']['role'] == "ADMIN") {?>
+                                  <option class="option-value" value="MEMBER">MEMBER</option>
+                                <?php }else { ?>
+                                  <option class="option-value" value="ADMIN">ADMIN</option>
+                                <?php } ?>
                             <?php }else{ ?>
                               <option selected disabled value="">choose...</option>
+                              <option class="option-value" value="ADMIN">ADMIN</option>
+                              <option class="option-value" value="MEMBER">MEMBER</option>
                             <?php } ?>
-                            <option class="option-value" value="ADMIN">ADMIN</option>
-                            <option class="option-value" value="MEMBER">MEMBER</option>
                           </select>
                           <div class="invalid-feedback">
                             Please select a valid state.
@@ -544,7 +556,9 @@ if (!isset($_SESSION['userEmail'])) {
                             type="checkbox"
                             role="switch"
                             id="flexSwitchCheckChecked"
-                            checked
+                            <?php if ($_SESSION['dataInput'] == null || isset($_SESSION['dataInput']) == true && $_SESSION['dataInput']['alive'] == true) {
+                              echo "checked";
+                            }?>
                           />
                           <label
                             class="form-check-label"
