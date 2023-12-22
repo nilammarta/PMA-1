@@ -330,61 +330,65 @@ include("action/common-action.php");
 
                   <?php if (isset($_GET["person"])) {
                       $thePerson = getUserById($_GET['person']);
+                      $_SESSION['personId'] = $_GET['person'];
+                      $_SESSION['page'] = $_GET['page'];
+                      $_SESSION['filter'] = $_GET['filter'];
+                      $_SESSION['search'] = $_GET['search'];
                       if ($thePerson != null) { ?>
                         <div class="table-responsive">
                           <table class="table mb-0">
                             <tbody>
-                            <tr>
-                              <td class="card-label">First name</td>
-                              <td>:</td>
-                              <td><?php echo $thePerson["firstName"] ?></td>
-                            </tr>
-                            <tr>
-                              <td>Last name</td>
-                              <td>:</td>
-                              <td><?php echo $thePerson['lastName'] ?></td>
-                            </tr>
-                            <tr>
-                              <td>NIK</td>
-                              <td>:</td>
-                              <td><?php echo $thePerson['nik'] ?></td>
-                            </tr>
-                            <tr>
-                              <td>Email</td>
-                              <td>:</td>
-                              <td><?php echo $thePerson['email'] ?></td>
-                            </tr>
-                            <tr>
-                              <td>Birthdate</td>
-                              <td>:</td>
-                              <td><?php echo date('d F Y', $thePerson['birthDate']) ?></td>
-                            </tr>
-                            <tr>
-                              <td>Gender</td>
-                              <td>:</td>
-                              <td><?php echo gender($thePerson['sex']) ?></td>
-                            </tr>
-                            <tr>
-                              <td>Address</td>
-                              <td>:</td>
-                              <td><?php echo $thePerson['address'] ?></td>
-                            </tr>
-                            </tbody>
-                            <tr>
-                              <td>Role</td>
-                              <td>:</td>
-                              <td><?php echo $thePerson['role'] ?></td>
-                            </tr>
-                            </tbody>
-                            <tr>
-                              <td>Status</td>
-                              <td>:</td>
-                              <td><?php if ($thePerson['alive'] == true){
-                                echo "Alive";
-                              }else {
-                                echo "Passed away";
-                              } ?></td>
-                            </tr>
+                              <tr>
+                                <td class="card-label">First name</td>
+                                <td>:</td>
+                                <td><?php echo $thePerson["firstName"] ?></td>
+                              </tr>
+                              <tr>
+                                <td>Last name</td>
+                                <td>:</td>
+                                <td><?php echo $thePerson['lastName'] ?></td>
+                              </tr>
+                              <tr>
+                                <td>NIK</td>
+                                <td>:</td>
+                                <td><?php echo $thePerson['nik'] ?></td>
+                              </tr>
+                              <tr>
+                                <td>Email</td>
+                                <td>:</td>
+                                <td><?php echo $thePerson['email'] ?></td>
+                              </tr>
+                              <tr>
+                                <td>Birthdate</td>
+                                <td>:</td>
+                                <td><?php echo date('d F Y', $thePerson['birthDate']) ?></td>
+                              </tr>
+                              <tr>
+                                <td>Gender</td>
+                                <td>:</td>
+                                <td><?php echo gender($thePerson['sex']) ?></td>
+                              </tr>
+                              <tr>
+                                <td>Address</td>
+                                <td>:</td>
+                                <td><?php echo $thePerson['address'] ?></td>
+                              </tr>
+
+                              <tr>
+                                <td>Role</td>
+                                <td>:</td>
+                                <td><?php echo $thePerson['role'] ?></td>
+                              </tr>
+
+                              <tr>
+                                <td>Status</td>
+                                <td>:</td>
+                                <td><?php if ($thePerson['alive'] == true){
+                                  echo "Alive";
+                                }else {
+                                  echo "Passed away";
+                                } ?></td>
+                              </tr>
                             </tbody>
                           </table>
                           <div class="card-body card-body-2">
@@ -469,7 +473,7 @@ include("action/common-action.php");
                           </div>
                         </div>
                       <?php } else { ?>
-                        <div class="alert alert-warning mb-0" role="alert">
+                        <div class="alert alert-danger mb-0" role="alert">
                           Person data is not found!
                         </div>
                       <?php } ?>
@@ -480,6 +484,14 @@ include("action/common-action.php");
             <?php if (isset($_GET['saved'])) { ?>
               <div class="alert alert-success saved mt-4" role="alert">
                 Person Data updated successfully!
+              </div>
+            <?php }else if (isset($_GET['error']) && $_GET['error'] == 1){ ?>
+              <div class="alert alert-danger saved mt-4" role="alert">
+                Can not delete this data, because there is only one admin in the database!
+              </div>
+            <?php }else if (isset($_GET['error']) && $_GET['error'] == 2) { ?>
+              <div class="alert alert-danger saved mt-4" role="alert">
+                Can not delete your own data!
               </div>
             <?php } ?>
           </div>

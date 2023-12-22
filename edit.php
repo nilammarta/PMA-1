@@ -315,11 +315,11 @@ require_once __DIR__ . "/action/common-action.php";
               <!-- <div class="col-12 col-md-10 col-lg-11 col-xxl-6"> -->
               <div class="col-12">
                   <?php if (isset($_GET['person'])) {
-                      $thePerson = getUserById($_GET['person']);
-                      $_SESSION['personId'] = $thePerson['id'];
+                      $_SESSION['personId'] = $_GET['person'];
                       $_SESSION['page'] = $_GET['page'];
                       $_SESSION['filter'] = $_GET['filter'];
                       $_SESSION['search'] = $_GET['search'];
+                      $thePerson = getUserById($_GET['person']);
                   } ?>
 
                 <form name="editPerson" class="create-form needs-validation p-4 mb-5" method="post"
@@ -475,11 +475,6 @@ require_once __DIR__ . "/action/common-action.php";
                           aria-label="Default select example"
                           required
                         >
-                          <?php if ($thePerson == null && $_SESSION['inputData'] == null || isset($_GET['saved']) != null){ ?>
-                            <option selected disabled value="">Choose...</option>
-                            <option class="option-value" value="m">Male</option>
-                            <option class="option-value" value="f">Female</option>
-                          <?php } else { ?>
                             <option selected
                               value="<?php if (isset($_SESSION['inputData'])){
                                   echo $_SESSION['inputData']['sex'];
@@ -500,7 +495,6 @@ require_once __DIR__ . "/action/common-action.php";
                             <?php } else { ?>
                               <option class="option-value" value="f">Female</option>
                             <?php } ?>
-                          <?php } ?>
                         </select>
                       </div>
 
@@ -531,6 +525,7 @@ require_once __DIR__ . "/action/common-action.php";
                           class="form-label"
                         >Internal notes</label>
                         <textarea
+                          name="internalNotes"
                           class="form-control"
                           id="exampleFormControlTextarea1"
                           rows="3"
@@ -550,12 +545,6 @@ require_once __DIR__ . "/action/common-action.php";
                           class="form-select"
                           aria-label="Default select example"
                         >
-                          <?php if ($thePerson == null && $_SESSION['inputData']== null || isset($_GET['saved']) != null) {?>
-                            <option selected disabled value="">Choose...</option>
-                            <option class="option-value" value="ADMIN">ADMIN</option>
-                            <option class="option-value" value="MEMBER">MEMBER</option>
-
-                          <?php } else {?>
                             <option
                               selected
                               value="<?php if (isset($_SESSION['inputData'])){
@@ -578,7 +567,6 @@ require_once __DIR__ . "/action/common-action.php";
                             <?php } else { ?>
                               <option class="option-value" value="ADMIN">ADMIN</option>
                             <?php } ?>
-                          <?php } ?>
                         </select>
                       </div>
 

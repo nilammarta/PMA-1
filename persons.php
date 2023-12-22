@@ -15,6 +15,12 @@ unset($_SESSION['search']);
 include("action/common-action.php");
 include("action/persons-action.php");
 $appName = "PERSONS - Person Management App";
+
+if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
+    $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
+} else {
+    $url = "";
+}
 ?>
 
 <!DOCTYPE html>
@@ -435,19 +441,13 @@ $appName = "PERSONS - Person Management App";
                             <td><?php echo $personsData[$i]["role"] ?></td>
                             <td>
                               <div class="d-grid gap-2 d-flex justify-content-md-end">
-                                    <?php
-                                    if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
-                                        $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
-                                    } else {
-                                        $url = "";
-                                    }
-
+                                  <?php
                                     if (isset($_GET['page']) == null) {
                                         $page = 1;
                                     } else {
                                         $page = $_GET['page'];
                                     }
-                                    ?>
+                                  ?>
                                   <a
                                     class="btn btn-outline-light me-md-2 btn-table"
                                     type="button"
@@ -459,16 +459,32 @@ $appName = "PERSONS - Person Management App";
                                       name="eye-sharp"
                                     ></ion-icon>
                                   </a>
-                                  <a
-                                    class="btn btn-outline-light btn-table"
-                                    type="button"
-                                    href="edit.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]["id"]?>"
-                                  >
-                                    <ion-icon
-                                      class="btn-icon"
-                                      name="create-sharp"
-                                    ></ion-icon>
-                                  </a>
+
+                                  <?php if ($personsData[$i]['email'] == $_SESSION['userEmail']) {?>
+<!--                                link untuk mengarah ke my profile page, karena mengedeit data user login          -->
+                                    <a
+                                      class="btn btn-outline-light btn-table"
+                                      type="button"
+                                      href="myProfile.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php $personsData[$i]['id'] ?>"
+                                    >
+                                      <ion-icon
+                                        class="btn-icon"
+                                        name="create-sharp"
+                                      ></ion-icon>
+                                    </a>
+                                  <?php }else { ?>
+<!--                                edit profile page -->
+                                    <a
+                                      class="btn btn-outline-light btn-table"
+                                      type="button"
+                                      href="edit.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]["id"]?>"
+                                    >
+                                      <ion-icon
+                                        class="btn-icon"
+                                        name="create-sharp"
+                                      ></ion-icon>
+                                    </a>
+                                  <?php } ?>
                               </div>
                             </td>
                           </tr>
@@ -479,17 +495,11 @@ $appName = "PERSONS - Person Management App";
                       <!--Pagination -->
                       <div class="page">
                         <nav aria-label="Page navigation example">
-                            <?php
-                            if (isset($_GET['search']) != null && isset($_GET['filter']) != null){
-                              $url = "?search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
-                            } else {
-                                $url = "?";
-                            } ?>
                           <ul class="pagination justify-content-center">
                             <li class="page-item">
                                 <?php if ($page > 1) { ?>
                                   <a class="page-link"
-                                     href='<?php echo $url ?>page=<?php echo $previous ?>'
+                                     href='?<?php echo $url ?>page=<?php echo $previous ?>'
                                   >
                                     <ion-icon
                                             class="page-icon"
@@ -499,37 +509,37 @@ $appName = "PERSONS - Person Management App";
                                 <?php } ?>
                             </li>
 
-                              <?php if ($data['totalPage'] > 1) {
-                                  for ($i = 1; $i <= $data["totalPage"]; $i++) {
-    //                                untuk memberi warna pada halaman pertama saat membuka page
-                                      if (isset($_GET['page']) == null && $i == 1) { ?>
-                                        <li class="page-item active">
-                                          <a class="page-link"
-                                             href="<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                          </a>
-                                        </li>
-    <!--                              untuk memberikn warna pada halaman saat ini        -->
-                                      <?php } else if ($_GET["page"] == $i) { ?>
-                                        <li class="page-item active">
-                                          <a class="page-link"
-                                             href="<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                          </a>
-                                        </li>
-    <!--                              untuk membuat banyak halaman yang di perlukan -->
-                                      <?php } else { ?>
-                                        <li class="page-item">
-                                          <a class="page-link"
-                                             href="<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                          </a>
-                                        </li>
-                                      <?php } ?>
-                                  <?php }
-                              } ?>
+                            <?php if ($data['totalPage'] > 1) {
+                                for ($i = 1; $i <= $data["totalPage"]; $i++) {
+  //                                untuk memberi warna pada halaman pertama saat membuka page
+                                    if (isset($_GET['page']) == null && $i == 1) { ?>
+                                      <li class="page-item active">
+                                        <a class="page-link"
+                                           href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                        </a>
+                                      </li>
+  <!--                              untuk memberikn warna pada halaman saat ini        -->
+                                    <?php } else if ($_GET["page"] == $i) { ?>
+                                      <li class="page-item active">
+                                        <a class="page-link"
+                                           href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                        </a>
+                                      </li>
+  <!--                              untuk membuat banyak halaman yang di perlukan -->
+                                    <?php } else { ?>
+                                      <li class="page-item">
+                                        <a class="page-link"
+                                           href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                        </a>
+                                      </li>
+                                    <?php } ?>
+                                <?php }
+                            } ?>
 
                             <li class="page-item">
                                 <?php if ($page < $data["totalPage"]) { ?>
                                   <a class="page-link"
-                                    href='<?php echo $url ?>page=<?php echo $next ?>'
+                                    href='?<?php echo $url ?>page=<?php echo $next ?>'
                                   >
                                     <ion-icon
                                       class="page-icon"

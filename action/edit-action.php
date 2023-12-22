@@ -55,6 +55,13 @@ function saveUpdateData(int $id): bool
     return false;
 }
 
+
+if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
+    $url = "search=" . $_SESSION['search'] . "&filter=" . $_SESSION['filter'] . "&";
+} else {
+    $url = "";
+}
+
 $errorData = editValidate($_POST['nik'], $_POST['email'], $_POST['password'], $_SESSION['personId']);
 if (count($errorData) != 0){
     $_SESSION['nikError'] = $errorData['nik'];
@@ -62,9 +69,8 @@ if (count($errorData) != 0){
     $_SESSION['passwordError'] = $errorData['password'];
     $_SESSION['inputData'] = inputData();
 
-    var_dump($_SESSION);
-
-    header("Location: ../edit.php");
+//    header("Location: ../edit.php?person=" . $_SESSION['personId'] . "&error=1");
+    redirect('../edit.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
     exit();
 }else{
     unset($_SESSION['inputData']);
@@ -73,11 +79,6 @@ if (count($errorData) != 0){
     unset($_SESSION['passwordError']);
     $saved = saveUpdateData($_SESSION['personId']);
     if($saved) {
-        if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
-            $url = "search=" . $_SESSION['search'] . "&filter=" . $_SESSION['filter'] . "&";
-        } else {
-            $url = "";
-        }
         redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=1");
     }
 }
