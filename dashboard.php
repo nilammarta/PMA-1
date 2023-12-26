@@ -315,7 +315,7 @@ include("action/dashboard-action.php");
             <p class="dashboard-description">
               Hi
                 <?php {
-                    echo $_SESSION['username'];
+                    echo $_SESSION['userName'];
                 } ?>!, Welcome in Dashboard
             </p>
             <p class="card-text">Last Activity : <strong> <?php echo lastActivity($_SESSION['logout']) ?> </strong></p>
@@ -329,7 +329,7 @@ include("action/dashboard-action.php");
                       <h3 class="card-title">
                         <ion-icon class="card-icon" name="people"></ion-icon>
                           <?php
-                          echo count($persons);
+                            echo count($persons);
                           ?>
                       </h3>
 

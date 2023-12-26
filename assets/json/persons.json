@@ -6,13 +6,13 @@
         "nik": "1200981029177917",
         "email": "lalalulu@gmail.com",
         "password": "12345678",
-        "birthDate": 976599433,
+        "birthDate": 976608756,
         "sex": "f",
         "address": "Denpasar",
-        "internalNotes": null,
+        "internalNotes": "                                        ",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1703223355
+        "lastLoggedIn": 1703574675
     },
     {
         "id": 3,
@@ -30,21 +30,6 @@
         "lastLoggedIn": null
     },
     {
-        "id": 4,
-        "firstName": "Briyan",
-        "lastName": "Kana",
-        "nik": "1209937002739987",
-        "email": "briyankana@gmail.com",
-        "password": "brytankana123",
-        "birthDate": 1071199059,
-        "sex": "m",
-        "address": "Bali",
-        "internalNotes": "",
-        "role": "MEMBER",
-        "alive": true,
-        "lastLoggedIn": null
-    },
-    {
         "id": 5,
         "firstName": "Kumi",
         "lastName": "Gina",
@@ -54,25 +39,25 @@
         "birthDate": 1544420034,
         "sex": "m",
         "address": "Lombok",
-        "internalNotes": null,
+        "internalNotes": "",
         "role": "MEMBER",
         "alive": true,
         "lastLoggedIn": null
     },
     {
         "id": 6,
-        "firstName": "Kuka",
+        "firstName": "Kukaas",
         "lastName": "Kuki",
         "nik": "1002986399380829",
-        "email": "kukakuki@gmail.com",
+        "email": "kukakukias@gmail.com",
         "password": "kukakuki123",
-        "birthDate": 1039683317,
-        "sex": "m",
-        "address": "Bali",
-        "internalNotes": "jumat, 22 desember",
+        "birthDate": 1039677161,
+        "sex": "Male",
+        "address": "Baturiti",
+        "internalNotes": "",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": null
+        "lastLoggedIn": 1703574880
     },
     {
         "id": 8,
@@ -84,7 +69,7 @@
         "birthDate": 1576997465,
         "sex": "f",
         "address": "Bali",
-        "internalNotes": null,
+        "internalNotes": "",
         "role": "MEMBER",
         "alive": true,
         "lastLoggedIn": null
@@ -102,6 +87,21 @@
         "internalNotes": "kamis, 21 desember 2023",
         "role": "MEMBER",
         "alive": false,
+        "lastLoggedIn": null
+    },
+    {
+        "id": 10,
+        "firstName": "Elsa",
+        "lastName": "Ana",
+        "nik": "1109738012972077",
+        "email": "elsa@gmail.com",
+        "password": "elsaana123",
+        "birthDate": 1039656045,
+        "sex": "f",
+        "address": "Tabanan",
+        "internalNotes": "",
+        "role": "MEMBER",
+        "alive": true,
         "lastLoggedIn": null
     }
 ]

@@ -156,3 +156,29 @@ function inputData ():array
         "alive" => $_POST['alive']
     ];
 }
+
+function editValidate(string $nik, string $email, string $password, int $id):array
+{
+    $validate = [];
+    if (checkNik($nik) == null){
+        $validate['nik'] = "Please type the correct NIK, at least 16 characters and numeric only!";
+    }
+
+    if (isNikExits($nik, $id) == true){
+        $validate['nik'] = "NIK is already exists in database, please type another NIK!";
+    }
+
+    if (checkFormatEmail($email) == null){
+        $validate['email'] = "Email format is not correct, please type again!";
+    }
+
+    if (isEmailExists($email, $id) == true){
+        $validate['email'] = "Email is already exists in database, please type another email!";
+    }
+
+    if (checkPassword($password) == null){
+        $validate['password'] = "Password must have a minimum of 8 character and maximum 16 characters!";
+    }
+
+    return $validate;
+}

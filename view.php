@@ -132,9 +132,9 @@ include("action/common-action.php");
         <div class="d-flex justify-content-between align-items-center">
           <div class="logo-box d-flex align-items-center gap-2">
             <img
-                    class="logo-img"
-                    src="assets/img/Permap-logo-2.png"
-                    alt="permap logo"
+              class="logo-img"
+              src="assets/img/Permap-logo-2.png"
+              alt="permap logo"
             />
             <h5 class="heading-2 logo-text m-0">PERMAP</h5>
           </div>
@@ -142,40 +142,40 @@ include("action/common-action.php");
           <div class="d-flex justify-content-end align-items-center">
             <div class="d-lg-none">
               <button
-                      class="btn btn-menu p-0"
-                      type="button"
-                      data-bs-toggle="offcanvas"
-                      data-bs-target="#staticBackdrop"
-                      aria-controls="staticBackdrop"
+                class="btn btn-menu p-0"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#staticBackdrop"
+                aria-controls="staticBackdrop"
               >
                 <ion-icon class="icon-menu" name="menu-outline"></ion-icon>
               </button>
 
               <!-- Side Bar -->
               <div
-                      class="offcanvas offcanvas-start"
-                      data-bs-backdrop="static"
-                      tabindex="-1"
-                      id="staticBackdrop"
-                      aria-labelledby="staticBackdropLabel"
+                class="offcanvas offcanvas-start"
+                data-bs-backdrop="static"
+                tabindex="-1"
+                id="staticBackdrop"
+                aria-labelledby="staticBackdropLabel"
               >
                 <div class="offcanvas-header">
                   <img
-                          class="logo-img"
-                          src="assets/img/Permap-logo-2.png"
-                          alt="permap logo"
+                    class="logo-img"
+                    src="assets/img/Permap-logo-2.png"
+                    alt="permap logo"
                   />
                   <h5
-                          class="offcanvas-title heading-2 m-0"
-                          id="staticBackdropLabel"
+                    class="offcanvas-title heading-2 m-0"
+                    id="staticBackdropLabel"
                   >
                     PERMAP
                   </h5>
                   <button
-                          class="btn--close"
-                          type="button"
-                          data-bs-dismiss="offcanvas"
-                          aria-label="Close"
+                    class="btn--close"
+                    type="button"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
                   >
                     <ion-icon class="icon-header" name="close"></ion-icon>
                   </button>
@@ -187,8 +187,8 @@ include("action/common-action.php");
                         <a class="main-nav-link" href="dashboard.php"
                         >
                           <ion-icon
-                                  name="file-tray-full-outline"
-                                  class="nav-icon"
+                            name="file-tray-full-outline"
+                            class="nav-icon"
                           ></ion-icon>
                           Dashboard</a
                         >
@@ -197,8 +197,8 @@ include("action/common-action.php");
                         <a class="main-nav-link" href="persons.php"
                         >
                           <ion-icon
-                                  name="people-outline"
-                                  class="nav-icon"
+                            name="people-outline"
+                            class="nav-icon"
                           ></ion-icon>
                           Persons</a
                         >
@@ -214,8 +214,8 @@ include("action/common-action.php");
                           <a class="main-nav-link" href="myProfile.php"
                           >
                             <ion-icon
-                                    name="person-circle-outline"
-                                    class="nav-icon"
+                              name="person-circle-outline"
+                              class="nav-icon"
                             ></ion-icon>
                             My Profile</a
                           >
@@ -224,8 +224,8 @@ include("action/common-action.php");
                           <a class="main-nav-link cta" href="logout.php"
                           >
                             <ion-icon
-                                    name="log-out-outline"
-                                    class="nav-icon"
+                              name="log-out-outline"
+                              class="nav-icon"
                             ></ion-icon>
                             Logout</a
                           >
@@ -239,8 +239,8 @@ include("action/common-action.php");
 
             <div class="user-box">
               <ion-icon
-                      class="user-icon btn-header"
-                      name="person-circle-outline"
+                class="user-icon btn-header"
+                name="person-circle-outline"
               ></ion-icon>
             </div>
             <div class="d-none d-lg-block">
@@ -263,8 +263,8 @@ include("action/common-action.php");
                   <a class="main-nav-link" href="dashboard.php"
                   >
                     <ion-icon
-                            name="file-tray-full-outline"
-                            class="nav-icon"
+                      name="file-tray-full-outline"
+                      class="nav-icon"
                     ></ion-icon>
                     Dashboard</a
                   >
@@ -273,8 +273,8 @@ include("action/common-action.php");
                   <a class="main-nav-link" href="persons.php"
                   >
                     <ion-icon
-                            name="people-outline"
-                            class="nav-icon"
+                      name="people-outline"
+                      class="nav-icon"
                     ></ion-icon>
                     Persons</a
                   >
@@ -290,8 +290,8 @@ include("action/common-action.php");
                     <a class="main-nav-link" href="myProfile.php"
                     >
                       <ion-icon
-                              name="person-circle-outline"
-                              class="nav-icon"
+                        name="person-circle-outline"
+                        class="nav-icon"
                       ></ion-icon>
                       My Profile</a
                     >
@@ -300,8 +300,8 @@ include("action/common-action.php");
                     <a class="main-nav-link cta" href="logout.php"
                     >
                       <ion-icon
-                              name="log-out-outline"
-                              class="nav-icon"
+                        name="log-out-outline"
+                        class="nav-icon"
                       ></ion-icon>
                       Logout</a>
                   </li>
@@ -321,7 +321,7 @@ include("action/common-action.php");
               <div class="col-12 col-lg-10 col-xl-9 col-xxl-7">
                 <div class="card" style="width: 100%">
                   <div
-                          class="card-body card-body-1 d-flex justify-content-center"
+                    class="card-body card-body-1 d-flex justify-content-center"
                   >
                     <h3 class="card-title main-title p-4 m-2 heading-tertiary">
                       Person Data
@@ -413,7 +413,11 @@ include("action/common-action.php");
 
                             <a
                               class="btn btn-primary me-2"
-                              href="edit.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
+                              <?php if ($thePerson['email'] == $_SESSION['userEmail']){ ?>
+                                href="myProfile.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
+                              <?php } else {?>
+                                href="edit.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
+                              <?php }?>
                               role="button"
                             >
                               <ion-icon name="create"></ion-icon>
@@ -464,7 +468,7 @@ include("action/common-action.php");
                                       type="button"
                                       class="btn btn-primary"
                                     >
-                                      <a role="button" class="btn-modal" href="action/delete-action.php">YES</a>
+                                      <a type="submit" role="button" class="btn-modal" href="action/delete-action.php">YES</a>
                                     </button>
                                   </div>
                                 </div>
@@ -481,14 +485,18 @@ include("action/common-action.php");
                 </div>
               </div>
             </div>
+
+<!--        alert untuk validasi jika data baru sudah tersimpan      -->
             <?php if (isset($_GET['saved'])) { ?>
               <div class="alert alert-success saved mt-4" role="alert">
                 Person Data updated successfully!
               </div>
+<!--        alert untuk validasi penghapusan jika data admin hanya ada satu       -->
             <?php }else if (isset($_GET['error']) && $_GET['error'] == 1){ ?>
               <div class="alert alert-danger saved mt-4" role="alert">
                 Can not delete this data, because there is only one admin in the database!
               </div>
+<!--        alert untuk validasi penghapusan jika data yang di hapus adalah dirinya sendiri        -->
             <?php }else if (isset($_GET['error']) && $_GET['error'] == 2) { ?>
               <div class="alert alert-danger saved mt-4" role="alert">
                 Can not delete your own data!

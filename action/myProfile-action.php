@@ -5,11 +5,11 @@ require_once __DIR__ . "/../assets/jsonHelper.php";
 
 session_start();
 
-function saveUpdateData(int $id): bool
+function saveUpdateProfile(int $id): bool
 {
     $persons = getPersonsData();
-    for ($i = 0; $i < count($persons); $i++){
-        if ($persons[$i]['id'] == $id) {
+    for ($i = 0; $i <count($persons); $i++){
+        if ($persons[$i]['id'] == $id){
             $persons[$i]['firstName'] = ucfirst($_POST['firstName']);
             $persons[$i]['lastName'] = ucfirst($_POST['lastName']);
             $persons[$i]['nik'] = $_POST['nik'];
@@ -19,20 +19,18 @@ function saveUpdateData(int $id): bool
             $persons[$i]['sex'] = $_POST['sex'];
             $persons[$i]['address'] = $_POST['address'];
             $persons[$i]['internalNotes'] = $_POST['internalNotes'];
-            $persons[$i]['role'] = $_POST['role'];
-            $persons[$i]['alive'] = convertSwitchValue($_POST['alive']);
 
             saveDataIntoJson($persons);
             return true;
         }
     }
+
     return false;
 }
 
-
-if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
+if ($_SESSION['search'] != null && $_SESSION['filter'] != null){
     $url = "search=" . $_SESSION['search'] . "&filter=" . $_SESSION['filter'] . "&";
-} else {
+}else{
     $url = "";
 }
 
@@ -42,19 +40,18 @@ if (count($errorData) != 0){
     $_SESSION['emailError'] = $errorData['email'];
     $_SESSION['passwordError'] = $errorData['password'];
     $_SESSION['inputData'] = inputData();
-
-//    header("Location: ../edit.php?person=" . $_SESSION['personId'] . "&error=1");
-    redirect('../edit.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
-//    exit();
+    redirect('../myProfile.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 }else{
-    unset($_SESSION['inputData']);
     unset($_SESSION['nikError']);
     unset($_SESSION['emailError']);
     unset($_SESSION['passwordError']);
 
-    $saved = saveUpdateData($_SESSION['personId']);
+    $saved = saveUpdateProfile($_SESSION['personId']);
 
-    if($saved) {
-        redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=1");
+    if ($saved) {
+        $_SESSION['userEmail'] = $_POST['email'];
+        $_SESSION['userName'] = $_POST['firstName'];
+        redirect('../view.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . '&saved=1');
     }
 }
+

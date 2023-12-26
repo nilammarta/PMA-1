@@ -312,11 +312,17 @@ include("action/common-action.php");
 
             <div class="row justify-content-center">
               <div class="col-12 col-md-10 col-lg-11 col-xxl-7">
-                <form class="create-form needs-validation p-4 mb-5">
+
+                  <?php
+                  $user = userLogin($_SESSION['userEmail']);
+                  $_SESSION['personId'] = $_GET['person'];
+                  $_SESSION['page'] = $_GET['page'];
+                  $_SESSION['filter'] = $_GET['filter'];
+                  $_SESSION['search'] = $_GET['search'];
+                  ?>
+
+                <form name="editProfile" class="create-form needs-validation p-4 mb-5" method="post" action="action/myProfile-action.php">
                   <h5 class="form-text pb-2 mb-4">EDIT PROFILE</h5>
-                    <?php
-                      $userLogin = userLogin($_SESSION['userEmail']);
-                    ?>
                   <div class="mb-3 row">
                     <label
                       for="inputFirstname"
@@ -324,10 +330,15 @@ include("action/common-action.php");
                     >Fist name</label>
                     <div class="col-sm-10">
                       <input
+                        name="firstName"
                         type="text"
                         class="form-control"
                         id="inputFirstname"
-                        value="<?php echo $userLogin["firstName"] ?>"
+                        value="<?php if (isset($_SESSION['inputData'])){
+                          echo $_SESSION['inputData']['firstName'];
+                        }else {
+                          echo $user["firstName"];
+                        }?>"
                       />
                     </div>
                   </div>
@@ -340,10 +351,15 @@ include("action/common-action.php");
                     >
                     <div class="col-sm-10">
                       <input
+                        name="lastName"
                         type="text"
                         class="form-control"
                         id="inputLastname"
-                        value="<?php echo $userLogin['lastName'] ?>"
+                        value="<?php if (isset($_SESSION['inputData'])){
+                          echo $_SESSION['inputData']['lastName'];
+                        }else {
+                          echo $user['lastName'];
+                        } ?>"
                       />
                     </div>
                   </div>
@@ -356,11 +372,22 @@ include("action/common-action.php");
                     >
                     <div class="col-sm-10">
                       <input
+                        name="nik"
                         type="number"
-                        class="form-control"
+                        class="form-control mb-2 <?php if (isset($_SESSION['nikError'])){
+                          echo "is-invalid";
+                        } ?>"
                         id="inputNIK"
-                        value="<?php echo $userLogin['nik'] ?>"
+                        value="<?php if (isset($_SESSION['inputData'])){
+                          echo $_SESSION['inputData']['nik'];
+                        }else {
+                          echo $user['nik'];
+                        }?>"
                       />
+
+                      <?php if (isset($_SESSION['nikError'])){ ?>
+                        <p class="error"> <?php echo $_SESSION['nikError'] ?></p>
+                      <?php }?>
                     </div>
                   </div>
 
@@ -368,31 +395,25 @@ include("action/common-action.php");
                     <label
                       for="inputEmail"
                       class="col-sm-2 col-form-label form-label"
-                    >Email</label
-                    >
+                    >Email</label>
                     <div class="col-sm-10">
                       <input
+                        name="email"
                         type="email"
-                        class="form-control"
+                        class="form-control mb-2 <?php if (isset($_SESSION['emailError'])){
+                          echo "is-invalid";
+                        } ?>"
                         id="inputEmail"
-                        value="<?php echo $userLogin['email'] ?>"
+                        value="<?php if (isset($_SESSION['inputData'])){
+                          echo $_SESSION['inputData']['email'];
+                        }else {
+                          echo $user['email'];
+                        }?>"
                       />
-                    </div>
-                  </div>
 
-                  <div class="mb-3 row">
-                    <label
-                      for="inputPassword"
-                      class="col-sm-2 col-form-label form-label"
-                    >Password</label
-                    >
-                    <div class="col-sm-10">
-                      <input
-                        type="password"
-                        class="form-control"
-                        id="inputPassword"
-                        value="<?php echo $userLogin['password'] ?>"
-                      />
+                      <?php if (isset($_SESSION['emailError'])){ ?>
+                        <p class="error"><?php echo $_SESSION['emailError']; ?></p>
+                      <?php } ?>
                     </div>
                   </div>
 
@@ -400,14 +421,19 @@ include("action/common-action.php");
                     <label
                       for="inputBirthdate"
                       class="col-sm-2 col-form-label form-label"
-                    >Birth date</label
-                    >
+                    >Birth date</label>
+
                     <div class="col-sm-10">
                       <input
+                        name="birthDate"
                         type="date"
                         class="form-control"
                         id="inputBirthdate"
-                        value="<?php echo date('Y-m-d', $userLogin['birthDate']) ?>"
+                        value="<?php if ($_SESSION['inputData']){
+                          echo $_SESSION['inputData']['birthDate'];
+                        }else {
+                          echo date('Y-m-d', $user['birthDate']);
+                        }?>"
                       />
                     </div>
                   </div>
@@ -416,37 +442,57 @@ include("action/common-action.php");
                     <label
                       for="inputAddress"
                       class="col-sm-2 col-form-label form-label"
-                    >Address</label
-                    >
+                    >Address</label>
+
                     <div class="col-sm-10">
                       <input
+                        name="address"
                         type="text"
                         class="form-control"
                         id="inputAddress"
-                        value="<?php echo $userLogin['address'] ?>"
+                        value="<?php if (isset($_SESSION['inputData'])){
+                          echo $_SESSION['inputData']['address'];
+                        } else {
+                          echo $user['address'];
+                        }?>"
                       />
                     </div>
                   </div>
 
                   <div class="mb-3 row">
                     <label
-                            for="inputSex"
-                            class="col-sm-2 col-form-label form-label"
-                    >Sex
-                    </label>
+                      for="inputSex"
+                      class="col-sm-2 col-form-label form-label"
+                    >Sex</label>
                     <div class="col-sm-10">
                       <select
+                        name="sex"
                         id="inputSex"
                         class="form-select"
                         aria-label="Default select example"
                         required
                       >
-                        <option selected></option>
-                        <option class="option-value" value="2"><?php if ($userLogin['sex'] == "f"){
-                              echo "Male";
-                            }else{
-                              echo "Female";
-                            } ?></option>
+                        <option
+                          selected
+                          value="<?php if (isset($_SESSION['inputData'])){
+                            echo $_SESSION['inputData']['sex'];
+                          }else{
+                            echo $user['sex'];
+                          }?>"
+                        >
+                          <?php if (isset($_SESSION['inputData'])){
+                            echo gender($_SESSION['inputData']['sex']);
+                          }else{
+                            echo gender($user['sex']);
+                          } ?>
+                        </option>
+                        <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['sex'] == "f"){ ?>
+                          <option class="option-value" value="m">Male</option>
+                        <?php }else if ($user['sex'] == "f") {?>
+                          <option class="option-value" value="m">Male</option>
+                        <?php }else { ?>
+                          <option class="option-value" value="f">Female</option>
+                        <?php }?>
                       </select>
                     </div>
                   </div>
@@ -454,27 +500,95 @@ include("action/common-action.php");
                   <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Internal notes</label>
                     <textarea
+                      name="internalNotes"
                       class="form-control"
                       id="exampleFormControlTextarea1"
                       rows="3"
-                    ><?php echo $userLogin['internalNotes'] ?></textarea>
+                    ><?php if (isset($_SESSION['inputData'])){
+                          echo $_SESSION['inputDate']['internalNotes'];
+                        }else {
+                            echo $user['internalNotes'];
+                        }?>
+                    </textarea>
                   </div>
 
+
+                  <h5 class="form-text pb-2 mb-3 mt-5">Change Password</h5>
+                  <div class="mb-3 row">
+                    <label
+                      for="inputPassword"
+                      class="col-sm-3 col-form-label form-label"
+                    >Current Password</label>
+
+                    <div class="col-sm-9">
+                      <input
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        id="inputPassword"
+                        placeholder="current password"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row">
+                    <label
+                      for="inputPassword"
+                      class="col-sm-3 col-form-label form-label"
+                    >New Password</label>
+
+                    <div class="col-sm-9">
+                      <input
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        id="inputPassword"
+                        placeholder="new password"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row">
+                    <label
+                      for="inputPassword"
+                      class="col-sm-3 col-form-label form-label"
+                    >Confirm Password</label>
+
+                    <div class="col-sm-9">
+                      <input
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        id="inputPassword"
+                        placeholder="confirm password"
+                      />
+                    </div>
+                  </div>
+
+<!--              button untuk menyimpan dan membatalakan    -->
                   <div class="row justify-content-center mt-5">
                     <div class="col-12">
                       <div class="btn-create">
                         <button
-                                type="submit"
-                                class="btn btn-primary btn-save me-3"
+                          type="submit"
+                          class="btn btn-primary btn-save me-3"
                         >
                           Save
                         </button>
-                        <button
-                                type="reset"
-                                class="btn btn-secondary btn-cancel"
+
+                        <?php if (isset($_SESSION['search']) != null && isset($_SESSION['filter']) != null) {
+                            $url = "search=" . $_SESSION['search'] . "&filter=" . $_SESSION['filter'] . "&";
+                        }else{
+                            $url = "";
+                        }?>
+                        <a
+                          type="reset"
+                          role="button"
+                          class="btn btn-secondary btn-cancel"
+                          href="persons.php?<?php echo $url?>page=<?php echo $_SESSION['page']?>"
                         >
                           Cancel
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -486,20 +600,27 @@ include("action/common-action.php");
       </section>
     </main>
     <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
     ></script>
 
     <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
     ></script>
     <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
     ></script>
+
+    <?php
+      unset($_SESSION['nikError']);
+      unset($_SESSION['emailError']);
+      unset($_SESSION['passwordError']);
+      unset($_SESSION['inputData']);
+    ?>
   </body>
 </html>

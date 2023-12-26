@@ -420,29 +420,29 @@ require_once __DIR__ . "/action/common-action.php";
                         <?php } ?>
                       </div>
 
-                      <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label"
-                        >Password &#42;</label>
-                        <input
-                          type="password"
-                          name="password"
-                          class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) {
-                              echo "is-invalid";
-                          } ?>"
-                          id="exampleInputPassword1"
-                          placeholder="password"
-                          value="<?php if (isset($_SESSION['inputData'])){
-                            echo $_SESSION['inputData']['password'];
-                          } else {
-                            echo $thePerson['password'];
-                          } ?>"
-                          required
-                        />
-
-                          <?php if (isset($_GET['saved']) == null) { ?>
-                            <p class="error"> <?php echo $_SESSION['passwordError']; ?> </p>
-                          <?php } ?>
-                      </div>
+<!--                      <div class="mb-3">-->
+<!--                        <label for="exampleInputPassword1" class="form-label"-->
+<!--                        >Password &#42;</label>-->
+<!--                        <input-->
+<!--                          type="password"-->
+<!--                          name="password"-->
+<!--                          class="form-control mb-2 --><?php //if (isset($_SESSION['passwordError'])) {
+//                              echo "is-invalid";
+//                          } ?><!--"-->
+<!--                          id="exampleInputPassword1"-->
+<!--                          placeholder="password"-->
+<!--                          value="--><?php //if (isset($_SESSION['inputData'])){
+//                            echo $_SESSION['inputData']['password'];
+//                          } else {
+//                            echo $thePerson['password'];
+//                          } ?><!--"-->
+<!--                          required-->
+<!--                        />-->
+<!---->
+<!--                          --><?php //if (isset($_GET['saved']) == null) { ?>
+<!--                            <p class="error">--><?php //echo $_SESSION['passwordError']; ?><!--</p>-->
+<!--                          --><?php //} ?>
+<!--                      </div>-->
 
                       <div class="mb-3">
                         <label for="birthDateInput" class="form-label">
@@ -499,9 +499,7 @@ require_once __DIR__ . "/action/common-action.php";
                       </div>
 
                       <div class="mb-3">
-                        <label for="addressInput" class="form-label"
-                        >Address &#42;
-                        </label>
+                        <label for="addressInput" class="form-label"> Address &#42; </label>
                         <input
                           id="addressInput"
                           name="address"
@@ -536,39 +534,39 @@ require_once __DIR__ . "/action/common-action.php";
                         } ?></textarea>
                       </div>
 
-                      <div class="mb-3">
-                        <label for="exampleRoleInput" class="form-label"
-                        >Role &#42;</label>
-                        <select
-                          id="exampleRoleInput"
-                          name="role"
-                          class="form-select"
-                          aria-label="Default select example"
-                        >
-                            <option
-                              selected
-                              value="<?php if (isset($_SESSION['inputData'])){
-                                echo $_SESSION['inputData']['role'];
-                              } else{
-                                echo $thePerson['role'];
-                              } ?>"
-                            >
-                              <?php if (isset($_SESSION['inputData'])){
-                                  echo $_SESSION['inputData']['role'] == "ADMIN" ? "ADMIN" : "MEMBER" ;
-                              } else{
-                                  echo $thePerson['role'] == "ADMIN" ? "ADMIN" : "MEMBER";
-                              } ?>
-                            </option>
-
-                            <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['role'] == "ADMIN"){?>
-                              <option class="option-value" value="MEMBER">MEMBER</option>
-                            <?php }else if ($thePerson['role'] == "ADMIN"){ ?>
-                              <option class="option-value" value="MEMBER">MEMBER</option>
-                            <?php } else { ?>
-                              <option class="option-value" value="ADMIN">ADMIN</option>
-                            <?php } ?>
-                        </select>
-                      </div>
+<!--                      <div class="mb-3">-->
+<!--                        <label for="exampleRoleInput" class="form-label"-->
+<!--                        >Role &#42;</label>-->
+<!--                        <select-->
+<!--                          id="exampleRoleInput"-->
+<!--                          name="role"-->
+<!--                          class="form-select"-->
+<!--                          aria-label="Default select example"-->
+<!--                        >-->
+<!--                            <option-->
+<!--                              selected-->
+<!--                              value="--><?php //if (isset($_SESSION['inputData'])){
+//                                echo $_SESSION['inputData']['role'];
+//                              } else{
+//                                echo $thePerson['role'];
+//                              } ?><!--"-->
+<!--                            >-->
+<!--                              --><?php //if (isset($_SESSION['inputData'])){
+//                                  echo $_SESSION['inputData']['role'] == "ADMIN" ? "ADMIN" : "MEMBER" ;
+//                              } else{
+//                                  echo $thePerson['role'] == "ADMIN" ? "ADMIN" : "MEMBER";
+//                              } ?>
+<!--                            </option>-->
+<!---->
+<!--                            --><?php //if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['role'] == "ADMIN"){?>
+<!--                              <option class="option-value" value="MEMBER">MEMBER</option>-->
+<!--                            --><?php //}else if ($thePerson['role'] == "ADMIN"){ ?>
+<!--                              <option class="option-value" value="MEMBER">MEMBER</option>-->
+<!--                            --><?php //} else { ?>
+<!--                              <option class="option-value" value="ADMIN">ADMIN</option>-->
+<!--                            --><?php //} ?>
+<!--                        </select>-->
+<!--                      </div>-->
 
                       <div
                         class="form-check form-switch mb-5 d-flex flex-row align-items-end gap-3"
@@ -581,7 +579,7 @@ require_once __DIR__ . "/action/common-action.php";
                           id="flexSwitchCheckChecked"
                           <?php if(isset($_SESSION['inputData']) == true && $_SESSION['inputData']['alive'] == true){
                             echo 'checked';
-                          }else if ($thePerson['alive'] == true) {
+                          } else if ($thePerson['alive'] == true) {
                             echo "checked";
                           } ?>
                         />
@@ -593,6 +591,59 @@ require_once __DIR__ . "/action/common-action.php";
                     </div>
                   </div>
 
+                  <h5 class="form-text pb-2 mb-3 mt-5">
+                    Edit Password
+                  </h5>
+
+                  <div class="mb-3 row">
+                    <label for="exampleInputPassword1" class="col-sm-3 col-form-label form-label"
+                    >Current Password </label>
+                    <div class="col-sm-9">
+                      <input
+                        type="password"
+                        name="currentPassword"
+                        class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) {
+                            echo "is-invalid";
+                        } ?>"
+                        id="exampleInputPassword1"
+                        placeholder="current password"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row">
+                    <label for="exampleInputPassword2" class="col-sm-3 col-form-label form-label"
+                    >New Password </label>
+                    <div class="col-sm-9">
+                      <input
+                        type="password"
+                        name="newPassword"
+                        class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) {
+                            echo "is-invalid";
+                        } ?>"
+                        id="exampleInputPassword2"
+                        placeholder="new password"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row">
+                    <label for="exampleInputPassword3" class="col-sm-3 col-form-label form-label"
+                    >Confirm Password </label>
+                    <div class="col-sm-9">
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) {
+                            echo "is-invalid";
+                        } ?>"
+                        id="exampleInputPassword3"
+                        placeholder="confirm password"
+                      />
+                    </div>
+                  </div>
+
+<!--              bagian button untuk save dan cancel    -->
                   <div class="row justify-content-center mt-1">
                     <div class="col-12">
                       <div class="btn-create">
