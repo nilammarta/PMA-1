@@ -368,8 +368,7 @@ include("action/common-action.php");
                     <label
                       for="inputNIK"
                       class="col-sm-2 col-form-label form-label"
-                    >NIK</label
-                    >
+                    >NIK</label>
                     <div class="col-sm-10">
                       <input
                         name="nik"
@@ -505,10 +504,10 @@ include("action/common-action.php");
                       id="exampleFormControlTextarea1"
                       rows="3"
                     ><?php if (isset($_SESSION['inputData'])){
-                          echo $_SESSION['inputDate']['internalNotes'];
-                        }else {
-                            echo $user['internalNotes'];
-                        }?>
+                      echo $_SESSION['inputDate']['internalNotes'];
+                    }else {
+                        echo $user['internalNotes'];
+                    }?>
                     </textarea>
                   </div>
 
@@ -524,10 +523,16 @@ include("action/common-action.php");
                       <input
                         name="currentPassword"
                         type="password"
-                        class="form-control"
+                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError'])) {
+                          echo "is-invalid";
+                        }?>"
                         id="inputCurrentPassword"
                         placeholder="current password"
                       />
+
+                      <?php if ($_SESSION['currentPasswordError']){ ?>
+                        <p class="error"><?php echo $_SESSION['currentPasswordError']; ?></p>
+                      <?php }?>
                     </div>
                   </div>
 
@@ -541,7 +546,9 @@ include("action/common-action.php");
                       <input
                         name="newPassword"
                         type="password"
-                        class="form-control"
+                        class="form-control mb-2 <?php if (isset($_SESSION['newPasswordError'])){
+                          echo "is-invalid";
+                        } ?>"
                         id="inputNewPassword"
                         placeholder="new password"
                       />
@@ -558,10 +565,16 @@ include("action/common-action.php");
                       <input
                         name="confirmPassword"
                         type="password"
-                        class="form-control"
+                        class="form-control mb-2 <?php if (isset($_SESSION['newPasswordError'])) {
+                          echo "is-invalid";
+                        }?>"
                         id="inputConfirmPassword"
                         placeholder="confirm password"
                       />
+
+                      <?php if (isset($_SESSION['newPasswordError'])){ ?>
+                        <p class="error mt-3"><?php echo $_SESSION['newPasswordError']; ?></p>
+                      <?php }?>
                     </div>
                   </div>
 
@@ -581,11 +594,17 @@ include("action/common-action.php");
                         }else{
                             $url = "";
                         }?>
+
+                        <?php if ($_GET['page'] == null && $_SESSION['page'] == null) {
+                          $page = "1";
+                        }else{
+                          $page = $_SESSION['page'];
+                        }?>
                         <a
                           type="reset"
                           role="button"
                           class="btn btn-secondary btn-cancel"
-                          href="persons.php?<?php echo $url?>page=<?php echo $_SESSION['page']?>"
+                          href="persons.php?<?php echo $url?>page=<?php echo $page?>"
                         >
                           Cancel
                         </a>
@@ -619,7 +638,6 @@ include("action/common-action.php");
     <?php
       unset($_SESSION['nikError']);
       unset($_SESSION['emailError']);
-      unset($_SESSION['passwordError']);
       unset($_SESSION['inputData']);
     ?>
   </body>

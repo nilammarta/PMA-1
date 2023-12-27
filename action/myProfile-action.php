@@ -10,11 +10,17 @@ function saveUpdateProfile(int $id): bool
     $persons = getPersonsData();
     for ($i = 0; $i <count($persons); $i++){
         if ($persons[$i]['id'] == $id){
+            if ($_POST['newPassword'] != null){
+                $password = $_POST['newPassword'];
+            }else{
+                $password = $persons[$i]['password'];
+            }
+
             $persons[$i]['firstName'] = ucfirst($_POST['firstName']);
             $persons[$i]['lastName'] = ucfirst($_POST['lastName']);
             $persons[$i]['nik'] = $_POST['nik'];
             $persons[$i]['email'] = $_POST['email'];
-            $persons[$i]['password'] = $_POST['password'];
+            $persons[$i]['password'] = $password;
             $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $_POST['birthDate']);
             $persons[$i]['sex'] = $_POST['sex'];
             $persons[$i]['address'] = $_POST['address'];
@@ -34,17 +40,24 @@ if ($_SESSION['search'] != null && $_SESSION['filter'] != null){
     $url = "";
 }
 
-$errorData = editValidate($_POST['nik'], $_POST['email'], $_POST['password'], $_SESSION['personId']);
+if ($_POST['currentPassword'] != null && $_POST['newPassword']){
+    $errorPass = passwordValidate($_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
+}else{
+    $errorPass = [];
+}
+
+$errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId']);
 if (count($errorData) != 0){
     $_SESSION['nikError'] = $errorData['nik'];
     $_SESSION['emailError'] = $errorData['email'];
-    $_SESSION['passwordError'] = $errorData['password'];
     $_SESSION['inputData'] = inputData();
+    $_SESSION['currentPasswordError'] = $errorPass['currentPass'];
+    $_SESSION['newPasswordError'] = $errorPass['newPass'];
+
     redirect('../myProfile.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 }else{
     unset($_SESSION['nikError']);
     unset($_SESSION['emailError']);
-    unset($_SESSION['passwordError']);
 
     $saved = saveUpdateProfile($_SESSION['personId']);
 

@@ -420,30 +420,6 @@ require_once __DIR__ . "/action/common-action.php";
                         <?php } ?>
                       </div>
 
-<!--                      <div class="mb-3">-->
-<!--                        <label for="exampleInputPassword1" class="form-label"-->
-<!--                        >Password &#42;</label>-->
-<!--                        <input-->
-<!--                          type="password"-->
-<!--                          name="password"-->
-<!--                          class="form-control mb-2 --><?php //if (isset($_SESSION['passwordError'])) {
-//                              echo "is-invalid";
-//                          } ?><!--"-->
-<!--                          id="exampleInputPassword1"-->
-<!--                          placeholder="password"-->
-<!--                          value="--><?php //if (isset($_SESSION['inputData'])){
-//                            echo $_SESSION['inputData']['password'];
-//                          } else {
-//                            echo $thePerson['password'];
-//                          } ?><!--"-->
-<!--                          required-->
-<!--                        />-->
-<!---->
-<!--                          --><?php //if (isset($_GET['saved']) == null) { ?>
-<!--                            <p class="error">--><?php //echo $_SESSION['passwordError']; ?><!--</p>-->
-<!--                          --><?php //} ?>
-<!--                      </div>-->
-
                       <div class="mb-3">
                         <label for="birthDateInput" class="form-label">
                           Birth date &#42;
@@ -534,40 +510,6 @@ require_once __DIR__ . "/action/common-action.php";
                         } ?></textarea>
                       </div>
 
-<!--                      <div class="mb-3">-->
-<!--                        <label for="exampleRoleInput" class="form-label"-->
-<!--                        >Role &#42;</label>-->
-<!--                        <select-->
-<!--                          id="exampleRoleInput"-->
-<!--                          name="role"-->
-<!--                          class="form-select"-->
-<!--                          aria-label="Default select example"-->
-<!--                        >-->
-<!--                            <option-->
-<!--                              selected-->
-<!--                              value="--><?php //if (isset($_SESSION['inputData'])){
-//                                echo $_SESSION['inputData']['role'];
-//                              } else{
-//                                echo $thePerson['role'];
-//                              } ?><!--"-->
-<!--                            >-->
-<!--                              --><?php //if (isset($_SESSION['inputData'])){
-//                                  echo $_SESSION['inputData']['role'] == "ADMIN" ? "ADMIN" : "MEMBER" ;
-//                              } else{
-//                                  echo $thePerson['role'] == "ADMIN" ? "ADMIN" : "MEMBER";
-//                              } ?>
-<!--                            </option>-->
-<!---->
-<!--                            --><?php //if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['role'] == "ADMIN"){?>
-<!--                              <option class="option-value" value="MEMBER">MEMBER</option>-->
-<!--                            --><?php //}else if ($thePerson['role'] == "ADMIN"){ ?>
-<!--                              <option class="option-value" value="MEMBER">MEMBER</option>-->
-<!--                            --><?php //} else { ?>
-<!--                              <option class="option-value" value="ADMIN">ADMIN</option>-->
-<!--                            --><?php //} ?>
-<!--                        </select>-->
-<!--                      </div>-->
-
                       <div
                         class="form-check form-switch mb-5 d-flex flex-row align-items-end gap-3"
                       >
@@ -627,9 +569,7 @@ require_once __DIR__ . "/action/common-action.php";
                         } ?>"
                         id="exampleInputPassword2"
                         placeholder="new password"
-                        required
                       />
-
                     </div>
                   </div>
 
@@ -640,12 +580,11 @@ require_once __DIR__ . "/action/common-action.php";
                       <input
                         type="password"
                         name="confirmPassword"
-                        class="form-control mb-2 <?php if (isset($_SESSION[''])){
+                        class="form-control mb-2 <?php if (isset($_SESSION['newPasswordError'])){
                           echo "is-invalid";
                         } ?>"
                         id="exampleInputPassword3"
                         placeholder="confirm password"
-                        required
                       />
                       <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])) { ?>
                         <p class="error mt-3"> <?php echo $_SESSION['newPasswordError']; ?></p>

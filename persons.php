@@ -404,7 +404,7 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                   <?php } else { ?>
                       <?php
                       $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
-                      $limit = 2;
+                      $limit = 5;
 
                       $previous = $page - 1;
                       $next = $page + 1;

@@ -190,20 +190,24 @@ function editValidate(string $nik, string $email, int $id):array
     return $validate;
 }
 
-//function passwordValidation(int $id, array $passwordInput): string
-//{
-////    $passValidate = [];
-////    untuk mengecek password yang di input sama dengan password yang di gunakan saat ini
-//    if (isMatchCurrentPassword($id, $passwordInput['currentPassword']) == false){
-//        return "Password input is wrong, please type again!";
-//    }
-//
-////    untuk mengecek input password
-//    if (checkInputPassword($_POST['newPassword']) == null){
-//        $passValidate ['inputPassError'] = "Password must have at least 1 capital letter, 1 non capital letter and 1 number,
-//        with minimum of 8 characters and maximum 16 characters!";
-//    }
-//
-////  untuk melakukan pengecekan terhadap konfirmasi yang di lakukan
-////    if ($_POST['newPassword'] =)
-//}
+function passwordValidate(string $currentPass, string $newPass, string $confirmPass): array
+{
+    $validation = [];
+
+    if (isMatchCurrentPassword($_SESSION['personId'], $currentPass) == false){
+        $validation['currentPass'] = "Password input is not correct, please type again!";
+    }
+
+    if (checkInputPassword($newPass) == null){
+        $validation['newPass'] = "Password password is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
+        with minimum of 8 characters and maximum 16 characters!";
+
+    }
+
+    if ($confirmPass != $newPass){
+        $validation['newPass'] = "Password password is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
+        with minimum of 8 characters and maximum 16 characters!";
+    }
+
+    return $validation;
+}

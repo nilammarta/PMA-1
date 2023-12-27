@@ -24,7 +24,6 @@ function saveUpdateData(int $id): bool
             $persons[$i]['sex'] = $_POST['sex'];
             $persons[$i]['address'] = $_POST['address'];
             $persons[$i]['internalNotes'] = $_POST['internalNotes'];
-            $persons[$i]['role'] = $_POST['role'];
             $persons[$i]['alive'] = convertSwitchValue($_POST['alive']);
 
             saveDataIntoJson($persons);
@@ -42,37 +41,17 @@ if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
 }
 
 
-function passwordValidate(string $currentPass, string $newPass, string $confirmPass): array
-{
-    $validation = [];
-
-    if (isMatchCurrentPassword($_SESSION['personId'], $currentPass) == false){
-        $validation['currentPass'] = "Password input is not correct, please type again!";
-    }
-
-    if (checkInputPassword($newPass) == null){
-        $validation['newPass'] = "Password password is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
-        with minimum of 8 characters and maximum 16 characters!";
-
-    }
-
-    if ($confirmPass != $newPass){
-        $validation['newPass'] = "Password password is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
-        with minimum of 8 characters and maximum 16 characters!";
-    }
-
-
-    return $validation;
+if ($_POST['currentPassword'] != null) {
+    $errorPass = passwordValidate($_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
+}else{
+    $errorPass = [];
 }
-
-//if ($_POST['currentPassword'] != null && $_POST['newPassword'])
-$errorPass = passwordValidate($_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
 $errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId']);
 if (count($errorData) != 0 || count($errorPass) != 0){
     $_SESSION['nikError'] = $errorData['nik'];
     $_SESSION['emailError'] = $errorData['email'];
     $_SESSION['inputData'] = inputData();
-    $_SESSION['currentPasswordError'] =$errorPass['currentPass'];
+    $_SESSION['currentPasswordError'] = $errorPass['currentPass'];
     $_SESSION['newPasswordError'] = $errorPass['newPass'];
 //    $_SESSION['confirmPasswordError'] = $errorPass['confirmPass'];
 
