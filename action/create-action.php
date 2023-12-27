@@ -44,7 +44,7 @@ function validate(string $nik, string $password, string $email):array
         $validate['nik'] = "NIK is already exists in database please type another NIK";
     }
 
-    if (checkPassword($password) == null) {
+    if (checkInputPassword($password) == null) {
         $validate['password'] = "Password must have a minimum of 8 characters and maximum 16 characters";
     }
 

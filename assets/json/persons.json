@@ -9,10 +9,10 @@
         "birthDate": 976608756,
         "sex": "f",
         "address": "Denpasar",
-        "internalNotes": "                                        ",
+        "internalNotes": "",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1703574675
+        "lastLoggedIn": 1703658065
     },
     {
         "id": 3,

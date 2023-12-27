@@ -186,7 +186,7 @@ include("action/common-action.php");
                           Dashboard</a
                         >
                       </li>
-                      <li class="nav-item nav-open">
+                      <li class="nav-item">
                         <a class="main-nav-link" href="persons.php"
                         >
                           <ion-icon
@@ -203,7 +203,7 @@ include("action/common-action.php");
                     <h6 class="heading-6 sub-heading m-0">Account</h6>
                     <nav class="main-nav">
                       <ul class="main-nav-list">
-                        <li class="nav-item">
+                        <li class="nav-item nav-open">
                           <a class="main-nav-link" href="myProfile.php"
                           >
                             <ion-icon
@@ -512,20 +512,20 @@ include("action/common-action.php");
                     </textarea>
                   </div>
 
-
+<!--               change password       -->
                   <h5 class="form-text pb-2 mb-3 mt-5">Change Password</h5>
                   <div class="mb-3 row">
                     <label
-                      for="inputPassword"
+                      for="inputCurrentPassword"
                       class="col-sm-3 col-form-label form-label"
                     >Current Password</label>
 
                     <div class="col-sm-9">
                       <input
-                        name="password"
+                        name="currentPassword"
                         type="password"
                         class="form-control"
-                        id="inputPassword"
+                        id="inputCurrentPassword"
                         placeholder="current password"
                       />
                     </div>
@@ -533,16 +533,16 @@ include("action/common-action.php");
 
                   <div class="mb-3 row">
                     <label
-                      for="inputPassword"
+                      for="inputNewPassword"
                       class="col-sm-3 col-form-label form-label"
                     >New Password</label>
 
                     <div class="col-sm-9">
                       <input
-                        name="password"
+                        name="newPassword"
                         type="password"
                         class="form-control"
-                        id="inputPassword"
+                        id="inputNewPassword"
                         placeholder="new password"
                       />
                     </div>
@@ -550,16 +550,16 @@ include("action/common-action.php");
 
                   <div class="mb-3 row">
                     <label
-                      for="inputPassword"
+                      for="inputConfirmPassword"
                       class="col-sm-3 col-form-label form-label"
                     >Confirm Password</label>
 
                     <div class="col-sm-9">
                       <input
-                        name="password"
+                        name="confirmPassword"
                         type="password"
                         class="form-control"
-                        id="inputPassword"
+                        id="inputConfirmPassword"
                         placeholder="confirm password"
                       />
                     </div>

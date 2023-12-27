@@ -314,9 +314,9 @@ include("action/dashboard-action.php");
             <h2 class="heading-2 content-title m-0 p-3">DASHBOARD</h2>
             <p class="dashboard-description">
               Hi
-                <?php {
-                    echo $_SESSION['userName'];
-                } ?>!, Welcome in Dashboard
+              <?php {
+                  echo $_SESSION['userName'];
+              } ?>!, Welcome in Dashboard
             </p>
             <p class="card-text">Last Activity : <strong> <?php echo lastActivity($_SESSION['logout']) ?> </strong></p>
 

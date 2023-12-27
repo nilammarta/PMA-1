@@ -109,12 +109,23 @@ function checkFormatEmail($newEmail):string | null
 
 
 // Validate Password
-function checkPassword($newPassword):string|null
+function checkInputPassword($newPassword):string|null
 {
-    if (strlen($newPassword) > 16 || strlen($newPassword) < 8){
+//    if (strlen($newPassword) > 16 || strlen($newPassword) < 8){
+    if (!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/", $newPassword)){
         return null;
     }else{
         return $newPassword;
+    }
+}
+
+function isMatchCurrentPassword(int $id, string $currentPassword): bool
+{
+    $thePerson = getUserById($id);
+    if ($thePerson['password'] == $currentPassword){
+        return true;
+    }else{
+        return false;
     }
 }
 
@@ -157,7 +168,7 @@ function inputData ():array
     ];
 }
 
-function editValidate(string $nik, string $email, string $password, int $id):array
+function editValidate(string $nik, string $email, int $id):array
 {
     $validate = [];
     if (checkNik($nik) == null){
@@ -176,9 +187,23 @@ function editValidate(string $nik, string $email, string $password, int $id):arr
         $validate['email'] = "Email is already exists in database, please type another email!";
     }
 
-    if (checkPassword($password) == null){
-        $validate['password'] = "Password must have a minimum of 8 character and maximum 16 characters!";
-    }
-
     return $validate;
 }
+
+//function passwordValidation(int $id, array $passwordInput): string
+//{
+////    $passValidate = [];
+////    untuk mengecek password yang di input sama dengan password yang di gunakan saat ini
+//    if (isMatchCurrentPassword($id, $passwordInput['currentPassword']) == false){
+//        return "Password input is wrong, please type again!";
+//    }
+//
+////    untuk mengecek input password
+//    if (checkInputPassword($_POST['newPassword']) == null){
+//        $passValidate ['inputPassError'] = "Password must have at least 1 capital letter, 1 non capital letter and 1 number,
+//        with minimum of 8 characters and maximum 16 characters!";
+//    }
+//
+////  untuk melakukan pengecekan terhadap konfirmasi yang di lakukan
+////    if ($_POST['newPassword'] =)
+//}

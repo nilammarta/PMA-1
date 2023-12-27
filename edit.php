@@ -591,55 +591,65 @@ require_once __DIR__ . "/action/common-action.php";
                     </div>
                   </div>
 
+<!--               change password   -->
                   <h5 class="form-text pb-2 mb-3 mt-5">
                     Edit Password
                   </h5>
-
                   <div class="mb-3 row">
                     <label for="exampleInputPassword1" class="col-sm-3 col-form-label form-label"
                     >Current Password </label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9 col-xl-7">
                       <input
                         type="password"
                         name="currentPassword"
-                        class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) {
+                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError'])) {
                             echo "is-invalid";
                         } ?>"
                         id="exampleInputPassword1"
                         placeholder="current password"
                       />
+
+                      <?php if (isset($_SESSION['currentPasswordError'])){ ?>
+                        <p class="error"> <?php echo $_SESSION['currentPasswordError']; ?></p>
+                      <?php }?>
                     </div>
                   </div>
 
                   <div class="mb-3 row">
                     <label for="exampleInputPassword2" class="col-sm-3 col-form-label form-label"
                     >New Password </label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9 col-xl-7">
                       <input
                         type="password"
                         name="newPassword"
-                        class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) {
-                            echo "is-invalid";
+                        class="form-control mb-2 <?php if (isset($_SESSION['newPasswordError'])){
+                          echo "is-invalid";
                         } ?>"
                         id="exampleInputPassword2"
                         placeholder="new password"
+                        required
                       />
+
                     </div>
                   </div>
 
                   <div class="mb-3 row">
                     <label for="exampleInputPassword3" class="col-sm-3 col-form-label form-label"
                     >Confirm Password </label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9 col-xl-7">
                       <input
                         type="password"
                         name="confirmPassword"
-                        class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) {
-                            echo "is-invalid";
+                        class="form-control mb-2 <?php if (isset($_SESSION[''])){
+                          echo "is-invalid";
                         } ?>"
                         id="exampleInputPassword3"
                         placeholder="confirm password"
+                        required
                       />
+                      <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])) { ?>
+                        <p class="error mt-3"> <?php echo $_SESSION['newPasswordError']; ?></p>
+                      <?php }?>
                     </div>
                   </div>
 
@@ -699,6 +709,9 @@ require_once __DIR__ . "/action/common-action.php";
     unset($_SESSION['emailError']);
     unset($_SESSION['passwordError']);
     unset($_SESSION['inputData']);
+    unset($_SESSION['currentPasswordError']);
+    unset($_SESSION['newPasswordError']);
+//    unset($_SESSION['confirmPasswordError']);
     ?>
 
   </body>

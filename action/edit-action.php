@@ -10,11 +10,16 @@ function saveUpdateData(int $id): bool
     $persons = getPersonsData();
     for ($i = 0; $i < count($persons); $i++){
         if ($persons[$i]['id'] == $id) {
+            if ($_POST['currentPassword'] != null){
+                $password = $_POST['newPassword'];
+            }else{
+                $password = $persons[$i]['password'];
+            }
             $persons[$i]['firstName'] = ucfirst($_POST['firstName']);
             $persons[$i]['lastName'] = ucfirst($_POST['lastName']);
             $persons[$i]['nik'] = $_POST['nik'];
             $persons[$i]['email'] = $_POST['email'];
-            $persons[$i]['password'] = $_POST['password'];
+            $persons[$i]['password'] =  $password;
             $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $_POST['birthDate']);
             $persons[$i]['sex'] = $_POST['sex'];
             $persons[$i]['address'] = $_POST['address'];
@@ -36,21 +41,50 @@ if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
     $url = "";
 }
 
-$errorData = editValidate($_POST['nik'], $_POST['email'], $_POST['password'], $_SESSION['personId']);
-if (count($errorData) != 0){
+
+function passwordValidate(string $currentPass, string $newPass, string $confirmPass): array
+{
+    $validation = [];
+
+    if (isMatchCurrentPassword($_SESSION['personId'], $currentPass) == false){
+        $validation['currentPass'] = "Password input is not correct, please type again!";
+    }
+
+    if (checkInputPassword($newPass) == null){
+        $validation['newPass'] = "Password password is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
+        with minimum of 8 characters and maximum 16 characters!";
+
+    }
+
+    if ($confirmPass != $newPass){
+        $validation['newPass'] = "Password password is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
+        with minimum of 8 characters and maximum 16 characters!";
+    }
+
+
+    return $validation;
+}
+
+//if ($_POST['currentPassword'] != null && $_POST['newPassword'])
+$errorPass = passwordValidate($_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
+$errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId']);
+if (count($errorData) != 0 || count($errorPass) != 0){
     $_SESSION['nikError'] = $errorData['nik'];
     $_SESSION['emailError'] = $errorData['email'];
-    $_SESSION['passwordError'] = $errorData['password'];
     $_SESSION['inputData'] = inputData();
+    $_SESSION['currentPasswordError'] =$errorPass['currentPass'];
+    $_SESSION['newPasswordError'] = $errorPass['newPass'];
+//    $_SESSION['confirmPasswordError'] = $errorPass['confirmPass'];
 
-//    header("Location: ../edit.php?person=" . $_SESSION['personId'] . "&error=1");
     redirect('../edit.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 //    exit();
 }else{
     unset($_SESSION['inputData']);
     unset($_SESSION['nikError']);
     unset($_SESSION['emailError']);
-    unset($_SESSION['passwordError']);
+    unset($_SESSION['currentPasswordError']);
+    unset($_SESSION['newPasswordError']);
+//    unset($_SESSION['confirmPasswordError']);
 
     $saved = saveUpdateData($_SESSION['personId']);
 
