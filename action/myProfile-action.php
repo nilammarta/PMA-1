@@ -40,14 +40,9 @@ if ($_SESSION['search'] != null && $_SESSION['filter'] != null){
     $url = "";
 }
 
-if ($_POST['currentPassword'] != null && $_POST['newPassword']){
-    $errorPass = passwordValidate($_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
-}else{
-    $errorPass = [];
-}
-
+$errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
 $errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId']);
-if (count($errorData) != 0){
+if (count($errorData) != 0 || count($errorPass) != 0){
     $_SESSION['nikError'] = $errorData['nik'];
     $_SESSION['emailError'] = $errorData['email'];
     $_SESSION['inputData'] = inputData();
@@ -58,6 +53,9 @@ if (count($errorData) != 0){
 }else{
     unset($_SESSION['nikError']);
     unset($_SESSION['emailError']);
+    unset($_SESSION['inputData']);
+    unset($_SESSION['currentPasswordError']);
+    unset($_SESSION['newPasswordError']);
 
     $saved = saveUpdateProfile($_SESSION['personId']);
 

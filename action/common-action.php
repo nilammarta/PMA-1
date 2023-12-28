@@ -71,7 +71,7 @@ function isNikExits(string $nik, int|null $id):bool
 }
 
 // validate NIK
-function checkNik (string $nik):string|null
+function checkNik (string $nik): string|null
 {
     if (strlen($nik) == 16 && preg_match("/^[0-9]*$/", $nik)){
         return $nik;
@@ -190,24 +190,39 @@ function editValidate(string $nik, string $email, int $id):array
     return $validate;
 }
 
-function passwordValidate(string $currentPass, string $newPass, string $confirmPass): array
+function newPasswordValidate(string $newPass, string $confirmPass): array
 {
     $validation = [];
 
-    if (isMatchCurrentPassword($_SESSION['personId'], $currentPass) == false){
-        $validation['currentPass'] = "Password input is not correct, please type again!";
-    }
-
     if (checkInputPassword($newPass) == null){
-        $validation['newPass'] = "Password password is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
+        $validation['newPass'] = "Password input is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
         with minimum of 8 characters and maximum 16 characters!";
 
     }
 
     if ($confirmPass != $newPass){
-        $validation['newPass'] = "Password password is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
+        $validation['newPass'] = "Password input is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
         with minimum of 8 characters and maximum 16 characters!";
     }
 
     return $validation;
+}
+
+function passwordValidate(int $id, string $currentPassword, string $newPassword, string $confirmPassword):array
+{
+    $validate = [];
+    if ($currentPassword != null){
+        if (isMatchCurrentPassword($id, $currentPassword) == false){
+            $validate['currentPass'] = "Password input is not correct";
+        }else{
+            $errorNewPass = newPasswordValidate($newPassword, $confirmPassword);
+            if ($errorNewPass != null) {
+                $validate['newPass'] = $errorNewPass['newPass'];
+            }
+        }
+    }else{
+        $validate['currentPass'] = "Please input the current password first!";
+    }
+
+    return $validate;
 }

@@ -189,7 +189,7 @@ body {
 
 .main-nav-link:hover,
 .main-nav-link:active {
-  color: #c599ff;
+  /*color: #c599ff;*/
   color: #ffd299;
 }
 
@@ -254,4 +254,9 @@ body {
 
 .alert{
   text-align: center;
+}
+
+.error{
+  color: #b21818;
+  line-height: 1.6rem;
 }

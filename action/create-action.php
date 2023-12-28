@@ -33,7 +33,7 @@ function generateId($persons): int
  */
 
 //tampung error yang terjadi pada inputan form
-function validate(string $nik, string $password, string $email):array
+function validate(string $nik, string $password, string $confirmPassword, string $email):array
 {
     $validate = [];
     if (checkNik($nik) == null) {
@@ -45,7 +45,13 @@ function validate(string $nik, string $password, string $email):array
     }
 
     if (checkInputPassword($password) == null) {
-        $validate['password'] = "Password must have a minimum of 8 characters and maximum 16 characters";
+        $validate['password'] = "Password input is not correct, password must have at least 1 capital letter, 1 non-capital letter,
+         and 1 number, with minimum of 8 characters and maximum 16 characters";
+    }
+
+    if ($password != $confirmPassword){
+        $validate['password'] = "Password input is not correct, password must have at least 1 capital letter, 1 non-capital letter,
+        and 1 number, with minimum of 8 characters and maximum 16 characters";
     }
 
     if (isEmailExists($email, null) == true) {
@@ -85,7 +91,7 @@ function saveData():bool
     return true;
 }
 
-$errorData = validate($_POST['nik'], $_POST['password'], $_POST['email']);
+$errorData = validate($_POST['nik'], $_POST['password'], $_POST['confirmPassword'], $_POST['email']);
 if (count($errorData) != 0){
     $_SESSION['nikError'] = $errorData["nik"];
     $_SESSION['emailError'] = $errorData['email'];

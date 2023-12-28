@@ -403,11 +403,23 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                     </div>
                   <?php } else { ?>
                       <?php
-                      $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
+//                      $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
+
+                      if (isset($_GET['page']) && $_GET['page'] < 1){
+                        $page = 1;
+                      }else if (isset($_GET['page']) == null){
+                        $page = 1;
+                      }else if(isset($_GET['page']) && is_numeric($_GET['page']) == false ) {
+                          $page = 1;
+                      }else{
+                        $page = $_GET['page'];
+                      }
+
                       $limit = 5;
 
                       $previous = $page - 1;
                       $next = $page + 1;
+
 
                       $data = getPaginatedData($persons, $page, $limit);
 
@@ -416,11 +428,11 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                       $number = ($page - 1) * $limit + 1; ?>
 
                     <!--                  Pengecekan untuk halaman page jika page yang ada di url lebih besar dari total page-->
-                      <?php if ($data['totalPage'] < $_GET['page']) { ?>
-                      <div class="alert alert-danger mx-5" role="alert">
-                        Page (<?php echo $_GET['page'] ?>) is not found!
-                      </div>
-                      <?php } else { ?>
+<!--                      --><?php //if ($data['totalPage'] < $_GET['page']) { ?>
+<!--                        <div class="alert alert-danger mx-5" role="alert">-->
+<!--                          Page (--><?php //echo $_GET['page'] ?><!--) is not found!-->
+<!--                        </div>-->
+<!--                      --><?php //} else { ?>
                       <table class="table table-hover">
                         <tbody>
 
@@ -441,10 +453,13 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                             <td><?php echo $personsData[$i]["role"] ?></td>
                             <td>
                               <div class="d-grid gap-2 d-flex justify-content-md-end">
+<!--                                  page untuk di tambahkan pada href -->
                                   <?php
                                     if (isset($_GET['page']) == null) {
                                         $page = 1;
-                                    } else {
+                                    }elseif (is_numeric($_GET['page']) == false && $_GET['page'] < 1){
+                                        $page = 1;
+                                    }else{
                                         $page = $_GET['page'];
                                     }
                                   ?>
@@ -497,7 +512,8 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                         <nav aria-label="Page navigation example">
                           <ul class="pagination justify-content-center">
                             <li class="page-item">
-                                <?php if ($page > 1) { ?>
+
+                                <?php if ($page > 1 && is_numeric($_GET['page']) != null) { ?>
                                   <a class="page-link"
                                      href='?<?php echo $url ?>page=<?php echo $previous ?>'
                                   >
@@ -518,8 +534,22 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                                            href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
                                         </a>
                                       </li>
-  <!--                              untuk memberikn warna pada halaman saat ini        -->
+  <!--                              untuk memberikan warna pada halaman saat ini        -->
                                     <?php } else if ($_GET["page"] == $i) { ?>
+                                      <li class="page-item active">
+                                        <a class="page-link"
+                                           href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                        </a>
+                                      </li>
+                                      <!--untuk memberikan warna pada halaman jika diinput "asdancasdw"      -->
+                                    <?php }else if ($_GET['page'] > $data['totalPage'] && $i == 1 ) { ?>
+                                      <li class="page-item active">
+                                        <a class="page-link"
+                                           href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                        </a>
+                                      </li>
+<!--                                untuk memberikan warna pada halaman jika inputan -2              -->
+                                    <?php }else if (is_numeric($_GET['page']) == true && $_GET['page'] < 1 && $i == 1) { ?>
                                       <li class="page-item active">
                                         <a class="page-link"
                                            href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
@@ -537,10 +567,9 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                             } ?>
 
                             <li class="page-item">
-                                <?php if ($page < $data["totalPage"]) { ?>
+                                <?php if ($page < $data["totalPage"] || $_GET['page'] > $data['totalPage']) { ?>
                                   <a class="page-link"
-                                    href='?<?php echo $url ?>page=<?php echo $next ?>'
-                                  >
+                                    href='?<?php echo $url ?>page=<?php echo $next ?>'>
                                     <ion-icon
                                       class="page-icon"
                                       name="caret-forward-outline"
@@ -552,7 +581,7 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                         </nav>
                       </div>
                       <?php } ?>
-                  <?php } ?>
+<!--                  --><?php //} ?>
               </div>
             </div>
           </div>

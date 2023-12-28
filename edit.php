@@ -313,7 +313,7 @@ require_once __DIR__ . "/action/common-action.php";
 
             <div class="row justify-content-center">
               <!-- <div class="col-12 col-md-10 col-lg-11 col-xxl-6"> -->
-              <div class="col-12">
+              <div class="col-12 col-md-10 col-lg-12">
                   <?php if (isset($_GET['person'])) {
                       $_SESSION['personId'] = $_GET['person'];
                       $_SESSION['page'] = $_GET['page'];
@@ -535,12 +535,12 @@ require_once __DIR__ . "/action/common-action.php";
 
 <!--               change password   -->
                   <h5 class="form-text pb-2 mb-3 mt-5">
-                    Edit Password
+                    Change Password
                   </h5>
                   <div class="mb-3 row">
-                    <label for="exampleInputPassword1" class="col-sm-3 col-form-label form-label"
+                    <label for="exampleInputPassword1" class="col-sm-2 col-form-label form-label"
                     >Current Password </label>
-                    <div class="col-sm-9 col-xl-7">
+                    <div class="col-sm-9 col-xl-6">
                       <input
                         type="password"
                         name="currentPassword"
@@ -558,13 +558,13 @@ require_once __DIR__ . "/action/common-action.php";
                   </div>
 
                   <div class="mb-3 row">
-                    <label for="exampleInputPassword2" class="col-sm-3 col-form-label form-label"
+                    <label for="exampleInputPassword2" class="col-sm-2 col-form-label form-label"
                     >New Password </label>
-                    <div class="col-sm-9 col-xl-7">
+                    <div class="col-sm-9 col-xl-6">
                       <input
                         type="password"
                         name="newPassword"
-                        class="form-control mb-2 <?php if (isset($_SESSION['newPasswordError'])){
+                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])){
                           echo "is-invalid";
                         } ?>"
                         id="exampleInputPassword2"
@@ -574,13 +574,13 @@ require_once __DIR__ . "/action/common-action.php";
                   </div>
 
                   <div class="mb-3 row">
-                    <label for="exampleInputPassword3" class="col-sm-3 col-form-label form-label"
+                    <label for="exampleInputPassword3" class="col-sm-2 col-form-label form-label"
                     >Confirm Password </label>
-                    <div class="col-sm-9 col-xl-7">
+                    <div class="col-sm-9 col-xl-6">
                       <input
                         type="password"
                         name="confirmPassword"
-                        class="form-control mb-2 <?php if (isset($_SESSION['newPasswordError'])){
+                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])){
                           echo "is-invalid";
                         } ?>"
                         id="exampleInputPassword3"
@@ -650,7 +650,6 @@ require_once __DIR__ . "/action/common-action.php";
     unset($_SESSION['inputData']);
     unset($_SESSION['currentPasswordError']);
     unset($_SESSION['newPasswordError']);
-//    unset($_SESSION['confirmPasswordError']);
     ?>
 
   </body>

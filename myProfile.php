@@ -315,8 +315,13 @@ include("action/common-action.php");
 
                   <?php
                   $user = userLogin($_SESSION['userEmail']);
-                  $_SESSION['personId'] = $_GET['person'];
-                  $_SESSION['page'] = $_GET['page'];
+                  $_SESSION['personId'] = $user['id'];
+                  if (isset($_GET['page']) == null){
+                    $page = "1";
+                  }else{
+                    $page = $_GET['page'];
+                  }
+                  $_SESSION['page'] = $page;
                   $_SESSION['filter'] = $_GET['filter'];
                   $_SESSION['search'] = $_GET['search'];
                   ?>
@@ -507,8 +512,7 @@ include("action/common-action.php");
                       echo $_SESSION['inputDate']['internalNotes'];
                     }else {
                         echo $user['internalNotes'];
-                    }?>
-                    </textarea>
+                    }?></textarea>
                   </div>
 
 <!--               change password       -->
@@ -546,7 +550,7 @@ include("action/common-action.php");
                       <input
                         name="newPassword"
                         type="password"
-                        class="form-control mb-2 <?php if (isset($_SESSION['newPasswordError'])){
+                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])){
                           echo "is-invalid";
                         } ?>"
                         id="inputNewPassword"
@@ -565,14 +569,14 @@ include("action/common-action.php");
                       <input
                         name="confirmPassword"
                         type="password"
-                        class="form-control mb-2 <?php if (isset($_SESSION['newPasswordError'])) {
+                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])) {
                           echo "is-invalid";
                         }?>"
                         id="inputConfirmPassword"
                         placeholder="confirm password"
                       />
 
-                      <?php if (isset($_SESSION['newPasswordError'])){ ?>
+                      <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])){ ?>
                         <p class="error mt-3"><?php echo $_SESSION['newPasswordError']; ?></p>
                       <?php }?>
                     </div>
@@ -636,9 +640,11 @@ include("action/common-action.php");
     ></script>
 
     <?php
-      unset($_SESSION['nikError']);
-      unset($_SESSION['emailError']);
-      unset($_SESSION['inputData']);
+    unset($_SESSION['nikError']);
+    unset($_SESSION['emailError']);
+    unset($_SESSION['inputData']);
+    unset($_SESSION['currentPasswordError']);
+    unset($_SESSION['newPasswordError']);
     ?>
   </body>
 </html>

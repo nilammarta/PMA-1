@@ -33,19 +33,13 @@ function saveUpdateData(int $id): bool
     return false;
 }
 
-
 if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
     $url = "search=" . $_SESSION['search'] . "&filter=" . $_SESSION['filter'] . "&";
 } else {
     $url = "";
 }
 
-
-if ($_POST['currentPassword'] != null) {
-    $errorPass = passwordValidate($_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
-}else{
-    $errorPass = [];
-}
+$errorPass= passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
 $errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId']);
 if (count($errorData) != 0 || count($errorPass) != 0){
     $_SESSION['nikError'] = $errorData['nik'];
@@ -53,8 +47,10 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     $_SESSION['inputData'] = inputData();
     $_SESSION['currentPasswordError'] = $errorPass['currentPass'];
     $_SESSION['newPasswordError'] = $errorPass['newPass'];
-//    $_SESSION['confirmPasswordError'] = $errorPass['confirmPass'];
 
+//    $_SESSION['confirmPasswordError'] = $errorPass['confirmPass'];
+//    echo $_POST['newPassword'] . "dan" . $_POST['confirmPassword'];
+//
     redirect('../edit.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 //    exit();
 }else{
@@ -70,4 +66,5 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     if($saved) {
         redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=1");
     }
+
 }

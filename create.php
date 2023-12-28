@@ -281,8 +281,8 @@ if (!isset($_SESSION['userEmail'])) {
                     <a class="main-nav-link" href="myProfile.php"
                     >
                       <ion-icon
-                              name="person-circle-outline"
-                              class="nav-icon"
+                        name="person-circle-outline"
+                        class="nav-icon"
                       ></ion-icon>
                       My Profile</a
                     >
@@ -291,8 +291,8 @@ if (!isset($_SESSION['userEmail'])) {
                     <a class="main-nav-link cta" href="logout.php"
                     >
                       <ion-icon
-                              name="log-out-outline"
-                              class="nav-icon"
+                        name="log-out-outline"
+                        class="nav-icon"
                       ></ion-icon>
                       Logout</a
                     >
@@ -388,8 +388,7 @@ if (!isset($_SESSION['userEmail'])) {
 
                         <div class="mb-3">
                           <label for="exampleInputEmail1" class="form-label"
-                          >Email &#42;</label
-                          >
+                          >Email &#42;</label>
                           <input
                             name="email"
                             type="email"
@@ -408,27 +407,43 @@ if (!isset($_SESSION['userEmail'])) {
                               <p class="error"> <?php echo $_SESSION['emailError']; ?> </p>
                             <?php } ?>
                         </div>
+
                         <div class="mb-3">
                           <label for="exampleInputPassword1" class="form-label">
-                            Password &#42;</label>
+                            Password &#42;
+                          </label>
                           <input
                             name="password"
                             type="password"
-                            class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) { ?>
-                              is-invalid
-                            <?php } ?>"
+                            class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) {
+                              echo "is-invalid";
+                            } ?>"
                             id="exampleInputPassword1"
                             placeholder="password"
-                            value="<?php if (isset($_SESSION['dataInput'])) {
-                              echo $_SESSION['dataInput']['password'];
-                            } ?>"
                             required
                           />
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="exampleInputPassword2" class="form-label">Confirm Password &#42;</label>
+                          <input
+                            name="confirmPassword"
+                            type="password"
+                            class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])){
+                              echo "is-invalid";
+                            } ?>"
+                            id="exampleInputPassword2"
+                            placeholder="confirm password"
+                            required
+                          />
+
                           <?php if (isset($_GET['saved']) == null){ ?>
                             <p class="error"><?php echo $_SESSION['passwordError']; ?></p>
                           <?php } ?>
                         </div>
+                      </div>
 
+                      <div class="form-2">
                         <div class="mb-3">
                           <label for="birthDateInput" class="form-label">
                             Birth date &#42;
@@ -440,14 +455,12 @@ if (!isset($_SESSION['userEmail'])) {
                             type="date"
                             class="form-control"
                             value="<?php if (isset($_SESSION['dataInput'])) {
-                              echo $_SESSION['dataInput']['birthDate'];
+                                echo $_SESSION['dataInput']['birthDate'];
                             }?>"
                             required
                           />
                         </div>
-                      </div>
 
-                      <div class="form-2">
                         <div class="mb-3">
                           <label for="exampleSexInput" class="form-label"
                           >Sex &#42;
