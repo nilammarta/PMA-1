@@ -439,6 +439,10 @@ include("action/common-action.php");
                           echo date('Y-m-d', $user['birthDate']);
                         }?>"
                       />
+
+                      <?php if (isset($_SESSION['birthDateError'])){ ?>
+                        <p class="error"><?php echo $_SESSION['birthDateError']; ?></p>
+                      <?php } ?>
                     </div>
                   </div>
 
@@ -645,6 +649,7 @@ include("action/common-action.php");
     unset($_SESSION['inputData']);
     unset($_SESSION['currentPasswordError']);
     unset($_SESSION['newPasswordError']);
+    unset($_SESSION['birthDateError']);
     ?>
   </body>
 </html>

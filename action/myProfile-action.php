@@ -20,7 +20,7 @@ function saveUpdateProfile(int $id): bool
             $persons[$i]['lastName'] = ucfirst($_POST['lastName']);
             $persons[$i]['nik'] = $_POST['nik'];
             $persons[$i]['email'] = $_POST['email'];
-            $persons[$i]['password'] = $password;
+            $persons[$i]['password'] = encryptPassword($password);
             $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $_POST['birthDate']);
             $persons[$i]['sex'] = $_POST['sex'];
             $persons[$i]['address'] = $_POST['address'];
@@ -40,11 +40,16 @@ if ($_SESSION['search'] != null && $_SESSION['filter'] != null){
     $url = "";
 }
 
-$errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
-$errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId']);
+if ($_POST['currentPassword'] != null || $_POST['newPassword']) {
+    $errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
+}else{
+    $errorPass = [];
+}
+$errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId'], $_POST['birthDate']);
 if (count($errorData) != 0 || count($errorPass) != 0){
     $_SESSION['nikError'] = $errorData['nik'];
     $_SESSION['emailError'] = $errorData['email'];
+    $_SESSION['birthDateError'] = $errorData['birthDate'];
     $_SESSION['inputData'] = inputData();
     $_SESSION['currentPasswordError'] = $errorPass['currentPass'];
     $_SESSION['newPasswordError'] = $errorPass['newPass'];
@@ -56,6 +61,7 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     unset($_SESSION['inputData']);
     unset($_SESSION['currentPasswordError']);
     unset($_SESSION['newPasswordError']);
+    unset($_SESSION['birthDateError']);
 
     $saved = saveUpdateProfile($_SESSION['personId']);
 

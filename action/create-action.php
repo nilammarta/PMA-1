@@ -33,34 +33,33 @@ function generateId($persons): int
  */
 
 //tampung error yang terjadi pada inputan form
-function validate(string $nik, string $password, string $confirmPassword, string $email):array
+function validate(string $nik, string $password, string $confirmPassword, string $email, string $birthDate):array
 {
     $validate = [];
     if (checkNik($nik) == null) {
-        $validate['nik'] = "Please type the correct NIK, at least 16 characters and only numeric NIK is allowed";
+        $validate['nik'] = "Please type the correct NIK, at least 16 characters and only numeric NIK is allowed!";
     }
 
     if (isNikExits($nik, null) == true) {
-        $validate['nik'] = "NIK is already exists in database please type another NIK";
+        $validate['nik'] = "NIK is already exists in database please type another NIK!";
     }
 
-    if (checkInputPassword($password) == null) {
-        $validate['password'] = "Password input is not correct, password must have at least 1 capital letter, 1 non-capital letter,
-         and 1 number, with minimum of 8 characters and maximum 16 characters";
-    }
-
-    if ($password != $confirmPassword){
-        $validate['password'] = "Password input is not correct, password must have at least 1 capital letter, 1 non-capital letter,
-        and 1 number, with minimum of 8 characters and maximum 16 characters";
+    if (newPasswordValidate($password, $confirmPassword) != ""){
+        $validate['password'] = newPasswordValidate($password, $confirmPassword);
     }
 
     if (isEmailExists($email, null) == true) {
-        $validate['email'] = "Email address is already exists in database, please type another email";
+        $validate['email'] = "Email address is already exists in database, please type another email!";
     }
 
     if (checkFormatEmail($email) == null) {
-        $validate['email'] = "Email format is not correct, please type again";
+        $validate['email'] = "Email format is not correct, please type again!";
 
+    }
+
+    $timestamp = convertStringIntoDate('Y-m-d', $birthDate);
+    if (time() < $timestamp){
+        $validate['birthDate'] = "Birth Date is not correct, please input again!";
     }
 
     return $validate;
@@ -76,7 +75,7 @@ function saveData():bool
         "lastName" => ucfirst($_POST['lastName']),
         "nik" => $_POST["nik"],
         "email" => $_POST['email'],
-        "password" => $_POST['password'],
+        "password" => encryptPassword($_POST['password']),
         "birthDate" =>convertStringIntoDate('Y-m-d', $_POST['birthDate']),
         "sex" => $_POST['sex'],
         "address" => $_POST['address'],
@@ -91,11 +90,12 @@ function saveData():bool
     return true;
 }
 
-$errorData = validate($_POST['nik'], $_POST['password'], $_POST['confirmPassword'], $_POST['email']);
+$errorData = validate($_POST['nik'], $_POST['password'], $_POST['confirmPassword'], $_POST['email'], $_POST['birthDate']);
 if (count($errorData) != 0){
     $_SESSION['nikError'] = $errorData["nik"];
     $_SESSION['emailError'] = $errorData['email'];
     $_SESSION['passwordError'] = $errorData['password'];
+    $_SESSION['birthDateError'] = $errorData['birthDate'];
     $_SESSION['dataInput'] = inputData();
 
     header("Location: ../create.php");
@@ -105,6 +105,7 @@ if (count($errorData) != 0){
     unset($_SESSION['emailError']);
     unset($_SESSION['passwordError']);
     unset($_SESSION['dataInput']);
+    unset($_SESSION['birthDateError']);
     if (saveData()) {
         redirect("../create.php", "saved=1");
     }

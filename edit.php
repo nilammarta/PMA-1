@@ -17,15 +17,15 @@ require_once __DIR__ . "/action/common-action.php";
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
-            href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
     />
 
     <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
     />
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -437,6 +437,10 @@ require_once __DIR__ . "/action/common-action.php";
                           } ?>"
                           required
                         />
+
+                        <?php if (isset($_SESSION['birthDateError'])){?>
+                          <p class="error"><?php echo $_SESSION['birthDateError']; ?></p>
+                        <?php } ?>
                       </div>
                     </div>
                     <div class="form-2">
@@ -508,6 +512,40 @@ require_once __DIR__ . "/action/common-action.php";
                         } else{
                           echo $thePerson['internalNotes'];
                         } ?></textarea>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="exampleRoleInput" class="form-label"
+                        >Role &#42;</label>
+                        <select
+                          id="exampleRoleInput"
+                          name="role"
+                          class="form-select"
+                          aria-label="Default select example"
+                        >
+                            <option
+                              selected
+                              value="<?php if (isset($_SESSION['inputData'])){
+                                  echo $_SESSION['inputData']['role'];
+                                } else{
+                                  echo $thePerson['role'];
+                                } ?>"
+                            >
+                              <?php if (isset($_SESSION['inputData'])){
+                                    echo $_SESSION['inputData']['role'] == "ADMIN" ? "ADMIN" : "MEMBER" ;
+                                } else{
+                                    echo $thePerson['role'] == "ADMIN" ? "ADMIN" : "MEMBER";
+                                } ?>
+                            </option>
+
+                            <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['role'] == "ADMIN"){?>
+                              <option class="option-value" value="MEMBER">MEMBER</option>
+                            <?php }else if ($thePerson['role'] == "ADMIN"){ ?>
+                              <option class="option-value" value="MEMBER">MEMBER</option>
+                            <?php } else { ?>
+                              <option class="option-value" value="ADMIN">ADMIN</option>
+                            <?php } ?>
+                        </select>
                       </div>
 
                       <div
@@ -650,6 +688,7 @@ require_once __DIR__ . "/action/common-action.php";
     unset($_SESSION['inputData']);
     unset($_SESSION['currentPasswordError']);
     unset($_SESSION['newPasswordError']);
+    unset($_SESSION['birthDateError']);
     ?>
 
   </body>

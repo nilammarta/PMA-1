@@ -13,13 +13,22 @@ function redirect($url, $getParams)
     die();
 }
 
-// function untuk mengecek umur user
-function checkAge(int $date): int
+// function untuk mendapatkan umur user
+function getAge(int $date): int
 {
 //    untuk mendapatkan selisih timestamp dari waktu saat ini dengan timestamp tgl lahirnya
     $age = time() - $date;
 //    floor digunakan untuk pembulatan keatas
     return floor($age / (60 * 60 * 24 * 365)); // (menit, jam, hari, tahun)
+}
+
+function getStatus(bool $status): string
+{
+    if ($status == true){
+        return 'Alive';
+    }else{
+        return "Passed Away";
+    }
 }
 
 function userLogin($email):array
@@ -107,7 +116,6 @@ function checkFormatEmail($newEmail):string | null
     }
 }
 
-
 // Validate Password
 function checkInputPassword($newPassword):string|null
 {
@@ -122,11 +130,18 @@ function checkInputPassword($newPassword):string|null
 function isMatchCurrentPassword(int $id, string $currentPassword): bool
 {
     $thePerson = getUserById($id);
-    if ($thePerson['password'] == $currentPassword){
+
+    $verify = password_verify($currentPassword, $thePerson['password']);
+    if ($verify){
         return true;
     }else{
         return false;
     }
+}
+
+function encryptPassword(string $password):string
+{
+    return password_hash($password, PASSWORD_DEFAULT);
 }
 
 function convertSwitchValue($value):bool
@@ -139,7 +154,7 @@ function convertSwitchValue($value):bool
 }
 
 
-// function to convert input string
+// function to convert input string into timestamp
 function convertStringIntoDate(string $format, string $birthDate): int|null
 {
     $dateFormat = date_create_from_format($format, $birthDate);
@@ -168,7 +183,7 @@ function inputData ():array
     ];
 }
 
-function editValidate(string $nik, string $email, int $id):array
+function editValidate(string $nik, string $email, int $id, string $birthDate):array
 {
     $validate = [];
     if (checkNik($nik) == null){
@@ -187,25 +202,28 @@ function editValidate(string $nik, string $email, int $id):array
         $validate['email'] = "Email is already exists in database, please type another email!";
     }
 
+    $timestamp = convertStringIntoDate('Y-m-d', $birthDate);
+    if (time() < $timestamp){
+        $validate['birthDate'] = "Birth Date is not correct, please type again!";
+    }
+
     return $validate;
 }
 
-function newPasswordValidate(string $newPass, string $confirmPass): array
+function newPasswordValidate(string $newPass, string $confirmPass): string
 {
-    $validation = [];
 
     if (checkInputPassword($newPass) == null){
-        $validation['newPass'] = "Password input is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
+        return "Password input is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
         with minimum of 8 characters and maximum 16 characters!";
-
     }
 
     if ($confirmPass != $newPass){
-        $validation['newPass'] = "Password input is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
+        return "Password input is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
         with minimum of 8 characters and maximum 16 characters!";
     }
 
-    return $validation;
+    return "";
 }
 
 function passwordValidate(int $id, string $currentPassword, string $newPassword, string $confirmPassword):array
@@ -216,8 +234,8 @@ function passwordValidate(int $id, string $currentPassword, string $newPassword,
             $validate['currentPass'] = "Password input is not correct";
         }else{
             $errorNewPass = newPasswordValidate($newPassword, $confirmPassword);
-            if ($errorNewPass != null) {
-                $validate['newPass'] = $errorNewPass['newPass'];
+            if ($errorNewPass != "") {
+                $validate['newPass'] = $errorNewPass;
             }
         }
     }else{

@@ -341,53 +341,49 @@ include("action/common-action.php");
                               <tr>
                                 <td class="card-label">First name</td>
                                 <td>:</td>
-                                <td><?php echo $thePerson["firstName"] ?></td>
+                                <td><?php echo $thePerson["firstName"]; ?></td>
                               </tr>
                               <tr>
                                 <td>Last name</td>
                                 <td>:</td>
-                                <td><?php echo $thePerson['lastName'] ?></td>
+                                <td><?php echo $thePerson['lastName']; ?></td>
                               </tr>
                               <tr>
                                 <td>NIK</td>
                                 <td>:</td>
-                                <td><?php echo $thePerson['nik'] ?></td>
+                                <td><?php echo $thePerson['nik']; ?></td>
                               </tr>
                               <tr>
                                 <td>Email</td>
                                 <td>:</td>
-                                <td><?php echo $thePerson['email'] ?></td>
+                                <td><?php echo $thePerson['email']; ?></td>
                               </tr>
                               <tr>
                                 <td>Birthdate</td>
                                 <td>:</td>
-                                <td><?php echo date('d F Y', $thePerson['birthDate']) ?></td>
+                                <td><?php echo date('d F Y', $thePerson['birthDate']); ?></td>
                               </tr>
                               <tr>
                                 <td>Gender</td>
                                 <td>:</td>
-                                <td><?php echo gender($thePerson['sex']) ?></td>
+                                <td><?php echo gender($thePerson['sex']); ?></td>
                               </tr>
                               <tr>
                                 <td>Address</td>
                                 <td>:</td>
-                                <td><?php echo $thePerson['address'] ?></td>
+                                <td><?php echo $thePerson['address']; ?></td>
                               </tr>
 
                               <tr>
                                 <td>Role</td>
                                 <td>:</td>
-                                <td><?php echo $thePerson['role'] ?></td>
+                                <td><?php echo $thePerson['role']; ?></td>
                               </tr>
 
                               <tr>
                                 <td>Status</td>
                                 <td>:</td>
-                                <td><?php if ($thePerson['alive'] == true){
-                                  echo "Alive";
-                                }else {
-                                  echo "Passed away";
-                                } ?></td>
+                                <td><?php echo getStatus($thePerson['alive']); ?></td>
                               </tr>
                             </tbody>
                           </table>

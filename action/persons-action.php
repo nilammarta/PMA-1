@@ -42,7 +42,7 @@ function filter(string $filter): array|null
     if ($filter == "productive") {
         $adult = [];
         foreach ($persons as $person) {
-            if (checkAge($person["birthDate"]) > 15 && $person["alive"] == true) {
+            if (getAge($person["birthDate"]) > 15) {
                 $adult[] = $person;
             }
         }
@@ -50,7 +50,7 @@ function filter(string $filter): array|null
     } elseif ($filter == "children") {
         $child = [];
         foreach ($persons as $person) {
-            if (checkAge($person["birthDate"]) <= 15 && $person["alive"] == true) {
+            if (getAge($person["birthDate"]) <= 15) {
                 $child [] = $person;
             }
         }
@@ -122,6 +122,6 @@ function getFilter(string $filter): string
     }else if ($filter == "passedAway"){
         return "PassedAway";
     }else{
-        return "Filter";
+        return "All Persons Data";
     }
 }

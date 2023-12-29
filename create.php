@@ -459,6 +459,10 @@ if (!isset($_SESSION['userEmail'])) {
                             }?>"
                             required
                           />
+
+                          <?php if (isset($_SESSION['birthDateError'])){ ?>
+                             <p class="error"><?php echo $_SESSION['birthDateError']; ?></p>
+                          <?php } ?>
                         </div>
 
                         <div class="mb-3">
@@ -591,6 +595,7 @@ if (!isset($_SESSION['userEmail'])) {
                       <div class="col-12">
                         <div class="btn-create">
                           <button
+                            name="save"
                             type="submit"
                             class="btn btn-primary btn-save me-3"
                           >
@@ -617,26 +622,27 @@ if (!isset($_SESSION['userEmail'])) {
       </section>
     </main>
     <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
     ></script>
 
     <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
     ></script>
     <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
     ></script>
     <?php
     unset($_SESSION['nikError']);
     unset($_SESSION['passwordError']);
     unset($_SESSION['emailError']);
     unset($_SESSION['dataInput']);
+    unset($_SESSION['birthDateError']);
     ?>
   </body>
 </html>
