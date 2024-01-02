@@ -3,8 +3,14 @@
 require_once __DIR__ . "/action/common-action.php";
 
 session_start();
-if (isset($_SESSION['userEmail'])){
-    redirect("dashboard.php", "");
-}else{
-    redirect("login.php", "");
+
+function loginCheck($userEmail): void
+{
+    if (isset($userEmail)){
+        redirect("dashboard.php", "");
+    }else{
+        redirect("login.php", "");
+    }
 }
+
+loginCheck($_SESSION['userEmail']);

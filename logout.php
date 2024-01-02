@@ -1,12 +1,15 @@
 <?php
 
-session_start();
-if (!isset($_SESSION['userEmail'])) {
-    header("Location: login.php");
-    exit();
-}
 require_once __DIR__ . "/action/common-action.php";
 require_once __DIR__ . "/assets/jsonHelper.php";
+
+session_start();
+userLoginCheck($_SESSION['userEmail']);
+
+//if (!isset($_SESSION['userEmail'])) {
+//    header("Location: login.php");
+//    exit();
+//}
 
 $persons = getPersonsData();
 

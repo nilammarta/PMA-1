@@ -77,7 +77,7 @@
 
 /* TABLE */
 .table {
-  min-width: 600px;
+  min-width: 800px;
   vertical-align: baseline;
   border: 0.01px solid #bdbcbc99;
   background-color: #fff;
@@ -88,10 +88,6 @@ thead {
   text-transform: uppercase;
   background-color: #ae98ff;
 }
-
-/* th {
-  color: #fff;
-} */
 
 tbody {
   font-size: 1rem;

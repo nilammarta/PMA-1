@@ -11,15 +11,16 @@ function saveUpdateData(int $id): bool
     for ($i = 0; $i < count($persons); $i++){
         if ($persons[$i]['id'] == $id) {
             if ($_POST['currentPassword'] != null){
-                $password = $_POST['newPassword'];
+                $password = encryptPassword($_POST['newPassword']);
             }else{
                 $password = $persons[$i]['password'];
             }
+
             $persons[$i]['firstName'] = ucfirst($_POST['firstName']);
             $persons[$i]['lastName'] = ucfirst($_POST['lastName']);
             $persons[$i]['nik'] = $_POST['nik'];
             $persons[$i]['email'] = $_POST['email'];
-            $persons[$i]['password'] =  encryptPassword($password);
+            $persons[$i]['password'] =  $password;
             $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $_POST['birthDate']);
             $persons[$i]['sex'] = $_POST['sex'];
             $persons[$i]['role'] = $_POST['role'];
@@ -45,6 +46,7 @@ if ($_POST['currentPassword'] != null || $_POST['newPassword'] != null) {
 }else{
     $errorPass = [];
 }
+
 $errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId'], $_POST['birthDate']);
 if (count($errorData) != 0 || count($errorPass) != 0){
     $_SESSION['nikError'] = $errorData['nik'];

@@ -1,10 +1,13 @@
 <?php
-session_start();
+include("action/common-action.php");
 
-if (!isset($_SESSION['userEmail'])) {
-    header("Location: login-action.php");
-    exit();
-}
+session_start();
+userLoginCheck($_SESSION['userEmail']);
+
+//if (!isset($_SESSION['userEmail'])) {
+//    header("Location: login-action.php");
+//    exit();
+//}
 
 
 unset($_SESSION['page']);
@@ -12,7 +15,6 @@ unset($_SESSION['filter']);
 unset($_SESSION['search']);
 unset($_SESSION['personId']);
 
-include("action/common-action.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -334,17 +336,18 @@ include("action/common-action.php");
                       $_SESSION['page'] = $_GET['page'];
                       $_SESSION['filter'] = $_GET['filter'];
                       $_SESSION['search'] = $_GET['search'];
+
                       if ($thePerson != null) { ?>
                         <div class="table-responsive">
                           <table class="table mb-0">
                             <tbody>
                               <tr>
-                                <td class="card-label">First name</td>
+                                <td class="card-label">First Name</td>
                                 <td>:</td>
                                 <td><?php echo $thePerson["firstName"]; ?></td>
                               </tr>
                               <tr>
-                                <td>Last name</td>
+                                <td>Last Name</td>
                                 <td>:</td>
                                 <td><?php echo $thePerson['lastName']; ?></td>
                               </tr>
@@ -359,7 +362,7 @@ include("action/common-action.php");
                                 <td><?php echo $thePerson['email']; ?></td>
                               </tr>
                               <tr>
-                                <td>Birthdate</td>
+                                <td>Birth Date</td>
                                 <td>:</td>
                                 <td><?php echo date('d F Y', $thePerson['birthDate']); ?></td>
                               </tr>
@@ -373,13 +376,11 @@ include("action/common-action.php");
                                 <td>:</td>
                                 <td><?php echo $thePerson['address']; ?></td>
                               </tr>
-
                               <tr>
                                 <td>Role</td>
                                 <td>:</td>
                                 <td><?php echo $thePerson['role']; ?></td>
                               </tr>
-
                               <tr>
                                 <td>Status</td>
                                 <td>:</td>
@@ -404,72 +405,76 @@ include("action/common-action.php");
                             <a class="btn btn-secondary me-2"
                                href="persons.php?<?php echo $url?>page=<?php echo $_GET['page']?>"
                                role="button">
-                              <ion-icon name="arrow-back-sharp"></ion-icon>
+                              <ion-icon name="arrow-back-sharp"></ion-icon> <?php if ($_SESSION['userRole'] == "MEMBER"){
+                                  echo "Back";
+                                }?>
                             </a>
 
-                            <a
-                              class="btn btn-primary me-2"
-                              <?php if ($thePerson['email'] == $_SESSION['userEmail']){ ?>
-                                href="myProfile.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
-                              <?php } else {?>
-                                href="edit.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
-                              <?php }?>
-                              role="button"
-                            >
-                              <ion-icon name="create"></ion-icon>
-                              EDIT
-                            </a>
+                            <?php if ($_SESSION['userRole'] == "ADMIN"){ ?>
+                              <a
+                                class="btn btn-primary me-2"
+                                <?php if ($thePerson['email'] == $_SESSION['userEmail']){ ?>
+                                  href="myProfile.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
+                                <?php } else {?>
+                                  href="edit.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
+                                <?php }?>
+                                role="button"
+                              >
+                                <ion-icon name="create"></ion-icon>
+                                EDIT
+                              </a>
 
-                            <button
-                              type="button"
-                              class="btn btn-danger"
-                              data-bs-toggle="modal"
-                              data-bs-target="#exampleModal"
-                            >
-                              <ion-icon name="trash"></ion-icon>
-                              DELETE
-                            </button>
+                              <button
+                                type="button"
+                                class="btn btn-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                              >
+                                <ion-icon name="trash"></ion-icon>
+                                DELETE
+                              </button>
 
-                            <!-- Modal -->
-                            <div
-                              class="modal fade"
-                              id="exampleModal"
-                              tabindex="-1"
-                              aria-labelledby="exampleModalLabel"
-                              aria-hidden="true"
-                            >
-                              <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h4 class="modal-title" id="exampleModalLabel">
-                                      Delete Person
-                                    </h4>
-                                    <button
-                                      type="button"
-                                      class="btn-close"
-                                      data-bs-dismiss="modal"
-                                      aria-label="Close"
-                                    ></button>
-                                  </div>
-                                  <div class="modal-body">Are you sure want to delete this person?</div>
-                                  <div class="modal-footer">
-                                    <button
-                                      type="button"
-                                      class="btn btn-secondary"
-                                      data-bs-dismiss="modal"
-                                    >
-                                      NO
-                                    </button>
-                                    <button
-                                      type="button"
-                                      class="btn btn-primary"
-                                    >
-                                      <a type="submit" role="button" class="btn-modal" href="action/delete-action.php">YES</a>
-                                    </button>
+                              <!-- Modal -->
+                              <div
+                                class="modal fade"
+                                id="exampleModal"
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                              >
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title" id="exampleModalLabel">
+                                        Delete Person
+                                      </h4>
+                                      <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                      ></button>
+                                    </div>
+                                    <div class="modal-body">Are you sure want to delete this person?</div>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                      >
+                                        NO
+                                      </button>
+                                      <button
+                                        type="button"
+                                        class="btn btn-primary"
+                                      >
+                                        <a type="submit" role="button" class="btn-modal" href="action/delete-action.php">YES</a>
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            <?php } ?>
                           </div>
                         </div>
                       <?php } else { ?>

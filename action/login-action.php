@@ -16,6 +16,8 @@ if (isset($_POST['login'])) {
         $_SESSION['userEmail'] = $_POST['email'];
         $_SESSION['userName'] = check($jsonData)['firstName'];
         $_SESSION['logout'] = check($jsonData)['lastLoggedIn'];
+        $_SESSION['userRole'] = check($jsonData)['role'];
+
         header("Location: ../dashboard.php");
         exit();
 
@@ -28,8 +30,7 @@ if (isset($_POST['login'])) {
 function check(array $tempData): array|null
 {
     for ($i = 0; $i < count($tempData); $i++) {
-        if ($_POST["email"] == $tempData[$i]["email"] && $_POST["password"] == $tempData[$i]["password"] && $tempData[$i]["alive"] == true) {
-//            $_SESSION['userEmail'] = $_POST['email'];
+        if ($_POST["email"] == $tempData[$i]["email"] && password_verify($_POST["password"], $tempData[$i]["password"]) && $tempData[$i]["alive"]) {
             return $tempData[$i];
         }
     }

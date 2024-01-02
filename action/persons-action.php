@@ -33,8 +33,6 @@ function searchPerson(array $persons, string $searchInput): array|null
     return null;
 }
 
-//date('j F Y', $value->getBirthDate())
-
 // filtering persons
 function filter(string $filter): array|null
 {

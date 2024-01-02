@@ -1,12 +1,15 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['userEmail'])) {
-    header("Location: login-action.php");
-    exit();
-}
 
 require_once __DIR__ . "/action/common-action.php";
+
+session_start();
+userLoginCheck($_SESSION['userEmail']);
+
+//if (!isset($_SESSION['userEmail'])) {
+//    header("Location: login-action.php");
+//    exit();
+//}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -443,6 +446,7 @@ require_once __DIR__ . "/action/common-action.php";
                         <?php } ?>
                       </div>
                     </div>
+
                     <div class="form-2">
                       <div class="mb-3">
                         <label for="exampleSexInput" class="form-label"

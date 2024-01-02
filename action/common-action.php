@@ -1,6 +1,15 @@
 <?php
 require_once __DIR__ . "/../assets/jsonHelper.php";
 
+
+function userLoginCheck(string $email)
+{
+    if (!isset($_SESSION['userEmail'])) {
+        header("Location: login-action.php");
+        exit();
+    }
+}
+
 function getPersonsData(): array
 {
     return loadDataIntoJson("persons.json");

@@ -1,12 +1,14 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['userEmail'])) {
-    header("Location: login-action.php");
-    exit();
-}
-
 include("action/common-action.php");
+
+session_start();
+userLoginCheck($_SESSION['userEmail']);
+
+//if (!isset($_SESSION['userEmail'])) {
+//    header("Location: login-action.php");
+//    exit();
+//}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

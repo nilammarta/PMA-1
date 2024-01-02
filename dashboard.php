@@ -1,15 +1,17 @@
 <?php
+include("action/dashboard-action.php");
+require_once __DIR__ . "/action/common-action.php";
+
 session_start();
+userLoginCheck($_SESSION['userEmail']);
 
-if (!isset($_SESSION['userEmail'])) {
-    header("Location: login.php");
-    exit();
-}
+//if (!isset($_SESSION['userEmail'])) {
+//    header("Location: login.php");
+//    exit();
+//}
 
-include("action/common-action.php");
 $persons = getPersonsData();
 
-include("action/dashboard-action.php");
 ?>
 
 <!DOCTYPE html>
