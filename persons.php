@@ -487,7 +487,9 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                                     <ion-icon
                                       class="btn-icon"
                                       name="eye-sharp"
-                                    ></ion-icon>
+                                    ></ion-icon> <?php if ($_SESSION['userRole'] == "MEMBER"){
+                                      echo "view";
+                                      }?>
                                   </a>
                                 <?php }else {?>
                                   <a

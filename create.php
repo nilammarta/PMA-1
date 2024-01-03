@@ -8,6 +8,8 @@ userLoginCheck($_SESSION['userEmail']);
 //    header("Location: action/login-action.php");
 //    exit();
 //}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -257,8 +259,8 @@ userLoginCheck($_SESSION['userEmail']);
                   <a class="main-nav-link" href="dashboard.php"
                   >
                     <ion-icon
-                            name="file-tray-full-outline"
-                            class="nav-icon"
+                      name="file-tray-full-outline"
+                      class="nav-icon"
                     ></ion-icon>
                     Dashboard</a
                   >
@@ -267,8 +269,8 @@ userLoginCheck($_SESSION['userEmail']);
                   <a class="main-nav-link" href="persons.php"
                   >
                     <ion-icon
-                            name="people-outline"
-                            class="nav-icon"
+                      name="people-outline"
+                      class="nav-icon"
                     ></ion-icon>
                     Persons</a
                   >

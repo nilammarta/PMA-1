@@ -4,8 +4,8 @@ require_once __DIR__ . "/../assets/jsonHelper.php";
 
 function userLoginCheck(string $email)
 {
-    if (!isset($_SESSION['userEmail'])) {
-        header("Location: login-action.php");
+    if (!isset($email)) {
+        header("Location: login.php");
         exit();
     }
 }
@@ -140,8 +140,14 @@ function isMatchCurrentPassword(int $id, string $currentPassword): bool
 {
     $thePerson = getUserById($id);
 
-    $verify = password_verify($currentPassword, $thePerson['password']);
-    if ($verify){
+//    $verify = password_verify($currentPassword, $thePerson['password']);
+//    if ($verify){
+//        return true;
+//    }else{
+//        return false;
+//    }
+
+    if ($currentPassword == $thePerson['password']){
         return true;
     }else{
         return false;

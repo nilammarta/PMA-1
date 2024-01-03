@@ -492,8 +492,13 @@ unset($_SESSION['personId']);
               </div>
             </div>
 
+<!--        alert untuk validasi jika data baru berhasil di simpan    -->
+            <?php if (isset($_GET['saved'])){ ?>
+              <div class="alert alert-success saved mt-4" role="alert">
+                Person data has been update!
+              </div>
 <!--        alert untuk validasi penghapusan jika data admin hanya ada satu       -->
-            <?php if (isset($_GET['error']) && $_GET['error'] == 1){ ?>
+            <?php }else if (isset($_GET['error']) && $_GET['error'] == 1){ ?>
               <div class="alert alert-danger saved mt-4" role="alert">
                 Can not delete this data, because there is only one admin in the database!
               </div>

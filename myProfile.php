@@ -119,7 +119,7 @@ userLoginCheck($_SESSION['userEmail']);
     <link href="assets/query/query.css" rel="stylesheet"/>
     <link href="assets/css/create.css" rel="stylesheet"/>
 
-    <title>MY PROFIL - Person Management App</title>
+    <title>MY PROFILE - Person Management App</title>
   </head>
   <body>
     <header class="header-section">
@@ -330,7 +330,7 @@ userLoginCheck($_SESSION['userEmail']);
                   ?>
 
                   <?php if (isset($_GET['saved'])){?>
-                    <div class="alert alert-success saved mt-4" role="alert">
+                    <div class="alert alert-success saved mb-4" role="alert">
                       Your Profile has been updated!
                     </div>
                   <?php }?>
