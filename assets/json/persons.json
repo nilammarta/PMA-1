@@ -3,16 +3,16 @@
         "id": 1,
         "firstName": "Lala",
         "lastName": "Lulu",
-        "nik": "1200981029177917",
+        "nik": "1200981029177912",
         "email": "lalalulu@gmail.com",
         "password": "$2y$10$NOsrUKlQUBfbaNoVE7Q.luKIDY6eCy4PK5MzhWESJChQ3zkBNegby",
-        "birthDate": 1039687052,
+        "birthDate": 1039662757,
         "sex": "f",
         "address": "Denpasar",
         "internalNotes": "",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1704186861
+        "lastLoggedIn": 1704249634
     },
     {
         "id": 2,

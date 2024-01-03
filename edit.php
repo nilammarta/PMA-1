@@ -322,7 +322,11 @@ userLoginCheck($_SESSION['userEmail']);
                       $_SESSION['page'] = $_GET['page'];
                       $_SESSION['filter'] = $_GET['filter'];
                       $_SESSION['search'] = $_GET['search'];
-                      $thePerson = getUserById($_GET['person']);
+                      if (!is_numeric($_GET['person'])){
+                          $thePerson = [];
+                      }else {
+                          $thePerson = getUserById($_GET['person']);
+                      }
                   } ?>
 
                 <form name="editPerson" class="create-form needs-validation p-4 mb-5" method="post"
@@ -468,7 +472,7 @@ userLoginCheck($_SESSION['userEmail']);
                             >
                               <?php if (isset($_SESSION['inputData'])){
                                 echo $_SESSION['inputData']['sex'] == "f" ? "Female" : "Male";
-                              } else {
+                              }else {
                                 echo $thePerson['sex'] == "f" ? "Female" : "Male" ;
                               } ?>
                             </option>

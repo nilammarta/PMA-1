@@ -476,27 +476,42 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
                                       $page = $_GET['page'];
                                   }
                                   ?>
-                                <a
-                                  class="btn btn-outline-light me-md-2 btn-table"
-                                  type="button"
-                                  href="view.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]["id"] ?>"
-                                  role="button"
-                                >
-                                  <ion-icon
-                                    class="btn-icon"
-                                    name="eye-sharp"
-                                  ></ion-icon> <?php if ($_SESSION['userRole'] == "MEMBER"){
-                                      echo "view";
-                                    }?>
-                                </a>
+
+                                <?php if ($personsData[$i]['email'] == $_SESSION['userEmail']){ ?>
+                                  <a
+                                    class="btn btn-outline-light me-md-2 btn-table"
+                                    type="button"
+                                    href="myProfile.php"
+                                    role="button"
+                                  >
+                                    <ion-icon
+                                      class="btn-icon"
+                                      name="eye-sharp"
+                                    ></ion-icon>
+                                  </a>
+                                <?php }else {?>
+                                  <a
+                                    class="btn btn-outline-light me-md-2 btn-table"
+                                    type="button"
+                                    href="view.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]["id"] ?>"
+                                    role="button"
+                                  >
+                                    <ion-icon
+                                      class="btn-icon"
+                                      name="eye-sharp"
+                                    ></ion-icon> <?php if ($_SESSION['userRole'] == "MEMBER"){
+                                        echo "view";
+                                      }?>
+                                  </a>
+                                <?php } ?>
 
                                 <?php if ($_SESSION['userRole'] == "ADMIN") {
                                   if ($personsData[$i]['email'] == $_SESSION['userEmail']) { ?>
-                                    <!--                                link untuk mengarah ke my profile page, karena mengedit data user login (data dirisendiri)         -->
+                                    <!-- link untuk mengarah ke my profile page, karena mengedit data user login (data dirisendiri)         -->
                                     <a
                                       class="btn btn-outline-light btn-table"
                                       type="button"
-                                      href="myProfile.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]['id'] ?>"
+                                      href="myProfile.php"
                                     >
                                       <ion-icon
                                         class="btn-icon"

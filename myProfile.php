@@ -316,17 +316,24 @@ userLoginCheck($_SESSION['userEmail']);
               <div class="col-12 col-md-10 col-lg-11 col-xxl-7">
 
                   <?php
-                  $user = userLogin($_SESSION['userEmail']);
-                  $_SESSION['personId'] = $user['id'];
-                  if (isset($_GET['page']) == null){
-                    $page = "1";
-                  }else{
-                    $page = $_GET['page'];
-                  }
-                  $_SESSION['page'] = $page;
-                  $_SESSION['filter'] = $_GET['filter'];
-                  $_SESSION['search'] = $_GET['search'];
+                    $user = userLogin($_SESSION['userEmail']);
+                    $_SESSION['personId'] = $user['id'];
+                    if (isset($_GET['page']) == null){
+                      $page = "1";
+                    }else{
+                      $page = $_GET['page'];
+                    }
+                    $_SESSION['page'] = $page;
+                    $_SESSION['filter'] = $_GET['filter'];
+                    $_SESSION['search'] = $_GET['search'];
+
                   ?>
+
+                  <?php if (isset($_GET['saved'])){?>
+                    <div class="alert alert-success saved mt-4" role="alert">
+                      Your Profile has been updated!
+                    </div>
+                  <?php }?>
 
                 <form name="editProfile" class="create-form needs-validation p-4 mb-5" method="post" action="action/myProfile-action.php">
                   <h5 class="form-text pb-2 mb-4">EDIT PROFILE</h5>

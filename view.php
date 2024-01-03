@@ -331,7 +331,12 @@ unset($_SESSION['personId']);
                   </div>
 
                   <?php if (isset($_GET["person"])) {
-                      $thePerson = getUserById($_GET['person']);
+                      if (!is_numeric($_GET['person'])){
+                          $thePerson = null;
+                      }else {
+                          $thePerson = getUserById($_GET['person']);
+                      }
+
                       $_SESSION['personId'] = $_GET['person'];
                       $_SESSION['page'] = $_GET['page'];
                       $_SESSION['filter'] = $_GET['filter'];
@@ -487,13 +492,8 @@ unset($_SESSION['personId']);
               </div>
             </div>
 
-<!--        alert untuk validasi jika data baru sudah tersimpan      -->
-            <?php if (isset($_GET['saved'])) { ?>
-              <div class="alert alert-success saved mt-4" role="alert">
-                Person Data updated successfully!
-              </div>
 <!--        alert untuk validasi penghapusan jika data admin hanya ada satu       -->
-            <?php }else if (isset($_GET['error']) && $_GET['error'] == 1){ ?>
+            <?php if (isset($_GET['error']) && $_GET['error'] == 1){ ?>
               <div class="alert alert-danger saved mt-4" role="alert">
                 Can not delete this data, because there is only one admin in the database!
               </div>

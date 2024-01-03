@@ -69,7 +69,7 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     if ($saved) {
         $_SESSION['userEmail'] = $_POST['email'];
         $_SESSION['userName'] = $_POST['firstName'];
-        redirect('../view.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . '&saved=1');
+        redirect('../myProfile.php', '&saved=1');
     }
 }
 
