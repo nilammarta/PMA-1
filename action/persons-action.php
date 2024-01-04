@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../assets/jsonHelper.php";
+require_once __DIR__ . "/jsonHelper.php";
 
 function searchPerson(array $persons, string $searchInput): array|null
 {

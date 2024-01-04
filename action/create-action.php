@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/common-action.php";
-require_once __DIR__ . "/../assets/jsonHelper.php";
+require_once __DIR__ . "/jsonHelper.php";
 
 session_start();
 
@@ -66,7 +66,7 @@ function validate(string $nik, string $password, string $confirmPassword, string
 }
 
 // function to save new data person
-function saveData():bool
+function saveData():int
 {
     $persons = getPersonsData();
     $newPerson = [
@@ -87,7 +87,7 @@ function saveData():bool
 
     $persons [] = $newPerson;
     saveDataIntoJson($persons);
-    return true;
+    return $newPerson['id'];
 }
 
 $errorData = validate($_POST['nik'], $_POST['password'], $_POST['confirmPassword'], $_POST['email'], $_POST['birthDate']);
@@ -106,7 +106,9 @@ if (count($errorData) != 0){
     unset($_SESSION['passwordError']);
     unset($_SESSION['dataInput']);
     unset($_SESSION['birthDateError']);
-    if (saveData()) {
-        redirect("../create.php", "saved=1");
+
+    $personId = saveData();
+    if ($personId != null) {
+        redirect("../view.php", "page=1&person=" . $personId . "&saved=1");
     }
 }

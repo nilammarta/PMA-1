@@ -1,6 +1,6 @@
 <?php
 require_once "includes/header.php";
-showHeader("App - Test aja", "persons");
+showHeader("App - Test aja", "create.css", "persons");
 ?>
 
   <!-- main specific untuk halaman ybs saja -->
@@ -11,8 +11,7 @@ showHeader("App - Test aja", "persons");
           <nav class="main-nav">
             <ul class="main-nav-list">
               <li class="nav-item">
-                <a class="main-nav-link" href="dashboard.php"
-                >
+                <a class="main-nav-link" href="dashboard.php">
                   <ion-icon
                     name="file-tray-full-outline"
                     class="nav-icon"

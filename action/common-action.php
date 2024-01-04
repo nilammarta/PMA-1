@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . "/../assets/jsonHelper.php";
+require_once __DIR__ . "/jsonHelper.php";
 
 
-function userLoginCheck(string $email)
+function userLoginCheck(string | null $email): void
 {
-    if (!isset($email)) {
+    if (!isset($email) | $email == null) {
         header("Location: login.php");
         exit();
     }
@@ -140,18 +140,18 @@ function isMatchCurrentPassword(int $id, string $currentPassword): bool
 {
     $thePerson = getUserById($id);
 
-//    $verify = password_verify($currentPassword, $thePerson['password']);
-//    if ($verify){
-//        return true;
-//    }else{
-//        return false;
-//    }
-
-    if ($currentPassword == $thePerson['password']){
+    $verify = password_verify($currentPassword, $thePerson['password']);
+    if ($verify){
         return true;
     }else{
         return false;
     }
+
+//    if ($currentPassword == $thePerson['password']){
+//        return true;
+//    }else{
+//        return false;
+//    }
 }
 
 function encryptPassword(string $password):string
@@ -163,7 +163,7 @@ function convertSwitchValue($value):bool
 {
     if ($value == "on"){
         return true;
-    }else{
+    } else {
         return false;
     }
 }
@@ -228,12 +228,7 @@ function editValidate(string $nik, string $email, int $id, string $birthDate):ar
 function newPasswordValidate(string $newPass, string $confirmPass): string
 {
 
-    if (checkInputPassword($newPass) == null){
-        return "Password input is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
-        with minimum of 8 characters and maximum 16 characters!";
-    }
-
-    if ($confirmPass != $newPass){
+    if (checkInputPassword($newPass) == null || $confirmPass != $newPass){
         return "Password input is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
         with minimum of 8 characters and maximum 16 characters!";
     }
@@ -245,7 +240,7 @@ function passwordValidate(int $id, string $currentPassword, string $newPassword,
 {
     $validate = [];
     if ($currentPassword != null){
-        if (isMatchCurrentPassword($id, $currentPassword) == false){
+        if (!isMatchCurrentPassword($id, $currentPassword)){
             $validate['currentPass'] = "Password input is not correct";
         }else{
             $errorNewPass = newPasswordValidate($newPassword, $confirmPassword);

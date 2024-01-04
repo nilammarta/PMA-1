@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/common-action.php";
-require_once __DIR__ . "/../assets/jsonHelper.php";
+require_once __DIR__ . "/jsonHelper.php";
 
 session_start();
 
@@ -73,7 +73,7 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     $saved = saveUpdateData($_SESSION['personId']);
 
     if($saved) {
-        redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=1");
+        redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=2");
     }
 
 }

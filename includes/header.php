@@ -1,6 +1,7 @@
 <?php
 
-function showHeader(string $title, string $link) {
+function showHeader(string $title, string $style, string $nav) : void
+{
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,7 +111,7 @@ function showHeader(string $title, string $link) {
 
     <link href="../assets/css/general.css" rel="stylesheet"/>
     <link href="../assets/query/query.css" rel="stylesheet"/>
-    <link href="../assets/css/create.css" rel="stylesheet"/>
+    <link href="../assets/css/<?php echo $style ?>" rel="stylesheet"/>
 
     <title><?= $title ?></title>
   </head>
@@ -123,7 +124,7 @@ function showHeader(string $title, string $link) {
             <img
                 class="logo-img"
                 src="../assets/img/Permap-logo-2.png"
-                alt="permap logo"
+                alt="persons management logo"
             />
               <h5 class="heading-2 logo-text m-0">PERMAP</h5>
           </div>
@@ -172,7 +173,7 @@ function showHeader(string $title, string $link) {
                 <div class="offcanvas-body d-flex flex-column gap-4">
                   <nav class="main-nav">
                     <ul class="main-nav-list">
-                      <li class="nav-item <?php if ($link == "dashboard"){ echo "nav-open"; } ?>">
+                      <li class="nav-item <?php if ($nav == "dashboard"){ echo "nav-open"; } ?>">
                         <a class="main-nav-link" href="../dashboard.php"
                         >
                           <ion-icon
@@ -182,7 +183,7 @@ function showHeader(string $title, string $link) {
                           Dashboard</a
                         >
                       </li>
-                      <li class="nav-item <?php if ($link == "persons"){ echo "nav-open"; }?>">
+                      <li class="nav-item <?php if ($nav == "persons"){ echo "nav-open"; }?>">
                         <a class="main-nav-link" href="../persons.php"
                         >
                           <ion-icon
@@ -198,7 +199,7 @@ function showHeader(string $title, string $link) {
                     <h6 class="heading-6 sub-heading m-0">Account</h6>
                     <nav class="main-nav">
                       <ul class="main-nav-list">
-                        <li class="nav-item <?php if ($link == "profile"){ echo "nav-open"; } ?>">
+                        <li class="nav-item <?php if ($nav == "profile"){ echo "nav-open"; } ?>">
                           <a class="main-nav-link" href="../myProfile.php"
                           >
                             <ion-icon

@@ -1,15 +1,10 @@
 <?php
 
 require_once __DIR__ . "/action/common-action.php";
-require_once __DIR__ . "/assets/jsonHelper.php";
+require_once __DIR__ . "/action/jsonHelper.php";
 
 session_start();
 userLoginCheck($_SESSION['userEmail']);
-
-//if (!isset($_SESSION['userEmail'])) {
-//    header("Location: login.php");
-//    exit();
-//}
 
 $persons = getPersonsData();
 
@@ -20,7 +15,6 @@ for ($i=0; $i<count($persons); $i++){
         saveDataIntoJson($persons);
     }
 }
-
 
 session_unset();
 session_destroy();

@@ -6,13 +6,13 @@
         "nik": "1200981029177912",
         "email": "lalalulu@gmail.com",
         "password": "$2y$10$NOsrUKlQUBfbaNoVE7Q.luKIDY6eCy4PK5MzhWESJChQ3zkBNegby",
-        "birthDate": 1039664573,
+        "birthDate": 1038819931,
         "sex": "f",
         "address": "Denpasar",
-        "internalNotes": "",
+        "internalNotes": "Lala lulu",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1704253442
+        "lastLoggedIn": 1704363625
     },
     {
         "id": 2,
@@ -36,10 +36,10 @@
         "nik": "1299380783699091",
         "email": "kumigina@gmail.com",
         "password": "$2y$10$A5HIQ0hJ\/cCLqkH1lIHxMOmq0Y.qmAPy6RBDzZewEY9gK8Pyo4Gm6",
-        "birthDate": 1544415078,
+        "birthDate": 1544432757,
         "sex": "m",
         "address": "Lombok",
-        "internalNotes": "",
+        "internalNotes": "Kumi gina",
         "role": "MEMBER",
         "alive": true,
         "lastLoggedIn": 1704255824
@@ -57,7 +57,7 @@
         "internalNotes": "",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1704253547
+        "lastLoggedIn": 1704354938
     },
     {
         "id": 5,
@@ -96,13 +96,13 @@
         "nik": "1109738012972077",
         "email": "elsa@gmail.com",
         "password": "$2y$10$kRSgWhUdFvNhQpM3on5yRuPJ\/0h0ffHJnL6yg7hQsnJ0H.fv9kL9.",
-        "birthDate": 1039661224,
+        "birthDate": 1039679731,
         "sex": "f",
         "address": "Tabanan",
         "internalNotes": "",
-        "role": "MEMBER",
+        "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1704163985
+        "lastLoggedIn": 1704359074
     },
     {
         "id": 8,
@@ -117,7 +117,7 @@
         "internalNotes": "",
         "role": "MEMBER",
         "alive": true,
-        "lastLoggedIn": null
+        "lastLoggedIn": 1704354969
     },
     {
         "id": 9,
@@ -140,10 +140,55 @@
         "lastName": "Kawa",
         "nik": "1090077297100021",
         "email": "giga@gmail.com",
-        "password": "$2y$10$841pTFkjrxVgc9kIi1Wnvuz7wV4scl7.iTEvTFWRZajtd7dLAD0ba",
-        "birthDate": 1103514953,
+        "password": "$2y$10$9pR5ezSe4ByhHPWXckPEOeRJSoXhJgsXQzsSm0MtxRe2MR7Q9lNbO",
+        "birthDate": 1103529536,
         "sex": "m",
         "address": "Tabanan",
+        "internalNotes": "",
+        "role": "MEMBER",
+        "alive": true,
+        "lastLoggedIn": null
+    },
+    {
+        "id": 11,
+        "firstName": "Lal",
+        "lastName": "12",
+        "nik": "1212121212121212",
+        "email": "coba@gmail.com",
+        "password": "$2y$10$55cvPXTTWybGGGnd8D63aew9RiDB6Y1kTTCrXKc7ypovBTmVDHG4C",
+        "birthDate": 1039666810,
+        "sex": "m",
+        "address": "Tabanan",
+        "internalNotes": "",
+        "role": "MEMBER",
+        "alive": true,
+        "lastLoggedIn": 1704347140
+    },
+    {
+        "id": 12,
+        "firstName": "Coba create",
+        "lastName": "User",
+        "nik": "1189093889028384",
+        "email": "Cobauser@gmail.com",
+        "password": "$2y$10$zACYlbRVQV8VtUjk\/LB4De0QLXOZRz9pXC0N2sbodjR40A7zIPwWS",
+        "birthDate": 977303296,
+        "sex": "m",
+        "address": "wqw",
+        "internalNotes": "",
+        "role": "MEMBER",
+        "alive": true,
+        "lastLoggedIn": 1704362394
+    },
+    {
+        "id": 13,
+        "firstName": "Test",
+        "lastName": "Coba",
+        "nik": "1230093799017380",
+        "email": "jaja@gmail.com",
+        "password": "$2y$10$MuPdyFnBbtX5I2Dy8eyyxu8vYxI5xqYqP6e87gb2MkrZZ0LxnqudO",
+        "birthDate": 976613702,
+        "sex": "m",
+        "address": "nasdmbck",
         "internalNotes": "",
         "role": "MEMBER",
         "alive": true,
