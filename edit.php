@@ -1,12 +1,16 @@
 <?php
 
 require_once __DIR__ . "/action/common-action.php";
+require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
 
 session_start();
-userLoginCheck($_SESSION['userEmail']);
-showHeader("EDIT - Persons Management App", "create.css", "persons");
+checkUserLogin($_SESSION['userEmail']);
+checkUserLoginRole($_SESSION['userRole']);
+
+addHeadCode("create.css", "EDIT - Persons Management App");
+showHeader("persons");
 ?>
     <main>
       <section class="main-section d-flex flex-row">
@@ -87,10 +91,9 @@ showHeader("EDIT - Persons Management App", "create.css", "persons");
                           id="nikInput"
                           name="nik"
                           type="text"
-                          class="form-control mb-2 <?php if (isset($_SESSION['nikError'])) {
+                          class="form-control mb-2 <?php if (isset($_SESSION['errorData']['nik'])) {
                               echo "is-invalid";
                           } ?>"
-                          placeholder="Nomor Induk Kependudukan"
                           value="<?php if (isset($_SESSION['inputData'])) {
                               echo $_SESSION['inputData']['nik'];
                           } else {
@@ -101,8 +104,8 @@ showHeader("EDIT - Persons Management App", "create.css", "persons");
                           required
                         />
 
-                        <?php if (isset($_GET['saved']) == null) { ?>
-                          <p class="error"><?php echo $_SESSION['nikError']; ?></p>
+                        <?php if (isset($_SESSION['errorData']['nik'])) { ?>
+                          <p class="error"><?php echo $_SESSION['errorData']['nik']; ?></p>
                         <?php } ?>
                       </div>
 
@@ -112,7 +115,7 @@ showHeader("EDIT - Persons Management App", "create.css", "persons");
                         <input
                           type="email"
                           name="email"
-                          class="form-control mb-2 <?php if (isset($_SESSION['emailError'])) {
+                          class="form-control mb-2 <?php if (isset($_SESSION['errorData']['email'])) {
                               echo "is-invalid";
                           } ?>"
                           id="exampleInputEmail1"
@@ -126,8 +129,8 @@ showHeader("EDIT - Persons Management App", "create.css", "persons");
                           required
                         />
 
-                        <?php if (isset($_GET['saved']) == null) { ?>
-                          <p class="error"><?php echo $_SESSION['emailError']; ?></p>
+                        <?php if (isset($_SESSION['errorData']['email'])) { ?>
+                          <p class="error"><?php echo $_SESSION['errorData']['email']; ?></p>
                         <?php } ?>
                       </div>
 
@@ -140,7 +143,9 @@ showHeader("EDIT - Persons Management App", "create.css", "persons");
                           id="birthDateInput"
                           name="birthDate"
                           type="date"
-                          class="form-control"
+                          class="form-control mb-2 <?php if (isset($_SESSION['errorData']['birthaDate'])){
+                            echo "is-invalid";
+                          } ?>"
                           value="<?php if (isset($_SESSION['inputData'])){
                             echo $_SESSION['inputData']['birthDate'];
                           } else if ($thePerson != null){
@@ -149,8 +154,8 @@ showHeader("EDIT - Persons Management App", "create.css", "persons");
                           required
                         />
 
-                        <?php if (isset($_SESSION['birthDateError'])){?>
-                          <p class="error"><?php echo $_SESSION['birthDateError']; ?></p>
+                        <?php if (isset($_SESSION['errorData']['birthDate'])){?>
+                          <p class="error"><?php echo $_SESSION['errorData']['birthDate']; ?></p>
                         <?php } ?>
                       </div>
                     </div>
@@ -294,15 +299,15 @@ showHeader("EDIT - Persons Management App", "create.css", "persons");
                       <input
                         type="password"
                         name="currentPassword"
-                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError'])) {
+                        class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']['currentPass'])) {
                             echo "is-invalid";
                         } ?>"
                         id="exampleInputPassword1"
                         placeholder="current password"
                       />
 
-                      <?php if (isset($_SESSION['currentPasswordError'])){ ?>
-                        <p class="error"> <?php echo $_SESSION['currentPasswordError']; ?></p>
+                      <?php if (isset($_SESSION['errorPassword'])){ ?>
+                        <p class="error"> <?php echo $_SESSION['errorPassword']['currentPass']; ?></p>
                       <?php }?>
                     </div>
                   </div>
@@ -314,7 +319,7 @@ showHeader("EDIT - Persons Management App", "create.css", "persons");
                       <input
                         type="password"
                         name="newPassword"
-                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])){
+                        class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']['currentPass']) == null && isset($_SESSION['errorPassword']['newPass'])){
                           echo "is-invalid";
                         } ?>"
                         id="exampleInputPassword2"
@@ -330,14 +335,14 @@ showHeader("EDIT - Persons Management App", "create.css", "persons");
                       <input
                         type="password"
                         name="confirmPassword"
-                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])){
+                        class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']['currentPass']) == null && isset($_SESSION['errorPassword']['newPass'])){
                           echo "is-invalid";
                         } ?>"
                         id="exampleInputPassword3"
                         placeholder="confirm password"
                       />
-                      <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])) { ?>
-                        <p class="error mt-3"> <?php echo $_SESSION['newPasswordError']; ?></p>
+                      <?php if (isset($_SESSION['errorPassword']["currentPass"]) == null && isset($_SESSION['errorPassword']['newPass'])) { ?>
+                        <p class="error mt-3"> <?php echo $_SESSION['errorPassword']['newPass']; ?></p>
                       <?php }?>
                     </div>
                   </div>
@@ -378,12 +383,8 @@ showHeader("EDIT - Persons Management App", "create.css", "persons");
     </main>
 
 <?php
-unset($_SESSION['nikError']);
-unset($_SESSION['emailError']);
-unset($_SESSION['passwordError']);
+unset($_SESSION['errorData']);
 unset($_SESSION['inputData']);
-unset($_SESSION['currentPasswordError']);
-unset($_SESSION['newPasswordError']);
-unset($_SESSION['birthDateError']);
+unset($_SESSION['errorPassword']);
 require_once "includes/footer.php";
 ?>

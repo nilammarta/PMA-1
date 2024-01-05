@@ -2,24 +2,21 @@
 
 include("action/common-action.php");
 include("action/persons-action.php");
+require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
 
 session_start();
 
-userLoginCheck($_SESSION['userEmail']);
+checkUserLogin($_SESSION['userEmail']);
 
 unset($_SESSION['personId']);
 unset($_SESSION['page']);
 unset($_SESSION['filter']);
 unset($_SESSION['search']);
-unset($_SESSION['nikError']);
-unset($_SESSION['emailError']);
-unset($_SESSION['passwordError']);
 unset($_SESSION['inputData']);
-unset($_SESSION['currentPasswordError']);
-unset($_SESSION['newPasswordError']);
-unset($_SESSION['birthDateError']);
+unset($_SESSION['errorData']);
+unset($_SESSION['errorPassword']);
 
 $appName = "PERSONS - Person Management App";
 
@@ -28,8 +25,8 @@ if (isset($_GET["search"]) != null && isset($_GET['filter']) != null) {
 } else {
     $url = "";
 }
-
-showHeader("PERSONS - Persons Management App", "persons.css", "persons");
+addHeadCode("persons.css", "PERSONS - Persons Management App");
+showHeader("persons");
 ?>
     <main>
       <section class="main-section d-flex flex-row">
@@ -53,6 +50,7 @@ showHeader("PERSONS - Persons Management App", "persons.css", "persons");
                         value="<?php echo $_GET['search']; ?>"
                         aria-label="Search"
                       />
+
                       <select name="filter" class="form-select select-filter me-2 mb-2" aria-label="Default select example">
                         <option name="filter" class="select-item selected" value="<?php if (isset($_GET['filter'])) {
                             echo $_GET['filter'];
@@ -64,8 +62,8 @@ showHeader("PERSONS - Persons Management App", "persons.css", "persons");
                                 echo "All Persons Data";
                             } ?></option>
                         <option class="select-item" value="allPersons">All Persons Data</option>
-                        <option class="select-item" value="productive">In Productive Age</option>
-                        <option class="select-item" value="children">Children</option>
+                        <option class="select-item" value="productive">In Productive Age (15-64 y.o)</option>
+                        <option class="select-item" value="children">Children (0-15 y.o)</option>
                         <option class="select-item" value="male">Male</option>
                         <option class="select-item" value="female">Female</option>
                         <option class="select-item" value="passedAway">Passed Away</option>

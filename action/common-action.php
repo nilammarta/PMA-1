@@ -2,11 +2,30 @@
 require_once __DIR__ . "/jsonHelper.php";
 
 
-function userLoginCheck(string | null $email): void
+function checkUserLogin(string | null $email): void
 {
     if (!isset($email) | $email == null) {
         header("Location: login.php");
         exit();
+    }
+}
+
+//function untuk mengatahui siapa yang login saat ini
+function userLogin($email):array
+{
+    $persons = getPersonsData();
+    for ($i =0; $i < count($persons); $i++){
+        if($persons[$i]["email"] == $email){
+            return $persons[$i];
+        }
+    }
+    return [];
+}
+
+function checkUserLoginRole(string $role): void
+{
+    if ($role == "MEMBER"){
+        redirect("dashboard.php", "");
     }
 }
 
@@ -38,17 +57,6 @@ function getStatus(bool $status): string
     }else{
         return "Passed Away";
     }
-}
-
-function userLogin($email):array
-{
-    $persons = getPersonsData();
-    for ($i =0; $i < count($persons); $i++){
-        if($persons[$i]["email"] == $email){
-            return $persons[$i];
-        }
-    }
-    return [];
 }
 
 function getUserById(int $id):array
@@ -228,9 +236,13 @@ function editValidate(string $nik, string $email, int $id, string $birthDate):ar
 function newPasswordValidate(string $newPass, string $confirmPass): string
 {
 
-    if (checkInputPassword($newPass) == null || $confirmPass != $newPass){
+    if (checkInputPassword($newPass) == null){
         return "Password input is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
         with minimum of 8 characters and maximum 16 characters!";
+    }
+
+    if ($newPass != $confirmPass){
+        return "New Password input and Confirm Password input did not match!";
     }
 
     return "";

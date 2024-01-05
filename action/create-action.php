@@ -92,20 +92,22 @@ function saveData():int
 
 $errorData = validate($_POST['nik'], $_POST['password'], $_POST['confirmPassword'], $_POST['email'], $_POST['birthDate']);
 if (count($errorData) != 0){
-    $_SESSION['nikError'] = $errorData["nik"];
-    $_SESSION['emailError'] = $errorData['email'];
-    $_SESSION['passwordError'] = $errorData['password'];
-    $_SESSION['birthDateError'] = $errorData['birthDate'];
+//    $_SESSION['nikError'] = $errorData["nik"];
+//    $_SESSION['emailError'] = $errorData['email'];
+//    $_SESSION['passwordError'] = $errorData['password'];
+//    $_SESSION['birthDateError'] = $errorData['birthDate'];
+    $_SESSION['errorData'] = $errorData;
     $_SESSION['dataInput'] = inputData();
 
     header("Location: ../create.php");
     exit();
 }else{
-    unset($_SESSION['nikError']);
-    unset($_SESSION['emailError']);
-    unset($_SESSION['passwordError']);
+//    unset($_SESSION['nikError']);
+//    unset($_SESSION['emailError']);
+//    unset($_SESSION['passwordError']);
+    unset($_SESSION['errorData']);
     unset($_SESSION['dataInput']);
-    unset($_SESSION['birthDateError']);
+//    unset($_SESSION['birthDateError']);
 
     $personId = saveData();
     if ($personId != null) {

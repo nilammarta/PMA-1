@@ -110,9 +110,9 @@ function getPaginatedData(array $data, int $page, int $limit): array
 function getFilter(string $filter): string
 {
     if ($filter == "productive"){
-        return "In Productive Age";
+        return "In Productive Age (15-64 y.o)";
     } elseif ($filter == "children"){
-        return "Children";
+        return "Children (0-15 y.o)";
     } else if ($filter == "male"){
         return "Male";
     } else if ($filter == "female"){

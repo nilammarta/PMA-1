@@ -1,12 +1,15 @@
 <?php
 include("action/common-action.php");
+require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
 
 session_start();
-userLoginCheck($_SESSION['userEmail']);
+checkUserLogin($_SESSION['userEmail']);
 
-showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
+addHeadCode("create.css", "MY PROFILE - Persons Management App");
+
+showHeader("profile");
 ?>
     <main>
       <section class="main-section d-flex flex-row">
@@ -39,6 +42,7 @@ showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
                       Your Profile has been updated!
                     </div>
                   <?php }?>
+
 
                 <form name="editProfile" class="create-form needs-validation p-4 mb-5" method="post" action="action/myProfile-action.php">
                   <h5 class="form-text pb-2 mb-4">EDIT PROFILE</h5>
@@ -91,20 +95,23 @@ showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
                     <div class="col-sm-10">
                       <input
                         name="nik"
-                        type="number"
-                        class="form-control mb-2 <?php if (isset($_SESSION['nikError'])){
+                        id="inputNIK"
+                        type="text"
+                        class="form-control mb-2 <?php if (isset($_SESSION['errorData']['nik'])){
                           echo "is-invalid";
                         } ?>"
-                        id="inputNIK"
                         value="<?php if (isset($_SESSION['inputData'])){
                           echo $_SESSION['inputData']['nik'];
                         }else {
                           echo $user['nik'];
                         }?>"
+                        aria-label="NIK"
+                        maxlength="16"
+                        required
                       />
 
-                      <?php if (isset($_SESSION['nikError'])){ ?>
-                        <p class="error"> <?php echo $_SESSION['nikError'] ?></p>
+                      <?php if (isset($_SESSION['errorData']['nik'])){ ?>
+                        <p class="error"> <?php echo $_SESSION['errorData']['nik']; ?></p>
                       <?php } ?>
                     </div>
                   </div>
@@ -118,7 +125,7 @@ showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
                       <input
                         name="email"
                         type="email"
-                        class="form-control mb-2 <?php if (isset($_SESSION['emailError'])){
+                        class="form-control mb-2 <?php if (isset($_SESSION['errorData']['email'])){
                           echo "is-invalid";
                         } ?>"
                         id="inputEmail"
@@ -129,8 +136,8 @@ showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
                         }?>"
                       />
 
-                      <?php if (isset($_SESSION['emailError'])){ ?>
-                        <p class="error"><?php echo $_SESSION['emailError']; ?></p>
+                      <?php if (isset($_SESSION['errorData']['email'])){ ?>
+                        <p class="error"><?php echo $_SESSION['errorData']['email']; ?></p>
                       <?php } ?>
                     </div>
                   </div>
@@ -145,7 +152,9 @@ showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
                       <input
                         name="birthDate"
                         type="date"
-                        class="form-control"
+                        class="form-control mb-2 <?php if (isset($_SESSION['errorData']['birthDate'])){
+                          echo "is-invalid";
+                        }?>"
                         id="inputBirthdate"
                         value="<?php if ($_SESSION['inputData']){
                           echo $_SESSION['inputData']['birthDate'];
@@ -214,23 +223,9 @@ showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
                           <option class="option-value" value="m">Male</option>
                         <?php }else { ?>
                           <option class="option-value" value="f">Female</option>
-                        <?php }?>
+                        <?php } ?>
                       </select>
                     </div>
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Internal notes</label>
-                    <textarea
-                      name="internalNotes"
-                      class="form-control"
-                      id="exampleFormControlTextarea1"
-                      rows="3"
-                    ><?php if (isset($_SESSION['inputData'])){
-                      echo $_SESSION['inputDate']['internalNotes'];
-                    }else {
-                        echo $user['internalNotes'];
-                    }?></textarea>
                   </div>
 
 <!--               change password       -->
@@ -245,16 +240,16 @@ showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
                       <input
                         name="currentPassword"
                         type="password"
-                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError'])) {
+                        class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']['currentPass'])) {
                           echo "is-invalid";
                         }?>"
                         id="inputCurrentPassword"
                         placeholder="current password"
                       />
 
-                      <?php if ($_SESSION['currentPasswordError']){ ?>
-                        <p class="error"><?php echo $_SESSION['currentPasswordError']; ?></p>
-                      <?php }?>
+                      <?php if ($_SESSION['errorPassword']['currentPass']){ ?>
+                        <p class="error"><?php echo $_SESSION['errorPassword']['currentPass']; ?></p>
+                      <?php } ?>
                     </div>
                   </div>
 
@@ -268,7 +263,7 @@ showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
                       <input
                         name="newPassword"
                         type="password"
-                        class="form-control mb-2 <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])){
+                        class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']['newPass']) == null && isset($_SESSION['errorData']['newPass'])){
                           echo "is-invalid";
                         } ?>"
                         id="inputNewPassword"
@@ -294,8 +289,8 @@ showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
                         placeholder="confirm password"
                       />
 
-                      <?php if (isset($_SESSION['currentPasswordError']) == null && isset($_SESSION['newPasswordError'])){ ?>
-                        <p class="error mt-3"><?php echo $_SESSION['newPasswordError']; ?></p>
+                      <?php if (isset($_SESSION['errorPassword']['newPass']) == null && isset($_SESSION['errorPassword']['newPass'])){ ?>
+                        <p class="error mt-3"><?php echo $_SESSION['errorPassword']['newPass']; ?></p>
                       <?php } ?>
                     </div>
                   </div>
@@ -341,11 +336,8 @@ showHeader("MY PROFILE - Persons Management App", "create.css", "profile");
       </section>
     </main>
   <?php
-    unset($_SESSION['nikError']);
-    unset($_SESSION['emailError']);
     unset($_SESSION['inputData']);
-    unset($_SESSION['currentPasswordError']);
-    unset($_SESSION['newPasswordError']);
-    unset($_SESSION['birthDateError']);
+    unset($_SESSION['errorData']);
+    unset($_SESSION['errorPassword']);
     require_once "includes/footer.php";
   ?>

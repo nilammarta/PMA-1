@@ -49,26 +49,17 @@ if ($_POST['currentPassword'] != null || $_POST['newPassword'] != null) {
 
 $errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId'], $_POST['birthDate']);
 if (count($errorData) != 0 || count($errorPass) != 0){
-    $_SESSION['nikError'] = $errorData['nik'];
-    $_SESSION['emailError'] = $errorData['email'];
-    $_SESSION['birthDateError'] = $errorData['birthDate'];
-    $_SESSION['inputData'] = inputData();
-    $_SESSION['currentPasswordError'] = $errorPass['currentPass'];
-    $_SESSION['newPasswordError'] = $errorPass['newPass'];
 
-//    $_SESSION['confirmPasswordError'] = $errorPass['confirmPass'];
-//    echo $_POST['newPassword'] . "dan" . $_POST['confirmPassword'];
-//
+    $_SESSION['errorData'] = $errorData;
+    $_SESSION['errorPassword'] = $errorPass;
+    $_SESSION['inputData'] = inputData();
+
     redirect('../edit.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 //    exit();
 }else{
-    unset($_SESSION['inputData']);
-    unset($_SESSION['nikError']);
-    unset($_SESSION['emailError']);
+    unset($_SESSION['errorData']);
+    unset($_SESSION['errorPassword']);
     unset($_SESSION['currentPasswordError']);
-    unset($_SESSION['newPasswordError']);
-    unset($_SESSION['birthDateError']);
-//    unset($_SESSION['confirmPasswordError']);
 
     $saved = saveUpdateData($_SESSION['personId']);
 

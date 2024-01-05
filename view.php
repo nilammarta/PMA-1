@@ -1,10 +1,11 @@
 <?php
 include("action/common-action.php");
+require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
 
 session_start();
-userLoginCheck($_SESSION['userEmail']);
+checkUserLogin($_SESSION['userEmail']);
 
 
 unset($_SESSION['page']);
@@ -12,7 +13,9 @@ unset($_SESSION['filter']);
 unset($_SESSION['search']);
 unset($_SESSION['personId']);
 
-showHeader("VIEW - Persons Management App", "view.css", "persons");
+addHeadCode("view.css", "VIEW - Persons Management App");
+
+showHeader("persons");
 ?>
     <main>
       <section class="main-section d-flex flex-row">
@@ -152,10 +155,13 @@ showHeader("VIEW - Persons Management App", "view.css", "persons");
                               </tr>
                             </tbody>
                           </table>
-                          <div class="card-body card-body-2">
-                            <h6 class="card-title">Internal notes :</h6>
-                            <div class="card-text"><?php echo $thePerson['internalNotes'] ?></div>
-                          </div>
+
+                          <?php if ($_SESSION['userRole'] == "ADMIN"){ ?>
+                            <div class="card-body card-body-2">
+                              <h6 class="card-title">Internal notes :</h6>
+                              <div class="card-text"><?php echo $thePerson['internalNotes'] ?></div>
+                            </div>
+                          <?php } ?>
 
                           <div class="card-body btn-card">
                               <?php
@@ -169,7 +175,8 @@ showHeader("VIEW - Persons Management App", "view.css", "persons");
                             <a class="btn btn-secondary me-2"
                                href="persons.php?<?php echo $url?>page=<?php echo $_GET['page']?>"
                                role="button">
-                              <ion-icon name="arrow-back-sharp"></ion-icon> <?php if ($_SESSION['userRole'] == "MEMBER"){
+                              <ion-icon name="arrow-back-sharp"></ion-icon>
+                                <?php if ($_SESSION['userRole'] == "MEMBER"){
                                   echo "Back";
                                 }?>
                             </a>

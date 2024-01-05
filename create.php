@@ -1,12 +1,15 @@
 <?php
 include "action/common-action.php";
+require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
 
 session_start();
-userLoginCheck($_SESSION['userEmail']);
+checkUserLogin($_SESSION['userEmail']);
+checkUserLoginRole($_SESSION['userRole']);
 
-showHeader("CREATE - Persons Management App", "create.css", "persons");
+addHeadCode("create.css", "CREATE - Persons Management App");
+showHeader("persons");
 ?>
     <main>
       <section class="main-section d-flex flex-row">
@@ -17,6 +20,17 @@ showHeader("CREATE - Persons Management App", "create.css", "persons");
             <div class="content-title">
               <h2 class="heading-2 m-0 p-3">ADD PERSON</h2>
             </div>
+
+            <?php if (isset($_SESSION['errorData'])){
+              $error = $_SESSION['errorData'];
+            ?>
+              <div class="alert alert-danger" role="alert">
+                Error while submit the form:
+                <?php for ($i = 0; $i < count($_SESSION['errorData']); $i++){
+                  echo "- " . $_SESSION['errorData'][$i] . PHP_EOL;
+                } ?>
+              </div>
+            <?php } ?>
 
             <div class="row justify-content-center">
               <!-- <div class="col-12 col-md-10 col-lg-11 col-xxl-6"> -->
@@ -79,7 +93,7 @@ showHeader("CREATE - Persons Management App", "create.css", "persons");
                             name="nik"
                             id="nikInput"
                             type="text"
-                            class="form-control mb-2 <?php if (isset($_SESSION['nikError'])) { ?>
+                            class="form-control mb-2 <?php if (isset($_SESSION['errorData']['nik'])) { ?>
                               is-invalid
                             <?php } ?>"
                             placeholder="Nomor Induk Kependudukan"
@@ -90,8 +104,8 @@ showHeader("CREATE - Persons Management App", "create.css", "persons");
                             }?>"
                             required
                           />
-                          <?php if (isset($_GET['saved']) == null) {?>
-                            <p class="error"> <?php echo $_SESSION['nikError'];?> </p>
+                          <?php if (isset($_SESSION['errorData']['nik'])) {?>
+                            <p class="error"> <?php echo $_SESSION['errorData']['nik'];?> </p>
                           <?php } ?>
                         </div>
 
@@ -101,7 +115,7 @@ showHeader("CREATE - Persons Management App", "create.css", "persons");
                           <input
                             name="email"
                             type="email"
-                            class="form-control mb-2 <?php if (isset($_SESSION['emailError'])) { ?>
+                            class="form-control mb-2 <?php if (isset($_SESSION['errorData']['email'])) { ?>
                               is-invalid
                             <?php } ?>"
                             id="exampleInputEmail1"
@@ -112,9 +126,9 @@ showHeader("CREATE - Persons Management App", "create.css", "persons");
                             ?>"
                             required
                           />
-                            <?php if (isset($_GET['saved']) == null){?>
-                              <p class="error"> <?php echo $_SESSION['emailError']; ?> </p>
-                            <?php } ?>
+                          <?php if (isset($_SESSION['errorData']['email'])){?>
+                            <p class="error"> <?php echo $_SESSION['errorData']['email']; ?></p>
+                          <?php } ?>
                         </div>
 
                         <div class="mb-3">
@@ -124,7 +138,7 @@ showHeader("CREATE - Persons Management App", "create.css", "persons");
                           <input
                             name="password"
                             type="password"
-                            class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])) {
+                            class="form-control mb-2 <?php if (isset($_SESSION['errorData']['password'])) {
                               echo "is-invalid";
                             } ?>"
                             id="exampleInputPassword1"
@@ -138,7 +152,7 @@ showHeader("CREATE - Persons Management App", "create.css", "persons");
                           <input
                             name="confirmPassword"
                             type="password"
-                            class="form-control mb-2 <?php if (isset($_SESSION['passwordError'])){
+                            class="form-control mb-2 <?php if (isset($_SESSION['errorData']['password'])){
                               echo "is-invalid";
                             } ?>"
                             id="exampleInputPassword2"
@@ -146,8 +160,8 @@ showHeader("CREATE - Persons Management App", "create.css", "persons");
                             required
                           />
 
-                          <?php if (isset($_GET['saved']) == null){ ?>
-                            <p class="error"><?php echo $_SESSION['passwordError']; ?></p>
+                          <?php if (isset($_SESSION['errorData']['password'])){ ?>
+                            <p class="error"><?php echo $_SESSION['errorData']['password']; ?></p>
                           <?php } ?>
                         </div>
                       </div>
@@ -169,8 +183,8 @@ showHeader("CREATE - Persons Management App", "create.css", "persons");
                             required
                           />
 
-                          <?php if (isset($_SESSION['birthDateError'])){ ?>
-                             <p class="error"><?php echo $_SESSION['birthDateError']; ?></p>
+                          <?php if (isset($_SESSION['errorData']['birthDate'])){ ?>
+                             <p class="error"><?php echo $_SESSION['errorData']['birthDate']; ?></p>
                           <?php } ?>
                         </div>
 
@@ -326,11 +340,8 @@ showHeader("CREATE - Persons Management App", "create.css", "persons");
     </main>
 
 <?php
-unset($_SESSION['nikError']);
-unset($_SESSION['passwordError']);
-unset($_SESSION['emailError']);
 unset($_SESSION['dataInput']);
-unset($_SESSION['birthDateError']);
+unset($_SESSION['errorData']);
 require_once "includes/footer.php";
 ?>
 

@@ -4,7 +4,7 @@ require_once __DIR__ . "/action/common-action.php";
 require_once __DIR__ . "/action/jsonHelper.php";
 
 session_start();
-userLoginCheck($_SESSION['userEmail']);
+checkUserLogin($_SESSION['userEmail']);
 
 $persons = getPersonsData();
 
