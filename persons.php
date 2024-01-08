@@ -53,15 +53,16 @@ showHeader("persons");
 
                       <select name="filter" class="form-select select-filter me-2 mb-2" aria-label="Default select example">
                         <option name="filter" class="select-item selected" value="<?php if (isset($_GET['filter'])) {
-                            echo $_GET['filter'];
-                        } else {
-                            echo "allPersons";
+                          echo getFilterValue($_GET['filter']);
+                        }else{
+                          echo "allPersons";
                         } ?>" selected><?php if (isset($_GET['filter'])) {
-                                echo getFilter($_GET['filter']);
-                            } else {
-                                echo "All Persons Data";
-                            } ?></option>
+                          echo getFilter($_GET['filter']);
+                        } else {
+                          echo "All Persons Data";
+                        } ?></option>
                         <option class="select-item" value="allPersons">All Persons Data</option>
+                        <option class="select-item" value="elderly">Elderly ( > 64 y.o)</option>
                         <option class="select-item" value="productive">In Productive Age (15-64 y.o)</option>
                         <option class="select-item" value="children">Children (0-15 y.o)</option>
                         <option class="select-item" value="male">Male</option>
@@ -104,9 +105,9 @@ showHeader("persons");
 
                   <?php
                   if (isset($_GET['search']) != null && isset($_GET['filter']) != null) {
-                      $persons = searchPerson(filter($_GET['filter']), $_GET['search']);
+                      $persons = searchPerson(filter(getFilterValue($_GET['filter'])), $_GET['search']);
                   } else if (isset($_GET["filter"])) {
-                      $persons = filter($_GET["filter"]);
+                      $persons = filter(getFilterValue($_GET["filter"]));
                   } else {
                       $persons = getPersonsData();
                   }
@@ -121,7 +122,6 @@ showHeader("persons");
                     </div>
                   <?php } else { ?>
                       <?php
-    //                      $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
 
                       if (isset($_GET['page']) && $_GET['page'] < 1) {
                           $page = 1;
@@ -152,12 +152,12 @@ showHeader("persons");
 
                       <thead>
                         <tr>
-                          <th class="text-center" scope="col">No</th>
-                          <th class="text-center" scope="col">Email</th>
-                          <th class="text-center" scope="col">Name</th>
-                          <th class="text-center" scope="col">Age</th>
-                          <th class="text-center" scope="col">Status</th>
-                          <th class="text-center" scope="col">Role</th>
+                          <th class="text-center p-3" scope="col">No</th>
+                          <th class="text-center p-3" scope="col">Email</th>
+                          <th class="text-center p-3" scope="col">Name</th>
+                          <th class="text-center p-3" scope="col">Age</th>
+                          <th class="text-center p-3" scope="col">Status</th>
+                          <th class="text-center p-3" scope="col">Role</th>
                           <th scope="col"></th>
                         </tr>
                       </thead>
@@ -198,7 +198,7 @@ showHeader("persons");
                                       echo "view";
                                       }?>
                                   </a>
-                                <?php }else {?>
+                                <?php } else {?>
                                   <a
                                     class="btn btn-outline-light me-md-2 btn-table"
                                     type="button"
@@ -322,7 +322,6 @@ showHeader("persons");
                       </nav>
                     </div>
                   <?php } ?>
-                <!--                  --><?php //} ?>
               </div>
             </div>
           </div>

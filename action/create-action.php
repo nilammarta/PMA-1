@@ -41,7 +41,7 @@ function validate(string $nik, string $password, string $confirmPassword, string
     }
 
     if (isNikExits($nik, null) == true) {
-        $validate['nik'] = "NIK is already exists in database please type another NIK!";
+        $validate['nik'] = "NIK is already exists in database!";
     }
 
     if (newPasswordValidate($password, $confirmPassword) != ""){
@@ -49,17 +49,16 @@ function validate(string $nik, string $password, string $confirmPassword, string
     }
 
     if (isEmailExists($email, null) == true) {
-        $validate['email'] = "Email address is already exists in database, please type another email!";
+        $validate['email'] = "Email address is already exists in database!";
     }
 
     if (checkFormatEmail($email) == null) {
-        $validate['email'] = "Email format is not correct, please type again!";
-
+        $validate['email'] = "Email format is not correct!";
     }
 
     $timestamp = convertStringIntoDate('Y-m-d', $birthDate);
-    if (time() < $timestamp){
-        $validate['birthDate'] = "Birth Date is not correct, please input again!";
+    if (time() < $timestamp || $timestamp == null){
+        $validate['birthDate'] = "Birth Date is not correct!";
     }
 
     return $validate;
@@ -98,16 +97,13 @@ if (count($errorData) != 0){
 //    $_SESSION['birthDateError'] = $errorData['birthDate'];
     $_SESSION['errorData'] = $errorData;
     $_SESSION['dataInput'] = inputData();
+    $_SESSION['birthDate'] = $_POST['birthDate'];
 
     header("Location: ../create.php");
     exit();
 }else{
-//    unset($_SESSION['nikError']);
-//    unset($_SESSION['emailError']);
-//    unset($_SESSION['passwordError']);
     unset($_SESSION['errorData']);
     unset($_SESSION['dataInput']);
-//    unset($_SESSION['birthDateError']);
 
     $personId = saveData();
     if ($personId != null) {

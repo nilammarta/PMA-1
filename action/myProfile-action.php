@@ -47,14 +47,9 @@ if ($_POST['currentPassword'] != null || $_POST['newPassword']) {
 
 $errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId'], $_POST['birthDate']);
 if (count($errorData) != 0 || count($errorPass) != 0){
-//    $_SESSION['nikError'] = $errorData['nik'];
-//    $_SESSION['emailError'] = $errorData['email'];
-//    $_SESSION['birthDateError'] = $errorData['birthDate'];
     $_SESSION['errorData'] = $errorData;
     $_SESSION['inputData'] = inputData();
     $_SESSION['errorPassword'] = $errorPass;
-//    $_SESSION['currentPasswordError'] = $errorPass['currentPass'];
-//    $_SESSION['newPasswordError'] = $errorPass['newPass'];
 
     redirect('../myProfile.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 }else{

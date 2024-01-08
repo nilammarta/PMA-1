@@ -43,7 +43,8 @@ if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
 
 if ($_POST['currentPassword'] != null || $_POST['newPassword'] != null) {
     $errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
-}else{
+//$errorPass = newPasswordValidate($_POST['newPassword'], $_POST['confirmPassword']);
+} else {
     $errorPass = [];
 }
 
@@ -56,7 +57,7 @@ if (count($errorData) != 0 || count($errorPass) != 0){
 
     redirect('../edit.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 //    exit();
-}else{
+} else {
     unset($_SESSION['errorData']);
     unset($_SESSION['errorPassword']);
     unset($_SESSION['currentPasswordError']);
@@ -66,5 +67,4 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     if($saved) {
         redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=2");
     }
-
 }

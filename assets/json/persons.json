@@ -12,7 +12,7 @@
         "internalNotes": "Lala lulu",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1704442168
+        "lastLoggedIn": 1704705386
     },
     {
         "id": 2,
@@ -42,7 +42,7 @@
         "internalNotes": "Kumi gina",
         "role": "MEMBER",
         "alive": true,
-        "lastLoggedIn": 1704437062
+        "lastLoggedIn": 1704705433
     },
     {
         "id": 4,
@@ -111,7 +111,7 @@
         "nik": "1230087399879200",
         "email": "jukilisya@gmail.com",
         "password": "$2y$10$Wr00Xvnof5v7MYW7VJBX5eXsqaQQsPvw9Gl7Vm\/pOnWll9ydxAVZu",
-        "birthDate": 1562032462,
+        "birthDate": 1656747838,
         "sex": "f",
         "address": "Tabanan",
         "internalNotes": "",
@@ -204,6 +204,21 @@
         "birthDate": -601334008,
         "sex": "m",
         "address": "ans",
+        "internalNotes": "",
+        "role": "MEMBER",
+        "alive": true,
+        "lastLoggedIn": null
+    },
+    {
+        "id": 15,
+        "firstName": "Lansia ",
+        "lastName": "2",
+        "nik": "1009739403039779",
+        "email": "lansia2@gmail.com",
+        "password": "$2y$10$4Cdeyo.hOqUrqnVOLxencuSbNm4H0FYYJsh9df4kYjpKpbndqP5PO",
+        "birthDate": -603902469,
+        "sex": "f",
+        "address": "asdkaj",
         "internalNotes": "",
         "role": "MEMBER",
         "alive": true,

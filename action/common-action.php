@@ -214,20 +214,20 @@ function editValidate(string $nik, string $email, int $id, string $birthDate):ar
     }
 
     if (isNikExits($nik, $id) == true){
-        $validate['nik'] = "NIK is already exists in database, please type another NIK!";
+        $validate['nik'] = "NIK is already exists in database!";
     }
 
     if (checkFormatEmail($email) == null){
-        $validate['email'] = "Email format is not correct, please type again!";
+        $validate['email'] = "Email format is not correct!";
     }
 
     if (isEmailExists($email, $id) == true){
-        $validate['email'] = "Email is already exists in database, please type another email!";
+        $validate['email'] = "Email is already exists in database!";
     }
 
     $timestamp = convertStringIntoDate('Y-m-d', $birthDate);
-    if (time() < $timestamp){
-        $validate['birthDate'] = "Birth Date is not correct, please type again!";
+    if (time() < $timestamp || $timestamp == null){
+        $validate['birthDate'] = "Birth Date is not correct!";
     }
 
     return $validate;
@@ -237,12 +237,12 @@ function newPasswordValidate(string $newPass, string $confirmPass): string
 {
 
     if (checkInputPassword($newPass) == null){
-        return "Password input is not correct, password must have at least 1 capital letter, 1 non capital letter and 1 number,
-        with minimum of 8 characters and maximum 16 characters!";
+        return "Password input is not correct!" .  "<br>"  . "* password must have at least 1 capital letter" . "<br>" . "* 1 non capital letter and 1 number " .
+        "<br>" . "* with minimum of 8 characters and maximum 16 characters!";
     }
 
     if ($newPass != $confirmPass){
-        return "New Password input and Confirm Password input did not match!";
+        return "New Password and Confirm Password did not match!";
     }
 
     return "";
@@ -253,7 +253,7 @@ function passwordValidate(int $id, string $currentPassword, string $newPassword,
     $validate = [];
     if ($currentPassword != null){
         if (!isMatchCurrentPassword($id, $currentPassword)){
-            $validate['currentPass'] = "Password input is not correct";
+            $validate['currentPass'] = "Password input is not correct!";
         }else{
             $errorNewPass = newPasswordValidate($newPassword, $confirmPassword);
             if ($errorNewPass != "") {

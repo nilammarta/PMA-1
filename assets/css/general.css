@@ -260,3 +260,8 @@ body {
   color: #b21818;
   line-height: 1.6rem;
 }
+
+.error-banner{
+  text-align: start;
+  line-height: 1.8;
+}

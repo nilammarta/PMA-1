@@ -129,6 +129,17 @@ showHeader("persons");
                                 <td><?php echo $thePerson['email']; ?></td>
                               </tr>
                               <tr>
+                                <td>Age</td>
+                                <td>:</td>
+                                <td><?php $age = getAge($thePerson['birthDate']);
+                                  if ($age > 1){
+                                    echo $age . " years old";
+                                  }else {
+                                    echo $age . " year old";
+                                  }
+                                ?></td>
+                              </tr>
+                              <tr>
                                 <td>Birth Date</td>
                                 <td>:</td>
                                 <td><?php echo date('d F Y', $thePerson['birthDate']); ?></td>
