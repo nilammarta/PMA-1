@@ -50,9 +50,16 @@ showHeader("profile");
                     if (isset($_SESSION['errorPassword']['currentPass'])){
                       $error[] = $_SESSION['errorPassword']['currentPass'];
                     }
+                    if (isset($_SESSION['errorPassword']['passError']) && isset($_SESSION['errorPassword']['newPass']) == null && isset($_SESSION['errorPassword']['confirmPass']) == null){
+                      $error[] = $_SESSION['errorPassword']['passError'];
+                    }
                     if (isset($_SESSION['errorPassword']['newPass'])){
                       $error[] = $_SESSION['errorPassword']['newPass'];
-                    }?>
+                    }
+                    if (isset($_SESSION['errorPassword']['confirmPass'])){
+                      $error[] = $_SESSION['errorPassword']['confirmPass'];
+                    }
+                    ?>
 
                     <div class="alert alert-danger error-banner">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -297,12 +304,16 @@ showHeader("profile");
                       <input
                         name="newPassword"
                         type="password"
-                        class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']['currentPass']) == null && isset($_SESSION['errorPassword']['newPass'])){
+                        class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']['newPass']) || isset($_SESSION['errorPassword']['currentPass']) == null && isset($_SESSION['errorPassword']['passError'])){
                           echo "is-invalid";
                         } ?>"
                         id="inputNewPassword"
                         placeholder="new password"
                       />
+
+                      <?php if (isset($_SESSION['errorPassword']['newPass'])){?>
+                        <p class="error"><?php echo $_SESSION['errorPassword']['newPass']; ?></p>
+                      <?php } ?>
                     </div>
                   </div>
 
@@ -316,15 +327,16 @@ showHeader("profile");
                       <input
                         name="confirmPassword"
                         type="password"
-                        class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']["currentPass"]) == null && isset($_SESSION['errorPassword']['newPass'])) {
+                        class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']['confirmPass']) || isset($_SESSION['errorPassword']["currentPass"]) == null && isset($_SESSION['errorPassword']['passError'])) {
                           echo "is-invalid";
                         }?>"
                         id="inputConfirmPassword"
                         placeholder="confirm password"
                       />
-
-                      <?php if (isset($_SESSION['errorPassword']['currentPass']) == null && isset($_SESSION['errorPassword']['newPass'])){ ?>
-                        <p class="error mt-3"><?php echo $_SESSION['errorPassword']['newPass']; ?></p>
+                      <?php if (isset($_SESSION['errorPassword']['confirmPass'])){?>
+                        <p class="error"><?php echo $_SESSION['errorPassword']['confirmPass']; ?></p>
+                      <?php } else if(isset($_SESSION['errorPassword']['currentPass']) == null && isset($_SESSION['errorPassword']['passError'])){ ?>
+                        <p class="error mt-3"><?php echo $_SESSION['errorPassword']['passError']; ?></p>
                       <?php } ?>
                     </div>
                   </div>

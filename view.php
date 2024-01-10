@@ -6,7 +6,9 @@ require_once "includes/sidebar.php";
 
 session_start();
 checkUserLogin($_SESSION['userEmail']);
-
+if ($_GET['person'] == null){
+  redirect("dashboard.php", "");
+}
 
 unset($_SESSION['page']);
 unset($_SESSION['filter']);

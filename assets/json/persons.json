@@ -6,13 +6,13 @@
         "nik": "1200981029177912",
         "email": "lalalulu@gmail.com",
         "password": "$2y$10$NOsrUKlQUBfbaNoVE7Q.luKIDY6eCy4PK5MzhWESJChQ3zkBNegby",
-        "birthDate": 1038817078,
+        "birthDate": 1038811106,
         "sex": "f",
         "address": "Denpasar",
         "internalNotes": "Lala lulu",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1704705386
+        "lastLoggedIn": 1704876535
     },
     {
         "id": 2,
@@ -42,7 +42,7 @@
         "internalNotes": "Kumi gina",
         "role": "MEMBER",
         "alive": true,
-        "lastLoggedIn": 1704705433
+        "lastLoggedIn": 1704855706
     },
     {
         "id": 4,
@@ -181,37 +181,37 @@
     },
     {
         "id": 13,
-        "firstName": "Test",
+        "firstName": "&lt;p&gt;Test &lt;\/p&gt;",
         "lastName": "Coba",
         "nik": "1230093799017380",
         "email": "jaja@gmail.com",
         "password": "$2y$10$MuPdyFnBbtX5I2Dy8eyyxu8vYxI5xqYqP6e87gb2MkrZZ0LxnqudO",
-        "birthDate": 976613702,
+        "birthDate": 976611034,
         "sex": "m",
         "address": "nasdmbck",
-        "internalNotes": "",
+        "internalNotes": "&lt;h3&gt;internalnotes&lt;\/h3&gt;",
         "role": "MEMBER",
         "alive": true,
         "lastLoggedIn": null
     },
     {
         "id": 14,
-        "firstName": "Lal",
-        "lastName": "Q",
-        "nik": "1200916318200983",
+        "firstName": "Lansia",
+        "lastName": "W",
+        "nik": "1200916318200987",
         "email": "lansia@gmail.com",
         "password": "$2y$10$kfDYQeXokB2PNzHMzjyuxee9VfCZNBuYlnHv4ZyWTHJRdh1dmKNfW",
         "birthDate": -601334008,
         "sex": "m",
-        "address": "ans",
-        "internalNotes": "",
+        "address": "&lt;h5&gt; ans &lt;\/h5&gt;",
+        "internalNotes": "&lt;h5&gt;coba tag html h5 pada internal notes yang sudah di implementkan filter sanitasi&lt;h5&gt;",
         "role": "MEMBER",
         "alive": true,
-        "lastLoggedIn": null
+        "lastLoggedIn": 1704854313
     },
     {
         "id": 15,
-        "firstName": "Lansia ",
+        "firstName": "Lansia",
         "lastName": "2",
         "nik": "1009739403039779",
         "email": "lansia2@gmail.com",

@@ -10,7 +10,7 @@ function generateId($persons): int
     if ($persons == null){
         $id = 1;
     }else{
-        $lastPerson = $persons[count($persons) -1];
+        $lastPerson = $persons[count($persons) - 1];
         $id = $lastPerson["id"] + 1;
     }
     return $id;
@@ -70,15 +70,15 @@ function saveData():int
     $persons = getPersonsData();
     $newPerson = [
         "id" => generateId($persons),
-        "firstName" => ucfirst($_POST['firstName']),
-        "lastName" => ucfirst($_POST['lastName']),
+        "firstName" => ucfirst(htmlspecialchars($_POST['firstName'])),
+        "lastName" => ucfirst(htmlspecialchars($_POST['lastName'])),
         "nik" => $_POST["nik"],
-        "email" => $_POST['email'],
+        "email" => filter_var($_POST['email'], FILTER_SANITIZE_EMAIL),
         "password" => encryptPassword($_POST['password']),
         "birthDate" =>convertStringIntoDate('Y-m-d', $_POST['birthDate']),
         "sex" => $_POST['sex'],
-        "address" => $_POST['address'],
-        "internalNotes" => $_POST['internalNotes'],
+        "address" => htmlspecialchars($_POST['address']),
+        "internalNotes" => htmlspecialchars($_POST['internalNotes']),
         "role" => $_POST['role'],
         "alive" => convertSwitchValue($_POST['alive']),
         "lastLoggedIn" => null
@@ -91,10 +91,7 @@ function saveData():int
 
 $errorData = validate($_POST['nik'], $_POST['password'], $_POST['confirmPassword'], $_POST['email'], $_POST['birthDate']);
 if (count($errorData) != 0){
-//    $_SESSION['nikError'] = $errorData["nik"];
-//    $_SESSION['emailError'] = $errorData['email'];
-//    $_SESSION['passwordError'] = $errorData['password'];
-//    $_SESSION['birthDateError'] = $errorData['birthDate'];
+
     $_SESSION['errorData'] = $errorData;
     $_SESSION['dataInput'] = inputData();
     $_SESSION['birthDate'] = $_POST['birthDate'];

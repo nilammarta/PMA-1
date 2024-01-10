@@ -16,14 +16,14 @@ function saveUpdateProfile(int $id): bool
                 $password = $persons[$i]['password'];
             }
 
-            $persons[$i]['firstName'] = ucfirst($_POST['firstName']);
-            $persons[$i]['lastName'] = ucfirst($_POST['lastName']);
+            $persons[$i]['firstName'] = ucfirst(htmlspecialchars($_POST['firstName']));
+            $persons[$i]['lastName'] = ucfirst(htmlspecialchars($_POST['lastName']));
             $persons[$i]['nik'] = $_POST['nik'];
-            $persons[$i]['email'] = $_POST['email'];
+            $persons[$i]['email'] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $persons[$i]['password'] = $password;
             $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $_POST['birthDate']);
             $persons[$i]['sex'] = $_POST['sex'];
-            $persons[$i]['address'] = $_POST['address'];
+            $persons[$i]['address'] = htmlspecialchars($_POST['address']);
 
             saveDataIntoJson($persons);
             return true;

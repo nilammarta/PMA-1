@@ -218,7 +218,7 @@ function editValidate(string $nik, string $email, int $id, string $birthDate):ar
     }
 
     if (checkFormatEmail($email) == null){
-        $validate['email'] = "Email format is not correct!";
+        $validate['email'] = "Email format is invalid!";
     }
 
     if (isEmailExists($email, $id) == true){
@@ -227,7 +227,7 @@ function editValidate(string $nik, string $email, int $id, string $birthDate):ar
 
     $timestamp = convertStringIntoDate('Y-m-d', $birthDate);
     if (time() < $timestamp || $timestamp == null){
-        $validate['birthDate'] = "Birth Date is not correct!";
+        $validate['birthDate'] = "Birth Date is invalid!";
     }
 
     return $validate;
@@ -235,7 +235,6 @@ function editValidate(string $nik, string $email, int $id, string $birthDate):ar
 
 function newPasswordValidate(string $newPass, string $confirmPass): string
 {
-
     if (checkInputPassword($newPass) == null){
         return "Password input is not correct!" .  "<br>"  . "* password must have at least 1 capital letter" . "<br>" . "* 1 non capital letter and 1 number " .
         "<br>" . "* with minimum of 8 characters and maximum 16 characters!";
@@ -255,9 +254,17 @@ function passwordValidate(int $id, string $currentPassword, string $newPassword,
         if (!isMatchCurrentPassword($id, $currentPassword)){
             $validate['currentPass'] = "Password input is not correct!";
         }else{
+            if (empty($newPassword)){
+                $validate['newPass'] = "Please type the New Password!";
+            }
+
+            if (empty($confirmPassword)){
+                $validate['confirmPass'] = "Please type the Confirm Password!";
+            }
+
             $errorNewPass = newPasswordValidate($newPassword, $confirmPassword);
             if ($errorNewPass != "") {
-                $validate['newPass'] = $errorNewPass;
+                $validate['passError'] = $errorNewPass;
             }
         }
     }else{
@@ -266,3 +273,4 @@ function passwordValidate(int $id, string $currentPassword, string $newPassword,
 
     return $validate;
 }
+

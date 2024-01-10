@@ -8,6 +8,9 @@ require_once "includes/sidebar.php";
 session_start();
 checkUserLogin($_SESSION['userEmail']);
 checkUserLoginRole($_SESSION['userRole']);
+if ($_GET['person'] == null){
+    redirect("dashboard.php", "");
+}
 
 addHeadCode("create.css", "EDIT - Persons Management App");
 showHeader("persons");
@@ -46,11 +49,8 @@ showHeader("persons");
                       if (isset($_SESSION['errorData']['birthDate'])) {
                           $error[] = $_SESSION['errorData']['birthDate'];
                       }
-                      if (isset($_SESSION['errorPassword']['currentPass'])) {
-                          $error[] = $_SESSION['errorPassword']['currentPass'];
-                      }
-                      if (isset($_SESSION['errorPassword']['newPass'])) {
-                          $error[] = $_SESSION['errorPassword']['newPass'];
+                      if (isset($_SESSION['errorPassword'])) {
+                          $error[] = $_SESSION['errorPassword'];
                       } ?>
 
                     <div class="alert alert-danger error-banner">
@@ -289,13 +289,13 @@ showHeader("persons");
                         } ?>
                       </option>
 
-                        <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['role'] == "ADMIN") { ?>
-                          <option class="option-value" value="MEMBER">MEMBER</option>
-                        <?php } else if ($thePerson['role'] == "ADMIN") { ?>
-                          <option class="option-value" value="MEMBER">MEMBER</option>
-                        <?php } else { ?>
-                          <option class="option-value" value="ADMIN">ADMIN</option>
-                        <?php } ?>
+                      <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['role'] == "ADMIN") { ?>
+                        <option class="option-value" value="MEMBER">MEMBER</option>
+                      <?php } else if ($thePerson['role'] == "ADMIN") { ?>
+                        <option class="option-value" value="MEMBER">MEMBER</option>
+                      <?php } else { ?>
+                        <option class="option-value" value="ADMIN">ADMIN</option>
+                      <?php } ?>
                     </select>
                   </div>
 
@@ -323,28 +323,28 @@ showHeader("persons");
               </div>
 
               <!--               change password   -->
-              <h5 class="form-text pb-2 mb-3 mt-5">
-                Change Password
-              </h5>
-              <div class="mb-3 row">
-                <label for="exampleInputPassword1" class="col-sm-2 col-form-label form-label"
-                >Current Password </label>
-                <div class="col-sm-9 col-xl-6">
-                  <input
-                    type="password"
-                    name="currentPassword"
-                    class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']['currentPass'])) {
-                        echo "is-invalid";
-                    } ?>"
-                    id="exampleInputPassword1"
-                    placeholder="current password"
-                  />
-
-                    <?php if (isset($_SESSION['errorPassword'])) { ?>
-                      <p class="error"> <?php echo $_SESSION['errorPassword']['currentPass']; ?></p>
-                    <?php } ?>
-                </div>
-              </div>
+<!--              <h5 class="form-text pb-2 mb-3 mt-5">-->
+<!--                Change Password-->
+<!--              </h5>-->
+<!--              <div class="mb-3 row">-->
+<!--                <label for="exampleInputPassword1" class="col-sm-2 col-form-label form-label"-->
+<!--                >Current Password </label>-->
+<!--                <div class="col-sm-9 col-xl-6">-->
+<!--                  <input-->
+<!--                    type="password"-->
+<!--                    name="currentPassword"-->
+<!--                    class="form-control mb-2 --><?php //if (isset($_SESSION['errorPassword']['currentPass'])) {
+//                        echo "is-invalid";
+//                    } ?><!--"-->
+<!--                    id="exampleInputPassword1"-->
+<!--                    placeholder="current password"-->
+<!--                  />-->
+<!---->
+<!--                    --><?php //if (isset($_SESSION['errorPassword'])) { ?>
+<!--                      <p class="error"> --><?php //echo $_SESSION['errorPassword']['currentPass']; ?><!--</p>-->
+<!--                    --><?php //} ?>
+<!--                </div>-->
+<!--              </div>-->
 
 <!--              <div class="mb-3 row">-->
 <!--                <label for="exampleInputPassword2" class="col-sm-2 col-form-label form-label"-->
@@ -353,7 +353,7 @@ showHeader("persons");
 <!--                  <input-->
 <!--                    type="password"-->
 <!--                    name="newPassword"-->
-<!--                    class="form-control mb-2 --><?php //if (isset($_SESSION['errorPassword']['currentPass']) == null && isset($_SESSION['errorPassword']['newPass'])) {
+<!--                    class="form-control mb-2 --><?php //if (isset($_SESSION['errorPassword'])) {
 //                        echo "is-invalid";
 //                    } ?><!--"-->
 <!--                    id="exampleInputPassword2"-->
@@ -362,24 +362,24 @@ showHeader("persons");
 <!--                </div>-->
 <!--              </div>-->
 
-              <div class="mb-3 row">
-                <label for="exampleInputPassword3" class="col-sm-2 col-form-label form-label"
-                >Confirm Password </label>
-                <div class="col-sm-9 col-xl-6">
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    class="form-control mb-2 <?php if (isset($_SESSION['errorPassword']['currentPass']) == null && isset($_SESSION['errorPassword']['newPass'])) {
-                        echo "is-invalid";
-                    } ?>"
-                    id="exampleInputPassword3"
-                    placeholder="confirm password"
-                  />
-                    <?php if (isset($_SESSION['errorPassword']["currentPass"]) == null && isset($_SESSION['errorPassword']['newPass'])) { ?>
-                      <p class="error mt-3"> <?php echo $_SESSION['errorPassword']['newPass']; ?></p>
-                    <?php } ?>
-                </div>
-              </div>
+<!--              <div class="mb-3 row">-->
+<!--                <label for="exampleInputPassword3" class="col-sm-2 col-form-label form-label"-->
+<!--                >Confirm Password </label>-->
+<!--                <div class="col-sm-9 col-xl-6">-->
+<!--                  <input-->
+<!--                    type="password"-->
+<!--                    name="confirmPassword"-->
+<!--                    class="form-control mb-2 --><?php //if (isset($_SESSION['errorPassword'])) {
+//                        echo "is-invalid";
+//                    } ?><!--"-->
+<!--                    id="exampleInputPassword3"-->
+<!--                    placeholder="confirm password"-->
+<!--                  />-->
+<!--                  --><?php //if (isset($_SESSION['errorPassword'])) { ?>
+<!--                    <p class="error mt-3"> --><?php //echo $_SESSION['errorPassword']; ?><!--</p>-->
+<!--                  --><?php //} ?>
+<!--                </div>-->
+<!--              </div>-->
 
               <!--              bagian button untuk save dan cancel    -->
               <div class="row justify-content-center mt-1">
@@ -419,6 +419,6 @@ showHeader("persons");
 <?php
 unset($_SESSION['errorData']);
 unset($_SESSION['inputData']);
-unset($_SESSION['errorPassword']);
+//unset($_SESSION['errorPassword']);
 require_once "includes/footer.php";
 ?>

@@ -114,10 +114,22 @@ showHeader("persons");
 
                   if ($_GET["search"] != null && $persons == null) { ?>
                     <div class="alert alert-danger mx-5" role="alert">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                           class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
+                        0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
+                        0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                      </svg>
                       Search result is not found!
                     </div>
                   <?php } elseif ($persons == null) { ?>
                     <div class="alert alert-danger mx-5" role="alert">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                           class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
+                        0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
+                        0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                      </svg>
                       Data is empty!
                     </div>
                   <?php } else { ?>
@@ -177,7 +189,7 @@ showHeader("persons");
                                   <?php
                                   if (isset($_GET['page']) == null) {
                                       $page = 1;
-                                  } elseif (is_numeric($_GET['page']) == false && $_GET['page'] < 1) {
+                                  } elseif (!is_numeric($_GET['page']) && $_GET['page'] < 1) {
                                       $page = 1;
                                   } else {
                                       $page = $_GET['page'];
@@ -266,46 +278,46 @@ showHeader("persons");
                               <?php } ?>
                           </li>
 
-                            <?php if ($data['totalPage'] > 1) {
-                                for ($i = 1; $i <= $data["totalPage"]; $i++) {
-                                    //                                untuk memberi warna pada halaman pertama saat membuka page
-                                    if (isset($_GET['page']) == null && $i == 1) { ?>
-                                      <li class="page-item active">
-                                        <a class="page-link"
-                                           href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                        </a>
-                                      </li>
-                                      <!-- untuk memberikan warna pada halaman saat ini        -->
-                                    <?php } else if ($_GET["page"] == $i) { ?>
-                                      <li class="page-item active">
-                                        <a class="page-link"
-                                           href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                        </a>
-                                      </li>
-                                      <!-- untuk memberikan warna pada halaman jika diinput "asdancasdw"      -->
-                                    <?php } else if ($_GET['page'] > $data['totalPage'] && $i == 1) { ?>
-                                      <li class="page-item active">
-                                        <a class="page-link"
-                                           href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                        </a>
-                                      </li>
-                                      <!-- untuk memberikan warna pada halaman jika inputan -2              -->
-                                    <?php } else if (is_numeric($_GET['page']) == true && $_GET['page'] < 1 && $i == 1) { ?>
-                                      <li class="page-item active">
-                                        <a class="page-link"
-                                           href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                        </a>
-                                      </li>
-                                      <!-- untuk membuat banyak halaman yang di perlukan -->
-                                    <?php } else { ?>
-                                      <li class="page-item">
-                                        <a class="page-link"
-                                           href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
-                                        </a>
-                                      </li>
-                                    <?php } ?>
-                                <?php }
-                            } ?>
+                          <?php if ($data['totalPage'] > 1) {
+                              for ($i = 1; $i <= $data["totalPage"]; $i++) {
+                                  //                                untuk memberi warna pada halaman pertama saat membuka page
+                                  if (isset($_GET['page']) == null && $i == 1) { ?>
+                                    <li class="page-item active">
+                                      <a class="page-link"
+                                         href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                      </a>
+                                    </li>
+                                    <!-- untuk memberikan warna pada halaman saat ini        -->
+                                  <?php } else if ($_GET["page"] == $i) { ?>
+                                    <li class="page-item active">
+                                      <a class="page-link"
+                                         href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                      </a>
+                                    </li>
+                                    <!-- untuk memberikan warna pada halaman jika diinput "asdancasdw"      -->
+                                  <?php } else if ($_GET['page'] > $data['totalPage'] && $i == 1) { ?>
+                                    <li class="page-item active">
+                                      <a class="page-link"
+                                         href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                      </a>
+                                    </li>
+                                    <!-- untuk memberikan warna pada halaman jika inputan -2              -->
+                                  <?php } else if (is_numeric($_GET['page']) == true && $_GET['page'] < 1 && $i == 1) { ?>
+                                    <li class="page-item active">
+                                      <a class="page-link"
+                                         href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                      </a>
+                                    </li>
+                                    <!-- untuk membuat banyak halaman yang di perlukan -->
+                                  <?php } else { ?>
+                                    <li class="page-item">
+                                      <a class="page-link"
+                                         href="?<?php echo $url ?>page=<?php echo $i ?>"> <?php echo $i ?>
+                                      </a>
+                                    </li>
+                                  <?php } ?>
+                              <?php }
+                          } ?>
 
                           <li class="page-item">
                               <?php if ($page < $data["totalPage"] || $_GET['page'] > $data['totalPage']) { ?>
