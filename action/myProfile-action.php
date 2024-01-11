@@ -39,7 +39,7 @@ if ($_SESSION['search'] != null && $_SESSION['filter'] != null){
     $url = "";
 }
 
-if ($_POST['currentPassword'] != null || $_POST['newPassword']) {
+if ($_POST['currentPassword'] != null || isset($_POST['newPassword'])) {
     $errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
 }else{
     $errorPass = [];

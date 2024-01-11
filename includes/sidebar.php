@@ -40,15 +40,15 @@ function showSidebar(string $nav): void
                 My Profile
               </a>
             </li>
-              <li class="nav-item">
-                <a class="main-nav-link cta" href="../logout.php">
-                  <ion-icon
-                    name="log-out-outline"
-                    class="nav-icon"
-                  ></ion-icon>
-                  Logout
-                </a>
-              </li>
+            <li class="nav-item">
+              <a class="main-nav-link cta" href="../logout.php">
+                <ion-icon
+                  name="log-out-outline"
+                  class="nav-icon"
+                ></ion-icon>
+                Logout
+              </a>
+            </li>
           </ul>
         </nav>
       </div>

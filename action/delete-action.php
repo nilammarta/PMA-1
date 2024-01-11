@@ -28,8 +28,8 @@ for ($i = 0; $i < count($persons); $i++) {
 //        validasi ketika email user login sama dengan dengan email yang akan di hapus
         if ($persons[$i]['email'] == $_SESSION['userEmail']) {
             redirect("../view.php", $url . "page="  .$_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&error=2");
-//        validasi ketika hada ada 1 user role admin pada database, maka tidak bisa di hapus
-        }else if ($persons[$i]['role'] == 'ADMIN'){
+//        validasi ketika ada ada 1 user role admin pada database, maka tidak bisa di hapus
+        } else if ($persons[$i]['role'] == 'ADMIN'){
             if ($admin != 1) {
                 unset($persons[$i]);
                 $persons = array_values($persons);

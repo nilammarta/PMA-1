@@ -82,7 +82,7 @@ function filter(string $filter): array|null
     } elseif ($filter == "passedAway") {
         $passed = [];
         foreach ($persons as $person){
-            if ($person["alive"] == false){
+            if (!$person["alive"]){
                 $passed[] = $person;
             }
         }
