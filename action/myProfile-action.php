@@ -41,13 +41,13 @@ if ($_SESSION['search'] != null && $_SESSION['filter'] != null){
     $url = "";
 }
 
-if (empty($_POST['currentPassword']) && empty($_POST['newPassword'] && empty($_POST['confirmPassword']))){
+if (empty($_POST['currentPassword']) && empty($_POST['newPassword']) && empty($_POST['confirmPassword'])){
     $errorPass = [];
 } else{
     $errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
 }
 
-//if ($_POST['currentPassword'] != null || isset($_POST['newPassword'])) {
+//if ($_POST['currentPassword'] != null || $_POST['newPassword'] != null || $_POST['confirmPassword'] != null) {
 //    $errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
 //}else{
 //    $errorPass = [];
@@ -60,7 +60,7 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     $_SESSION['errorPassword'] = $errorPass;
 
     redirect('../myProfile.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
-}else{
+} else {
     unset($_SESSION['errorData']);
     unset($_SESSION['inputData']);
     unset($_SESSION['errorPassword']);

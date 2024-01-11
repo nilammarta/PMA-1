@@ -44,7 +44,7 @@ function validate(string $nik, string $password, string $confirmPassword, string
         $validate['nik'] = "NIK is already exists in database!";
     }
 
-    if (newPasswordValidate($password, $confirmPassword) != ""){
+    if (newPasswordValidate($password, $confirmPassword) != null){
         $validate['password'] = newPasswordValidate($password, $confirmPassword);
     }
 

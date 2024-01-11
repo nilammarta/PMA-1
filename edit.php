@@ -188,9 +188,9 @@ showHeader("persons");
                       required
                     />
 
-                      <?php if (isset($_SESSION['errorData']['birthDate'])) { ?>
-                        <p class="error"><?php echo $_SESSION['errorData']['birthDate']; ?></p>
-                      <?php } ?>
+                    <?php if (isset($_SESSION['errorData']['birthDate'])) { ?>
+                      <p class="error"><?php echo $_SESSION['errorData']['birthDate']; ?></p>
+                    <?php } ?>
                   </div>
                 </div>
 
@@ -323,63 +323,44 @@ showHeader("persons");
               </div>
 
               <!--               change password   -->
-<!--              <h5 class="form-text pb-2 mb-3 mt-5">-->
-<!--                Change Password-->
-<!--              </h5>-->
-<!--              <div class="mb-3 row">-->
-<!--                <label for="exampleInputPassword1" class="col-sm-2 col-form-label form-label"-->
-<!--                >Current Password </label>-->
-<!--                <div class="col-sm-9 col-xl-6">-->
-<!--                  <input-->
-<!--                    type="password"-->
-<!--                    name="currentPassword"-->
-<!--                    class="form-control mb-2 --><?php //if (isset($_SESSION['errorPassword']['currentPass'])) {
-//                        echo "is-invalid";
-//                    } ?><!--"-->
-<!--                    id="exampleInputPassword1"-->
-<!--                    placeholder="current password"-->
-<!--                  />-->
-<!---->
-<!--                    --><?php //if (isset($_SESSION['errorPassword'])) { ?>
-<!--                      <p class="error"> --><?php //echo $_SESSION['errorPassword']['currentPass']; ?><!--</p>-->
-<!--                    --><?php //} ?>
-<!--                </div>-->
-<!--              </div>-->
+              <h5 class="form-text pb-2 mb-3 mt-5">
+                Change Password
+              </h5>
 
-<!--              <div class="mb-3 row">-->
-<!--                <label for="exampleInputPassword2" class="col-sm-2 col-form-label form-label"-->
-<!--                >New Password </label>-->
-<!--                <div class="col-sm-9 col-xl-6">-->
-<!--                  <input-->
-<!--                    type="password"-->
-<!--                    name="newPassword"-->
-<!--                    class="form-control mb-2 --><?php //if (isset($_SESSION['errorPassword'])) {
-//                        echo "is-invalid";
-//                    } ?><!--"-->
-<!--                    id="exampleInputPassword2"-->
-<!--                    placeholder="new password"-->
-<!--                  />-->
-<!--                </div>-->
-<!--              </div>-->
+              <div class="mb-3 row">
+                <label for="exampleInputPassword2" class="col-sm-2 col-form-label form-label"
+                >New Password </label>
+                <div class="col-sm-9 col-xl-6">
+                  <input
+                    type="password"
+                    name="newPassword"
+                    class="form-control mb-2 <?php if (isset($_SESSION['errorPassword'])) {
+                        echo "is-invalid";
+                    } ?>"
+                    id="exampleInputPassword2"
+                    placeholder="new password"
+                  />
+                </div>
+              </div>
 
-<!--              <div class="mb-3 row">-->
-<!--                <label for="exampleInputPassword3" class="col-sm-2 col-form-label form-label"-->
-<!--                >Confirm Password </label>-->
-<!--                <div class="col-sm-9 col-xl-6">-->
-<!--                  <input-->
-<!--                    type="password"-->
-<!--                    name="confirmPassword"-->
-<!--                    class="form-control mb-2 --><?php //if (isset($_SESSION['errorPassword'])) {
-//                        echo "is-invalid";
-//                    } ?><!--"-->
-<!--                    id="exampleInputPassword3"-->
-<!--                    placeholder="confirm password"-->
-<!--                  />-->
-<!--                  --><?php //if (isset($_SESSION['errorPassword'])) { ?>
-<!--                    <p class="error mt-3"> --><?php //echo $_SESSION['errorPassword']; ?><!--</p>-->
-<!--                  --><?php //} ?>
-<!--                </div>-->
-<!--              </div>-->
+              <div class="mb-3 row">
+                <label for="exampleInputPassword3" class="col-sm-2 col-form-label form-label"
+                >Confirm Password </label>
+                <div class="col-sm-9 col-xl-6">
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    class="form-control mb-2 <?php if (isset($_SESSION['errorPassword'])) {
+                        echo "is-invalid";
+                    } ?>"
+                    id="exampleInputPassword3"
+                    placeholder="confirm password"
+                  />
+                  <?php if (isset($_SESSION['errorPassword'])) { ?>
+                    <p class="error mt-3"> <?php echo $_SESSION['errorPassword']; ?></p>
+                  <?php } ?>
+                </div>
+              </div>
 
               <!--              bagian button untuk save dan cancel    -->
               <div class="row justify-content-center mt-1">
@@ -419,6 +400,6 @@ showHeader("persons");
 <?php
 unset($_SESSION['errorData']);
 unset($_SESSION['inputData']);
-//unset($_SESSION['errorPassword']);
+unset($_SESSION['errorPassword']);
 require_once "includes/footer.php";
 ?>

@@ -1,7 +1,11 @@
 <?php
 require_once __DIR__ . "/jsonHelper.php";
 
-
+/**
+ * @param string|null $email
+ * @return void
+ * function to check if user has been login or not
+ */
 function checkUserLogin(string | null $email): void
 {
     if (!isset($email) | $email == null) {
@@ -10,7 +14,11 @@ function checkUserLogin(string | null $email): void
     }
 }
 
-//function untuk mengatahui siapa yang login saat ini
+/**
+ * @param $email
+ * @return array
+ * function to get user login data
+ */
 function userLogin($email):array
 {
     $persons = getPersonsData();
@@ -22,6 +30,11 @@ function userLogin($email):array
     return [];
 }
 
+/**
+ * @param string $role
+ * @return void
+ * function to check user login role, if user login is a MEMBER => redirect to dashboard page
+ */
 function checkUserLoginRole(string $role): void
 {
     if ($role == "MEMBER"){
@@ -29,19 +42,32 @@ function checkUserLoginRole(string $role): void
     }
 }
 
+/**
+ * @return array
+ * function to get all persons data from json file
+ */
 function getPersonsData(): array
 {
     return loadDataIntoJson("persons.json");
 }
 
-// function untuk redirect page
-function redirect($url, $getParams)
+/**
+ * @param $url
+ * @param $getParams
+ * @return void
+ * function to redirect to another page
+ */
+function redirect($url, $getParams):void
 {
     header('Location: ' . $url . '?' . $getParams);
     die();
 }
 
-// function untuk mendapatkan umur user
+/**
+ * @param int $date
+ * @return int
+ * function to get person age
+ */
 function getAge(int $date): int
 {
 //    untuk mendapatkan selisih timestamp dari waktu saat ini dengan timestamp tgl lahirnya
@@ -50,6 +76,11 @@ function getAge(int $date): int
     return floor($age / (60 * 60 * 24 * 365)); // (menit, jam, hari, tahun)
 }
 
+/**
+ * @param bool $status
+ * @return string
+ * function to get status of person if TRUE => person still alive otherwise person passedAway
+ */
 function getStatus(bool $status): string
 {
     if ($status == true){
@@ -59,6 +90,11 @@ function getStatus(bool $status): string
     }
 }
 
+/**
+ * @param int $id
+ * @return array
+ * function to get user data by id
+ */
 function getUserById(int $id):array
 {
     $persons = getPersonsData();
@@ -70,6 +106,11 @@ function getUserById(int $id):array
     return [];
 }
 
+/**
+ * @param string $gender
+ * @return string of gender
+ * function to convert the gender of persons if gender (f) => female, if gender (m) =>male
+ */
 function gender(string $gender):string
 {
     if($gender == "f"){
@@ -79,6 +120,12 @@ function gender(string $gender):string
     }
 }
 
+/**
+ * @param string $nik
+ * @param int|null $id
+ * @return bool
+ * function to check if NIK input is exits in json file or not, TRUE if nik exits and FALSE if nik is not exits
+ */
 function isNikExits(string $nik, int|null $id):bool
 {
     $personsData = getPersonsData();
@@ -96,8 +143,12 @@ function isNikExits(string $nik, int|null $id):bool
     return false;
 }
 
-// validate NIK
-function checkNik (string $nik): string|null
+/**
+ * @param string $nik
+ * @return string|null
+ * function to validate nik input
+ */
+function checkNik(string $nik): string|null
 {
     if (strlen($nik) == 16 && preg_match("/^[0-9]*$/", $nik)){
         return $nik;
@@ -106,7 +157,12 @@ function checkNik (string $nik): string|null
     }
 }
 
-// validate Email
+/**
+ * @param string $newEmail
+ * @param int|null $id
+ * @return bool
+ * function to check
+ */
 function isEmailExists(string $newEmail, int|null $id): bool
 {
     $persons = getPersonsData();
@@ -154,12 +210,6 @@ function isMatchCurrentPassword(int $id, string $currentPassword): bool
     }else{
         return false;
     }
-
-//    if ($currentPassword == $thePerson['password']){
-//        return true;
-//    }else{
-//        return false;
-//    }
 }
 
 function encryptPassword(string $password):string
@@ -167,6 +217,7 @@ function encryptPassword(string $password):string
     return password_hash($password, PASSWORD_DEFAULT);
 }
 
+// function to convert switch value
 function convertSwitchValue($value):bool
 {
     if ($value == "on"){
@@ -233,7 +284,7 @@ function editValidate(string $nik, string $email, int $id, string $birthDate):ar
     return $validate;
 }
 
-function newPasswordValidate(string $newPass, string $confirmPass): string
+function newPasswordValidate(string $newPass, string $confirmPass): string | null
 {
     if (checkInputPassword($newPass) == null){
         return "Password input is not correct!" .  "<br>"  . "* password must have at least 1 capital letter" . "<br>" . "* 1 non capital letter and 1 number " .
@@ -244,7 +295,7 @@ function newPasswordValidate(string $newPass, string $confirmPass): string
         return "New Password and Confirm Password did not match!";
     }
 
-    return "";
+    return null;
 }
 
 function passwordValidate(int $id, string $currentPassword, string $newPassword, string $confirmPassword):array
@@ -263,7 +314,7 @@ function passwordValidate(int $id, string $currentPassword, string $newPassword,
             }
 
             $errorNewPass = newPasswordValidate($newPassword, $confirmPassword);
-            if ($errorNewPass != "") {
+            if ($errorNewPass != null) {
                 $validate['passError'] = $errorNewPass;
             }
         }

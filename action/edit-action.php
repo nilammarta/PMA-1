@@ -10,11 +10,17 @@ function saveUpdateData(int $id): bool
     $persons = getPersonsData();
     for ($i = 0; $i < count($persons); $i++){
         if ($persons[$i]['id'] == $id) {
+            if (isset($_POST['newPassword'])){
+                $password = encryptPassword($_POST['newPassword']);
+            } else {
+                $password = $persons[$i]['password'];
+            }
 
             $persons[$i]['firstName'] = ucfirst(htmlspecialchars($_POST['firstName']));
             $persons[$i]['lastName'] = ucfirst(htmlspecialchars($_POST['lastName']));
             $persons[$i]['nik'] = htmlspecialchars($_POST['nik']);
             $persons[$i]['email'] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $persons[$i]['password'] = $password;
             $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $_POST['birthDate']);
             $persons[$i]['sex'] = $_POST['sex'];
             $persons[$i]['role'] = $_POST['role'];
@@ -35,25 +41,24 @@ if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
     $url = "";
 }
 
-//if ($_POST['currentPassword'] != null || $_POST['newPassword'] != null) {
-////    $errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
-//    $errorPass = newPasswordValidate($_POST['newPassword'], $_POST['confirmPassword']);
-//} else {
-//    $errorPass = [];
-//}
+if (empty($_POST['newPassword']) && empty($_POST['confirmPassword'])){
+    $errorPass = null;
+} else {
+  $errorPass = newPasswordValidate($_POST['newPassword'], $_POST['confirmPassword']);
+}
 
 $errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId'], $_POST['birthDate']);
-if (count($errorData) != 0){
+if (count($errorData) != 0 || $errorPass != null){
 
     $_SESSION['errorData'] = $errorData;
-//    $_SESSION['errorPassword'] = $errorPass;
+    $_SESSION['errorPassword'] = $errorPass;
     $_SESSION['inputData'] = inputData();
 
     redirect('../edit.php', $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 } else {
     unset($_SESSION['errorData']);
     unset($_SESSION['inputData']);
-//    unset($_SESSION['errorPassword']);
+    unset($_SESSION['errorPassword']);
 
     $saved = saveUpdateData($_SESSION['personId']);
 

@@ -26,6 +26,14 @@ function searchPerson(array $persons, string $searchInput): array|null
             }
         }
 
+        foreach ($persons as $value){
+            if (preg_match("/$search/i", $value['email']) == 1){
+                if (in_array($value, $results) == 0){
+                    $results[] = $value;
+                }
+            }
+        }
+
         if (count($results) != null) {
             return $results;
         }
