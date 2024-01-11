@@ -36,6 +36,8 @@ showHeader("profile");
                   $_SESSION['filter'] = $_GET['filter'];
                   $_SESSION['search'] = $_GET['search'];
 
+                  echo $_SESSION['curpass'];
+
                   if (isset($_SESSION['errorData']) || isset($_SESSION['errorPassword'])){
                     $error = [];
                     if (isset($_SESSION['errorData']['nik'])){
@@ -75,7 +77,6 @@ showHeader("profile");
                         }
                       ?>
                     </div>
-
                   <?php } ?>
 
                   <?php if (isset($_GET['saved'])){?>
@@ -273,6 +274,25 @@ showHeader("profile");
                       </select>
                     </div>
                   </div>
+
+                  <?php if ($_SESSION['userRole'] == "ADMIN"){?>
+                    <div class="mb-3">
+                      <label
+                        for="exampleFormControlTextarea1"
+                        class="form-label"
+                      >Internal notes</label>
+                      <textarea
+                        name="internalNotes"
+                        class="form-control"
+                        id="exampleFormControlTextarea1"
+                        rows="3"
+                      ><?php if (isset($_SESSION['inputData'])) {
+                            echo $_SESSION['inputData']['internalNotes'];
+                        } else {
+                            echo $user['internalNotes'];
+                        } ?></textarea>
+                    </div>
+                  <?php } ?>
 
 <!--               change password       -->
                   <h5 class="form-text pb-2 mb-3 mt-5">Change Password</h5>

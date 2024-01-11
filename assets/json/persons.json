@@ -6,13 +6,13 @@
         "nik": "1200981029177912",
         "email": "lalalulu@gmail.com",
         "password": "$2y$10$NOsrUKlQUBfbaNoVE7Q.luKIDY6eCy4PK5MzhWESJChQ3zkBNegby",
-        "birthDate": 1038796684,
+        "birthDate": 1038802919,
         "sex": "f",
         "address": "Denpasar",
         "internalNotes": "Lala lulu",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1704876535
+        "lastLoggedIn": 1704946839
     },
     {
         "id": 2,
@@ -33,16 +33,16 @@
         "id": 3,
         "firstName": "Kumi",
         "lastName": "Gina",
-        "nik": "1299380783699092",
+        "nik": "1299380783699093",
         "email": "kumigina@gmail.com",
         "password": "$2y$10$A5HIQ0hJ\/cCLqkH1lIHxMOmq0Y.qmAPy6RBDzZewEY9gK8Pyo4Gm6",
-        "birthDate": 1544409857,
+        "birthDate": 1544414597,
         "sex": "m",
         "address": "Lombok",
-        "internalNotes": "Kumi gina",
+        "internalNotes": "&lt;h5&gt;Kumi gina&lt;\/h5&gt;",
         "role": "MEMBER",
         "alive": true,
-        "lastLoggedIn": 1704855706
+        "lastLoggedIn": 1704946673
     },
     {
         "id": 4,

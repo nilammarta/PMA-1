@@ -24,7 +24,9 @@ function saveUpdateProfile(int $id): bool
             $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $_POST['birthDate']);
             $persons[$i]['sex'] = $_POST['sex'];
             $persons[$i]['address'] = htmlspecialchars($_POST['address']);
-
+            if (isset($_POST['internalNotes'])) {
+                $persons[$i]['internalNotes'] = ucfirst(htmlspecialchars($_POST['internalNotes']));
+            }
             saveDataIntoJson($persons);
             return true;
         }
@@ -39,11 +41,17 @@ if ($_SESSION['search'] != null && $_SESSION['filter'] != null){
     $url = "";
 }
 
-if ($_POST['currentPassword'] != null || isset($_POST['newPassword'])) {
-    $errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
-}else{
+if (empty($_POST['currentPassword']) && empty($_POST['newPassword'] && empty($_POST['confirmPassword']))){
     $errorPass = [];
+} else{
+    $errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
 }
+
+//if ($_POST['currentPassword'] != null || isset($_POST['newPassword'])) {
+//    $errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
+//}else{
+//    $errorPass = [];
+//}
 
 $errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId'], $_POST['birthDate']);
 if (count($errorData) != 0 || count($errorPass) != 0){
