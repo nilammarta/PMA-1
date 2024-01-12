@@ -2,7 +2,12 @@
 
 require_once __DIR__ . "/common-action.php";
 
-// function for filtering person
+/**
+ * @param string $filter
+ * @param array $persons
+ * @return int|null
+ * function to get count of person based on filter person
+ */
 function getCountPersons(string $filter, array $persons):int|null
 {
 //    $persons = getPersonsData();
@@ -55,6 +60,11 @@ function getCountPersons(string $filter, array $persons):int|null
     }
 }
 
+/**
+ * @param int|null $time
+ * @return string
+ * function to get last logged in (last activity) of person
+ */
 function lastActivity(int|null $time):string
 {
     if ($time != null){

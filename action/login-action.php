@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/jsonHelper.php";
+require_once __DIR__ . "/json-helper.php";
 require_once __DIR__ . "/common-action.php";
 
 session_start();
@@ -11,8 +11,6 @@ if (isset($_POST['login'])) {
 
 // conditional untuk meng-redirect page contoh dari login menuju dashboard
     if (check($jsonData)) {
-//  header('Location: ../dashboard.php');
-//  die();
         $_SESSION['userEmail'] = $_POST['email'];
         $_SESSION['userName'] = check($jsonData)['firstName'];
         $_SESSION['logout'] = check($jsonData)['lastLoggedIn'];
@@ -26,7 +24,11 @@ if (isset($_POST['login'])) {
     }
 }
 
-// function untuk mengecek apakah email dan password yang di input cocok atau tidak
+/**
+ * @param array $tempData
+ * @return array|null
+ * function to check if combination of email input and password input exist in json file
+ */
 function check(array $tempData): array|null
 {
     for ($i = 0; $i < count($tempData); $i++) {

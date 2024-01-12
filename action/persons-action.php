@@ -1,9 +1,14 @@
 <?php
-require_once __DIR__ . "/jsonHelper.php";
+require_once __DIR__ . "/json-helper.php";
 
+/**
+ * @param array $persons
+ * @param string $searchInput
+ * @return array|null
+ * function to get search result based on search input
+ */
 function searchPerson(array $persons, string $searchInput): array|null
 {
-//    $persons = loadDataIntoJson("/../assets/json/persons.json");
     $search = urldecode($searchInput);
     $results = [];
     $resultsLastName = [];
@@ -26,14 +31,6 @@ function searchPerson(array $persons, string $searchInput): array|null
             }
         }
 
-        foreach ($persons as $value){
-            if (preg_match("/$search/i", $value['email']) == 1){
-                if (in_array($value, $results) == 0){
-                    $results[] = $value;
-                }
-            }
-        }
-
         if (count($results) != null) {
             return $results;
         }
@@ -41,11 +38,15 @@ function searchPerson(array $persons, string $searchInput): array|null
     return null;
 }
 
-// filtering persons
-function filter(string $filter): array|null
+/**
+ * @param string $filterValue
+ * @return array|null
+ * function to filtering the persons data based on string filter value
+ */
+function filter(string $filterValue): array|null
 {
     $persons = getPersonsData();
-    if ($filter == "productive") {
+    if ($filterValue == "productive") {
         $adult = [];
         foreach ($persons as $person) {
             if (getAge($person["birthDate"]) > 15 && getAge($person['birthDate']) <= 64) {
@@ -53,7 +54,7 @@ function filter(string $filter): array|null
             }
         }
         return $adult;
-    } elseif ($filter == "elderly"){
+    } elseif ($filterValue == "elderly"){
         $elderly = [];
         foreach ($persons as $person){
             if (getAge($person['birthDate']) > 64){
@@ -61,7 +62,7 @@ function filter(string $filter): array|null
             }
         }
         return $elderly;
-    } elseif ($filter == "children") {
+    } elseif ($filterValue == "children") {
         $child = [];
         foreach ($persons as $person) {
             if (getAge($person["birthDate"]) <= 15) {
@@ -69,7 +70,7 @@ function filter(string $filter): array|null
             }
         }
         return $child;
-    } elseif ($filter == "male") {
+    } elseif ($filterValue == "male") {
         $male = [];
         foreach ($persons as $person) {
             if ($person["sex"] == "m") {
@@ -78,7 +79,7 @@ function filter(string $filter): array|null
         }
         return $male;
 
-    } elseif ($filter == "female") {
+    } elseif ($filterValue == "female") {
         $female = [];
         foreach ($persons as $person) {
             if ($person["sex"] == "f") {
@@ -87,7 +88,7 @@ function filter(string $filter): array|null
         }
         return $female;
 
-    } elseif ($filter == "passedAway") {
+    } elseif ($filterValue == "passedAway") {
         $passed = [];
         foreach ($persons as $person){
             if (!$person["alive"]){
@@ -96,7 +97,7 @@ function filter(string $filter): array|null
         }
         return $passed;
 
-    }elseif ($filter == "allPersons"){
+    }elseif ($filterValue == "allPersons"){
         return getPersonsData();
 
     } else {
@@ -104,7 +105,13 @@ function filter(string $filter): array|null
     }
 }
 
-// paginated data
+/**
+ * @param array $data
+ * @param int $page
+ * @param int $limit
+ * @return array
+ * function to get paginated data
+ */
 function getPaginatedData(array $data, int $page, int $limit): array
 {
 //   untuk mendapatkan jumlah halaman yang di perlukan dengan membagi antara banyak data dengan limit yang di tentukan
@@ -123,25 +130,35 @@ function getPaginatedData(array $data, int $page, int $limit): array
     ];
 }
 
-function getFilter(string $filter): string
+/**
+ * @param string $filterValue
+ * @return string
+ * function to get filter by filter value
+ */
+function getFilter(string $filterValue): string
 {
-    if ($filter == "productive"){
+    if ($filterValue == "productive"){
         return "In Productive Age (15-64 y.o)";
-    } elseif ($filter == "elderly"){
+    } elseif ($filterValue == "elderly"){
         return "Elderly ( > 64 y.o)";
-    } elseif ($filter == "children"){
+    } elseif ($filterValue == "children"){
         return "Children (0-15 y.o)";
-    } else if ($filter == "male"){
+    } else if ($filterValue == "male"){
         return "Male";
-    } else if ($filter == "female"){
+    } else if ($filterValue == "female"){
         return "Female";
-    }else if ($filter == "passedAway"){
+    }else if ($filterValue == "passedAway"){
         return "PassedAway";
     }else{
         return "All Persons Data";
     }
 }
 
+/**
+ * @param string $filter
+ * @return string
+ * function to get filter value
+ */
 function getFilterValue(string $filter): string
 {
     if ($filter == "productive"){

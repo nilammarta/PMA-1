@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * @param string $style => style css of page
+ * @param string $title => title of page
+ * @return void
+ * function to show header of html code for each page
+ */
 function addHeadCode(string $style, string $title): void
 {
 ?>

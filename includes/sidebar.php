@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @param string $nav => to add class nav open in sidebar
+ * @return void
+ * function to show sidebar for each page
+ */
 function showSidebar(string $nav): void
 {?>
   <div class="sidebar d-none d-lg-flex flex-column gap-5">
@@ -31,8 +36,8 @@ function showSidebar(string $nav): void
         <h6 class="heading-6 sub-heading m-0">Account</h6>
         <nav class="main-nav">
           <ul class="main-nav-list">
-            <li class="nav-item <?php if ($nav == "profile"){ echo "nav-open";} ?>>">
-              <a class="main-nav-link" href="../myProfile.php">
+            <li class="nav-item <?php if ($nav == "profile"){ echo "nav-open";} ?>">
+              <a class="main-nav-link" href="../my-profile.php">
                 <ion-icon
                   name="person-circle-outline"
                   class="nav-icon"

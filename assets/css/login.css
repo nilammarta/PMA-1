@@ -15,10 +15,7 @@
 }
 
 .permap-logo {
-  /* width: 5.2rem;
-  height: 5.2rem; */
   width: 30%;
-  /* height: 100%; */
 }
 
 .login-form {
@@ -51,7 +48,6 @@
 
 .logo-description {
   text-transform: uppercase;
-  /* font-size: 1.8rem; */
 }
 
 .login label {

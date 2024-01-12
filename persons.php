@@ -200,7 +200,7 @@ showHeader("persons");
                                   <a
                                     class="btn btn-outline-light me-md-2 btn-table"
                                     type="button"
-                                    href="myProfile.php"
+                                    href="my-profile.php"
                                     role="button"
                                   >
                                     <ion-icon
@@ -232,7 +232,7 @@ showHeader("persons");
                                     <a
                                       class="btn btn-outline-light btn-table"
                                       type="button"
-                                      href="myProfile.php"
+                                      href="my-profile.php"
                                     >
                                       <ion-icon
                                         class="btn-icon"

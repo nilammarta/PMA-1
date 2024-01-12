@@ -20,9 +20,7 @@
 }
 
 .card-icon {
-  /* font-size: 56px; */
   font-size: 2.2rem;
-  /*color: #880085;*/
   color: #ffffff;
   padding: 1rem;
   border: 3px solid #ffffff;
@@ -38,11 +36,6 @@
   padding: 1rem;
   font-weight: 700;
 }
-
-/*.card-subtitle:hover,*/
-/*.card-subtitle:active {*/
-/*  color: #880085;*/
-/*}*/
 
 .card-text {
   font-size: 1rem;
@@ -65,21 +58,17 @@
 
 .card-4 {
   background-color: #ff9500;
-  /* background-color: #e2a61b; */
 }
 
 .card-5 {
-  /* background-color: #3a6ea5; */
   background-color: #338a92;
 }
 
 .card-6 {
-  /* background-color: #006d77; */
   background-color: #9370db;
 }
 
 .card {
-  /* background-color: #9370db; */
   border: none;
   color: #fff;
   height: 100%;

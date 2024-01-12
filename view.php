@@ -51,7 +51,7 @@ showHeader("persons");
               <nav class="main-nav">
                 <ul class="main-nav-list">
                   <li class="nav-item">
-                    <a class="main-nav-link" href="myProfile.php">
+                    <a class="main-nav-link" href="my-profile.php">
                       <ion-icon
                         name="person-circle-outline"
                         class="nav-icon"
@@ -216,7 +216,7 @@ showHeader("persons");
                             <a
                               class="btn btn-primary me-2"
                               <?php if ($thePerson['email'] == $_SESSION['userEmail']){ ?>
-                                href="myProfile.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
+                                href="my-profile.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
                               <?php } else {?>
                                 href="edit.php?<?php echo $url?>page=<?php echo $_GET['page']?>&person=<?php echo $_GET['person'] ?>"
                               <?php }?>

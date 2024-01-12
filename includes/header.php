@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @param string $nav => to add class nav-open in sidebar
+ * @return void
+ * function to show header
+ */
 function showHeader(string $nav) : void
 {
 ?>
@@ -86,7 +91,7 @@ function showHeader(string $nav) : void
                     <nav class="main-nav">
                       <ul class="main-nav-list">
                         <li class="nav-item <?php if ($nav == "profile"){ echo "nav-open"; } ?>">
-                          <a class="main-nav-link" href="../myProfile.php">
+                          <a class="main-nav-link" href="../my-profile.php">
                             <ion-icon
                               name="person-circle-outline"
                               class="nav-icon"

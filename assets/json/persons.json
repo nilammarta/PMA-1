@@ -12,7 +12,7 @@
         "internalNotes": "Lala lulu",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1704964634
+        "lastLoggedIn": 1705033327
     },
     {
         "id": 2,
@@ -35,14 +35,14 @@
         "lastName": "Gina",
         "nik": "1299380783699093",
         "email": "kumigina@gmail.com",
-        "password": "$2y$10$A5HIQ0hJ\/cCLqkH1lIHxMOmq0Y.qmAPy6RBDzZewEY9gK8Pyo4Gm6",
-        "birthDate": 1544433102,
+        "password": "$2y$10$38cW4wGuPBgeH7vBMaICU.2iSK\/px1EJxAMeBxRdL6PHiYGQiC3pW",
+        "birthDate": 1544411707,
         "sex": "m",
         "address": "Lombok",
         "internalNotes": "&lt;h5&gt;Kumi gina&lt;\/h5&gt;",
         "role": "MEMBER",
         "alive": true,
-        "lastLoggedIn": 1704959456
+        "lastLoggedIn": 1705029463
     },
     {
         "id": 4,
@@ -215,13 +215,13 @@
         "lastName": "2",
         "nik": "1009739403039779",
         "email": "lansia2@gmail.com",
-        "password": "$2y$10$4Cdeyo.hOqUrqnVOLxencuSbNm4H0FYYJsh9df4kYjpKpbndqP5PO",
-        "birthDate": -603904599,
+        "password": "$2y$10$q4wEoKmyNRYR0AhK5LAc.uL.ao28W\/JceTRUVKW1yjIjZwS8BBBfy",
+        "birthDate": -603922785,
         "sex": "f",
         "address": "asdkaj",
         "internalNotes": "",
         "role": "MEMBER",
-        "alive": true,
+        "alive": false,
         "lastLoggedIn": null
     },
     {
@@ -243,15 +243,30 @@
         "id": 17,
         "firstName": "Lal",
         "lastName": "As",
-        "nik": "1212121212121210",
+        "nik": "1212121212121217",
         "email": "lalaluluzaa@gmail.com",
-        "password": "$2y$10$uNdBIAcgEjNVLnOe\/SBwZ.Bc\/QikfuuvC1TmEIa46zrOjU1mgtxd.",
-        "birthDate": 1039684632,
+        "password": "$2y$10$dHZ9yO2qlVC2YFjYqtgLOO.dkoWGz878jL9W5q8IGf9euvQtY4gzm",
+        "birthDate": 1039662260,
         "sex": "f",
         "address": "askdma",
         "internalNotes": "",
         "role": "MEMBER",
         "alive": true,
         "lastLoggedIn": 1704965140
+    },
+    {
+        "id": 18,
+        "firstName": "User",
+        "lastName": "Kiki",
+        "nik": "1212121212121210",
+        "email": "userkiki@gmail.com",
+        "password": "$2y$10$1CFfYWDMxL6YxY4dlPNPAOPrSRDjf6n0nnmGrHBH\/Vtie4CkFTM\/2",
+        "birthDate": 950247711,
+        "sex": "f",
+        "address": "tabanan",
+        "internalNotes": "",
+        "role": "MEMBER",
+        "alive": true,
+        "lastLoggedIn": 1705032412
     }
 ]

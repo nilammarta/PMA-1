@@ -1,4 +1,9 @@
 <?php
+/**
+ * @param string $fileName
+ * @return array|null
+ * function to load data from json file
+ */
 function loadDataIntoJson(string $fileName): null|array
 {
     $path = __DIR__ . "/../assets/json/" . $fileName;
@@ -13,6 +18,11 @@ function loadDataIntoJson(string $fileName): null|array
     return null;
 }
 
+/**
+ * @param array $personsData
+ * @return void
+ * function to save new data into json
+ */
 function saveDataIntoJson(array $personsData): void
 {
     $json = json_encode($personsData, JSON_PRETTY_PRINT);

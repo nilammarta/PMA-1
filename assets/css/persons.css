@@ -13,7 +13,6 @@
 
 .btn-search {
   background-color: #ae98ff;
-  /* background-color: #a7aaff; */
   color: #2c0066;
   font-weight: 500;
 }
@@ -24,21 +23,8 @@
 }
 
 .select-filter {
-  /*background-color: #a7aaff;*/
   background-color: #ae98ff;
-
-  /* background-color: #d3eca8; */
 }
-
-  /*.select-item:hover,*/
-  /*.select-filter:active {*/
-  /*  background-color: #5c54b6;*/
-  /*  border: none;*/
-  /*  !* background-color: #ae98ff; *!*/
-  /*}*/
-
-
-
 
 .search-form{
   color: #2c0066;
@@ -127,7 +113,6 @@ tbody {
 .page-link {
   font-size: 1rem;
   color: #2c0066;
-  /* height: 100%; */
   padding: 0.5rem 0.75rem;
   border: none;
   border-radius: 50%;

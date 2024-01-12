@@ -1,10 +1,15 @@
 <?php
 
 require_once __DIR__ . "/common-action.php";
-require_once __DIR__ . "/jsonHelper.php";
+require_once __DIR__ . "/json-helper.php";
 
 session_start();
 
+/**
+ * @param $persons
+ * @return int
+ * function to generated id of person
+ */
 function generateId($persons): int
 {
     if ($persons == null){
@@ -24,15 +29,13 @@ function generateId($persons): int
  * ['email'] => [
  *   'format' => 'Format tidak sesuai'
  * ]
- *
+ *tampung error yang terjadi pada inputan form
  *
  * @param $nik
  * @param $password
  * @param $email
  * @return array
  */
-
-//tampung error yang terjadi pada inputan form
 function validate(string $nik, string $password, string $confirmPassword, string $email, string $birthDate):array
 {
     $validate = [];
@@ -64,7 +67,10 @@ function validate(string $nik, string $password, string $confirmPassword, string
     return $validate;
 }
 
-// function to save new data person
+/**
+ * @return int => of personID
+ * function to save new person data
+ */
 function saveData():int
 {
     $persons = getPersonsData();

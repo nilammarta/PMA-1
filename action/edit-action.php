@@ -1,10 +1,15 @@
 <?php
 
 require_once __DIR__ . "/common-action.php";
-require_once __DIR__ . "/jsonHelper.php";
+require_once __DIR__ . "/json-helper.php";
 
 session_start();
 
+/**
+ * @param int $id
+ * @return bool
+ * function to save update data person into json file
+ */
 function saveUpdateData(int $id): bool
 {
     $persons = getPersonsData();

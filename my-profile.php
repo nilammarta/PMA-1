@@ -91,7 +91,7 @@ showHeader("profile");
                   <?php } ?>
 
 
-                <form name="editProfile" class="create-form needs-validation p-4 mb-5" method="post" action="action/myProfile-action.php">
+                <form name="editProfile" class="create-form needs-validation p-4 mb-5" method="post" action="action/my-profile-action.php">
                   <h5 class="form-text pb-2 mb-4">EDIT PROFILE</h5>
                   <div class="mb-3 row">
                     <label

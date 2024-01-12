@@ -1,7 +1,6 @@
 .form-text {
   color: #5a00b3;
   font-size: 1rem;
-  /* margin-top: 3.8rem; */
   border-bottom: 3px solid #dca53f;
 }
 
@@ -37,7 +36,6 @@
 .create *:focus {
   outline: none;
   box-shadow: 0 0 0 0.2rem rgba(66, 0, 153, 0.788);
-  /* background-color: #eaeaea; */
 }
 
 .form-check-input:checked {

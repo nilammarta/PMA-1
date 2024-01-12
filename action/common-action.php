@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/jsonHelper.php";
+require_once __DIR__ . "/json-helper.php";
 
 /**
  * @param string|null $email
@@ -55,9 +55,9 @@ function getPersonsData(): array
  * @param $url
  * @param $getParams
  * @return void
- * function to redirect to another page
+ * function to redirect the page to another page
  */
-function redirect($url, $getParams):void
+function redirect($url, $getParams) : void
 {
     header('Location: ' . $url . '?' . $getParams);
     die();
@@ -93,7 +93,7 @@ function getStatus(bool $status): string
 /**
  * @param int $id
  * @return array
- * function to get user data by id
+ * function to get user data based on id
  */
 function getUserById(int $id):array
 {
@@ -109,7 +109,7 @@ function getUserById(int $id):array
 /**
  * @param string $gender
  * @return string of gender
- * function to convert the gender of persons if gender (f) => female, if gender (m) =>male
+ * function to convert the gender of persons if gender (f) => female, if gender (m) => male
  */
 function gender(string $gender):string
 {
@@ -146,7 +146,7 @@ function isNikExits(string $nik, int|null $id):bool
 /**
  * @param string $nik
  * @return string|null
- * function to validate nik input
+ * function to validate nik input if length of NIK is more than 16 it will return null
  */
 function checkNik(string $nik): string|null
 {
@@ -161,7 +161,7 @@ function checkNik(string $nik): string|null
  * @param string $newEmail
  * @param int|null $id
  * @return bool
- * function to check
+ * function to check if email input is exist in json file or not
  */
 function isEmailExists(string $newEmail, int|null $id): bool
 {
@@ -180,6 +180,11 @@ function isEmailExists(string $newEmail, int|null $id): bool
     return false;
 }
 
+/**
+ * @param $newEmail
+ * @return string|null
+ * function to check email format of the email input
+ */
 function checkFormatEmail($newEmail):string | null
 {
     if (preg_match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^", $newEmail)){
@@ -189,10 +194,13 @@ function checkFormatEmail($newEmail):string | null
     }
 }
 
-// Validate Password
+/**
+ * @param $newPassword
+ * @return string|null
+ * function to check input password, if password valid it will return new password
+ */
 function checkInputPassword($newPassword):string|null
 {
-//    if (strlen($newPassword) > 16 || strlen($newPassword) < 8){
     if (!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/", $newPassword)){
         return null;
     }else{
@@ -200,10 +208,18 @@ function checkInputPassword($newPassword):string|null
     }
 }
 
+/**
+ * @param int $id => id of person
+ * @param string $currentPassword => password input
+ * @return bool
+ * function to check if current password input is match with the current password of the person
+ */
 function isMatchCurrentPassword(int $id, string $currentPassword): bool
 {
+//   get the person based on id
     $thePerson = getUserById($id);
 
+//  check current password input is match with the person password
     $verify = password_verify($currentPassword, $thePerson['password']);
     if ($verify){
         return true;
@@ -212,12 +228,21 @@ function isMatchCurrentPassword(int $id, string $currentPassword): bool
     }
 }
 
-function encryptPassword(string $password):string
+/**
+ * @param string $password
+ * @return string
+ * function to encrypt (hash) password
+ */
+function encryptPassword(string $password) :string
 {
     return password_hash($password, PASSWORD_DEFAULT);
 }
 
-// function to convert switch value
+/**
+ * @param $value
+ * @return bool
+ * function to convert switch input if on it will return TRUE, otherwise it wil return FALSE
+ */
 function convertSwitchValue($value):bool
 {
     if ($value == "on"){
@@ -228,11 +253,17 @@ function convertSwitchValue($value):bool
 }
 
 
-// function to convert input string into timestamp
+/**
+ * @param string $format
+ * @param string $birthDate
+ * @return int|null
+ * function to convert string of date into timestamp
+ */
 function convertStringIntoDate(string $format, string $birthDate): int|null
 {
     $dateFormat = date_create_from_format($format, $birthDate);
     if ($dateFormat) {
+//      convert date into timestamp
         $timeStamp = date_format($dateFormat, 'U');
         return ($timeStamp);
     } else {
@@ -240,6 +271,10 @@ function convertStringIntoDate(string $format, string $birthDate): int|null
     }
 }
 
+/**
+ * @return array => of input data
+ * function to get input data from user as array
+ */
 function inputData ():array
 {
     return [
@@ -257,6 +292,15 @@ function inputData ():array
     ];
 }
 
+
+/**
+ * @param string $nik
+ * @param string $email
+ * @param int $id
+ * @param string $birthDate
+ * @return array
+ * function to validate data input and return array of error message
+ */
 function editValidate(string $nik, string $email, int $id, string $birthDate):array
 {
     $validate = [];
@@ -284,6 +328,12 @@ function editValidate(string $nik, string $email, int $id, string $birthDate):ar
     return $validate;
 }
 
+/**
+ * @param string $newPass
+ * @param string $confirmPass
+ * @return string|null
+ * function to validate new password and return error message if password input is invalid
+ */
 function newPasswordValidate(string $newPass, string $confirmPass): string | null
 {
     if (checkInputPassword($newPass) == null){
@@ -298,30 +348,4 @@ function newPasswordValidate(string $newPass, string $confirmPass): string | nul
     return null;
 }
 
-function passwordValidate(int $id, string $currentPassword, string $newPassword, string $confirmPassword):array
-{
-    $validate = [];
-    if ($currentPassword != null){
-        if (!isMatchCurrentPassword($id, $currentPassword)){
-            $validate['currentPass'] = "Password input is not correct!";
-        }else{
-            if (empty($newPassword)){
-                $validate['newPass'] = "Please type the New Password!";
-            }
-
-            if (empty($confirmPassword)){
-                $validate['confirmPass'] = "Please type the Confirm Password!";
-            }
-
-            $errorNewPass = newPasswordValidate($newPassword, $confirmPassword);
-            if ($errorNewPass != null) {
-                $validate['passError'] = $errorNewPass;
-            }
-        }
-    }else{
-        $validate['currentPass'] = "Please input the current password first!";
-    }
-
-    return $validate;
-}
 

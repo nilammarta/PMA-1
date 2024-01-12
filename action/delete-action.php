@@ -1,10 +1,15 @@
 <?php
 
 require_once __DIR__ . "/common-action.php";
-require_once __DIR__ . "/jsonHelper.php";
+require_once __DIR__ . "/json-helper.php";
 
 session_start();
 
+/**
+ * @param array $persons
+ * @return int
+ * function to get count of person that have role ADMIN in json file (database)
+ */
 function getCountAdmin(array $persons): int
 {
     $admin = [];

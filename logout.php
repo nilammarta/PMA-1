@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/action/common-action.php";
-require_once __DIR__ . "/action/jsonHelper.php";
+require_once __DIR__ . "/action/json-helper.php";
 
 session_start();
 checkUserLogin($_SESSION['userEmail']);
