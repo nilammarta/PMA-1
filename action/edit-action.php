@@ -10,28 +10,28 @@ session_start();
  * @return bool
  * function to save update data person into json file
  */
-function saveUpdateData(int $id): bool
+function saveUpdateData(int $id, array $dataInput): bool
 {
     $persons = getPersonsData();
     for ($i = 0; $i < count($persons); $i++){
         if ($persons[$i]['id'] == $id) {
-            if (isset($_POST['newPassword'])){
+            if ($_POST['newPassword'] != null){
                 $password = encryptPassword($_POST['newPassword']);
             } else {
                 $password = $persons[$i]['password'];
             }
 
-            $persons[$i]['firstName'] = ucfirst(htmlspecialchars($_POST['firstName']));
-            $persons[$i]['lastName'] = ucfirst(htmlspecialchars($_POST['lastName']));
-            $persons[$i]['nik'] = htmlspecialchars($_POST['nik']);
-            $persons[$i]['email'] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $persons[$i]['firstName'] = ucfirst($dataInput['firstName']);
+            $persons[$i]['lastName'] = ucfirst($dataInput['lastName']);
+            $persons[$i]['nik'] = $dataInput['nik'];
+            $persons[$i]['email'] = $dataInput['email'];
             $persons[$i]['password'] = $password;
-            $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $_POST['birthDate']);
-            $persons[$i]['sex'] = $_POST['sex'];
-            $persons[$i]['role'] = $_POST['role'];
-            $persons[$i]['address'] = htmlspecialchars($_POST['address']);
-            $persons[$i]['internalNotes'] = ucfirst(htmlspecialchars($_POST['internalNotes']));
-            $persons[$i]['alive'] = convertSwitchValue($_POST['alive']);
+            $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $dataInput['birthDate']);
+            $persons[$i]['sex'] = $dataInput['sex'];
+            $persons[$i]['role'] = $dataInput['role'];
+            $persons[$i]['address'] = $dataInput['address'];
+            $persons[$i]['internalNotes'] = ucfirst($dataInput['internalNotes']);
+            $persons[$i]['alive'] = convertSwitchValue($dataInput['alive']);
 
             saveDataIntoJson($persons);
             return true;
@@ -65,7 +65,7 @@ if (count($errorData) != 0 || $errorPass != null){
     unset($_SESSION['inputData']);
     unset($_SESSION['errorPassword']);
 
-    $saved = saveUpdateData($_SESSION['personId']);
+    $saved = saveUpdateData($_SESSION['personId'], inputData());
 
     if($saved) {
         redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=2");

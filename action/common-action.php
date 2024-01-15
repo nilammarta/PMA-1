@@ -278,15 +278,17 @@ function convertStringIntoDate(string $format, string $birthDate): int|null
 function inputData ():array
 {
     return [
-        "firstName" => $_POST['firstName'],
-        "lastName" => $_POST['lastName'],
+//      function htmlspecialschars() => to sanitize the string input
+        "firstName" => htmlspecialchars($_POST['firstName']),
+        "lastName" => htmlspecialchars($_POST['lastName']),
         "nik" => $_POST['nik'],
-        "email" => $_POST['email'],
+//      function filter_var() and FILTER SANITIZE EMAIL => to sanitize the input email
+        "email" => filter_var($_POST['email'], FILTER_SANITIZE_EMAIL),
         "password" => $_POST['password'],
         "birthDate" => $_POST['birthDate'],
         "sex" => $_POST['sex'],
-        "address" => $_POST['address'],
-        "internalNotes" => $_POST['internalNotes'],
+        "address" => htmlspecialchars($_POST['address']),
+        "internalNotes" => htmlspecialchars($_POST['internalNotes']),
         "role" => $_POST['role'],
         "alive" => $_POST['alive']
     ];
@@ -337,7 +339,7 @@ function editValidate(string $nik, string $email, int $id, string $birthDate):ar
 function newPasswordValidate(string $newPass, string $confirmPass): string | null
 {
     if (checkInputPassword($newPass) == null){
-        return "Password input is not correct!" .  "<br>"  . "* password must have at least 1 capital letter" . "<br>" . "* 1 non capital letter and 1 number " .
+        return "Password input is not correct!" . "<br>" . "* password must have at least 1 capital letter" . "<br>" . "* 1 non capital letter and 1 number " .
         "<br>" . "* with minimum of 8 characters and maximum 16 characters!";
     }
 

@@ -5,14 +5,14 @@
         "lastName": "Lulu",
         "nik": "1200981029177912",
         "email": "lalalulu@gmail.com",
-        "password": "$2y$10$TrrWgFwoWwc9IiLqh7tpGOxYGw9FoX3dUAbjP6mB0Qy3XYHGumN2i",
-        "birthDate": 1038809192,
+        "password": "$2y$10$ZQ6Bv1nEWH5TKALaQPvPqum2m4xGW6uPx7taLgIswhSFog8FcbkEi",
+        "birthDate": 1038794955,
         "sex": "f",
         "address": "Denpasar",
-        "internalNotes": "Lala lulu",
+        "internalNotes": "&lt;h5&gt;lala lulu &lt;\/h5&gt;",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1705033327
+        "lastLoggedIn": 1705292338
     },
     {
         "id": 2,
@@ -46,18 +46,18 @@
     },
     {
         "id": 4,
-        "firstName": "Kuka",
-        "lastName": "Kuki",
+        "firstName": "*Kuka*",
+        "lastName": "*Kuki*",
         "nik": "1002986399380822",
         "email": "kukakuki@gmail.com",
-        "password": "$2y$10$09wcfhN0Wy9\/Ip6.fjKW\/OGaufVGUAPvqDHNyCF\/NWzu7Y1omKkNu",
-        "birthDate": 1040717657,
+        "password": "$2y$10$XG57z8dqTb42dX8bvSjF6uZOzXOuTSt1ZyPAZ3p1WfzV38IO3oa76",
+        "birthDate": 1040704014,
         "sex": "m",
         "address": "Baturiti",
         "internalNotes": "",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1704958009
+        "lastLoggedIn": 1705292837
     },
     {
         "id": 5,
@@ -268,5 +268,20 @@
         "role": "MEMBER",
         "alive": true,
         "lastLoggedIn": 1705032412
+    },
+    {
+        "id": 19,
+        "firstName": "Yura",
+        "lastName": "*Yuri*",
+        "nik": "1200938479039484",
+        "email": "yurayuri@gmail.com",
+        "password": "$2y$10$TIff0\/SNgboiTlIJDqorR.ns3MIcHHw0eofQPamYOoNR\/XCbUJJFe",
+        "birthDate": 976595559,
+        "sex": "Array",
+        "address": "sdfjkas",
+        "internalNotes": "&lt;h4&gt;internal notes baru&lt;\/h5&gt;",
+        "role": "MEMBER",
+        "alive": true,
+        "lastLoggedIn": 1705293049
     }
 ]

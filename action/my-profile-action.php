@@ -10,7 +10,7 @@ session_start();
  * @return bool
  * function to save update profile into json file
  */
-function saveUpdateProfile(int $id): bool
+function saveUpdateProfile(int $id, $dataInput): bool
 {
     $persons = getPersonsData();
     for ($i = 0; $i <count($persons); $i++){
@@ -20,19 +20,16 @@ function saveUpdateProfile(int $id): bool
             }else{
                 $password = $persons[$i]['password'];
             }
-
-//          function htmlspecialschars() => to sanitize the string input
-            $persons[$i]['firstName'] = ucfirst(htmlspecialchars($_POST['firstName']));
-            $persons[$i]['lastName'] = ucfirst(htmlspecialchars($_POST['lastName']));
-            $persons[$i]['nik'] = $_POST['nik'];
-//          function filter_var() and FILTER SANITIZE EMAIL => to sanitize the input email
-            $persons[$i]['email'] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $persons[$i]['firstName'] = ucfirst($dataInput['firstName']);
+            $persons[$i]['lastName'] = ucfirst($dataInput['lastName']);
+            $persons[$i]['nik'] = $dataInput['nik'];
+            $persons[$i]['email'] = $dataInput['email'];
             $persons[$i]['password'] = $password;
-            $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $_POST['birthDate']);
-            $persons[$i]['sex'] = $_POST['sex'];
-            $persons[$i]['address'] = htmlspecialchars($_POST['address']);
+            $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $dataInput['birthDate']);
+            $persons[$i]['sex'] = $dataInput['sex'];
+            $persons[$i]['address'] = $dataInput['address'];
             if (isset($_POST['internalNotes'])) {
-                $persons[$i]['internalNotes'] = ucfirst(htmlspecialchars($_POST['internalNotes']));
+                $persons[$i]['internalNotes'] = ucfirst($dataInput['internalNotes']);
             }
             saveDataIntoJson($persons);
             return true;
@@ -101,11 +98,12 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     unset($_SESSION['inputData']);
     unset($_SESSION['errorPassword']);
 
-    $saved = saveUpdateProfile($_SESSION['personId']);
+    $dataInput = inputData();
+    $saved = saveUpdateProfile($_SESSION['personId'], $dataInput);
 
     if ($saved) {
-        $_SESSION['userEmail'] = $_POST['email'];
-        $_SESSION['userName'] = $_POST['firstName'];
+        $_SESSION['userEmail'] = $dataInput['email'];
+        $_SESSION['userName'] = ucwords($dataInput['firstName']);
         redirect('../my-profile.php', '&saved=1');
     }
 }

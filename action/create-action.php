@@ -71,22 +71,22 @@ function validate(string $nik, string $password, string $confirmPassword, string
  * @return int => of personID
  * function to save new person data
  */
-function saveData():int
+function saveData(array $dataInput):int
 {
     $persons = getPersonsData();
     $newPerson = [
         "id" => generateId($persons),
-        "firstName" => ucfirst(htmlspecialchars($_POST['firstName'])),
-        "lastName" => ucfirst(htmlspecialchars($_POST['lastName'])),
-        "nik" => $_POST["nik"],
-        "email" => filter_var($_POST['email'], FILTER_SANITIZE_EMAIL),
-        "password" => encryptPassword($_POST['password']),
-        "birthDate" =>convertStringIntoDate('Y-m-d', $_POST['birthDate']),
-        "sex" => $_POST['sex'],
-        "address" => htmlspecialchars($_POST['address']),
-        "internalNotes" => htmlspecialchars($_POST['internalNotes']),
-        "role" => $_POST['role'],
-        "alive" => convertSwitchValue($_POST['alive']),
+        "firstName" => ucfirst($dataInput['firstName']),
+        "lastName" => ucfirst($dataInput['lastName']),
+        "nik" => $dataInput['nik'],
+        "email" => $dataInput['email'],
+        "password" => encryptPassword($dataInput['password']),
+        "birthDate" =>convertStringIntoDate('Y-m-d', $dataInput['birthDate']),
+        "sex" => $dataInput['sex'],
+        "address" => $dataInput['address'],
+        "internalNotes" => $dataInput['internalNotes'],
+        "role" => $dataInput['role'],
+        "alive" => convertSwitchValue($dataInput['alive']),
         "lastLoggedIn" => null
     ];
 
@@ -108,7 +108,7 @@ if (count($errorData) != 0){
     unset($_SESSION['errorData']);
     unset($_SESSION['dataInput']);
 
-    $personId = saveData();
+    $personId = saveData(inputData());
     if ($personId != null) {
         redirect("../view.php", "page=1&person=" . $personId . "&saved=1");
     }
