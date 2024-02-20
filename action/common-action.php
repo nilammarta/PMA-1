@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . "/json-helper.php";
+require_once __DIR__ . "/../includes/pma-db.php";
+global $PDO;
 
 /**
  * @param string|null $email
@@ -46,9 +48,13 @@ function checkUserLoginRole(string $role): void
  * @return array
  * function to get all persons data from json file
  */
-function getPersonsData(): array
+function getPersonsData($PDO): array
 {
-    return loadDataIntoJson("persons.json");
+//    return loadDataIntoJson("persons.json");
+    $query = 'SELECT * FROM Persons';
+    $statement = $PDO -> prepare($query);
+    $statement -> execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
 /**
@@ -246,12 +252,11 @@ function encryptPassword(string $password) :string
 function convertSwitchValue($value):bool
 {
     if ($value == "on"){
-        return true;
+        return 1;
     } else {
-        return false;
+        return 0;
     }
 }
-
 
 /**
  * @param string $format
@@ -270,6 +275,7 @@ function convertStringIntoDate(string $format, string $birthDate): int|null
         return null;
     }
 }
+
 
 /**
  * @return array => of input data
@@ -339,7 +345,7 @@ function editValidate(string $nik, string $email, int $id, string $birthDate):ar
 function newPasswordValidate(string $newPass, string $confirmPass): string | null
 {
     if (checkInputPassword($newPass) == null){
-        return "Password input is not correct!" . "<br>" . "* password must have at least 1 capital letter" . "<br>" . "* 1 non capital letter and 1 number " .
+        return "Password input is not correct!" . "<br>" . "* password must have at least 1 capital letter" . "<br>" . "* 1 non-capital letter and 1 number " .
         "<br>" . "* with minimum of 8 characters and maximum 16 characters!";
     }
 

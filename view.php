@@ -3,6 +3,8 @@ include("action/common-action.php");
 require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
+require_once "includes/pma-db.php";
+global $PDO;
 
 session_start();
 checkUserLogin($_SESSION['userEmail']);
@@ -36,16 +38,22 @@ showHeader("persons");
                       if (!is_numeric($_GET['person'])){
                           $thePerson = null;
                       }else {
-                          $thePerson = getUserById($_GET['person']);
+//                          $thePerson = getUserById($_GET['person'], $PDO);
+                          $query = 'SELECT * FROM Persons WHERE ID = :personId';
+                          $statement = $PDO->prepare($query);
+                          $statement ->execute(array('personId' => $_GET['person']));
+                          $thePerson = $statement->fetch(PDO::FETCH_ASSOC);
                       }
 
                       $_SESSION['personId'] = $_GET['person'];
                       $_SESSION['page'] = $_GET['page'];
                       $_SESSION['filter'] = $_GET['filter'];
-                      $_SESSION['search'] = $_GET['search']; ?>
+                      $_SESSION['search'] = $_GET['search'];
+                      ?>
 
-<!--              alet untuk menampilkan validasi jika data sudah tersimpan atau sudah di perbarui    -->
-                  <?php if (isset($_GET['saved']) && $_GET['saved'] == 1 && $thePerson != null){ ?>
+<!--              alert untuk menampilkan validasi jika data sudah tersimpan atau sudah di perbarui    -->
+<!--                  --><?php //if (isset($_GET['saved']) && $_GET['saved'] == 1 && $thePerson != null){ ?>
+                  <?php if (isset($_SESSION['info'])){ ?>
                     <div class="alert alert-success saved" role="alert">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
                         <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75
@@ -80,12 +88,12 @@ showHeader("persons");
                             <tr>
                               <td class="card-label">First Name</td>
                               <td>:</td>
-                              <td><?php echo $thePerson["firstName"]; ?></td>
+                              <td><?php echo $thePerson["first_name"]; ?></td>
                             </tr>
                             <tr>
                               <td>Last Name</td>
                               <td>:</td>
-                              <td><?php echo $thePerson['lastName']; ?></td>
+                              <td><?php echo $thePerson['last_name']; ?></td>
                             </tr>
                             <tr>
                               <td>NIK</td>
@@ -100,7 +108,7 @@ showHeader("persons");
                             <tr>
                               <td>Age</td>
                               <td>:</td>
-                              <td><?php $age = getAge($thePerson['birthDate']);
+                              <td><?php $age = getAge($thePerson['birth_date']);
                                 if ($age > 1){
                                   echo $age . " years old";
                                 }else {
@@ -111,7 +119,7 @@ showHeader("persons");
                             <tr>
                               <td>Birth Date</td>
                               <td>:</td>
-                              <td><?php echo date('d F Y', $thePerson['birthDate']); ?></td>
+                              <td><?php echo date('d F Y', $thePerson['birth_date']); ?></td>
                             </tr>
                             <tr>
                               <td>Gender</td>
@@ -139,7 +147,7 @@ showHeader("persons");
                         <?php if ($_SESSION['userRole'] == "ADMIN"){ ?>
                           <div class="card-body card-body-2">
                             <h6 class="card-title">Internal notes :</h6>
-                            <div class="card-text"><?php echo $thePerson['internalNotes'] ?></div>
+                            <div class="card-text"><?php echo $thePerson['internal_notes'] ?></div>
                           </div>
                         <?php } ?>
 

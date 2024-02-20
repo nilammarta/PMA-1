@@ -3,13 +3,16 @@ include "action/common-action.php";
 require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
+//require_once "includes/pma-db.php";
 
+//global $PDO;
 session_start();
 checkUserLogin($_SESSION['userEmail']);
 checkUserLoginRole($_SESSION['userRole']);
 
 addHeadCode("create.css", "CREATE - Persons Management App");
 showHeader("persons");
+
 ?>
     <main>
       <section class="main-section d-flex flex-row">
@@ -35,20 +38,33 @@ showHeader("persons");
               if (isset($_SESSION['errorData']['birthDate'])){
                 $error[] = $_SESSION['errorData']['birthDate'];
               }
-            ?>
+              if (isset($_GET['error']) && $_GET['error'] == 1){
+                $error[] = $_SESSION['error'];
+              }?>
               <div class="alert alert-danger error-banner" role="alert">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                      class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
                   <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
-                        0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
-                        0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                            0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
+                            0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                 </svg>
                 Error while submit the form:<br>
-                <?php for ($i = 0; $i < count($error); $i++){
-                  echo "- " . $error[$i] . "<br>";
-                } ?>
+                  <?php for ($i = 0; $i < count($error); $i++){
+                      echo "- " . $error[$i] . "<br>";
+                  } ?>
               </div>
-            <?php } ?>
+            <?php } else if (isset($_SESSION['error']) && $_GET['error'] == 1){ ?>
+              <div class="alert alert-danger error-banner" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
+                            0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
+                            0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                </svg>
+                <?php echo $_SESSION['error']; ?>
+              </div>
+            <?php }?>
+
 
             <div class="row justify-content-center">
               <!-- <div class="col-12 col-md-10 col-lg-11 col-xxl-6"> -->
@@ -219,21 +235,21 @@ showHeader("persons");
                           >
                             <?php if (isset($_SESSION['dataInput'])){ ?>
                               <option selected value="<?php echo $_SESSION['dataInput']['sex'];?>">
-                                  <?php if ($_SESSION['dataInput']['sex'] == "f"){
+                                  <?php if ($_SESSION['dataInput']['sex'] == "M"){
                                 echo "Female";
                                 }else{
                                 echo "Male";
                                 }?>
                               </option>
-                              <?php if ($_SESSION['dataInput']['sex'] == "f"){ ?>
-                                <option class="option-value" value="m">Male</option>
+                              <?php if ($_SESSION['dataInput']['sex'] == "F"){ ?>
+                                <option class="option-value" value="M">Male</option>
                               <?php }else{ ?>
-                                <option class="option-value" value="f">Female</option>
+                                <option class="option-value" value="F">Female</option>
                               <?php } ?>
                             <?php }else{ ?>
                               <option selected disabled value="">choose...</option>
-                              <option class="option-value" value="m">Male</option>
-                              <option class="option-value" value="f">Female</option>
+                              <option class="option-value" value="M">Male</option>
+                              <option class="option-value" value="F">Female</option>
                             <?php } ?>
                           </select>
                         </div>
@@ -282,22 +298,22 @@ showHeader("persons");
                             required
                           >
                             <?php if (isset($_SESSION['dataInput'])){ ?>
-                                <option selected value="<?php echo $_SESSION['dataInput']['role']?>"><?php if ($_SESSION['dataInput']['role'] == 'ADMIN'){
+                                <option selected value="<?php echo $_SESSION['dataInput']['role']?>"><?php if ($_SESSION['dataInput']['role'] == 'A'){
                                   echo "ADMIN";
                                 }else{
                                   echo 'MEMBER';
                                 }?>
                                 </option>
 
-                                <?php if ($_SESSION['dataInput']['role'] == "ADMIN") {?>
-                                  <option class="option-value" value="MEMBER">MEMBER</option>
+                                <?php if ($_SESSION['dataInput']['role'] == "A") {?>
+                                  <option class="option-value" value="M">MEMBER</option>
                                 <?php }else { ?>
-                                  <option class="option-value" value="ADMIN">ADMIN</option>
+                                  <option class="option-value" value="A">ADMIN</option>
                                 <?php } ?>
                             <?php }else{ ?>
                               <option selected disabled value="">choose...</option>
-                              <option class="option-value" value="ADMIN">ADMIN</option>
-                              <option class="option-value" value="MEMBER">MEMBER</option>
+                              <option class="option-value" value="A">ADMIN</option>
+                              <option class="option-value" value="M">MEMBER</option>
                             <?php } ?>
                           </select>
                           <div class="invalid-feedback">

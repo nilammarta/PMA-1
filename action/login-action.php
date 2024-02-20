@@ -10,7 +10,7 @@ if (isset($_POST['login'])) {
     $email = $_POST['email'];
 
 // conditional untuk meng-redirect page contoh dari login menuju dashboard
-    if (check($jsonData)) {
+    if (check($jsonData) != null) {
         $_SESSION['userEmail'] = $_POST['email'];
         $_SESSION['userName'] = check($jsonData)['firstName'];
         $_SESSION['logout'] = check($jsonData)['lastLoggedIn'];

@@ -12,7 +12,7 @@
         "internalNotes": "&lt;h5&gt;lala lulu &lt;\/h5&gt;",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1705292338
+        "lastLoggedIn": 1707107354
     },
     {
         "id": 2,
@@ -57,7 +57,7 @@
         "internalNotes": "",
         "role": "ADMIN",
         "alive": true,
-        "lastLoggedIn": 1705292837
+        "lastLoggedIn": 1707107365
     },
     {
         "id": 5,
@@ -277,7 +277,7 @@
         "email": "yurayuri@gmail.com",
         "password": "$2y$10$TIff0\/SNgboiTlIJDqorR.ns3MIcHHw0eofQPamYOoNR\/XCbUJJFe",
         "birthDate": 976595559,
-        "sex": "Array",
+        "sex": "f",
         "address": "sdfjkas",
         "internalNotes": "&lt;h4&gt;internal notes baru&lt;\/h5&gt;",
         "role": "MEMBER",

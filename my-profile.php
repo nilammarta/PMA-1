@@ -36,7 +36,6 @@ showHeader("profile");
                   $_SESSION['filter'] = $_GET['filter'];
                   $_SESSION['search'] = $_GET['search'];
 
-                  echo $_SESSION['curpass'];
 
                   if (isset($_SESSION['errorData']) || isset($_SESSION['errorPassword'])){
                     $error = [];
