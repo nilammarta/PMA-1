@@ -14,13 +14,13 @@ function searchPerson(array $persons, string $searchInput): array|null
     $resultsLastName = [];
     if (isset($search)) {
         foreach ($persons as $value) {
-            if (preg_match("/$search/i", $value["firstName"]) == 1) {
+            if (preg_match("/$search/i", $value["first_name"]) == 1) {
                 $results [] = $value;
             }
         }
 
         foreach ($persons as $value) {
-            if (preg_match("/$search/i", $value["lastName"]) == 1) {
+            if (preg_match("/$search/i", $value["last_name"]) == 1) {
                 $resultsLastName[] = $value;
             }
         }

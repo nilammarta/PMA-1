@@ -2,19 +2,23 @@
 require_once __DIR__ . "/json-helper.php";
 require_once __DIR__ . "/common-action.php";
 
+require_once __DIR__ . "/../includes/pma-db.php";
+global $PDO;
+
 session_start();
 
-$jsonData = loadDataIntoJson("persons.json");
+//$jsonData = loadDataIntoJson("persons.json");
+$personsData = getPersonsData($PDO);
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
 
 // conditional untuk meng-redirect page contoh dari login menuju dashboard
-    if (check($jsonData) != null) {
+    if (check($personsData) != null) {
         $_SESSION['userEmail'] = $_POST['email'];
-        $_SESSION['userName'] = check($jsonData)['firstName'];
-        $_SESSION['logout'] = check($jsonData)['lastLoggedIn'];
-        $_SESSION['userRole'] = check($jsonData)['role'];
+        $_SESSION['userName'] = check($personsData)['first_name'];
+        $_SESSION['logout'] = check($personsData)['last_logged_in'];
+        $_SESSION['userRole'] = check($personsData)['role'];
 
         header("Location: ../dashboard.php");
         exit();

@@ -148,10 +148,10 @@ if (count($errorData) != 0){
     $query = 'SELECT ID FROM Persons WHERE nik = :nik';
     $statement = $PDO->prepare($query);
     $statement->execute(array("nik" => $nikInput));
-    $personId = $statement->fetch(PDO::FETCH_ASSOC);
+    $thePerson = $statement->fetch(PDO::FETCH_ASSOC);
 //    if ($personsId != null) {
 //        redirect("../view.php", "page=1&person=" . $personId . "&saved=1");
 //    }
 
-    redirect("../view.php", "page=1&person=" . $personId["ID"]);
+    redirect("../view.php", "page=1&person=" . $thePerson["id"]);
 }

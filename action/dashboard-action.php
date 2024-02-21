@@ -14,7 +14,7 @@ function getCountPersons(string $filter, array $persons):int|null
     if ($filter == "adult"){
         $adult = [];
         foreach ($persons as $person){
-            if (getAge($person["birthDate"]) > 15 && $person["alive"] == true) {
+            if (getAge($person["birth_date"]) > 15 && $person["alive"] == 1) {
                 $adult[] = $person;
             }
         }
@@ -23,7 +23,7 @@ function getCountPersons(string $filter, array $persons):int|null
     } elseif ($filter == "child") {
         $child = [];
         foreach ($persons as $person) {
-            if (getAge($person["birthDate"]) <= 15 && $person["alive"] == true) {
+            if (getAge($person["birth_date"]) <= 15 && $person["alive"] == 1) {
                 $child [] = $person;
             }
         }
@@ -31,7 +31,7 @@ function getCountPersons(string $filter, array $persons):int|null
     } elseif ($filter == "male") {
         $male = [];
         foreach ($persons as $person) {
-            if ($person["sex"] == "m") {
+            if ($person["sex"] == "M") {
                 $male [] = $person;
             }
         }
@@ -40,16 +40,16 @@ function getCountPersons(string $filter, array $persons):int|null
     } elseif ($filter == "female") {
         $female = [];
         foreach ($persons as $person) {
-            if ($person["sex"] == "f") {
+            if ($person["sex"] == "F") {
                 $female [] = $person;
             }
         }
         return count($female);
 
-    } elseif ($filter == "passedAway") {
+    } elseif ($filter == "passed_away") {
         $passed = [];
         foreach ($persons as $person){
-            if ($person["alive"] == false){
+            if ($person["alive"] == 0){
                 $passed[] = $person;
             }
         }

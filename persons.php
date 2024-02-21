@@ -5,6 +5,8 @@ include("action/persons-action.php");
 require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
+require_once "includes/pma-db.php";
+global $PDO;
 
 session_start();
 
@@ -87,7 +89,7 @@ showHeader("persons");
             </nav>
 
             <!-- add -->
-            <?php if ($_SESSION['userRole'] == "ADMIN"){?>
+            <?php if ($_SESSION['userRole'] == "A"){?>
               <div class="d-flex">
                 <a
                   href="create.php"
@@ -109,7 +111,7 @@ showHeader("persons");
                   } else if (isset($_GET["filter"])) {
                       $persons = filter(getFilterValue($_GET["filter"]));
                   } else {
-                      $persons = getPersonsData();
+                      $persons = getPersonsData($PDO);
                   }
 
                   if ($_GET["search"] != null && $persons == null) { ?>
@@ -179,10 +181,10 @@ showHeader("persons");
                           <tr>
                             <td class="text-center"><?php echo $number++ ?></td>
                             <td><?php echo $personsData[$i]["email"]; ?></td>
-                            <td><?php echo $personsData[$i]["firstName"] . " " . $personsData[$i]["lastName"]; ?></td>
-                            <td class="text-center"><?php echo getAge($personsData[$i]['birthDate']); ?></td>
-                            <td class="text-center"><?php echo getStatus($personsData[$i]['alive']) ?></td>
-                            <td class="text-center"><?php echo $personsData[$i]["role"]; ?></td>
+                            <td><?php echo $personsData[$i]["first_name"] . " " . $personsData[$i]["last_name"]; ?></td>
+                            <td class="text-center"><?php echo getAge($personsData[$i]['birth_date']); ?></td>
+                            <td class="text-center"><?php echo getStatus($personsData[$i]['alive']); ?></td>
+                            <td class="text-center"><?php echo getRole($personsData[$i]["role"]); ?></td>
                             <td>
                               <div class="d-grid gap-2 d-flex justify-content-md-center">
                                 <!-- page untuk di tambahkan pada href -->
@@ -206,7 +208,7 @@ showHeader("persons");
                                     <ion-icon
                                       class="btn-icon"
                                       name="eye-sharp"
-                                    ></ion-icon> <?php if ($_SESSION['userRole'] == "MEMBER"){
+                                    ></ion-icon> <?php if ($_SESSION['userRole'] == "M"){
                                       echo "view";
                                       }?>
                                   </a>
@@ -220,15 +222,15 @@ showHeader("persons");
                                     <ion-icon
                                       class="btn-icon"
                                       name="eye-sharp"
-                                    ></ion-icon> <?php if ($_SESSION['userRole'] == "MEMBER"){
+                                    ></ion-icon> <?php if ($_SESSION['userRole'] == "M"){
                                         echo "view";
                                       }?>
                                   </a>
                                 <?php } ?>
 
-                                <?php if ($_SESSION['userRole'] == "ADMIN") {
+                                <?php if ($_SESSION['userRole'] == "A") {
                                   if ($personsData[$i]['email'] == $_SESSION['userEmail']) { ?>
-                                    <!-- link untuk mengarah ke my profile page, karena mengedit data user login (data dirisendiri)         -->
+                                    <!-- link untuk mengarah ke my profile page, karena mengedit data user login (data diri sendiri)         -->
                                     <a
                                       class="btn btn-outline-light btn-table"
                                       type="button"

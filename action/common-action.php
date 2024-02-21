@@ -89,7 +89,7 @@ function getAge(int $date): int
  */
 function getStatus(bool $status): string
 {
-    if ($status == true){
+    if ($status || $status == 1){
         return 'Alive';
     }else{
         return "Passed Away";
@@ -117,12 +117,21 @@ function getUserById(int $id):array
  * @return string of gender
  * function to convert the gender of persons if gender (f) => female, if gender (m) => male
  */
-function gender(string $gender):string
+function getGender(string $gender):string
 {
-    if($gender == "f"){
+    if($gender == "F"){
         return "Female";
     }else{
         return "Male";
+    }
+}
+
+function getRole(string $role): string
+{
+    if ($role == "A"){
+        return "ADMIN";
+    }else{
+        return "MEMBER";
     }
 }
 

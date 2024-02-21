@@ -4,11 +4,13 @@ require_once __DIR__ . "/action/common-action.php";
 require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
+require_once "includes/pma-db.php";
+global $PDO;
 
 session_start();
 checkUserLogin($_SESSION['userEmail']);
 
-$persons = getPersonsData();
+$persons = getPersonsData($PDO);
 
 addHeadCode("dashboard.css", "DASHBOARD - Persons Management App");
 showHeader("dashboard");

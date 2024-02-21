@@ -124,7 +124,7 @@ showHeader("persons");
                             <tr>
                               <td>Gender</td>
                               <td>:</td>
-                              <td><?php echo gender($thePerson['sex']); ?></td>
+                              <td><?php echo getGender($thePerson['sex']); ?></td>
                             </tr>
                             <tr>
                               <td>Address</td>
@@ -134,7 +134,7 @@ showHeader("persons");
                             <tr>
                               <td>Role</td>
                               <td>:</td>
-                              <td><?php echo $thePerson['role']; ?></td>
+                              <td><?php echo getRole($thePerson['role']); ?></td>
                             </tr>
                             <tr>
                               <td>Status</td>

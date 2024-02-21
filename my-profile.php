@@ -258,9 +258,9 @@ showHeader("profile");
                           }?>"
                         >
                           <?php if (isset($_SESSION['inputData'])){
-                            echo gender($_SESSION['inputData']['sex']);
+                            echo getGender($_SESSION['inputData']['sex']);
                           }else{
-                            echo gender($user['sex']);
+                            echo getGender($user['sex']);
                           } ?>
                         </option>
                         <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['sex'] == "f"){ ?>
