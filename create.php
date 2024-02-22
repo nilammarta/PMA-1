@@ -376,6 +376,7 @@ showHeader("persons");
 <?php
 unset($_SESSION['dataInput']);
 unset($_SESSION['errorData']);
+unset($_SESSION['error']);
 require_once "includes/footer.php";
 ?>
 

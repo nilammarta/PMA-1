@@ -10,7 +10,7 @@ global $PDO;
 session_start();
 checkUserLogin($_SESSION['userEmail']);
 
-$persons = getPersonsData($PDO);
+$persons = getPersonsData();
 
 addHeadCode("dashboard.css", "DASHBOARD - Persons Management App");
 showHeader("dashboard");

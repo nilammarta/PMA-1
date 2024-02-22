@@ -8,7 +8,7 @@ global $PDO;
 session_start();
 
 //$jsonData = loadDataIntoJson("persons.json");
-$personsData = getPersonsData($PDO);
+$personsData = getPersonsData();
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];

@@ -6,7 +6,6 @@ require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
 require_once "includes/pma-db.php";
-global $PDO;
 
 session_start();
 
@@ -19,6 +18,7 @@ unset($_SESSION['search']);
 unset($_SESSION['inputData']);
 unset($_SESSION['errorData']);
 unset($_SESSION['errorPassword']);
+unset($_SESSION['info']);
 
 $appName = "PERSONS - Person Management App";
 
@@ -93,7 +93,7 @@ showHeader("persons");
               <div class="d-flex">
                 <a
                   href="create.php"
-                  class="table-btn btn-primary btn-lg btn-add p-3 mt-5 btn-link"
+                  class="table-btn btn-primary btn-lg btn-add p-3 mt-5 mb-5 btn-link"
                   type="button"
                 >
                   <ion-icon class="add-icon me-2" name="person-add"></ion-icon>
@@ -102,7 +102,17 @@ showHeader("persons");
               </div>
             <?php } ?>
 
-            <div class="table-data mt-5" id="table">
+            <?php if (isset($_SESSION['deleteInfo'])){?>
+              <div class="alert alert-success saved" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
+                  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75
+                  0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093
+                  3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
+                </svg>
+                <?php echo $_SESSION['deleteInfo']; ?>
+              </div>
+            <?php }?>
+            <div class="table-data" id="table">
               <div class="table-responsive">
 
                   <?php
@@ -111,7 +121,7 @@ showHeader("persons");
                   } else if (isset($_GET["filter"])) {
                       $persons = filter(getFilterValue($_GET["filter"]));
                   } else {
-                      $persons = getPersonsData($PDO);
+                      $persons = getPersonsData();
                   }
 
                   if ($_GET["search"] != null && $persons == null) { ?>
@@ -216,7 +226,7 @@ showHeader("persons");
                                   <a
                                     class="btn btn-outline-light me-md-2 btn-table"
                                     type="button"
-                                    href="view.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]["id"] ?>"
+                                    href="view.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]['ID'] ?>"
                                     role="button"
                                   >
                                     <ion-icon
@@ -246,7 +256,7 @@ showHeader("persons");
                                     <a
                                       class="btn btn-outline-light btn-table"
                                       type="button"
-                                      href="edit.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]["id"] ?>"
+                                      href="edit.php?<?php echo $url ?>page=<?php echo $page ?>&person=<?php echo $personsData[$i]['ID'] ?>"
                                     >
                                       <ion-icon
                                         class="btn-icon"
@@ -342,4 +352,7 @@ showHeader("persons");
         </div>
       </section>
     </main>
-<?php require_once "includes/footer.php";?>
+<?php
+unset($_SESSION['deleteInfo']);
+require_once "includes/footer.php";
+?>

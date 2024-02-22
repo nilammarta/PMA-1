@@ -9,7 +9,7 @@ if (isset($_SESSION['userEmail'])) {
     exit(); // Terminate script execution after the redirect
 }
 
-addHeadCode("login.css", "LOGIN - Persons Management App", );
+addHeadCode("login.css", "LOGIN - Persons Management App");
 ?>
   <body>
     <main>

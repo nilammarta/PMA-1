@@ -91,7 +91,7 @@ showHeader("persons");
                       value="<?php if (isset($_SESSION['inputData'])) {
                           echo $_SESSION['inputData']['firstName'];
                       } else {
-                          echo $thePerson['firstName'];
+                          echo $thePerson['first_name'];
                       } ?>"
                       aria-label="First name"
                       required
@@ -111,7 +111,7 @@ showHeader("persons");
                       value="<?php if (isset($_SESSION['inputData'])) {
                           echo $_SESSION['inputData']['lastName'];
                       } else {
-                          echo $thePerson['lastName'];
+                          echo $thePerson['last_name'];
                       } ?>"
                       aria-label="Last name"
                       required
@@ -181,15 +181,15 @@ showHeader("persons");
                           echo "is-invalid";
                       } ?>"
                       value="<?php if (isset($_SESSION['inputData'])) {
-                          echo $_SESSION['inputData']['birthDate'];
+                          echo $_SESSION['inputData']['birth_date'];
                       } else if ($thePerson != null) {
-                          echo date('Y-m-d', $thePerson['birthDate']);
+                          echo date('Y-m-d', $thePerson['birth_date']);
                       } ?>"
                       required
                     />
 
-                    <?php if (isset($_SESSION['errorData']['birthDate'])) { ?>
-                      <p class="error"><?php echo $_SESSION['errorData']['birthDate']; ?></p>
+                    <?php if (isset($_SESSION['errorData']['birth_date'])) { ?>
+                      <p class="error"><?php echo $_SESSION['error_data']['birth_date']; ?></p>
                     <?php } ?>
                   </div>
                 </div>
@@ -208,23 +208,25 @@ showHeader("persons");
                     >
                       <option selected
                         value="<?php if (isset($_SESSION['inputData'])) {
-                            echo $_SESSION['inputData']['sex'];
+                            echo getGender($_SESSION['inputData']['sex']);
                         } else {
-                            echo $thePerson['sex'];
+                            echo getGender($thePerson['sex']);
                         } ?>"
                       >
                         <?php if (isset($_SESSION['inputData'])) {
-                            echo $_SESSION['inputData']['sex'] == "f" ? "Female" : "Male";
+                            echo $_SESSION['inputData']['sex'] == "F" ? "Female" : "Male";
+//                            echo getGender($_SESSION['inputData']['sex']);
                         } else {
-                            echo $thePerson['sex'] == "f" ? "Female" : "Male";
+//                            echo $thePerson['sex'] == "F" ? "Female" : "Male";
+                            echo getGender($thePerson['sex']);
                         } ?>
                       </option>
-                        <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['sex'] == "f") { ?>
-                          <option class="option-value" value="m">Male</option>
-                        <?php } else if ($thePerson['sex'] == "f") { ?>
-                          <option class="option-value" value="m">Male</option>
+                        <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['sex'] == "F") { ?>
+                          <option class="option-value" value="M">Male</option>
+                        <?php } else if ($thePerson['sex'] == "F") { ?>
+                          <option class="option-value" value="M">Male</option>
                         <?php } else { ?>
-                          <option class="option-value" value="f">Female</option>
+                          <option class="option-value" value="F">Female</option>
                         <?php } ?>
                     </select>
                   </div>
@@ -259,9 +261,9 @@ showHeader("persons");
                       id="exampleFormControlTextarea1"
                       rows="3"
                     ><?php if (isset($_SESSION['inputData'])) {
-                            echo $_SESSION['inputData']['internalNotes'];
+                            echo $_SESSION['inputData']['internal_notes'] == null ? "" : $_SESSION['inputData']['internal_notes'];
                         } else {
-                            echo $thePerson['internalNotes'];
+                            echo $thePerson['internal_notes'];
                         } ?></textarea>
                   </div>
 
@@ -283,18 +285,18 @@ showHeader("persons");
                         } ?>"
                       >
                         <?php if (isset($_SESSION['inputData'])) {
-                            echo $_SESSION['inputData']['role'] == "ADMIN" ? "ADMIN" : "MEMBER";
+                            echo getRole($_SESSION['inputData']['role']);
                         } else {
-                            echo $thePerson['role'] == "ADMIN" ? "ADMIN" : "MEMBER";
+                            echo getRole($thePerson['role']);
                         } ?>
                       </option>
 
-                      <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['role'] == "ADMIN") { ?>
-                        <option class="option-value" value="MEMBER">MEMBER</option>
-                      <?php } else if ($thePerson['role'] == "ADMIN") { ?>
-                        <option class="option-value" value="MEMBER">MEMBER</option>
+                      <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['role'] == "A") { ?>
+                        <option class="option-value" value="M">MEMBER</option>
+                      <?php } else if ($thePerson['role'] == "A") { ?>
+                        <option class="option-value" value="M">MEMBER</option>
                       <?php } else { ?>
-                        <option class="option-value" value="ADMIN">ADMIN</option>
+                        <option class="option-value" value="A">ADMIN</option>
                       <?php } ?>
                     </select>
                   </div>

@@ -1,6 +1,6 @@
 [
     {
-        "ID": 1,
+        "id": 1,
         "first_name": "Lala",
         "last_name": "Lulu",
         "nik": "1200981029177912",
@@ -12,10 +12,10 @@
         "internal_notes": "&lt;h5&gt;lala lulu &lt;\/h5&gt;",
         "role": "A",
         "alive": 1,
-        "last_logged_in": 1708508451
+        "last_logged_in": 1708564692
     },
     {
-        "ID": 2,
+        "id": 2,
         "first_name": "Agatha",
         "last_name": "Chelsea",
         "nik": "1200938086866281",
@@ -30,7 +30,7 @@
         "last_logged_in": 1704160248
     },
     {
-        "ID": 3,
+        "id": 3,
         "first_name": "Kumi",
         "last_name": "Gina",
         "nik": "1299380783699093",
@@ -45,7 +45,7 @@
         "last_logged_in": 1705029463
     },
     {
-        "ID": 4,
+        "id": 4,
         "first_name": "Kuka",
         "last_name": "Kuki",
         "nik": "1002986399380822",
@@ -60,7 +60,7 @@
         "last_logged_in": 1707107365
     },
     {
-        "ID": 5,
+        "id": 5,
         "first_name": "Yupi",
         "last_name": "Pink",
         "nik": "1209836890297197",
@@ -75,7 +75,7 @@
         "last_logged_in": null
     },
     {
-        "ID": 6,
+        "id": 6,
         "first_name": "Bunga",
         "last_name": "Larask",
         "nik": "1009279369102987",
@@ -90,7 +90,7 @@
         "last_logged_in": null
     },
     {
-        "ID": 7,
+        "id": 7,
         "first_name": "Elsa",
         "last_name": "Ana",
         "nik": "1109738012972077",
@@ -105,7 +105,7 @@
         "last_logged_in": 1704359074
     },
     {
-        "ID": 8,
+        "id": 8,
         "first_name": "Juki",
         "last_name": "Lisya",
         "nik": "1230087399879200",
@@ -120,7 +120,7 @@
         "last_logged_in": 1704354969
     },
     {
-        "ID": 9,
+        "id": 9,
         "first_name": "Sari",
         "last_name": "Wuri",
         "nik": "1103729901700391",
@@ -135,7 +135,7 @@
         "last_logged_in": null
     },
     {
-        "ID": 10,
+        "id": 10,
         "first_name": "Giga",
         "last_name": "Kawa",
         "nik": "1090077297100021",
@@ -150,7 +150,7 @@
         "last_logged_in": null
     },
     {
-        "ID": 13,
+        "id": 13,
         "first_name": "Kira",
         "last_name": "Jus",
         "nik": "1002937746578829",
@@ -165,7 +165,7 @@
         "last_logged_in": null
     },
     {
-        "ID": 15,
+        "id": 15,
         "first_name": "Yurasd",
         "last_name": "Data coba",
         "nik": "1299238887748299",
@@ -180,7 +180,7 @@
         "last_logged_in": null
     },
     {
-        "ID": 20,
+        "id": 20,
         "first_name": "Caca",
         "last_name": "Cici",
         "nik": "1030994887663773",
@@ -195,7 +195,7 @@
         "last_logged_in": null
     },
     {
-        "ID": 22,
+        "id": 22,
         "first_name": "Gio",
         "last_name": "Ogi",
         "nik": "1209938464668893",
@@ -210,7 +210,7 @@
         "last_logged_in": null
     },
     {
-        "ID": 23,
+        "id": 23,
         "first_name": "Lal",
         "last_name": "As",
         "nik": "1200938086866282",

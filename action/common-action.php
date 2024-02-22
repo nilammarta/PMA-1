@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/json-helper.php";
 require_once __DIR__ . "/../includes/pma-db.php";
-global $PDO;
+
 
 /**
  * @param string|null $email
@@ -48,8 +48,9 @@ function checkUserLoginRole(string $role): void
  * @return array
  * function to get all persons data from json file
  */
-function getPersonsData($PDO): array
+function getPersonsData(): array
 {
+    global $PDO;
 //    return loadDataIntoJson("persons.json");
     $query = 'SELECT * FROM Persons';
     $statement = $PDO -> prepare($query);
@@ -97,22 +98,6 @@ function getStatus(bool $status): string
 }
 
 /**
- * @param int $id
- * @return array
- * function to get user data based on id
- */
-function getUserById(int $id):array
-{
-    $persons = getPersonsData();
-    foreach ($persons as $person){
-        if ($person['id'] == $id){
-            return $person;
-        }
-    }
-    return [];
-}
-
-/**
  * @param string $gender
  * @return string of gender
  * function to convert the gender of persons if gender (f) => female, if gender (m) => male
@@ -126,6 +111,11 @@ function getGender(string $gender):string
     }
 }
 
+/**
+ * @param string $role
+ * @return string
+ * function to convert role value, if role is A, it will be return "ADMIN", if M it will return "MEMBER"
+ */
 function getRole(string $role): string
 {
     if ($role == "A"){
@@ -133,6 +123,30 @@ function getRole(string $role): string
     }else{
         return "MEMBER";
     }
+}
+
+
+/**
+ * @param int $id
+ * @return array
+ * function to get user data based on id
+ */
+function getUserById(int $id):array
+{
+    global $PDO;
+//    $persons = getPersonsData();
+//    foreach ($persons as $person){
+//        if ($person['id'] == $id){
+//            return $person;
+//        }
+//    }
+//    return [];
+    $query = 'SELECT * FROM Persons WHERE ID = :ID';
+    $statement = $PDO->prepare($query);
+    $statement->execute(array(
+        'ID' => $id
+    ));
+    return $statement->fetch(PDO::FETCH_ASSOC);
 }
 
 /**
@@ -150,7 +164,7 @@ function isNikExits(string $nik, int|null $id):bool
                 return true;
             }
         }else{
-            if ($person['nik'] == $nik && $person['id'] != $id){
+            if ($person['nik'] == $nik && $person['ID'] != $id){
                 return true;
             }
         }
@@ -187,7 +201,7 @@ function isEmailExists(string $newEmail, int|null $id): bool
                 return true;
             }
         }else{
-            if ($person['email'] == $newEmail && $person['id'] != $id){
+            if ($person['email'] == $newEmail && $person['ID'] != $id){
                 return true;
             }
         }

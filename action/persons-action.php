@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . "/json-helper.php";
+require_once "includes/pma-db.php";
+global $PDO;
 
 /**
  * @param array $persons
@@ -49,7 +51,7 @@ function filter(string $filterValue): array|null
     if ($filterValue == "productive") {
         $adult = [];
         foreach ($persons as $person) {
-            if (getAge($person["birthDate"]) > 15 && getAge($person['birthDate']) <= 64) {
+            if (getAge($person["birth_date"]) > 15 && getAge($person['birth_date']) <= 64) {
                 $adult[] = $person;
             }
         }
@@ -57,7 +59,7 @@ function filter(string $filterValue): array|null
     } elseif ($filterValue == "elderly"){
         $elderly = [];
         foreach ($persons as $person){
-            if (getAge($person['birthDate']) > 64){
+            if (getAge($person['birth_date']) > 64){
                 $elderly[] = $person;
             }
         }
@@ -65,7 +67,7 @@ function filter(string $filterValue): array|null
     } elseif ($filterValue == "children") {
         $child = [];
         foreach ($persons as $person) {
-            if (getAge($person["birthDate"]) <= 15) {
+            if (getAge($person["birth_date"]) <= 15) {
                 $child [] = $person;
             }
         }
@@ -73,7 +75,7 @@ function filter(string $filterValue): array|null
     } elseif ($filterValue == "male") {
         $male = [];
         foreach ($persons as $person) {
-            if ($person["sex"] == "m") {
+            if ($person["sex"] == "M") {
                 $male [] = $person;
             }
         }
@@ -82,13 +84,13 @@ function filter(string $filterValue): array|null
     } elseif ($filterValue == "female") {
         $female = [];
         foreach ($persons as $person) {
-            if ($person["sex"] == "f") {
+            if ($person["sex"] == "F") {
                 $female [] = $person;
             }
         }
         return $female;
 
-    } elseif ($filterValue == "passedAway") {
+    } elseif ($filterValue == "passed_away") {
         $passed = [];
         foreach ($persons as $person){
             if (!$person["alive"]){
@@ -98,7 +100,7 @@ function filter(string $filterValue): array|null
         return $passed;
 
     }elseif ($filterValue == "allPersons"){
-        return getPersonsData();
+        return $persons;
 
     } else {
         return null;

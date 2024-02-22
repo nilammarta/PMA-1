@@ -2,7 +2,9 @@
 
 require_once __DIR__ . "/common-action.php";
 require_once __DIR__ . "/json-helper.php";
+require_once __DIR__ . "/../includes/pma-db.php";
 
+global $PDO;
 session_start();
 
 /**
@@ -28,27 +30,39 @@ if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
 } else {
     $url = "";
 }
+
 for ($i = 0; $i < count($persons); $i++) {
-    if ($persons[$i]['id'] == $_SESSION['personId']) {
+    if ($persons[$i]['ID'] == $_SESSION['personId']) {
 //        validasi ketika email user login sama dengan dengan email yang akan di hapus
         if ($persons[$i]['email'] == $_SESSION['userEmail']) {
             redirect("../view.php", $url . "page="  .$_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&error=2");
 //        validasi ketika ada ada 1 user role admin pada database, maka tidak bisa di hapus
-        } else if ($persons[$i]['role'] == 'ADMIN'){
-            if ($admin != 1) {
-                unset($persons[$i]);
-                $persons = array_values($persons);
-                saveDataIntoJson($persons);
-                unset($_SESSION['personId']);
-                redirect("../persons.php", "");
-            }else{
-                redirect("../view.php", $url . "page="  .$_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&error=1");
-            }
+//        } else if ($persons[$i]['role'] == 'A'){
+//            if ($admin != 1) {
+////                unset($persons[$i]);
+////                $persons = array_values($persons);
+////                saveDataIntoJson($persons);
+////                unset($_SESSION['personId']);
+//                $query = 'DELETE FROM Persons WHERE ID = :ID';
+//                $statement = $PDO->prepare($query);
+//                $statement->execute(array(
+//                    "ID"=>$_SESSION['personId']
+//                ));
+//                redirect("../persons.php", "");
+//            }else{
+//                redirect("../view.php", $url . "page="  .$_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&error=1");
+//            }
         }else{
-            unset($persons[$i]);
-            $persons = array_values($persons);
-            saveDataIntoJson($persons);
-            unset($_SESSION['personId']);
+//            unset($persons[$i]);
+//            $persons = array_values($persons);
+//            saveDataIntoJson($persons);
+//            unset($_SESSION['personId']);
+            $query = 'DELETE FROM Persons WHERE ID = :ID';
+            $statement = $PDO->prepare($query);
+            $statement->execute(array(
+                "ID" => $_SESSION["personId"]
+            ));
+            $_SESSION['deleteInfo'] = "Person data has been deleted!";
             redirect("../persons.php", "");
         }
     }

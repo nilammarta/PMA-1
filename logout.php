@@ -8,13 +8,19 @@ global $PDO;
 session_start();
 checkUserLogin($_SESSION['userEmail']);
 
-$persons = getPersonsData($PDO);
+$persons = getPersonsData();
 
 // masukkan data 'lastLoggedIn' ke persons json
 for ($i=0; $i<count($persons); $i++){
     if ($persons[$i]["email"] == $_SESSION['userEmail']){
-        $persons[$i]["last_logged_in"] = time();
-        saveDataIntoJson($persons);
+//        $persons[$i]["lastLoggedIn"] = time();
+//        saveDataIntoJson($persons);
+        $query = 'UPDATE Persons SET last_logged_in = :last_logged_in WHERE email = :email';
+        $statement = $PDO ->prepare($query);
+        $statement->execute(array(
+            "email" => $_SESSION['userEmail'],
+            "last_logged_in" => time()
+        ));
     }
 }
 

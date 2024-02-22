@@ -72,6 +72,18 @@ showHeader("persons");
                       Person Data has been updated!
                     </div>
                   <?php } ?>
+                  <!--        alert untuk validasi penghapusan jika data admin hanya ada satu       -->
+                  <?php if (isset($_GET['error']) && $_GET['error'] == 1){ ?>
+                  <div class="alert alert-danger saved mt-4" role="alert">
+                    Can not delete this data, because there is only one admin in the database!
+                  </div>
+                  <!--        alert untuk validasi penghapusan jika data yang di hapus adalah dirinya sendiri        -->
+                  <?php }else if (isset($_GET['error']) && $_GET['error'] == 2) { ?>
+                  <div class="alert alert-danger saved mt-4" role="alert">
+                    Can not delete your own data!
+                  </div>
+                  <?php } ?>
+
                   <div class="card" style="width: 100%">
                     <div
                       class="card-body card-body-1 d-flex justify-content-center"
@@ -164,12 +176,12 @@ showHeader("persons");
                              href="persons.php?<?php echo $url?>page=<?php echo $_GET['page']?>"
                              role="button">
                             <ion-icon name="arrow-back-sharp"></ion-icon>
-                              <?php if ($_SESSION['userRole'] == "MEMBER"){
+                              <?php if ($_SESSION['userRole'] == "M"){
                                 echo "Back";
                               }?>
                           </a>
 
-                          <?php if ($_SESSION['userRole'] == "ADMIN"){ ?>
+                          <?php if ($_SESSION['userRole'] == "A"){ ?>
                             <a
                               class="btn btn-primary me-2"
                               <?php if ($thePerson['email'] == $_SESSION['userEmail']){ ?>
@@ -245,19 +257,6 @@ showHeader("persons");
                 <?php } ?>
               </div>
             </div>
-
-
-<!--        alert untuk validasi penghapusan jika data admin hanya ada satu       -->
-            <?php if (isset($_GET['error']) && $_GET['error'] == 1){ ?>
-              <div class="alert alert-danger saved mt-4" role="alert">
-                Can not delete this data, because there is only one admin in the database!
-              </div>
-<!--        alert untuk validasi penghapusan jika data yang di hapus adalah dirinya sendiri        -->
-            <?php }else if (isset($_GET['error']) && $_GET['error'] == 2) { ?>
-              <div class="alert alert-danger saved mt-4" role="alert">
-                Can not delete your own data!
-              </div>
-            <?php } ?>
           </div>
         </div>
       </section>
