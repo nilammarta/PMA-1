@@ -90,7 +90,7 @@ function filter(string $filterValue): array|null
         }
         return $female;
 
-    } elseif ($filterValue == "passed_away") {
+    } elseif ($filterValue == "passedAway") {
         $passed = [];
         foreach ($persons as $person){
             if (!$person["alive"]){

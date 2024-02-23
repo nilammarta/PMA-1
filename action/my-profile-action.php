@@ -2,7 +2,9 @@
 
 require_once __DIR__ . "/common-action.php";
 require_once __DIR__ . "/json-helper.php";
+require_once __DIR__ . "/../includes/pma-db.php";
 
+global $PDO;
 session_start();
 
 /**
@@ -10,33 +12,69 @@ session_start();
  * @return bool
  * function to save update profile into json file
  */
-function saveUpdateProfile(int $id, $dataInput): bool
+function saveUpdateProfile(int $id, array $dataInput, $PDO): void
 {
-    $persons = getPersonsData();
-    for ($i = 0; $i <count($persons); $i++){
-        if ($persons[$i]['id'] == $id){
-            if ($_POST['newPassword'] != null){
-                $password = encryptPassword($_POST['newPassword']);
-            }else{
-                $password = $persons[$i]['password'];
-            }
-            $persons[$i]['firstName'] = ucfirst($dataInput['firstName']);
-            $persons[$i]['lastName'] = ucfirst($dataInput['lastName']);
-            $persons[$i]['nik'] = $dataInput['nik'];
-            $persons[$i]['email'] = $dataInput['email'];
-            $persons[$i]['password'] = $password;
-            $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $dataInput['birthDate']);
-            $persons[$i]['sex'] = $dataInput['sex'];
-            $persons[$i]['address'] = $dataInput['address'];
-            if (isset($_POST['internalNotes'])) {
-                $persons[$i]['internalNotes'] = ucfirst($dataInput['internalNotes']);
-            }
-            saveDataIntoJson($persons);
-            return true;
-        }
+//    $persons = getPersonsData();
+//    for ($i = 0; $i <count($persons); $i++){
+//        if ($persons[$i]['id'] == $id){
+//            if ($_POST['newPassword'] != null){
+//                $password = encryptPassword($_POST['newPassword']);
+//            }else{
+//                $password = $persons[$i]['password'];
+//            }
+//            $persons[$i]['firstName'] = ucfirst($dataInput['firstName']);
+//            $persons[$i]['lastName'] = ucfirst($dataInput['lastName']);
+//            $persons[$i]['nik'] = $dataInput['nik'];
+//            $persons[$i]['email'] = $dataInput['email'];
+//            $persons[$i]['password'] = $password;
+//            $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $dataInput['birthDate']);
+//            $persons[$i]['sex'] = $dataInput['sex'];
+//            $persons[$i]['address'] = $dataInput['address'];
+//            if (isset($_POST['internalNotes'])) {
+//                $persons[$i]['internalNotes'] = ucfirst($dataInput['internalNotes']);
+//            }
+//            saveDataIntoJson($persons);
+//            return true;
+//        }
+//    }
+
+//    return false;
+
+    if ($_POST['newPassword'] != null){
+        $password = encryptPassword($_POST['newPassword']);
+    }else{
+        $query = 'SELECT password FROM Persons WHERE ID = :ID';
+        $statement = $PDO->prepare($query);
+        $statement->execute(array(
+            'ID' => $id
+        ));
+        $password = $statement->fetch(PDO::FETCH_ASSOC)['password'];
     }
 
-    return false;
+    try {
+        $query = 'UPDATE Persons SET first_name = :first_name, last_name = :last_name, nik = :nik, email = :email,
+                   password = :password, birth_date = :birth_date, sex = :sex, address = :address, 
+                   internal_notes = :internal_notes WHERE ID = :ID';
+        $statement = $PDO->prepare($query);
+        $statement->execute(array(
+            'ID' => $id,
+            'first_name' => ucfirst($dataInput['firstName']),
+            'last_name' => ucfirst($dataInput['lastName']),
+            'nik' => $dataInput['nik'],
+            'email' => $dataInput['email'],
+            'password' => $password,
+            'birth_date' => convertStringIntoDate('Y-m-d', $dataInput['birthDate']),
+            'sex' => $dataInput['sex'],
+            'address' => $dataInput['address'],
+            'internal_notes' => ucwords($dataInput['internalNotes']),
+        ));
+        $_SESSION['info'] = "Your profile has been updated!";
+    }catch (PDOException $e ) {
+            $_SESSION['error'] = 'Query error: ' . $e->getMessage();
+            $_SESSION['inputData'] = $dataInput;
+            header('Location: ../my-profile.php?person='. $id . '&error=1');
+            die();
+    }
 }
 
 /**
@@ -99,12 +137,9 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     unset($_SESSION['errorPassword']);
 
     $dataInput = inputData();
-    $saved = saveUpdateProfile($_SESSION['personId'], $dataInput);
-
-    if ($saved) {
-        $_SESSION['userEmail'] = $dataInput['email'];
-        $_SESSION['userName'] = ucwords($dataInput['firstName']);
-        redirect('../my-profile.php', '&saved=1');
-    }
+    $saved = saveUpdateProfile($_SESSION['personId'], $dataInput, $PDO);
+    $_SESSION['userEmail'] = $dataInput['email'];
+    $_SESSION['userName'] = ucwords($dataInput['firstName']);
+    redirect('../my-profile.php', "");
 }
 

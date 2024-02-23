@@ -261,4 +261,7 @@ showHeader("persons");
         </div>
       </section>
     </main>
-<?php require_once "includes/footer.php"; ?>
+<?php
+unset($_SESSION['info']);
+require_once "includes/footer.php";
+?>

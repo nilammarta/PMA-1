@@ -36,7 +36,7 @@ showHeader("persons");
 
         <div class="main-content">
           <div class="persons m-3 m-md-4">
-            <nav class="navbar bg-body-tertiary p-0">
+            <nav class="navbar bg-body-tertiary p-0 mb-5">
               <div class="container-fluid nav p-0">
                 <h2 class="heading-2 m-0 p-3">PERSONS</h2>
                 <div class="d-sm-flex">
@@ -93,7 +93,7 @@ showHeader("persons");
               <div class="d-flex">
                 <a
                   href="create.php"
-                  class="table-btn btn-primary btn-lg btn-add p-3 mt-5 mb-5 btn-link"
+                  class="table-btn btn-primary btn-lg btn-add p-3 mb-5 btn-link"
                   type="button"
                 >
                   <ion-icon class="add-icon me-2" name="person-add"></ion-icon>
@@ -332,7 +332,7 @@ showHeader("persons");
                           } ?>
 
                           <li class="page-item">
-                              <?php if ($page < $data["totalPage"] || $_GET['page'] > $data['totalPage']) { ?>
+                              <?php if ($page < $data["totalPage"] ||  $data['totalPage'] == 1 && $_GET['page'] > $data['totalPage']) { ?>
                                 <a class="page-link"
                                    href='?<?php echo $url ?>page=<?php echo $next ?>'>
                                   <ion-icon

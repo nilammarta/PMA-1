@@ -46,7 +46,7 @@ function getCountPersons(string $filter, array $persons):int|null
         }
         return count($female);
 
-    } elseif ($filter == "passed_away") {
+    } elseif ($filter == "passedAway") {
         $passed = [];
         foreach ($persons as $person){
             if ($person["alive"] == 0){

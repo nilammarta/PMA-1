@@ -25,8 +25,8 @@ showHeader("profile");
               <div class="col-12 col-md-10 col-lg-11 col-xxl-7">
 
                   <?php
-                  $user = userLogin($_SESSION['userEmail']);
-                  $_SESSION['personId'] = $user['id'];
+                  $user = getUserByEmail($_SESSION['userEmail']);
+                  $_SESSION['personId'] = $user['ID'];
                   if (isset($_GET['page']) == null){
                     $page = "1";
                   }else{
@@ -76,16 +76,26 @@ showHeader("profile");
                         }
                       ?>
                     </div>
-                  <?php } ?>
+                  <?php }else if (isset($_SESSION['error']) || isset($_GET['error'])){ ?>
+                    <div class="alert alert-danger error-banner">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                           class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
+                        0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
+                        0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                      </svg>
+                      <?php echo $_SESSION['error']; ?>
+                    </div>
 
-                  <?php if (isset($_GET['saved'])){?>
+                  <?php }?>
+                  <?php if (isset($_SESSION['info'])){?>
                     <div class="alert alert-success saved mb-4" role="alert">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
                         <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75
                         0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093
                         3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
                       </svg>
-                      Your Profile has been updated!
+                       <?php echo $_SESSION['info']; ?>
                     </div>
                   <?php } ?>
 
@@ -106,7 +116,7 @@ showHeader("profile");
                         value="<?php if (isset($_SESSION['inputData'])){
                           echo $_SESSION['inputData']['firstName'];
                         }else {
-                          echo $user["firstName"];
+                          echo $user["first_name"];
                         }?>"
                       />
                     </div>
@@ -127,7 +137,7 @@ showHeader("profile");
                         value="<?php if (isset($_SESSION['inputData'])){
                           echo $_SESSION['inputData']['lastName'];
                         }else {
-                          echo $user['lastName'];
+                          echo $user['last_name'];
                         } ?>"
                       />
                     </div>
@@ -205,7 +215,7 @@ showHeader("profile");
                         value="<?php if ($_SESSION['inputData']){
                           echo $_SESSION['inputData']['birthDate'];
                         }else {
-                          echo date('Y-m-d', $user['birthDate']);
+                          echo date('Y-m-d', $user['birth_date']);
                         }?>"
                       />
 
@@ -263,18 +273,18 @@ showHeader("profile");
                             echo getGender($user['sex']);
                           } ?>
                         </option>
-                        <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['sex'] == "f"){ ?>
-                          <option class="option-value" value="m">Male</option>
-                        <?php }else if ($user['sex'] == "f") {?>
-                          <option class="option-value" value="m">Male</option>
+                        <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['sex'] == "F"){ ?>
+                          <option class="option-value" value="M">Male</option>
+                        <?php }else if ($user['sex'] == "F") {?>
+                          <option class="option-value" value="M">Male</option>
                         <?php }else { ?>
-                          <option class="option-value" value="f">Female</option>
+                          <option class="option-value" value="F">Female</option>
                         <?php } ?>
                       </select>
                     </div>
                   </div>
 
-                  <?php if ($_SESSION['userRole'] == "ADMIN"){?>
+                  <?php if ($_SESSION['userRole'] == "A"){?>
                     <div class="mb-3">
                       <label
                         for="exampleFormControlTextarea1"
@@ -288,7 +298,7 @@ showHeader("profile");
                       ><?php if (isset($_SESSION['inputData'])) {
                             echo $_SESSION['inputData']['internalNotes'];
                         } else {
-                            echo $user['internalNotes'];
+                            echo $user['internal_notes'];
                         } ?></textarea>
                     </div>
                   <?php } ?>
@@ -409,5 +419,7 @@ showHeader("profile");
     unset($_SESSION['inputData']);
     unset($_SESSION['errorData']);
     unset($_SESSION['errorPassword']);
+    unset($_SESSION['info']);
+    unset($_SESSION['error']);
     require_once "includes/footer.php";
   ?>

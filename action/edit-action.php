@@ -15,8 +15,7 @@ session_start();
 function saveUpdateData(int $id, array $dataInput, $PDO): void
 {
 
-
-    $persons = getPersonsData();
+//    $persons = getPersonsData();
 //    for ($i = 0; $i < count($persons); $i++){
 //        if ($persons[$i]['id'] == $id) {
 //            if ($_POST['newPassword'] != null){
@@ -43,29 +42,42 @@ function saveUpdateData(int $id, array $dataInput, $PDO): void
 //    }
 //    return false;
 
+
+    if ($_POST['newPassword'] != null){
+        $password = encryptPassword($_POST['newPassword']);
+    } else {
+        $query = 'SELECT password FROM Persons WHERE ID = :ID';
+        $statement = $PDO->prepare($query);
+        $statement->execute(array(
+            "ID" => $id
+        ));
+        $password = $statement->fetch(PDO::FETCH_ASSOC)['password'];
+    }
+
     try {
         $query = 'UPDATE Persons SET first_name = :first_name, last_name = :last_name, nik = :nik, email = :email, 
                    password = :password, birth_date = :birth_date, sex = :sex, role =:role, address = :address, 
-                   internal_notes = :internal_notes, alive = :alive, last_logged_in = :last_logged_in WHERE ID = :id';
+                   internal_notes = :internal_notes, alive = :alive WHERE ID = :ID';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
             "ID" => $id,
-            "first_name" => $dataInput['firstName'],
-            "last_name" => $dataInput['lastName'],
+            "first_name" => ucfirst($dataInput['firstName']),
+            "last_name" => ucfirst($dataInput['lastName']),
             "nik" => $dataInput['nik'],
             "email" => $dataInput['email'],
-            "password" => $dataInput['password'],
-            "birth_date" => $dataInput['birthDate'],
+            "password" => $password,
+            "birth_date" => convertStringIntoDate('Y-m-d', $dataInput['birthDate']),
             "sex" => $dataInput['sex'],
             "role" => $dataInput['role'],
             "address" => $dataInput['address'],
-            "internal_notes" => $dataInput['internalNotes'],
-            "alive" => $dataInput['alive']
+            "internal_notes" => ucfirst($dataInput['internalNotes']),
+            "alive" => convertSwitchValue($dataInput['alive'])
         ));
         $_SESSION['info'] = "Person data has been updated!";
     }catch (PDOException $e ) {
         $_SESSION['error'] = 'Query error: ' . $e->getMessage();
-        header('Location: ../edit.php?person='. $id . 'error=1');
+        $_SESSION['inputData'] = $dataInput;
+        header('Location: ../edit.php?person='. $id . '&error=1');
         die();
     }
 }
@@ -82,14 +94,7 @@ if (empty($_POST['newPassword']) && empty($_POST['confirmPassword'])){
   $errorPass = newPasswordValidate($_POST['newPassword'], $_POST['confirmPassword']);
 }
 
-$query = 'SELECT ID FROM Persons WHERE nik = :nik';
-$statement = $PDO->prepare($query);
-$statement->execute(array(
-    'nik' => inputData()['nik']
-));
-$personId = $statement->fetch(PDO::FETCH_ASSOC);
-
-$errorData = editValidate($_POST['nik'], $_POST['email'], $personId['ID'], $_POST['birthDate']);
+$errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId'], $_POST['birthDate']);
 if (count($errorData) != 0 || $errorPass != null){
 
     $_SESSION['errorData'] = $errorData;
@@ -103,9 +108,9 @@ if (count($errorData) != 0 || $errorPass != null){
     unset($_SESSION['errorPassword']);
 
 
-    saveUpdateData($personId['ID'], inputData(), $PDO);
-echo     $personId['id'];
+    saveUpdateData($_SESSION['personId'], inputData(), $PDO);
+
 //    redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=2");
-//    redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $personId['id']);
+    redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 
 }

@@ -17,31 +17,27 @@ function checkUserLogin(string | null $email): void
 }
 
 /**
- * @param $email
- * @return array
- * function to get user login data
- */
-function userLogin($email):array
-{
-    $persons = getPersonsData();
-    for ($i =0; $i < count($persons); $i++){
-        if($persons[$i]["email"] == $email){
-            return $persons[$i];
-        }
-    }
-    return [];
-}
-
-/**
  * @param string $role
  * @return void
  * function to check user login role, if user login is a MEMBER => redirect to dashboard page
  */
 function checkUserLoginRole(string $role): void
 {
-    if ($role == "MEMBER"){
+    if ($role == "M"){
         redirect("dashboard.php", "");
     }
+}
+
+/**
+ * @param $url
+ * @param $getParams
+ * @return void
+ * function to redirect the page to another page
+ */
+function redirect($url, $getParams) : void
+{
+    header('Location: ' . $url . '?' . $getParams);
+    die();
 }
 
 /**
@@ -59,15 +55,26 @@ function getPersonsData(): array
 }
 
 /**
- * @param $url
- * @param $getParams
- * @return void
- * function to redirect the page to another page
+ * @param $email
+ * @return array
+ * function to get user login data
  */
-function redirect($url, $getParams) : void
+function getUserByEmail($email):array
 {
-    header('Location: ' . $url . '?' . $getParams);
-    die();
+    global $PDO;
+//    $persons = getPersonsData();
+//    for ($i =0; $i < count($persons); $i++){
+//        if($persons[$i]["email"] == $email){
+//            return $persons[$i];
+//        }
+//    }
+//    return [];
+    $query = 'SELECT * FROM Persons WHERE email = :email';
+    $statement = $PDO->prepare($query);
+    $statement->execute(array(
+        "email" => $email
+    ));
+    return $statement->fetch(PDO::FETCH_ASSOC);
 }
 
 /**
@@ -272,7 +279,7 @@ function encryptPassword(string $password) :string
  * @return bool
  * function to convert switch input if on it will return TRUE, otherwise it wil return FALSE
  */
-function convertSwitchValue($value):bool
+function convertSwitchValue($value):int
 {
     if ($value == "on"){
         return 1;
@@ -322,7 +329,6 @@ function inputData ():array
         "alive" => $_POST['alive']
     ];
 }
-
 
 /**
  * @param string $nik
