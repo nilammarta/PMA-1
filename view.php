@@ -4,7 +4,6 @@ require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
 require_once "includes/pma-db.php";
-global $PDO;
 
 session_start();
 checkUserLogin($_SESSION['userEmail']);
@@ -38,11 +37,7 @@ showHeader("persons");
                       if (!is_numeric($_GET['person'])){
                           $thePerson = null;
                       }else {
-//                          $thePerson = getUserById($_GET['person'], $PDO);
-                          $query = 'SELECT * FROM Persons WHERE ID = :personId';
-                          $statement = $PDO->prepare($query);
-                          $statement ->execute(array('personId' => $_GET['person']));
-                          $thePerson = $statement->fetch(PDO::FETCH_ASSOC);
+                          $thePerson = getUserById($_GET['person']);
                       }
 
                       $_SESSION['personId'] = $_GET['person'];
@@ -60,7 +55,7 @@ showHeader("persons");
                         0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093
                         3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
                       </svg>
-                      New Person has been saved!
+                      <?php echo $_SESSION['info']; ?>
                     </div>
                   <?php }else if (isset($_GET['saved']) && $_GET['saved'] == 2 && $thePerson != null){ ?>
                     <div class="alert alert-success saved" role="alert">
@@ -156,7 +151,7 @@ showHeader("persons");
                           </tbody>
                         </table>
 
-                        <?php if ($_SESSION['userRole'] == "ADMIN"){ ?>
+                        <?php if ($_SESSION['userRole'] == "A"){ ?>
                           <div class="card-body card-body-2">
                             <h6 class="card-title">Internal notes :</h6>
                             <div class="card-text"><?php echo $thePerson['internal_notes'] ?></div>

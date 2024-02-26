@@ -55,27 +55,28 @@ function getPersonsData(): array
 }
 
 /**
- * @param $email
+ * @param int $id
  * @return array
- * function to get user login data
+ * function to get user data based on id
  */
-function getUserByEmail($email):array
+function getUserById(int $id):array
 {
     global $PDO;
 //    $persons = getPersonsData();
-//    for ($i =0; $i < count($persons); $i++){
-//        if($persons[$i]["email"] == $email){
-//            return $persons[$i];
+//    foreach ($persons as $person){
+//        if ($person['id'] == $id){
+//            return $person;
 //        }
 //    }
 //    return [];
-    $query = 'SELECT * FROM Persons WHERE email = :email';
+    $query = 'SELECT * FROM Persons WHERE ID = :ID';
     $statement = $PDO->prepare($query);
     $statement->execute(array(
-        "email" => $email
+        'ID' => $id
     ));
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
+
 
 /**
  * @param int $date
@@ -130,30 +131,6 @@ function getRole(string $role): string
     }else{
         return "MEMBER";
     }
-}
-
-
-/**
- * @param int $id
- * @return array
- * function to get user data based on id
- */
-function getUserById(int $id):array
-{
-    global $PDO;
-//    $persons = getPersonsData();
-//    foreach ($persons as $person){
-//        if ($person['id'] == $id){
-//            return $person;
-//        }
-//    }
-//    return [];
-    $query = 'SELECT * FROM Persons WHERE ID = :ID';
-    $statement = $PDO->prepare($query);
-    $statement->execute(array(
-        'ID' => $id
-    ));
-    return $statement->fetch(PDO::FETCH_ASSOC);
 }
 
 /**
@@ -385,4 +362,91 @@ function newPasswordValidate(string $newPass, string $confirmPass): string | nul
     return null;
 }
 
+/**
+ * @param int $id
+ * @param array $dataInput
+ * @param $PDO
+ * @param string|null $flag
+ * @return void
+ * function to save update person data into mysql database
+ */
+function saveUpdateData(int $id, array $dataInput, $PDO, string $flag=null):void
+{
+    if ($_POST['newPassword'] != null) {
+        $password = encryptPassword($_POST['newPassword']);
+    } else {
+        $query = 'SELECT password FROM Persons WHERE ID = :ID';
+        $statement = $PDO->prepare($query);
+        $statement->execute(array(
+            "ID" => $id
+        ));
+        $password = $statement->fetch(PDO::FETCH_ASSOC)['password'];
+    }
+
+    if ($flag !=null) {
+
+        try {
+            $query = 'UPDATE Persons SET first_name = :first_name, last_name = :last_name, nik = :nik, email = :email, 
+                   password = :password, birth_date = :birth_date, sex = :sex, role =:role, address = :address, 
+                   internal_notes = :internal_notes, alive = :alive WHERE ID = :ID';
+            $statement = $PDO->prepare($query);
+            $statement->execute(array(
+                "ID" => $id,
+                "first_name" => ucfirst($dataInput['firstName']),
+                "last_name" => ucfirst($dataInput['lastName']),
+                "nik" => $dataInput['nik'],
+                "email" => $dataInput['email'],
+                "password" => $password,
+                "birth_date" => convertStringIntoDate('Y-m-d', $dataInput['birthDate']),
+                "sex" => $dataInput['sex'],
+                "role" => $dataInput['role'],
+                "address" => $dataInput['address'],
+                "internal_notes" => ucfirst($dataInput['internalNotes']),
+                "alive" => convertSwitchValue($dataInput['alive'])
+            ));
+            $_SESSION['info'] = "Person data has been updated!";
+        } catch (PDOException $e) {
+            $_SESSION['error'] = 'Query error: ' . $e->getMessage();
+            $_SESSION['inputData'] = $dataInput;
+            header('Location: ../edit.php?person=' . $id . '&error=1');
+            die();
+        }
+    }else{
+        if ($_POST['internalNotes'] != null){
+            $internalNotes = ucwords($dataInput['internalNotes']);
+        }else{
+            $query = 'SELECT internal_notes FROM Persons WHERE ID = :ID';
+            $statement = $PDO->prepare($query);
+            $statement->execute(array(
+                'ID' => $id
+            ));
+            $internalNotes = $statement->fetch(PDO::FETCH_ASSOC)['internal_notes'];
+        }
+
+        try {
+            $query = 'UPDATE Persons SET first_name = :first_name, last_name = :last_name, nik = :nik, email = :email,
+                   password = :password, birth_date = :birth_date, sex = :sex, address = :address, 
+                   internal_notes = :internal_notes WHERE ID = :ID';
+            $statement = $PDO->prepare($query);
+            $statement->execute(array(
+                'ID' => $id,
+                'first_name' => ucfirst($dataInput['firstName']),
+                'last_name' => ucfirst($dataInput['lastName']),
+                'nik' => $dataInput['nik'],
+                'email' => $dataInput['email'],
+                'password' => $password,
+                'birth_date' => convertStringIntoDate('Y-m-d', $dataInput['birthDate']),
+                'sex' => $dataInput['sex'],
+                'address' => $dataInput['address'],
+                'internal_notes' => $internalNotes,
+            ));
+            $_SESSION['info'] = "Your profile has been updated!";
+        }catch (PDOException $e ) {
+            $_SESSION['error'] = 'Query error: ' . $e->getMessage();
+            $_SESSION['inputData'] = $dataInput;
+            header('Location: ../my-profile.php?person='. $id . '&error=1');
+            die();
+        }
+    }
+}
 

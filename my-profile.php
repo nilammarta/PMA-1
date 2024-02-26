@@ -3,7 +3,9 @@ include("action/common-action.php");
 require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
+require_once "includes/pma-db.php";
 
+global $PDO;
 session_start();
 checkUserLogin($_SESSION['userEmail']);
 
@@ -25,7 +27,14 @@ showHeader("profile");
               <div class="col-12 col-md-10 col-lg-11 col-xxl-7">
 
                   <?php
-                  $user = getUserByEmail($_SESSION['userEmail']);
+//                  $user = getUserByEmail($_SESSION['userEmail']);
+                  $query = 'SELECT * FROM Persons WHERE email = :email';
+                  $statement = $PDO->prepare($query);
+                  $statement->execute(array(
+                      "email" => $_SESSION['userEmail']
+                  ));
+                  $user = $statement->fetch(PDO::FETCH_ASSOC);
+
                   $_SESSION['personId'] = $user['ID'];
                   if (isset($_GET['page']) == null){
                     $page = "1";

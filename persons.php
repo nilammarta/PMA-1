@@ -116,11 +116,12 @@ showHeader("persons");
               <div class="table-responsive">
 
                   <?php
-                  if (isset($_GET['search']) != null && isset($_GET['filter']) != null) {
-                      $persons = searchPerson(filter(getFilterValue($_GET['filter'])), $_GET['search']);
-                  } else if (isset($_GET["filter"])) {
-                      $persons = filter(getFilterValue($_GET["filter"]));
-                  } else {
+                  if (isset($_GET["filter"]) != null && isset($_GET['search']) != null){
+                      $persons = filter(getFilterValue($_GET["filter"]), searchPerson($_GET['search']));
+//                      $persons = searchPerson(filter(getFilterValue($_GET['filter'])), $_GET['search']);
+//                  } else if ($_GET['search'] != null)  {
+//                      $persons = searchPerson($_GET['search']);
+                  }else {
                       $persons = getPersonsData();
                   }
 
@@ -169,7 +170,6 @@ showHeader("persons");
                       $previous = $page - 1;
                       $next = $page + 1;
                       $number = ($page - 1) * $limit + 1;
-
                       ?>
 
                     <table class="table table-hover table-bordered">
@@ -332,7 +332,7 @@ showHeader("persons");
                           } ?>
 
                           <li class="page-item">
-                              <?php if ($page < $data["totalPage"] ||  $data['totalPage'] == 1 && $_GET['page'] > $data['totalPage']) { ?>
+                              <?php if ($page < $data["totalPage"] ||  $data['totalPage'] != 1 && $_GET['page'] > $data['totalPage']) { ?>
                                 <a class="page-link"
                                    href='?<?php echo $url ?>page=<?php echo $next ?>'>
                                   <ion-icon

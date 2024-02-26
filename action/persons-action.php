@@ -9,35 +9,41 @@ global $PDO;
  * @return array|null
  * function to get search result based on search input
  */
-function searchPerson(array $persons, string $searchInput): array|null
+function searchPerson(string $searchInput): array|null
 {
-    $search = urldecode($searchInput);
-    $results = [];
-    $resultsLastName = [];
-    if (isset($search)) {
-        foreach ($persons as $value) {
-            if (preg_match("/$search/i", $value["first_name"]) == 1) {
-                $results [] = $value;
-            }
-        }
+    global $PDO;
+//    $search = urldecode($searchInput);
+//    $results = [];
+//    $resultsLastName = [];
+//    if (isset($search)) {
+//        foreach ($persons as $value) {
+//            if (preg_match("/$search/i", $value["first_name"]) == 1) {
+//                $results [] = $value;
+//            }
+//        }
+//
+//        foreach ($persons as $value) {
+//            if (preg_match("/$search/i", $value["last_name"]) == 1) {
+//                $resultsLastName[] = $value;
+//            }
+//        }
+//
+//        foreach ($resultsLastName as $result) {
+//            if (in_array($result, $results) == 0) {
+//                $results[] = $result;
+//            }
+//        }
+//
+//        if (count($results) != null) {
+//            return $results;
+//        }
+//    }
+//    return null;
 
-        foreach ($persons as $value) {
-            if (preg_match("/$search/i", $value["last_name"]) == 1) {
-                $resultsLastName[] = $value;
-            }
-        }
-
-        foreach ($resultsLastName as $result) {
-            if (in_array($result, $results) == 0) {
-                $results[] = $result;
-            }
-        }
-
-        if (count($results) != null) {
-            return $results;
-        }
-    }
-    return null;
+    $query = "SELECT * FROM Persons WHERE email LIKE '%$searchInput%' OR first_name LIKE '%$searchInput%' OR last_name LIKE '%$searchInput%'";
+    $statement = $PDO->prepare($query);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
 /**
@@ -45,10 +51,12 @@ function searchPerson(array $persons, string $searchInput): array|null
  * @return array|null
  * function to filtering the persons data based on string filter value
  */
-function filter(string $filterValue): array|null
+function filter(string $filterValue, array $persons): array|null
 {
-    $persons = getPersonsData();
-    if ($filterValue == "productive") {
+    if ($persons == null){
+        $persons = getPersonsData();
+    }
+    if ($filterValue == "productive"){
         $adult = [];
         foreach ($persons as $person) {
             if (getAge($person["birth_date"]) > 15 && getAge($person['birth_date']) <= 64) {
@@ -64,7 +72,7 @@ function filter(string $filterValue): array|null
             }
         }
         return $elderly;
-    } elseif ($filterValue == "children") {
+    } elseif ($filterValue == "children"){
         $child = [];
         foreach ($persons as $person) {
             if (getAge($person["birth_date"]) <= 15) {
@@ -81,7 +89,7 @@ function filter(string $filterValue): array|null
         }
         return $male;
 
-    } elseif ($filterValue == "female") {
+    } elseif ($filterValue == "female"){
         $female = [];
         foreach ($persons as $person) {
             if ($person["sex"] == "F") {
@@ -90,7 +98,7 @@ function filter(string $filterValue): array|null
         }
         return $female;
 
-    } elseif ($filterValue == "passedAway") {
+    } elseif ($filterValue == "passedAway"){
         $passed = [];
         foreach ($persons as $person){
             if (!$person["alive"]){

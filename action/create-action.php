@@ -140,6 +140,7 @@ if (count($errorData) != 0){
 }else{
     unset($_SESSION['errorData']);
     unset($_SESSION['dataInput']);
+    unset($_SESSION['birthDate']);
 
     $dataInput = inputData();
     $nikInput = inputData()['nik'];
