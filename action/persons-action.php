@@ -41,7 +41,13 @@ function searchPerson(string $searchInput): array|null
 //    return null;
 
     $query = "SELECT * FROM Persons WHERE email LIKE '%$searchInput%' OR first_name LIKE '%$searchInput%' OR last_name LIKE '%$searchInput%'";
+//    $query = 'SELECT * FROM Persons WHERE email LIKE :email OR first_name LIKE :first_name OR last_name LIKE :last_name';
     $statement = $PDO->prepare($query);
+//    $statement->execute(array(
+//        'email' => $searchInput,
+//        'first_name' => $searchInput,
+//        'last_name' => $searchInput
+//    ));
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -53,9 +59,7 @@ function searchPerson(string $searchInput): array|null
  */
 function filter(string $filterValue, array $persons): array|null
 {
-    if ($persons == null){
-        $persons = getPersonsData();
-    }
+    global $PDO;
     if ($filterValue == "productive"){
         $adult = [];
         foreach ($persons as $person) {
@@ -64,6 +68,13 @@ function filter(string $filterValue, array $persons): array|null
             }
         }
         return $adult;
+
+//        $max = time() - (15 * (60 * 60 * 24 * 365));
+//        $min = time() - (64 * (60 * 60 * 24 * 365));
+//        $query = "SELECT * FROM Persons WHERE birth_date >= $min AND birth_date <= $max";
+//        $statement = $PDO->prepare($query);
+//        $statement->execute();
+//        return $statement->fetchAll(PDO::FETCH_ASSOC);
     } elseif ($filterValue == "elderly"){
         $elderly = [];
         foreach ($persons as $person){
@@ -72,6 +83,15 @@ function filter(string $filterValue, array $persons): array|null
             }
         }
         return $elderly;
+
+//        $min = time() - (64 * (60 * 60 * 24 * 365));
+//        echo $min;
+//        $query = "SELECT * FROM Persons WHERE birth_date < :date";
+//        $statement = $PDO->prepare($query);
+//        $statement->execute(array(
+//            'date' => $min
+//        ));
+//        return $statement->fetchAll(PDO::FETCH_ASSOC);
     } elseif ($filterValue == "children"){
         $child = [];
         foreach ($persons as $person) {
@@ -80,6 +100,13 @@ function filter(string $filterValue, array $persons): array|null
             }
         }
         return $child;
+
+//        $max = time() - (15 * (60 * 60 * 24 * 365));
+//        echo $max;
+//        $query = "SELECT * FROM Person WHERE birth_date >'$max'";
+//        $statement = $PDO->prepare($query);
+//        $statement->execute();
+//        return $statement->fetchAll(PDO::FETCH_ASSOC);
     } elseif ($filterValue == "male") {
         $male = [];
         foreach ($persons as $person) {
@@ -88,6 +115,12 @@ function filter(string $filterValue, array $persons): array|null
             }
         }
         return $male;
+//        $query = 'SELECT * FROM Persons WHERE sex = :sex';
+//        $statement = $PDO->prepare($query);
+//        $statement->execute(array(
+//            'sex' => "M"
+//        ));
+//        return $statement->fetchAll(PDO::FETCH_ASSOC);
 
     } elseif ($filterValue == "female"){
         $female = [];
@@ -97,6 +130,12 @@ function filter(string $filterValue, array $persons): array|null
             }
         }
         return $female;
+//        $query = 'SELECT * FROM Persons WHERE sex = :sex';
+//        $statement = $PDO->prepare($query);
+//        $statement->execute(array(
+//            'sex' => 'F'
+//        ));
+//        return $statement->fetchAll(PDO::FETCH_ASSOC);
 
     } elseif ($filterValue == "passedAway"){
         $passed = [];
@@ -106,8 +145,18 @@ function filter(string $filterValue, array $persons): array|null
             }
         }
         return $passed;
+//        $query = 'SELECT * FROM Persons WHERE alive = :alive';
+//        $statement = $PDO->prepare($query);
+//        $statement->execute(array(
+//           'alive' => 0
+//        ));
+//        return $statement->fetchAll(PDO::FETCH_ASSOC);
 
     }elseif ($filterValue == "allPersons"){
+//        $query = 'SELECT * FROM Persons';
+//        $statement = $PDO->prepare($query);
+//        $statement->execute();
+//        return $statement->fetchAll(PDO::FETCH_ASSOC);
         return $persons;
 
     } else {
@@ -122,21 +171,57 @@ function filter(string $filterValue, array $persons): array|null
  * @return array
  * function to get paginated data
  */
-function getPaginatedData(array $data, int $page, int $limit): array
+function getPaginatedData(array $data, int $page, int $limit, string | null $search, string | null $filter): array
 {
-//   untuk mendapatkan jumlah halaman yang di perlukan dengan membagi antara banyak data dengan limit yang di tentukan
-    $totalPage = ceil((float)count($data) / (float)$limit);
-//   untuk mendapatkan index dari data person yang akan di mulai dari setiap halaman
-    $indexStart = ($page - 1) * $limit;
-    $length = $limit;
-    if (($indexStart + $limit) > count($data)) {
-        $length = count($data) - $indexStart;
+    global $PDO;
+////   untuk mendapatkan jumlah halaman yang di perlukan dengan membagi antara banyak data dengan limit yang di tentukan
+//    $totalPage = ceil((float)count($data) / (float)$limit);
+////   untuk mendapatkan index dari data person yang akan di mulai dari setiap halaman
+//    $indexStart = ($page - 1) * $limit;
+//    $length = $limit;
+//    if (($indexStart + $limit) > count($data)) {
+//        $length = count($data) - $indexStart;
+//    }
+//
+//    return [
+//        "totalPage" => $totalPage,
+//        "pagingData" => array_slice($data, $indexStart, $length),
+//        "currentPage" => $page,
+//    ];
+
+
+
+
+
+    $offset = ($page - 1) * $limit;
+
+    if ($search != null && $filter != null){
+        $query = "SELECT * FROM Persons WHERE email LIKE '%$search%' OR first_name LIKE '%$search%' OR last_name LIKE '%$search%' LIMIT $limit OFFSET $offset";
+//    $query = 'SELECT * FROM Persons WHERE email LIKE :email OR first_name LIKE :first_name OR last_name LIKE :last_name';
+        $statement = $PDO->prepare($query);
+
+        $statement->execute();
+        $searchResult = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $pagingData = filter($filter, $searchResult);
+        $totalData = count($searchResult);
+    }else {
+        $dataQuery = "SELECT count(*) FROM Persons";
+        $dataStatement = $PDO->query($dataQuery);
+        $totalData = $dataStatement->fetchColumn();
+
+        $query = "SELECT * FROM Persons LIMIT $limit OFFSET $offset";
+        $statement = $PDO->prepare($query);
+        $statement->execute();
+        $pagingData = $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    $totalPage = ceil((float)$totalData / (float)$limit);
+
+
     return [
-        "totalPage" => $totalPage,
-        "pagingData" => array_slice($data, $indexStart, $length),
-        "currentPage" => $page,
+      "totalPage" => $totalPage,
+      "pagingData" => $pagingData,
+      "currentPage" => $page
     ];
 }
 

@@ -118,9 +118,10 @@ showHeader("persons");
                   <?php
                   if (isset($_GET["filter"]) != null && isset($_GET['search']) != null){
                       $persons = filter(getFilterValue($_GET["filter"]), searchPerson($_GET['search']));
+//                      var_dump($persons);
 //                      $persons = searchPerson(filter(getFilterValue($_GET['filter'])), $_GET['search']);
-//                  } else if ($_GET['search'] != null)  {
-//                      $persons = searchPerson($_GET['search']);
+                  } else if ($_GET['search'] != null)  {
+                      $persons = searchPerson($_GET['search']);
                   }else {
                       $persons = getPersonsData();
                   }
@@ -160,10 +161,12 @@ showHeader("persons");
 
                       $limit = 5;
 
-                      $data = getPaginatedData($persons, $page, $limit);
+
+
+                      $data = getPaginatedData($persons, $page, $limit, $_GET['search'], $_GET['filter']);
                       if ($data['totalPage'] < $_GET['page']) {
                           $page = 1;
-                          $data = getPaginatedData($persons, $page, $limit);
+                          $data = getPaginatedData($persons, $page, $limit, $_GET['search'], $_GET['filter']);
                       }
 
                       $personsData = $data["pagingData"];

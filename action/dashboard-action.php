@@ -14,7 +14,7 @@ function getCountPersons(string $filter, array $persons):int|null
     if ($filter == "adult"){
         $adult = [];
         foreach ($persons as $person){
-            if (getAge($person["birth_date"]) > 15 && $person["alive"] == 1) {
+            if (getAge($person["birth_date"]) > 15 && getAge($person["birth_date"]) <= 64 && $person["alive"] == 1) {
                 $adult[] = $person;
             }
         }
