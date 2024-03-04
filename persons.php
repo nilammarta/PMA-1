@@ -116,38 +116,17 @@ showHeader("persons");
               <div class="table-responsive">
 
                   <?php
-                  if (isset($_GET["filter"]) != null && isset($_GET['search']) != null){
-                      $persons = filter(getFilterValue($_GET["filter"]), searchPerson($_GET['search']));
-//                      var_dump($persons);
-//                      $persons = searchPerson(filter(getFilterValue($_GET['filter'])), $_GET['search']);
-                  } else if ($_GET['search'] != null)  {
-                      $persons = searchPerson($_GET['search']);
-                  }else {
-                      $persons = getPersonsData();
-                  }
+//                  if (isset($_GET["filter"]) != null && isset($_GET['search']) != null){
+//                      $persons = filter(getFilterValue($_GET["filter"]), searchPerson($_GET['search']), null, null);
+////                      var_dump($persons);
+////                      $persons = searchPerson(filter(getFilterValue($_GET['filter'])), $_GET['search']);
+//                  } else if ($_GET['search'] != null)  {
+//                      $persons = searchPerson($_GET['search']);
+//                  }else {
+//                      $persons = getPersonsData();
+//                  }
 
-                  if ($_GET["search"] != null && $persons == null) { ?>
-                    <div class="alert alert-danger mx-5" role="alert">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                           class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
-                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
-                        0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
-                        0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                      </svg>
-                      Search result is not found!
-                    </div>
-                  <?php } elseif ($persons == null) { ?>
-                    <div class="alert alert-danger mx-5" role="alert">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                           class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
-                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
-                        0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
-                        0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                      </svg>
-                      Person Data is empty!
-                    </div>
-                  <?php } else { ?>
-                      <?php
+
 
                       if (isset($_GET['page']) && $_GET['page'] < 1) {
                           $page = 1;
@@ -163,10 +142,10 @@ showHeader("persons");
 
 
 
-                      $data = getPaginatedData($persons, $page, $limit, $_GET['search'], $_GET['filter']);
+                      $data = getPaginatedData($page, $limit, $_GET['search'], $_GET['filter']);
                       if ($data['totalPage'] < $_GET['page']) {
                           $page = 1;
-                          $data = getPaginatedData($persons, $page, $limit, $_GET['search'], $_GET['filter']);
+                          $data = getPaginatedData($page, $limit, $_GET['search'], $_GET['filter']);
                       }
 
                       $personsData = $data["pagingData"];
@@ -174,7 +153,27 @@ showHeader("persons");
                       $next = $page + 1;
                       $number = ($page - 1) * $limit + 1;
                       ?>
-
+                  <?php  if ($_GET["search"] != null && $personsData == null) { ?>
+                    <div class="alert alert-danger mx-5" role="alert">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                           class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
+                        0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
+                        0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                      </svg>
+                      Search result is not found!
+                    </div>
+                  <?php } elseif ($personsData == null) { ?>
+                    <div class="alert alert-danger mx-5" role="alert">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                           class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
+                            0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
+                            0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                      </svg>
+                      Person Data is empty!
+                    </div>
+                  <?php } else { ?>
                     <table class="table table-hover table-bordered">
 
                       <thead>
