@@ -11,17 +11,6 @@
   box-shadow: 0 0 0 0.2rem rgba(66, 0, 153, 0.788);
 }
 
-.btn-search {
-  background-color: #ae98ff;
-  color: #2c0066;
-  font-weight: 500;
-}
-
-.btn-search:hover {
-  background-color: #5c54b6;
-  color: #f0f0ff;
-}
-
 .select-filter {
   background-color: #ae98ff;
 }
@@ -47,12 +36,6 @@
 
 .selected{
   font-weight: 400;
-}
-
-.btn-add {
-  font-size: 1rem;
-  border-radius: 9px;
-  color: #fff;
 }
 
 .add-icon {

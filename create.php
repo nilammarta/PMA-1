@@ -198,9 +198,7 @@ showHeader("persons");
                             <p class="error"><?php echo $_SESSION['errorData']['password']; ?></p>
                           <?php } ?>
                         </div>
-                      </div>
 
-                      <div class="form-2">
                         <div class="mb-3">
                           <label for="birthDateInput" class="form-label">
                             Birth date &#42;
@@ -217,9 +215,30 @@ showHeader("persons");
                             required
                           />
 
-                          <?php if (isset($_SESSION['errorData']['birthDate'])){ ?>
-                             <p class="error"><?php echo $_SESSION['errorData']['birthDate']; ?></p>
-                          <?php } ?>
+                            <?php if (isset($_SESSION['errorData']['birthDate'])){ ?>
+                              <p class="error"><?php echo $_SESSION['errorData']['birthDate']; ?></p>
+                            <?php } ?>
+                        </div>
+                      </div>
+
+                      <div class="form-2">
+
+                        <div class="mb-3">
+                          <label for="addressInput" class="form-label"
+                          >Address &#42;
+                          </label>
+                          <input
+                            name="address"
+                            id="addressInput"
+                            type="text"
+                            class="form-control"
+                            placeholder="address"
+                            aria-label="Last name"
+                            value="<?php if (isset($_SESSION['dataInput'])){
+                                echo $_SESSION['dataInput']['address'];
+                            } ?>"
+                            required
+                          />
                         </div>
 
                         <div class="mb-3">
@@ -255,21 +274,33 @@ showHeader("persons");
                         </div>
 
                         <div class="mb-3">
-                          <label for="addressInput" class="form-label"
-                          >Address &#42;
+                          <label for="exampleJobInput" class="form-label">
+                            Job
                           </label>
-                          <input
-                            name="address"
-                            id="addressInput"
-                            type="text"
-                            class="form-control"
-                            placeholder="address"
-                            aria-label="Last name"
-                            value="<?php if (isset($_SESSION['dataInput'])){
-                              echo $_SESSION['dataInput']['address'];
-                            } ?>"
+                          <select
+                            name="job"
+                            id="exampleJobInput"
+                            class="form-select"
+                            aria-label="Default select example"
                             required
-                          />
+                          >
+                            <?php if ($_SESSION['dataInput']){?>
+                              <option selected value="<?php echo $_SESSION['dataInput']['job_ID'];?>">
+                              <?php echo getJobById($_SESSION['dataInput']['job_ID'])['job_name'];?></option>
+
+                              <?php
+                              $jobs = getJobs($_SESSION['dataInput']['jobID']);
+                              for ($i = 1; $i < count($jobs); $i++){ ?>
+                                <option value="<?php echo $jobs[$i]['ID'] ?>"><?php echo $jobs[$i]['job_name'] ?></option>
+                              <?php } ?>
+                            <?php } else { ?>
+                              <option selected value="20">choose...</option>
+                              <?php $jobs = getJobs();
+                              for ($i = 0; $i < count($jobs); $i++){ ?>
+                                <option value="<?php echo $jobs[$i]['ID'];?>"><?php echo $jobs[$i]['jobs_name'];?></option>
+                              <?php } ?>
+                            <?php }?>
+                          </select>
                         </div>
 
                         <div class="mb-3">

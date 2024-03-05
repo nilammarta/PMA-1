@@ -201,6 +201,23 @@ body {
   font-weight: 600;
 }
 
+.btn-add {
+  font-size: 1rem;
+  border-radius: 9px;
+  color: #fff;
+}
+
+.btn-search {
+  background-color: #ae98ff;
+  color: #2c0066;
+  font-weight: 500;
+}
+
+.btn-search:hover {
+  background-color: #5c54b6;
+  color: #f0f0ff;
+}
+
 .btn-primary:hover,
 .btn-primary:active {
   background-color: #9a4dff;

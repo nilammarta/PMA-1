@@ -77,6 +77,34 @@ function getUserById(int $id):array
     return $statement->fetch(PDO::FETCH_ASSOC);
 }
 
+function getJobById(int $jobID):array
+{
+    global $PDO;
+    $query = 'SELECT * FROM Jobs WHERE ID = :jobID';
+    $statement = $PDO->prepare($query);
+    $statement->execute(array(
+        'jobID' => $jobID
+    ));
+    return $statement->fetch(PDO::FETCH_ASSOC);
+}
+
+function getJobs(int|null $jobID = null):array
+{
+    global $PDO;
+    if ($jobID != null) {
+        $query = 'SELECT * FROM Jobs WHERE ID NOT IN :jobID';
+        $statement = $PDO->prepare($query);
+        $statement->execute(array(
+            'jobID' => $jobID
+        ));
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }else{
+        $query = 'SELECT * FROM Jobs';
+        $statement = $PDO->prepare($query);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
 
 /**
  * @param int $date
