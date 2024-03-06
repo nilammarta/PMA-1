@@ -37,7 +37,7 @@ function showSidebar(string $nav): void
           <li class="nav-item <?php if ($nav == "jobs") {
               echo "nav-open";
           } ?>">
-            <a class="main-nav-link" href="../jobs.php">
+            <a class="main-nav-link" href="../jobs/jobs.php">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                    class="bi bi-pc-display-horizontal nav-icon" viewBox="0 0 16 16">
                 <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v7A1.5 1.5 0 0 0 1.5 10H6v1H1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1

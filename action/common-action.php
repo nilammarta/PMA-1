@@ -80,7 +80,7 @@ function getUserById(int $id):array
 function getJobById(int $jobID):array
 {
     global $PDO;
-    $query = 'SELECT * FROM Jobs WHERE ID = :jobID';
+    $query = 'SELECT * FROM jobs WHERE ID = :jobID';
     $statement = $PDO->prepare($query);
     $statement->execute(array(
         'jobID' => $jobID
@@ -92,14 +92,14 @@ function getJobs(int|null $jobID = null):array
 {
     global $PDO;
     if ($jobID != null) {
-        $query = 'SELECT * FROM Jobs WHERE ID NOT IN :jobID';
+        $query = 'SELECT * FROM jobs WHERE ID NOT IN :jobID';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
             'jobID' => $jobID
         ));
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }else{
-        $query = 'SELECT * FROM Jobs';
+        $query = 'SELECT * FROM jobs';
         $statement = $PDO->prepare($query);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
