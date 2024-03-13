@@ -6,6 +6,7 @@ require_once __DIR__ . "/../includes/sidebar.php";
 require_once __DIR__ . "/../includes/pma-db.php";
 require_once __DIR__ . "/../action/common-action.php";
 
+global $PDO;
 session_start();
 checkUserLoginRole($_SESSION['userRole']);
 
@@ -19,14 +20,14 @@ showHeader('jobs');
     <div class="main-content">
       <div class="create-job m-3 m-md-4">
         <div class="content-title">
-          <h2 class="heading-2 m-0 p-3">CREATE JOB</h2>
+          <h2 class="heading-2 m-0 p-3">EDIT JOB</h2>
         </div>
 
         <div class="row justify-content-center">
           <div class="col-12 col-md-10 col-lg-11 col-xxl-7">
             <form name="addJob" class="create-form needs-validation p-4 mb-5" method="post"
-                  action="../action/create-job-action.php">
-              <h5 class="form-text pb-2 mb-4">Add new job data in the form bellow:</h5>
+                  action="../action/create-job-action.php?jobId=<?php echo $_GET['jobId']; ?>">
+              <h5 class="form-text pb-2 mb-4">Edit job data in the form bellow:</h5>
               <div class="mb-3 row">
                 <label
                   for="inputJobName"
@@ -41,6 +42,13 @@ showHeader('jobs');
                     placeholder="Job name"
                     value="<?php if (isset($_SESSION['jobInput'])){
                       echo $_SESSION['jobInput'];
+                    }else {
+                      $query = 'SELECT job_name FROM Jobs WHERE ID = :jobId';
+                      $statement = $PDO->prepare($query);
+                      $statement->execute(array(
+                              'jobId' => $_GET['jobId']
+                      ));
+                      echo $statement->fetch(PDO::FETCH_ASSOC)['job_name'];
                     }?>"
                   />
                   <?php if (isset($_SESSION['errorJob'])){?>

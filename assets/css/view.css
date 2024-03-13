@@ -42,23 +42,3 @@
   background-color: #ebebff;
   min-width: 400px;
 }
-
-.modal-content {
-  background-color: #f0f0ff;
-}
-
-.modal-header {
-  color: #2c0066;
-}
-
-.modal-body {
-  text-align: center;
-}
-.modal-footer {
-  border-top: none;
-}
-
-.btn-modal{
-  text-decoration: none;
-  color: #ffffff;
-}

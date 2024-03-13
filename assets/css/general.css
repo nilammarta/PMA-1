@@ -345,3 +345,24 @@ tbody {
   font-size: 1rem;
   font-weight: 700;
 }
+
+/* Modal */
+.btn-modal{
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.modal-content {
+  background-color: #f0f0ff;
+}
+
+.modal-header {
+  color: #2c0066;
+}
+
+.modal-body {
+  text-align: center;
+}
+.modal-footer {
+  border-top: none;
+}

@@ -8,6 +8,8 @@ require_once __DIR__ . "/../action/common-action.php";
 require_once __DIR__ . "/../action/jobs-action.php";
 
 session_start();
+unset($_SESSION['jobId']);
+
 checkUserLogin($_SESSION['userEmail']);
 
 if (isset($_GET["search"]) != null ) {
@@ -38,7 +40,26 @@ showHeader("jobs");
               </svg>
                 <?php echo $_SESSION['info']; ?>
             </div>
-          <?php } ?>
+          <?php }else if (isset($_SESSION['deleteInfo'])){ ?>
+            <div class="alert alert-success saved" role="alert">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75
+                                  0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093
+                                  3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
+              </svg>
+                <?php echo $_SESSION['deleteInfo']; ?>
+            </div>
+          <?php } else if (isset($_SESSION['editInfo'])){?>
+            <div class="alert alert-success saved" role="alert">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75
+                                            0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093
+                                            3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
+              </svg>
+                <?php echo $_SESSION['editInfo']; ?>
+            </div>
+          <?php }?>
+
           <div class="search-add d-sm-flex justify-content-between">
             <div class="d-flex">
                 <?php if ($_SESSION['userRole'] == "A") { ?>
@@ -86,20 +107,6 @@ showHeader("jobs");
 
           <div class="table-data" id="table">
             <div class="table-responsive ms-xxl-5 me-xxl-5">
-              <table class="table table-hover table-bordered">
-                <thead>
-                <tr>
-                  <th class="text-center p-3" scope="col">No</th>
-                  <th class="text-center p-3" scope="col">Jobs</th>
-                  <th class="text-center p-3" scope="col">Workers</th>
-                  <?php if ($_SESSION['userRole'] == 'A'){?>
-                    <th scope="col"></th>
-                  <?php }?>
-                </tr>
-                </thead>
-
-                <tbody>
-
                 <?php
 
                 if (isset($_GET['page']) == null) {
@@ -113,93 +120,198 @@ showHeader("jobs");
                 $next = $page + 1;
 
                 if (isset($_GET['search'])){
-                  $jobs = getPaginatedJobs($limit, $page, $_GET['search']);
+                    $jobs = getPaginatedJobs($limit, $page, $_GET['search']);
                 }else {
                     $jobs = getPaginatedJobs($limit, $page);
                 }
                 $jobsPaging = $jobs['pagingData'];
 
                 $number = ($page - 1) * $limit + 1;
-                for ($i = 0; $i < count($jobsPaging); $i++) { ?>
+
+                if (isset($_GET['search']) != null && $jobsPaging == null){?>
+              <div class="alert alert-danger mx-5" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
+                        0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
+                        0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                </svg>
+                Search result is not found!
+              </div>
+                <?php }else if ($jobsPaging == null){?>
+              <div class="alert alert-danger mx-5" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
+                        0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
+                        0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                </svg>
+                Search result is not found!
+              </div>
+              <?php } else {?>
+                <table class="table table-hover table-bordered">
+                  <thead>
                   <tr>
-                    <td class="text-center"><?php echo $number++ ?></td>
-                    <td class=""><?php echo $jobsPaging[$i]['job_name']; ?></td>
-                    <td class="text-center"><?php echo getCountOfEmployees($jobsPaging[$i]['ID']); ?></td>
-                      <?php if ($_SESSION['userRole'] == "A") { ?>
-                        <td>
-                          <div class="d-grid gap-3 d-flex justify-content-md-center">
-                            <!-- edit jobs -->
-                            <a
-                              class="btn btn-outline-light btn-table"
-                              type="button"
-                              href=""
-                            >
-                              <ion-icon
-                                class="btn-icon"
-                                name="create-sharp"
-                              ></ion-icon>
-                              EDIT
-                            </a>
+                    <th class="text-center p-3" scope="col">No</th>
+                    <th class="text-center p-3" scope="col">Jobs</th>
+                    <th class="text-center p-3" scope="col">Workers</th>
+                    <?php if ($_SESSION['userRole'] == 'A'){?>
+                      <th scope="col"></th>
+                    <?php }?>
+                  </tr>
+                  </thead>
 
-                            <!-- delete jobs -->
-                            <button
-                              type="button"
-                              class="btn btn-danger"
-                              data-bs-toggle="modal"
-                              data-bs-target="#exampleModal"
-                            >
-                              <ion-icon name="trash"></ion-icon>
-                              DELETE
-                            </button>
+                  <tbody>
+                    <?php for ($i = 0; $i < count($jobsPaging); $i++) { ?>
+                      <tr>
+                        <td class="text-center"><?php echo $number++ ?></td>
+                        <td class=""><?php echo $jobsPaging[$i]['job_name']; ?></td>
+                        <td class="text-center"><?php echo getCountOfEmployees($jobsPaging[$i]['ID']); ?></td>
+                        <?php if ($_SESSION['userRole'] == "A") { ?>
+                          <td>
+                            <div class="d-grid gap-3 d-flex justify-content-md-center">
 
-                            <!-- Modal -->
-                            <div
-                              class="modal fade"
-                              id="exampleModal"
-                              tabindex="-1"
-                              aria-labelledby="exampleModalLabel"
-                              aria-hidden="true"
-                            >
-                              <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h4 class="modal-title" id="exampleModalLabel">
-                                      Delete Person
-                                    </h4>
-                                    <button
-                                      type="button"
-                                      class="btn-close"
-                                      data-bs-dismiss="modal"
-                                      aria-label="Close"
-                                    ></button>
-                                  </div>
-                                  <div class="modal-body">Are you sure want to delete this person?</div>
-                                  <div class="modal-footer">
-                                    <button
-                                      type="button"
-                                      class="btn btn-secondary"
-                                      data-bs-dismiss="modal"
-                                    >
-                                      NO
-                                    </button>
-                                    <button
-                                      type="button"
-                                      class="btn btn-primary"
-                                    >
-                                      <a type="submit" role="button" class="btn-modal"
-                                         href="action/delete-action.php">YES</a>
-                                    </button>
+                              <a
+                                class="btn btn-outline-light btn-table"
+                                type="button"
+                                href="edit-job.php?jobId=<?php echo $jobsPaging[$i]['ID']?>"
+                              >
+                                <ion-icon
+                                  class="btn-icon"
+                                  name="create-sharp"
+                                ></ion-icon>
+                                EDIT
+                              </a>
+    <!--                            <button-->
+    <!--                              type="button"-->
+    <!--                              class="btn btn-outline-light btn-table"-->
+    <!--                              data-bs-toggle="modal"-->
+    <!--                              data-bs-target="#editModal--><?php //= $jobsPaging[$i]['job_name'] ?><!--"-->
+    <!--                            >-->
+    <!--                              <ion-icon class="btn-icon" name="create-sharp"></ion-icon>-->
+    <!--                              EDIT-->
+    <!--                            </button>-->
+    <!---->
+    <!--                            Edit Modal -->
+    <!--                            <div-->
+    <!--                              class="modal fade"-->
+    <!--                              id="editModal--><?php //= $jobsPaging[$i]['job_name'] ?><!--"-->
+    <!--                              tabindex="-1"-->
+    <!--                              aria-labelledby="editModalLabel"-->
+    <!--                              aria-hidden="true"-->
+    <!--                            >-->
+    <!--                              <div class="modal-dialog modal-dialog-centered">-->
+    <!--                                <div class="modal-content">-->
+    <!--                                  <div class="modal-header">-->
+    <!--                                    <h4 class="modal-title" id="editModalLabel">-->
+    <!--                                      Edit Job-->
+    <!--                                    </h4>-->
+    <!--                                    <button-->
+    <!--                                      type="button"-->
+    <!--                                      class="btn-close"-->
+    <!--                                      data-bs-dismiss="modal"-->
+    <!--                                      aria-label="Close"-->
+    <!--                                    ></button>-->
+    <!--                                  </div>-->
+    <!--                                  <div class="modal-body">-->
+    <!--                                    <form name="editJob" class="create-form needs-validation"-->
+    <!--                                          method="post" action="/action/create-job-action.php">-->
+    <!--                                      <label-->
+    <!--                                        for="inputJobName"-->
+    <!--                                        class="col-sm-2 col-form-label form-label title-label"-->
+    <!--                                      >Job name</label>-->
+    <!--                                      <input-->
+    <!--                                        name="job"-->
+    <!--                                        type="text"-->
+    <!--                                        class="form-control"-->
+    <!--                                        id="inputJobName"-->
+    <!--                                        placeholder="Job name"-->
+    <!--                                        value="--><?php //echo $jobsPaging[$i]['job_name']; ?><!--"-->
+    <!--                                      />-->
+    <!--                                    </form>-->
+    <!--                                  </div>-->
+    <!--                                  <div class="modal-footer">-->
+    <!--                                    <button-->
+    <!--                                      type="button"-->
+    <!--                                      class="btn btn-secondary"-->
+    <!--                                      data-bs-dismiss="modal"-->
+    <!--                                    >-->
+    <!--                                      Cancel-->
+    <!--                                    </button>-->
+    <!--                                    <button-->
+    <!--                                            type="button"-->
+    <!--                                            class="btn btn-primary"-->
+    <!--                                    >-->
+    <!--                                      <a type="submit" role="button" class="btn-modal"-->
+    <!--                                         href="/action/create-job-action.php?jobId=--><?php //echo $jobsPaging[$i]['ID']; ?><!--">Save</a>-->
+    <!--                                    </button>-->
+    <!--                                  </div>-->
+    <!--                                </div>-->
+    <!--                              </div>-->
+    <!--                            </div>-->
+
+
+                              <!-- delete jobs -->
+                              <button
+                                type="button"
+                                class="btn btn-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal<?= $jobsPaging[$i]['ID'] ?>"
+                              >
+                                <ion-icon name="trash"></ion-icon>
+                                DELETE
+                              </button>
+
+                              <!-- Delete Modal -->
+                              <div
+                                class="modal fade"
+                                id="exampleModal<?= $jobsPaging[$i]['ID'] ?>"
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                              >
+                                <div class="modal-dialog modal-dialog-centered">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title" id="exampleModalLabel">
+                                        Delete Job
+                                      </h4>
+                                      <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                      ></button>
+                                    </div>
+                                    <div class="modal-body">Are you sure want to delete this job?</div>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                      >
+                                        NO
+                                      </button>
+                                      <button
+                                        type="button"
+                                        class="btn btn-primary"
+                                      >
+    <!--                                      --><?php //$_SESSION['jobId'] = $jobsPaging[$i]['ID']; ?>
+                                        <a type="submit" role="button" class="btn-modal"
+                                           href="/action/delete-job-action.php?jobId=<?php echo $jobsPaging[$i]['ID']?>">YES</a>
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </td>
-                      <?php } ?>
-                  </tr>
-                <?php } ?>
-                </tbody>
-              </table>
+                          </td>
+                        <?php } ?>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              <?php } ?>
 
 <!--              pagination -->
               <div class="page">
@@ -280,4 +392,9 @@ showHeader("jobs");
       </div>
     </section>
   </main>
-<?php require_once __DIR__ . "/../includes/footer.php"; ?>
+<?php
+unset($_SESSION['info']);
+unset($_SESSION['deleteInfo']);
+unset($_SESSION['editInfo']);
+require_once __DIR__ . "/../includes/footer.php";
+?>
