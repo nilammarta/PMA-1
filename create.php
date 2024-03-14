@@ -273,35 +273,35 @@ showHeader("persons");
                           </select>
                         </div>
 
-                        <div class="mb-3">
-                          <label for="exampleJobInput" class="form-label">
-                            Job
-                          </label>
-                          <select
-                            name="job"
-                            id="exampleJobInput"
-                            class="form-select"
-                            aria-label="Default select example"
-                            required
-                          >
-                            <?php if ($_SESSION['dataInput']){?>
-                              <option selected value="<?php echo $_SESSION['dataInput']['job_ID'];?>">
-                              <?php echo getJobById($_SESSION['dataInput']['job_ID'])['job_name'];?></option>
-
-                              <?php
-                              $jobs = getJobs($_SESSION['dataInput']['jobID']);
-                              for ($i = 1; $i < count($jobs); $i++){ ?>
-                                <option value="<?php echo $jobs[$i]['ID'] ?>"><?php echo $jobs[$i]['job_name'] ?></option>
-                              <?php } ?>
-                            <?php } else { ?>
-                              <option selected value="20">choose...</option>
-                              <?php $jobs = getJobs();
-                              for ($i = 0; $i < count($jobs); $i++){ ?>
-                                <option value="<?php echo $jobs[$i]['ID'];?>"><?php echo $jobs[$i]['jobs_name'];?></option>
-                              <?php } ?>
-                            <?php }?>
-                          </select>
-                        </div>
+<!--                        <div class="mb-3">-->
+<!--                          <label for="exampleJobInput" class="form-label">-->
+<!--                            Job-->
+<!--                          </label>-->
+<!--                          <select-->
+<!--                            name="job"-->
+<!--                            id="exampleJobInput"-->
+<!--                            class="form-select"-->
+<!--                            aria-label="Default select example"-->
+<!--                            required-->
+<!--                          >-->
+<!--                            --><?php //if ($_SESSION['dataInput']){?>
+<!--                              <option selected value="--><?php //echo $_SESSION['dataInput']['job_ID'];?><!--">-->
+<!--                              --><?php //echo getJobById($_SESSION['dataInput']['job_ID'])['job_name'];?><!--</option>-->
+<!---->
+<!--                              --><?php
+//                              $jobs = getJobs($_SESSION['dataInput']['jobID']);
+//                              for ($i = 1; $i < count($jobs); $i++){ ?>
+<!--                                <option value="--><?php //echo $jobs[$i]['ID'] ?><!--">--><?php //echo $jobs[$i]['job_name'] ?><!--</option>-->
+<!--                              --><?php //} ?>
+<!--                            --><?php //} else { ?>
+<!--                              <option selected value="20">choose...</option>-->
+<!--                              --><?php //$jobs = getJobs();
+//                              for ($i = 0; $i < count($jobs); $i++){ ?>
+<!--                                <option value="--><?php //echo $jobs[$i]['ID'];?><!--">--><?php //echo $jobs[$i]['jobs_name'];?><!--</option>-->
+<!--                              --><?php //} ?>
+<!--                            --><?php //}?>
+<!--                          </select>-->
+<!--                        </div>-->
 
                         <div class="mb-3">
                           <label

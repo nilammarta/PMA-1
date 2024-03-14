@@ -148,6 +148,11 @@ showHeader("persons");
                               <td>:</td>
                               <td><?php echo getStatus($thePerson['alive']); ?></td>
                             </tr>
+                            <tr>
+                              <td>Job</td>
+                              <td>:</td>
+                              <td><?php echo getPersonJob($thePerson['ID']); ?></td>
+                            </tr>
                           </tbody>
                         </table>
 
@@ -157,6 +162,114 @@ showHeader("persons");
                             <div class="card-text"><?php echo $thePerson['internal_notes'] ?></div>
                           </div>
                         <?php } ?>
+
+                        <?php $personHobbies = getPersonHobby($thePerson['ID']); ?>
+                        <?php if ($personHobbies != null){?>
+                          <div class="hobby-table p-4">
+                            <table class="table table-bordered mb-0">
+                              <thead>
+                                <tr>
+                                  <th class="text-center p-3" scope="col">No</th>
+                                  <th class="text-center p-3" scope="col">Hobbies</th>
+                                  <?php if ($thePerson['email'] == $_SESSION['userEmail'] || $_SESSION['userRole'] == "A"){ ?>
+                                    <th scope="col"></th>
+                                  <?php } ?>
+                                </tr>
+                              </thead>
+                              <?php for ($i = 0; $i < count($personHobbies); $i++){?>
+                                <tbody>
+                                  <tr>
+                                    <td class="text-center"><?php echo $i + 1; ?></td>
+                                    <td class="text-center"><?php echo $personHobbies[$i]['hobby_name'];?></td>
+                                    <?php if ($thePerson['email'] == $_SESSION['userEmail'] || $_SESSION['userRole'] == "A"){ ?>
+                                      <td>
+                                        <div class="d-grid gap-3 d-flex justify-content-md-center">
+                                          <a
+                                            class="btn btn-outline-light btn-table p-2"
+                                            type="button"
+                                            href="hobbies/edit-hobby.php?page=<?php echo $_GET['page']; ?>&person=<?php echo $_GET['person']; ?>&hobbyId=<?php echo $personHobbies[$i]['ID']?>"
+                                          >
+                                            <ion-icon
+                                              class="btn-icon"
+                                              name="create-sharp"
+                                            ></ion-icon>
+                                            EDIT
+                                          </a>
+
+                                          <!-- delete jobs -->
+                                          <button
+                                            type="button"
+                                            class="btn btn-danger p-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal<?= $personHobbies[$i]['ID'] ?>"
+                                          >
+                                            <ion-icon name="trash"></ion-icon>
+                                            DELETE
+                                          </button>
+
+                                          <!-- Delete Modal -->
+                                          <div
+                                            class="modal fade"
+                                            id="exampleModal<?= $personHobbies[$i]['ID'] ?>"
+                                            tabindex="-1"
+                                            aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true"
+                                          >
+                                            <div class="modal-dialog modal-dialog-centered">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h4 class="modal-title" id="exampleModalLabel">
+                                                    Delete Job
+                                                  </h4>
+                                                  <button
+                                                      type="button"
+                                                      class="btn-close"
+                                                      data-bs-dismiss="modal"
+                                                      aria-label="Close"
+                                                  ></button>
+                                                </div>
+                                                <div class="modal-body">Are you sure want to delete this job?</div>
+                                                <div class="modal-footer">
+                                                  <button
+                                                    type="button"
+                                                    class="btn btn-secondary"
+                                                    data-bs-dismiss="modal"
+                                                  >
+                                                    NO
+                                                  </button>
+                                                  <button
+                                                    type="button"
+                                                    class="btn btn-primary"
+                                                  >
+                                                    <a type="submit" role="button" class="btn-modal"
+                                                       href="/action/delete-hobby-action.php?page=<?php echo $_GET['page'];?>&person=<?php echo $_GET['person'];?>&hobbyId=<?php echo $personHobbies[$i]['ID']?>">YES</a>
+                                                  </button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    <?php }?>
+                                  </tr>
+                                </tbody>
+                              <?php }?>
+                            </table>
+                          </div>
+                        <?php }?>
+
+
+                        <div class="card-body card-body-2">
+                            <?php if ($personHobbies == null){?>
+                              <i>*No Hobby have been added yet</i>
+                            <?php }?>
+                          <div class="d-flex justify-content-end">
+                            <a class="btn btn-primary" role="button" href="hobbies/create-hobby.php?page=<?php echo $_GET['page'];?>&person=<?php echo $_GET['person'];?>">
+                              <ion-icon name="add-circle"></ion-icon>
+                              Add Hobby
+                            </a>
+                          </div>
+                        </div>
 
                         <div class="card-body btn-card">
                             <?php
@@ -258,5 +371,6 @@ showHeader("persons");
     </main>
 <?php
 unset($_SESSION['info']);
+unset($_SESSION['deleteInfo']);
 require_once "includes/footer.php";
 ?>

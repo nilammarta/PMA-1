@@ -1,51 +1,50 @@
 <?php
 
-require_once __DIR__ . "/../includes/header.php";
 require_once __DIR__ . "/../includes/html-head.php";
+require_once __DIR__ . "/../includes/header.php";
 require_once __DIR__ . "/../includes/sidebar.php";
-require_once __DIR__ . "/../includes/pma-db.php";
 require_once __DIR__ . "/../action/common-action.php";
 
 session_start();
-checkUserLoginRole($_SESSION['userRole']);
+checkUserLogin($_SESSION['userEmail']);
 
-addHeadCode('create.css', 'CREATE JOB - Person Management App');
-showHeader('jobs');
+addHeadCode("create.css", "CREATE HOBBY - Person Management App");
+showHeader("persons");
 ?>
 <main>
   <section class="main-section d-flex flex-row">
-      <?php showSidebar("jobs"); ?>
+      <?php showSidebar("persons"); ?>
 
     <div class="main-content">
       <div class="create-job m-3 m-md-4">
         <div class="content-title">
-          <h2 class="heading-2 m-0 p-3">CREATE JOB</h2>
+          <h2 class="heading-2 m-0 p-3">CREATE HOBBY</h2>
         </div>
 
         <div class="row justify-content-center">
           <div class="col-12 col-md-10 col-lg-11 col-xxl-7">
-            <form name="addJob" class="create-form needs-validation p-4 mb-5" method="post"
-                  action="../action/create-edit-job-action.php">
-              <h5 class="form-text pb-2 mb-4">Add new job data in the form bellow:</h5>
+            <form name="addHobby" class="create-form needs-validation p-4 mb-5" method="post"
+                  action="../action/create-hobby-action.php?page=<?php echo $_GET['page']; ?>&person=<?php echo $_GET['person'];?>">
+              <h5 class="form-text pb-2 mb-4">Add new hobby data in the form bellow:</h5>
               <div class="mb-3 row">
                 <label
-                  for="inputJobName"
+                  for="inputHobbyName"
                   class="col-sm-2 col-form-label form-label"
-                >Job name &#42;</label>
+                >Hobby name &#42;</label>
                 <div class="col-sm-10">
                   <input
-                    name="jobName"
+                    name="hobbyName"
                     type="text"
                     class="form-control"
-                    id="inputJobName"
-                    placeholder="Job name"
-                    value="<?php if (isset($_SESSION['jobInput'])){
-                      echo $_SESSION['jobInput'];
+                    id="inputHobbyName"
+                    placeholder="Hobby name"
+                    value="<?php if (isset($_SESSION['hobbyInput'])){
+                        echo $_SESSION['hobbyInput'];
                     }?>"
                   />
-                  <?php if (isset($_SESSION['errorJob'])){?>
-                    <p class="error"><?php echo $_SESSION['errorJob'];?> </p>
-                  <?php } ?>
+                    <?php if (isset($_SESSION['errorHobby'])){?>
+                      <p class="error"><?php echo $_SESSION['errorHobby'];?> </p>
+                    <?php } ?>
                 </div>
               </div>
 
@@ -68,7 +67,7 @@ showHeader('jobs');
                       type="reset"
                       role="button"
                       class="btn btn-secondary btn-cancel"
-                      href="jobs.php"
+                      href="/view.php?person=<?php echo $_GET['person']; ?>"
                     >
                       Cancel
                     </a>
@@ -84,7 +83,8 @@ showHeader('jobs');
 </main>
 
 <?php
-unset($_SESSION['jobInput']);
-unset($_SESSION['errorJob']);
-require_once __DIR__ . "/../includes/footer.php";
+unset($_SESSION['errorHobby']);
+unset($_SESSION['hobbyInput']);
+unset($_SESSION['error']);
+require_once "includes/footer.php";
 ?>

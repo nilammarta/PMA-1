@@ -8,10 +8,13 @@ require_once __DIR__ . "/../includes/pma-db.php";
  * @return void
  * function to check if user has been login or not
  */
-function checkUserLogin(string | null $email): void
+function checkUserLogin(string | null $email, bool|null $directory = null): void
 {
-    if (!isset($email) | $email == null) {
+    if (!isset($email) | $email == null && $directory == null) {
         header("Location: login.php");
+        exit();
+    }else if (!isset($email) | $email == null){
+        header("Location: ../login.php");
         exit();
     }
 }
@@ -159,6 +162,51 @@ function getRole(string $role): string
     }else{
         return "MEMBER";
     }
+}
+
+/**
+ * @param int $jobId
+ * @return string
+ * function to get persons job based on person id
+ */
+function getPersonJob(int $personId): string
+{
+    global $PDO;
+
+    $queryData = 'SELECT * FROM Persons_Jobs WHERE person_id = :personId';
+    $statementData = $PDO->prepare($queryData);
+    $statementData->execute(array(
+       'personId' => $personId
+    ));
+    $personJob = $statementData->fetchAll(PDO::FETCH_ASSOC);
+    if ($personJob != null) {
+        $jobId = $personJob['job_id'];
+
+        $query = 'SELECT job_name FROM Jobs WHERE ID = :jobID';
+        $statement = $PDO->prepare($query);
+        $statement->execute(array(
+            'jobID' => $jobId
+        ));
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }else{
+        return "-";
+    }
+}
+
+/**
+ * @param int $personId
+ * @return array
+ * function to get hobby based on person ID
+ */
+function getPersonHobby(int $personId):array
+{
+    global $PDO;
+    $query = 'SELECT * FROM Hobbies WHERE person_id = :personId';
+    $statement = $PDO->prepare($query);
+    $statement->execute(array(
+       'personId'=>$personId
+    ));
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
 /**
