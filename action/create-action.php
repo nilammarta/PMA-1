@@ -116,6 +116,10 @@ function saveData(array $dataInput, $PDO):void
             "alive" => convertSwitchValue($dataInput['alive']),
             "last_logged_in" => null
         ) );
+        $newPerson = $statement->fetch(PDO::FETCH_ASSOC);
+        var_dump($newPerson);
+
+//        $queryJob = 'INSERT INTO '
         $_SESSION['info'] = "New person data has been saved!";
     } catch ( PDOException $e ) {
         $_SESSION['error'] = 'Query error: ' . $e->getMessage();
@@ -150,8 +154,13 @@ if (count($errorData) != 0){
     $statement = $PDO->prepare($query);
     $statement->execute(array("nik" => $nikInput));
     $personId = $statement->fetch(PDO::FETCH_ASSOC);
-//    if ($personsId != null) {
-//        redirect("../view.php", "page=1&person=" . $personId . "&saved=1");
-//    }
+
+    $queryJob = 'INSERT INTO Persons_Jobs(person_id, job_id) VALUES (:personId, :jobId)';
+    $statementJob = $PDO->prepare($queryJob);
+    $statementJob->execute(array(
+        'personId' => $personId['ID'],
+        'jobId' => inputData()['jobId']
+    ));
+
     redirect("../view.php", "page=1&person=" . $personId['ID']);
 }

@@ -165,9 +165,9 @@ showHeader("persons");
 
                         <?php $personHobbies = getPersonHobby($thePerson['ID']); ?>
                         <?php if ($personHobbies != null){?>
-                          <div class="hobby-table p-4">
+                          <div class="hobby p-4">
                             <table class="table table-bordered mb-0">
-                              <thead>
+                              <thead class="thead-hobby">
                                 <tr>
                                   <th class="text-center p-3" scope="col">No</th>
                                   <th class="text-center p-3" scope="col">Hobbies</th>
@@ -177,7 +177,7 @@ showHeader("persons");
                                 </tr>
                               </thead>
                               <?php for ($i = 0; $i < count($personHobbies); $i++){?>
-                                <tbody>
+                                <tbody class="tbody-hobby">
                                   <tr>
                                     <td class="text-center"><?php echo $i + 1; ?></td>
                                     <td class="text-center"><?php echo $personHobbies[$i]['hobby_name'];?></td>
@@ -258,18 +258,19 @@ showHeader("persons");
                           </div>
                         <?php }?>
 
-
-                        <div class="card-body card-body-2">
-                            <?php if ($personHobbies == null){?>
-                              <i>*No Hobby have been added yet</i>
-                            <?php }?>
-                          <div class="d-flex justify-content-end">
-                            <a class="btn btn-primary" role="button" href="hobbies/create-hobby.php?page=<?php echo $_GET['page'];?>&person=<?php echo $_GET['person'];?>">
-                              <ion-icon name="add-circle"></ion-icon>
-                              Add Hobby
-                            </a>
+                        <?php if ($_SESSION['userRole'] == "A"){ ?>
+                          <div class="card-body card-body-2">
+                              <?php if ($personHobbies == null){?>
+                                <i>*No Hobby have been added yet</i>
+                              <?php }?>
+                            <div class="d-flex justify-content-end">
+                              <a class="btn btn-primary" role="button" href="hobbies/create-hobby.php?page=<?php echo $_GET['page'];?>&person=<?php echo $_GET['person'];?>">
+                                <ion-icon name="add-circle"></ion-icon>
+                                Add Hobby
+                              </a>
+                            </div>
                           </div>
-                        </div>
+                        <?php }?>
 
                         <div class="card-body btn-card">
                             <?php
@@ -371,6 +372,5 @@ showHeader("persons");
     </main>
 <?php
 unset($_SESSION['info']);
-unset($_SESSION['deleteInfo']);
 require_once "includes/footer.php";
 ?>

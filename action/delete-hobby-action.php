@@ -11,5 +11,9 @@ $statement = $PDO->prepare($query);
 $statement->execute(array(
     'hobbyId'=>$_GET['hobbyId']
 ));
-$_SESSION['deleteInfo'] = "Hobby data has been deleted!";
-redirect("../view.php", "page=" . $_GET['page'] . "&person=" . $_GET['person']);
+$_SESSION['info'] = "Hobby data has been deleted!";
+if (isset($_GET['page'])) {
+    redirect("../view.php", "page=" . $_GET['page'] . "&person=" . $_GET['person']);
+}else if ($_GET['person'] == null){
+    redirect("../my-profile.php","");
+}

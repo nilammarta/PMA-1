@@ -83,7 +83,7 @@ function getUserById(int $id):array
 function getJobById(int $jobID):array
 {
     global $PDO;
-    $query = 'SELECT * FROM jobs WHERE ID = :jobID';
+    $query = 'SELECT * FROM Jobs WHERE ID = :jobID';
     $statement = $PDO->prepare($query);
     $statement->execute(array(
         'jobID' => $jobID
@@ -95,14 +95,14 @@ function getJobs(int|null $jobID = null):array
 {
     global $PDO;
     if ($jobID != null) {
-        $query = 'SELECT * FROM jobs WHERE ID NOT IN :jobID';
+        $query = 'SELECT * FROM Jobs WHERE ID NOT IN (:jobId)';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
-            'jobID' => $jobID
+            'jobId' => $jobID
         ));
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }else{
-        $query = 'SELECT * FROM jobs';
+        $query = 'SELECT * FROM Jobs';
         $statement = $PDO->prepare($query);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -178,18 +178,21 @@ function getPersonJob(int $personId): string
     $statementData->execute(array(
        'personId' => $personId
     ));
-    $personJob = $statementData->fetchAll(PDO::FETCH_ASSOC);
+    $personJob = $statementData->fetch(PDO::FETCH_ASSOC);
+
     if ($personJob != null) {
         $jobId = $personJob['job_id'];
 
-        $query = 'SELECT job_name FROM Jobs WHERE ID = :jobID';
+        $query = 'SELECT * FROM Jobs WHERE ID = :jobID';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
             'jobID' => $jobId
         ));
-        return $statement->fetch(PDO::FETCH_ASSOC);
+//        echo $statement->fetch(PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC)['job_name'];
+//        return $personJob[0]['job_id'];
     }else{
-        return "-";
+        return "Jobless";
     }
 }
 
@@ -379,7 +382,8 @@ function inputData ():array
         "address" => htmlspecialchars($_POST['address']),
         "internalNotes" => htmlspecialchars($_POST['internalNotes']),
         "role" => $_POST['role'],
-        "alive" => $_POST['alive']
+        "alive" => $_POST['alive'],
+        "jobId" => $_POST['job']
     ];
 }
 
@@ -446,7 +450,7 @@ function newPasswordValidate(string $newPass, string $confirmPass): string | nul
  * @return void
  * function to save update person data into mysql database
  */
-function saveUpdateData(int $id, array $dataInput, $PDO, string $flag=null):void
+function saveUpdateData(int $id, array $dataInput, $PDO, string $flagEdit=null):void
 {
     if ($_POST['newPassword'] != null) {
         $password = encryptPassword($_POST['newPassword']);
@@ -459,7 +463,7 @@ function saveUpdateData(int $id, array $dataInput, $PDO, string $flag=null):void
         $password = $statement->fetch(PDO::FETCH_ASSOC)['password'];
     }
 
-    if ($flag !=null) {
+    if ($flagEdit !=null) {
 
         try {
             $query = 'UPDATE Persons SET first_name = :first_name, last_name = :last_name, nik = :nik, email = :email, 
@@ -516,7 +520,6 @@ function saveUpdateData(int $id, array $dataInput, $PDO, string $flag=null):void
                 'address' => $dataInput['address'],
                 'internal_notes' => $internalNotes,
             ));
-            $_SESSION['info'] = "Your profile has been updated!";
         }catch (PDOException $e ) {
             $_SESSION['error'] = 'Query error: ' . $e->getMessage();
             $_SESSION['inputData'] = $dataInput;

@@ -4,7 +4,9 @@ require_once __DIR__ . "/action/common-action.php";
 require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
+require_once "includes/pma-db.php";
 
+global $PDO;
 session_start();
 checkUserLogin($_SESSION['userEmail']);
 checkUserLoginRole($_SESSION['userRole']);
@@ -205,9 +207,7 @@ showHeader("persons");
                       <p class="error"><?php echo $_SESSION['error_data']['birth_date']; ?></p>
                     <?php } ?>
                   </div>
-                </div>
 
-                <div class="form-2">
                   <div class="mb-3">
                     <label for="exampleSexInput" class="form-label"
                     >Sex &#42;
@@ -220,19 +220,19 @@ showHeader("persons");
                       required
                     >
                       <option selected
-                        value="<?php if (isset($_SESSION['inputData'])) {
-                            echo $_SESSION['inputData']['sex'];
-                        } else {
-                            echo $thePerson['sex'];
-                        } ?>"
+                              value="<?php if (isset($_SESSION['inputData'])) {
+                                  echo $_SESSION['inputData']['sex'];
+                              } else {
+                                  echo $thePerson['sex'];
+                              } ?>"
                       >
-                        <?php if (isset($_SESSION['inputData'])) {
+                          <?php if (isset($_SESSION['inputData'])) {
 //                            echo $_SESSION['inputData']['sex'] == "F" ? "Female" : "Male";
-                            echo getGender($_SESSION['inputData']['sex']);
-                        } else {
+                              echo getGender($_SESSION['inputData']['sex']);
+                          } else {
 //                            echo $thePerson['sex'] == "F" ? "Female" : "Male";
-                            echo getGender($thePerson['sex']);
-                        } ?>
+                              echo getGender($thePerson['sex']);
+                          } ?>
                       </option>
                         <?php if (isset($_SESSION['inputData']) == true && $_SESSION['inputData']['sex'] == "F") { ?>
                           <option class="option-value" value="M">Male</option>
@@ -242,6 +242,53 @@ showHeader("persons");
                           <option class="option-value" value="F">Female</option>
                         <?php } ?>
                     </select>
+                  </div>
+                </div>
+
+                <div class="form-2">
+                  <div class="mb-3">
+                    <label
+                      for="exampleJobInput"
+                      class="form-label">Job</label>
+                      <select
+                        name="job"
+                        id="exampleJobInput"
+                        class="form-select"
+                        aria-label="Default select example"
+                        required
+                      >
+                        <?php if ($_SESSION['dataInput']){?>
+                          <option selected value="<?php echo $_SESSION['dataInput']['jobId'];?>">
+                            <?php echo getJobById($_SESSION['dataInput']['jobId'])['job_name'];?></option>
+
+                            <?php
+                            $jobs = getJobs($_SESSION['dataInput']['jobId']);
+                            for ($i = 0; $i < count($jobs); $i++){ ?>
+                              <option value="<?php echo $jobs[$i]['ID'] ?>"><?php echo $jobs[$i]['job_name'] ?></option>
+                            <?php } ?>
+                        <?php } else {
+                            $queryJob = 'SELECT job_id FROM Persons_Jobs WHERE person_id = :personId';
+                            $statement = $PDO->prepare($queryJob);
+                            $statement->execute(array(
+                                'personId' => $thePerson['ID']
+                            ));
+                            $jobID = $statement->fetch(PDO::FETCH_ASSOC)['job_id'];
+                            ?>
+                          <option selected value="<?php
+                          if ($jobID == null){
+                              echo "1";
+                          }else{
+                              echo $jobID;
+                          }
+                          ?>"><?php $personJob = getPersonJob($thePerson['ID']);
+                              echo $personJob;
+                              ?></option>
+                            <?php $jobs = getJobs(1);
+                            for ($i = 0; $i < count($jobs); $i++){ ?>
+                              <option value="<?php echo $jobs[$i]['ID'];?>"><?php echo $jobs[$i]['job_name'];?></option>
+                            <?php } ?>
+                        <?php }?>
+                      </select>
                   </div>
 
                   <div class="mb-3">

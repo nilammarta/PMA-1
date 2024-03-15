@@ -8,7 +8,7 @@ session_start();
 function saveHobby(int $personId, string $hobby):void
 {
     global $PDO;
-    if (isset($_GET['hobbyId']){
+    if (isset($_GET['hobbyId'])) {
         try{
             $query = 'UPDATE Hobbies SET hobby_name = :hobby_name WHERE ID = :jobId';
             $statement = $PDO->prepare($query);
@@ -17,7 +17,6 @@ function saveHobby(int $personId, string $hobby):void
                 'hobby_name' => $hobby
             ));
             $_SESSION['info'] = "Hobby data has been updated!";
-            redirect("../view.php", "person=" . $_GET['person']);
         }catch (PDOException $e){
             $_SESSION['error'] = "Query error: " . $e->getMessage();
             header("Location: ../hobbies/edit-hobby.php");
@@ -34,7 +33,7 @@ function saveHobby(int $personId, string $hobby):void
             $_SESSION['info'] = 'New Hobby data has been saved!';
         } catch (PDOException $e) {
             $_SESSION['error'] = 'Query error:' . $e->getMessage();
-            header('Location: ../jobs/jobs.php');
+            header('Location: ../hobbies/create-hobby.php');
             exit();
         }
     }
@@ -79,11 +78,15 @@ if ($validate != null){
     $_SESSION['errorHobby'] = $validate;
     $_SESSION['hobbyInput'] = $_POST['hobbyName'];
     if (isset($_GET['hobbyId'])){
-        redirect("../hobbies/create-hobby.php", "page=" . $_GET['page'] . "&person=" . $_GET['person'] ."&hobbyId=" . $_GET['hobbyId']);
+        redirect("../hobbies/edit-hobby.php", "page=" . $_GET['page'] . "&person=" . $_GET['person'] ."&hobbyId=" . $_GET['hobbyId']);
     }else {
         redirect("../hobbies/create-hobby.php", "page=" . $_GET['page'] . "&person=" . $_GET['person']);
     }
 }else {
     saveHobby($_GET['person'], ucfirst($_POST['hobbyName']));
-    redirect('../view.php', "page=" . $_GET['page'] . "&person=" . $_GET['person']);
+    if ($_GET['page'] != null) {
+        redirect('../view.php', "page=" . $_GET['page'] . "&person=" . $_GET['person']);
+    }else{
+        redirect("../my-profile.php","");
+    }
 }

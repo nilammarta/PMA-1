@@ -26,7 +26,7 @@ showHeader("persons");
         <div class="row justify-content-center">
           <div class="col-12 col-md-10 col-lg-11 col-xxl-7">
             <form name="addHobby" class="create-form needs-validation p-4 mb-5" method="post"
-                  action="../action/create-hobby-action.php?page=<?php echo $_GET['page']; ?>&person=<?php echo $_GET['person']?>&hobbyId=<?php echo $_GET['hobbyId'];?>">
+                  action="../action/create-edit-hobby-action.php?page=<?php echo $_GET['page']; ?>&person=<?php echo $_GET['person']?>&hobbyId=<?php echo $_GET['hobbyId'];?>">
               <h5 class="form-text pb-2 mb-4">Edit hobby data in the form bellow:</h5>
               <div class="mb-3 row">
                 <label
@@ -42,7 +42,7 @@ showHeader("persons");
                     placeholder="Hobby name"
                     value="<?php if (isset($_SESSION['hobbyInput'])) {
                         echo $_SESSION['hobbyInput'];
-                    }else{
+                    }else {
                       $query = 'SELECT hobby_name FROM Hobbies WHERE ID = :hobbyId';
                       $statement = $PDO->prepare($query);
                       $statement->execute(array(
@@ -76,7 +76,11 @@ showHeader("persons");
                       type="reset"
                       role="button"
                       class="btn btn-secondary btn-cancel"
-                      href="/view.php?person=<?php echo $_GET['person']; ?>"
+                      href="<?php if ($_GET['page'] == null){?>
+                       /my-profile.php
+                      <?php }else{?>
+                      /view.php?page=<?php echo $_GET['page'];?>&person=<?php echo $_GET['person']; ?>
+                      <?php }?>"
                     >
                       Cancel
                     </a>
@@ -95,5 +99,5 @@ showHeader("persons");
 unset($_SESSION['errorHobby']);
 unset($_SESSION['hobbyInput']);
 unset($_SESSION['error']);
-require_once "includes/footer.php";
+require_once __DIR__ . "/../includes/footer.php";
 ?>

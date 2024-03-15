@@ -366,3 +366,17 @@ tbody {
 .modal-footer {
   border-top: none;
 }
+
+.hobby{
+  background-color: #ebebff;
+}
+.hobby-title{
+  font-weight: 600;
+}
+.thead-hobby{
+  background-color: #ffc95e;
+  /*border: 1px solid #;*/
+}
+.tbody-hobby{
+  background-color: #F6F6F4;
+}

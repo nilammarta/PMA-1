@@ -97,6 +97,14 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     $dataInput = inputData();
 //    $saved = saveUpdateProfile($_SESSION['personId'], $dataInput, $PDO);
     saveUpdateData($_SESSION['personId'], $dataInput, $PDO);
+    $queryJob = 'INSERT INTO Persons_Jobs(person_id, job_id) VALUES (:personId, :JobId)';
+    $statementJob = $PDO->prepare($queryJob);
+    $statementJob->execute(array(
+        'personId' => $_SESSION['personId'],
+        'jobId' => inputData()['job']
+    ));
+
+    $_SESSION['info'] = "Your profile has been updated!";
     $_SESSION['userEmail'] = $dataInput['email'];
     $_SESSION['userName'] = ucwords($dataInput['firstName']);
     redirect('../my-profile.php', "");

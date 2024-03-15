@@ -68,6 +68,13 @@ if (count($errorData) != 0 || $errorPass != null){
     unset($_SESSION['errorPassword']);
 
     saveUpdateData($_SESSION['personId'], inputData(), $PDO, "edit");
+
+    $queryJob = 'INSERT INTO Persons_Jobs(person_id, job_id) VALUES(:personId, :jobId)';
+    $statementJob = $PDO->prepare($queryJob);
+    $statementJob->execute(array(
+        'personId' => $_SESSION['personId'],
+        'jobId' => inputData()['job']
+    ));
 //    redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=2");
     redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 

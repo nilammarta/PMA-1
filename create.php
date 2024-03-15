@@ -1,5 +1,6 @@
 <?php
-include "action/common-action.php";
+//include "action/common-action.php";
+require_once "action/common-action.php";
 require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
@@ -255,9 +256,9 @@ showHeader("persons");
                             <?php if (isset($_SESSION['dataInput'])){ ?>
                               <option selected value="<?php echo $_SESSION['dataInput']['sex'];?>">
                                   <?php if ($_SESSION['dataInput']['sex'] == "M"){
-                                echo "Female";
-                                }else{
                                 echo "Male";
+                                }else{
+                                echo "Female";
                                 }?>
                               </option>
                               <?php if ($_SESSION['dataInput']['sex'] == "F"){ ?>
@@ -273,35 +274,35 @@ showHeader("persons");
                           </select>
                         </div>
 
-<!--                        <div class="mb-3">-->
-<!--                          <label for="exampleJobInput" class="form-label">-->
-<!--                            Job-->
-<!--                          </label>-->
-<!--                          <select-->
-<!--                            name="job"-->
-<!--                            id="exampleJobInput"-->
-<!--                            class="form-select"-->
-<!--                            aria-label="Default select example"-->
-<!--                            required-->
-<!--                          >-->
-<!--                            --><?php //if ($_SESSION['dataInput']){?>
-<!--                              <option selected value="--><?php //echo $_SESSION['dataInput']['job_ID'];?><!--">-->
-<!--                              --><?php //echo getJobById($_SESSION['dataInput']['job_ID'])['job_name'];?><!--</option>-->
-<!---->
-<!--                              --><?php
-//                              $jobs = getJobs($_SESSION['dataInput']['jobID']);
-//                              for ($i = 1; $i < count($jobs); $i++){ ?>
-<!--                                <option value="--><?php //echo $jobs[$i]['ID'] ?><!--">--><?php //echo $jobs[$i]['job_name'] ?><!--</option>-->
-<!--                              --><?php //} ?>
-<!--                            --><?php //} else { ?>
-<!--                              <option selected value="20">choose...</option>-->
-<!--                              --><?php //$jobs = getJobs();
-//                              for ($i = 0; $i < count($jobs); $i++){ ?>
-<!--                                <option value="--><?php //echo $jobs[$i]['ID'];?><!--">--><?php //echo $jobs[$i]['jobs_name'];?><!--</option>-->
-<!--                              --><?php //} ?>
-<!--                            --><?php //}?>
-<!--                          </select>-->
-<!--                        </div>-->
+                        <div class="mb-3">
+                          <label
+                            for="exampleJobInput"
+                            class="form-label">Job</label>
+                          <select
+                            name="job"
+                            id="exampleJobInput"
+                            class="form-select"
+                            aria-label="Default select example"
+                            required
+                          >
+                            <?php if ($_SESSION['dataInput']){?>
+                              <option selected value="<?php echo $_SESSION['dataInput']['jobId'];?>">
+                              <?php echo getJobById($_SESSION['dataInput']['jobId'])['job_name'];?></option>
+
+                              <?php
+                              $jobs = getJobs($_SESSION['dataInput']['jobId']);
+                              for ($i = 0; $i < count($jobs); $i++){ ?>
+                                <option value="<?php echo $jobs[$i]['ID'] ?>"><?php echo $jobs[$i]['job_name'] ?></option>
+                              <?php } ?>
+                            <?php } else { ?>
+                              <option selected value="1">choose...</option>
+                              <?php $jobs = getJobs();
+                              for ($i = 1; $i < count($jobs); $i++){ ?>
+                                <option value="<?php echo $jobs[$i]['ID'];?>"><?php echo $jobs[$i]['job_name'];?></option>
+                              <?php } ?>
+                            <?php }?>
+                          </select>
+                        </div>
 
                         <div class="mb-3">
                           <label
@@ -317,6 +318,25 @@ showHeader("persons");
                             echo $_SESSION['dataInput']['internalNotes'];
                               } ?></textarea>
                         </div>
+
+<!--                        <div class="mb-3">-->
+<!--                          <label-->
+<!--                            for="exampleHobbyInput"-->
+<!--                            class="form-label"-->
+<!--                          >Hobby</label>-->
+<!--                          <input-->
+<!--                            name="hobby"-->
+<!--                            id="exampleHobbyInput"-->
+<!--                            class="form-control"-->
+<!--                            type="text"-->
+<!--                            placeholder="Hobby"-->
+<!--                            value="--><?php //if (isset($_SESSION['dataInput'])) {
+//                                echo $_SESSION['dataInput']['hobby'];
+//                            }else{
+//                              echo "";
+//                            }?><!--"-->
+<!--                          >-->
+<!--                        </div>-->
 
                         <div class="mb-3">
                           <label for="exampleRoleInput" class="form-label"
