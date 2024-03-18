@@ -7,6 +7,7 @@ require_once __DIR__ . "/../includes/pma-db.php";
 require_once __DIR__ . "/../action/common-action.php";
 
 session_start();
+checkUserLogin($_SESSION['userEmail'], true);
 checkUserLoginRole($_SESSION['userRole']);
 
 addHeadCode('create.css', 'CREATE JOB - Person Management App');

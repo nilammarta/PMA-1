@@ -36,18 +36,3 @@ function getPaginatedJobs(int $limit, int $page, string|null $search = null):arr
 
 }
 
-function getCountOfEmployees(int $jobId):int|string
-{
-    global $PDO;
-    $query = 'SELECT count(*) FROM Persons_Jobs WHERE job_id = :job_id';
-    $statement = $PDO->prepare($query);
-    $statement->execute(array(
-        'job_id' => $jobId
-    ));
-    $total = $statement->fetchColumn();
-    if ($total == null){
-        return '-';
-    }else{
-        return $total;
-    }
-}

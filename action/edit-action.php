@@ -69,12 +69,18 @@ if (count($errorData) != 0 || $errorPass != null){
 
     saveUpdateData($_SESSION['personId'], inputData(), $PDO, "edit");
 
-    $queryJob = 'INSERT INTO Persons_Jobs(person_id, job_id) VALUES(:personId, :jobId)';
-    $statementJob = $PDO->prepare($queryJob);
-    $statementJob->execute(array(
+//   update job data pada database Person_Jobs
+    $queryPersonJob = 'UPDATE Persons_Jobs SET job_id = :jobId WHERE person_id = :personId';
+    $statementPersonJob = $PDO->prepare($queryPersonJob);
+    $statementPersonJob->execute(array(
         'personId' => $_SESSION['personId'],
-        'jobId' => inputData()['job']
+        'jobId' => inputData()['jobId']
     ));
+
+//    var_dump(inputData());
+//    update count of job pada database jobs
+    updateCountOfJobs(inputData()['jobId'], inputData()['userJob']);
+
 //    redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=2");
     redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
 

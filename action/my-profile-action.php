@@ -9,40 +9,6 @@ session_start();
 
 /**
  * @param int $id
- * @return bool
- * function to save update profile into json file
- */
-//function saveUpdateProfile(int $id, array $dataInput, $PDO): void
-//{
-//    $persons = getPersonsData();
-//    for ($i = 0; $i <count($persons); $i++){
-//        if ($persons[$i]['id'] == $id){
-//            if ($_POST['newPassword'] != null){
-//                $password = encryptPassword($_POST['newPassword']);
-//            }else{
-//                $password = $persons[$i]['password'];
-//            }
-//            $persons[$i]['firstName'] = ucfirst($dataInput['firstName']);
-//            $persons[$i]['lastName'] = ucfirst($dataInput['lastName']);
-//            $persons[$i]['nik'] = $dataInput['nik'];
-//            $persons[$i]['email'] = $dataInput['email'];
-//            $persons[$i]['password'] = $password;
-//            $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $dataInput['birthDate']);
-//            $persons[$i]['sex'] = $dataInput['sex'];
-//            $persons[$i]['address'] = $dataInput['address'];
-//            if (isset($_POST['internalNotes'])) {
-//                $persons[$i]['internalNotes'] = ucfirst($dataInput['internalNotes']);
-//            }
-//            saveDataIntoJson($persons);
-//            return true;
-//        }
-//    }
-
-//    return false;
-//}
-
-/**
- * @param int $id
  * @param string $currentPassword
  * @param string $newPassword
  * @param string $confirmPassword
@@ -97,12 +63,13 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     $dataInput = inputData();
 //    $saved = saveUpdateProfile($_SESSION['personId'], $dataInput, $PDO);
     saveUpdateData($_SESSION['personId'], $dataInput, $PDO);
-    $queryJob = 'INSERT INTO Persons_Jobs(person_id, job_id) VALUES (:personId, :JobId)';
-    $statementJob = $PDO->prepare($queryJob);
-    $statementJob->execute(array(
+    $queryPersonJob = 'UPDATE Persons_Jobs SET job_id = :jobId WHERE person_id = :personId';
+    $statementPersonJob = $PDO->prepare($queryPersonJob);
+    $statementPersonJob->execute(array(
         'personId' => $_SESSION['personId'],
-        'jobId' => inputData()['job']
+        'jobId' => inputData()['jobId']
     ));
+    updateCountOfJobs();
 
     $_SESSION['info'] = "Your profile has been updated!";
     $_SESSION['userEmail'] = $dataInput['email'];

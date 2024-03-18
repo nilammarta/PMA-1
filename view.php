@@ -151,7 +151,7 @@ showHeader("persons");
                             <tr>
                               <td>Job</td>
                               <td>:</td>
-                              <td><?php echo getPersonJob($thePerson['ID']); ?></td>
+                              <td><?php echo getPersonJob($thePerson['ID'])['job']; ?></td>
                             </tr>
                           </tbody>
                         </table>
@@ -348,7 +348,7 @@ showHeader("persons");
                                       type="button"
                                       class="btn btn-primary"
                                     >
-                                      <a type="submit" role="button" class="btn-modal" href="action/delete-action.php">YES</a>
+                                      <a type="submit" role="button" class="btn-modal" href="action/delete-action.php?jobId=<?php echo getPersonJob($thePerson['ID'])['jobId']; ?>">YES</a>
                                     </button>
                                   </div>
                                 </div>

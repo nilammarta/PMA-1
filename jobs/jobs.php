@@ -7,10 +7,11 @@ require_once __DIR__ . "/../includes/pma-db.php";
 require_once __DIR__ . "/../action/common-action.php";
 require_once __DIR__ . "/../action/jobs-action.php";
 
+global $PDO;
 session_start();
 unset($_SESSION['jobId']);
 
-checkUserLogin($_SESSION['userEmail']);
+checkUserLogin($_SESSION['userEmail'], true);
 
 if (isset($_GET["search"]) != null ) {
     $url = "search=" . $_GET['search'] . "&";
@@ -57,6 +58,16 @@ showHeader("jobs");
                                             3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
               </svg>
                 <?php echo $_SESSION['editInfo']; ?>
+            </div>
+          <?php } else if (isset($_SESSION['error'])){?>
+            <div class="alert alert-danger mx-5" role="alert">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                   class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889
+                          0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0
+                          0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+              </svg>
+              <?php echo $_SESSION['error']; ?>
             </div>
           <?php }?>
 
@@ -166,7 +177,15 @@ showHeader("jobs");
                       <tr>
                         <td class="text-center"><?php echo $number++ ?></td>
                         <td class=""><?php echo $jobsPaging[$i]['job_name']; ?></td>
-                        <td class="text-center"><?php echo getCountOfEmployees($jobsPaging[$i]['ID']); ?></td>
+                        <td class="text-center"><?php
+                            $query = 'SELECT count FROM Jobs WHERE ID = :jobId';
+                            $statement = $PDO->prepare($query);
+                            $statement->execute(array(
+                                    'jobId' => $jobsPaging[$i]['ID']
+                            ));
+                            echo $statement->fetch(PDO::FETCH_ASSOC)['count'];
+//                            echo getCountJobByJobId($jobsPaging[$i]['ID'])
+                            ?></td>
                         <?php if ($_SESSION['userRole'] == "A") { ?>
                           <td>
                             <div class="d-grid gap-3 d-flex justify-content-md-center">
@@ -174,7 +193,7 @@ showHeader("jobs");
                               <a
                                 class="btn btn-outline-light btn-table"
                                 type="button"
-                                href="edit-job.php?jobId=<?php echo $jobsPaging[$i]['ID']?>"
+                                href="edit-job.php?page=<?php echo $_GET['page']; ?>&jobId=<?php echo $jobsPaging[$i]['ID']?>"
                               >
                                 <ion-icon
                                   class="btn-icon"
@@ -230,7 +249,7 @@ showHeader("jobs");
                                       >
     <!--                                      --><?php //$_SESSION['jobId'] = $jobsPaging[$i]['ID']; ?>
                                         <a type="submit" role="button" class="btn-modal"
-                                           href="/action/delete-job-action.php?jobId=<?php echo $jobsPaging[$i]['ID']?>">YES</a>
+                                           href="/action/delete-job-action.php?page=<?php echo $_GET['page']; ?>&jobId=<?php echo $jobsPaging[$i]['ID']?>">YES</a>
                                       </button>
                                     </div>
                                   </div>
@@ -328,5 +347,6 @@ showHeader("jobs");
 unset($_SESSION['info']);
 unset($_SESSION['deleteInfo']);
 unset($_SESSION['editInfo']);
+unset($_SESSION['error']);
 require_once __DIR__ . "/../includes/footer.php";
 ?>

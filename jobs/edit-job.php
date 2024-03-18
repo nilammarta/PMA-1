@@ -8,7 +8,7 @@ require_once __DIR__ . "/../action/common-action.php";
 
 global $PDO;
 session_start();
-checkUserLoginRole($_SESSION['userRole']);
+checkUserLoginRole($_SESSION['userRole'], true);
 
 addHeadCode('create.css', 'CREATE JOB - Person Management App');
 showHeader('jobs');
@@ -26,7 +26,7 @@ showHeader('jobs');
         <div class="row justify-content-center">
           <div class="col-12 col-md-10 col-lg-11 col-xxl-7">
             <form name="addJob" class="create-form needs-validation p-4 mb-5" method="post"
-                  action="../action/create-edit-job-action.php?jobId=<?php echo $_GET['jobId']; ?>">
+                  action="../action/create-edit-job-action.php?page=<?php echo $_GET['page']; ?>&jobId=<?php echo $_GET['jobId']; ?>">
               <h5 class="form-text pb-2 mb-4">Edit job data in the form bellow:</h5>
               <div class="mb-3 row">
                 <label

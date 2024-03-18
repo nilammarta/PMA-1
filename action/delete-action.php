@@ -31,40 +31,48 @@ if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
     $url = "";
 }
 
-for ($i = 0; $i < count($persons); $i++) {
-    if ($persons[$i]['ID'] == $_SESSION['personId']) {
-//        validasi ketika email user login sama dengan dengan email yang akan di hapus
-        if ($persons[$i]['email'] == $_SESSION['userEmail']) {
-            redirect("../view.php", $url . "page="  .$_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&error=2");
-//        validasi ketika ada ada 1 user role admin pada database, maka tidak bisa di hapus
-//        } else if ($persons[$i]['role'] == 'A'){
-//            if ($admin != 1) {
-////                unset($persons[$i]);
-////                $persons = array_values($persons);
-////                saveDataIntoJson($persons);
-////                unset($_SESSION['personId']);
-//                $query = 'DELETE FROM Persons WHERE ID = :ID';
-//                $statement = $PDO->prepare($query);
-//                $statement->execute(array(
-//                    "ID"=>$_SESSION['personId']
-//                ));
-//                redirect("../persons.php", "");
-//            }else{
-//                redirect("../view.php", $url . "page="  .$_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&error=1");
-//            }
-        }else{
-//            unset($persons[$i]);
-//            $persons = array_values($persons);
-//            saveDataIntoJson($persons);
-//            unset($_SESSION['personId']);
-            $query = 'DELETE FROM Persons WHERE ID = :ID';
-            $statement = $PDO->prepare($query);
-            $statement->execute(array(
-                "ID" => $_SESSION["personId"]
-            ));
-            $_SESSION['deleteInfo'] = "Person data has been deleted!";
-            redirect("../persons.php", "");
-        }
-    }
-}
+$queryPersonJob = 'DELETE FROM Persons_Jobs WHERE person_id = :personId';
+$statementPersonJob = $PDO->prepare($queryPersonJob);
+$statementPersonJob->execute(array(
+    'personId' => $_SESSION['personId']
+));
+
+updateCountOfJobs();
+
+$queryHobby = 'DELETE FROM Hobbies WHERE person_id = :personId';
+$statementHobby = $PDO->prepare($queryHobby);
+$statementHobby->execute(array(
+    'personId' => $_SESSION['personId']
+));
+
+$query = 'DELETE FROM Persons WHERE ID = :ID';
+$statement = $PDO->prepare($query);
+$statement->execute(array(
+    "ID" => $_SESSION["personId"]
+));
+
+
+$_SESSION['deleteInfo'] = "Person data has been deleted!";
+redirect("../persons.php", $url);
+
+//for ($i = 0; $i < count($persons); $i++) {
+//    if ($persons[$i]['ID'] == $_SESSION['personId']) {
+////        validasi ketika email user login sama dengan dengan email yang akan di hapus
+//        if ($persons[$i]['email'] == $_SESSION['userEmail']) {
+//            redirect("../view.php", $url . "page="  .$_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&error=2");
+//        }else{
+////            unset($persons[$i]);
+////            $persons = array_values($persons);
+////            saveDataIntoJson($persons);
+////            unset($_SESSION['personId']);
+//            $query = 'DELETE FROM Persons WHERE ID = :ID';
+//            $statement = $PDO->prepare($query);
+//            $statement->execute(array(
+//                "ID" => $_SESSION["personId"]
+//            ));
+//            $_SESSION['deleteInfo'] = "Person data has been deleted!";
+//            redirect("../persons.php", "");
+//        }
+//    }
+//}
 

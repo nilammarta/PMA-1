@@ -17,7 +17,6 @@ function saveJob(string $jobInput): void
                 'job_name' => ucwords($_POST['jobName'])
             ));
             $_SESSION['editInfo'] = "Job data has been updated!";
-            redirect("../jobs/jobs.php", "");
         }catch (PDOException $e){
             $_SESSION['error'] = "Query error: " . $e->getMessage();
         }
@@ -72,13 +71,15 @@ function validateJob(string $job, int|null $jobId):string|null
     }
 }
 
-//echo $_POST['jobName'];
-
 $validate = validateJob($_POST['jobName'], $_GET['jobId']);
 if ($validate == null){
     saveJob($_POST['jobName']);
     unset($_SESSION['jobId']);
-    redirect("../jobs/jobs.php","");
+    if ($_GET['page'] == null){
+        redirect("../jobs/jobs.php", "");
+    }else {
+        redirect("../jobs/jobs.php", "page=" . $_GET['page']);
+    }
 }else{
     $_SESSION['errorJob'] = $validate;
     $_SESSION['jobInput'] = $_POST['jobName'];

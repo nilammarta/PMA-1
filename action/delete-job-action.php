@@ -4,10 +4,22 @@ require_once __DIR__ . "/../action/common-action.php";
 
 session_start();
 global $PDO;
-$query = 'DELETE FROM Jobs WHERE ID = :jobId';
+
+$query = 'SELECT count FROM Jobs WHERE ID = :jobId';
 $statement = $PDO->prepare($query);
 $statement->execute(array(
-   'jobId' => $_GET['jobId']
+    'jobId' => $_GET['jobId']
 ));
-$_SESSION['deleteInfo'] = "Jobs data has been deleted!";
-redirect("../jobs/jobs.php", "");
+$count = $statement->fetch(PDO::FETCH_ASSOC)['count'];
+
+if ($count == "0") {
+    $query = 'DELETE FROM Jobs WHERE ID = :jobId';
+    $statement = $PDO->prepare($query);
+    $statement->execute(array(
+        'jobId' => $_GET['jobId']
+    ));
+    $_SESSION['deleteInfo'] = "Job data has been deleted!";
+}else{
+    $_SESSION['error'] = "Can not delete this job, because the job is already use!";
+}
+redirect("../jobs/jobs.php", "page=" . $_GET['page']);

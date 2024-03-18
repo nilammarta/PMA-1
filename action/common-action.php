@@ -169,7 +169,7 @@ function getRole(string $role): string
  * @return string
  * function to get persons job based on person id
  */
-function getPersonJob(int $personId): string
+function getPersonJob(int $personId): array
 {
     global $PDO;
 
@@ -189,11 +189,43 @@ function getPersonJob(int $personId): string
             'jobID' => $jobId
         ));
 //        echo $statement->fetch(PDO::FETCH_ASSOC);
-        return $statement->fetch(PDO::FETCH_ASSOC)['job_name'];
+        return [
+            'jobId' => $jobId,
+            'job' => $statement->fetch(PDO::FETCH_ASSOC)['job_name']
+        ];
 //        return $personJob[0]['job_id'];
     }else{
-        return "Jobless";
+        return [
+            'jobId' => 1,
+            'job' => "Jobless"
+        ];
     }
+}
+
+/**
+ * @param int $jobId
+ * @return int
+ * function to get count of employee based on job id from
+ */
+function getCountJobByJobId(int $jobId):int
+{
+    global $PDO;
+    $query = 'SELECT count(*) FROM Persons_Jobs WHERE job_id = :job_id';
+    $statement = $PDO->prepare($query);
+    $statement->execute(array(
+        'job_id' => $jobId
+    ));
+    return $statement->fetchColumn();
+//    if ($total == null){
+//        return '-';
+//    }else{
+//        return $total;
+//    }
+}
+
+function getCountOfEmployees()
+{
+
 }
 
 /**
@@ -383,7 +415,8 @@ function inputData ():array
         "internalNotes" => htmlspecialchars($_POST['internalNotes']),
         "role" => $_POST['role'],
         "alive" => $_POST['alive'],
-        "jobId" => $_POST['job']
+        "jobId" => $_POST['job'],
+        "userJob" => $_POST['userJob']
     ];
 }
 
@@ -527,5 +560,41 @@ function saveUpdateData(int $id, array $dataInput, $PDO, string $flagEdit=null):
             die();
         }
     }
+}
+
+
+function updateCountOfJobs(int $newJobId, int $jobId):void
+{
+    global $PDO;
+
+    $queryJob = 'UPDATE Jobs SET count = :countJob WHERE ID = :jobId';
+    $statementJob = $PDO->prepare($queryJob);
+    $statementJob->execute(array(
+        'jobId' => $jobId,
+        'countJob' => getJobById($jobId)['count'] - 1
+    ));
+
+    $queryUpdate = 'UPDATE Jobs SET count = :count WHERE ID = :jobId';
+    $statementUpdate = $PDO->prepare($queryUpdate);
+    $statementUpdate->execute(array(
+       'jobId' => $newJobId,
+       'count' => getJobById($newJobId)['count'] + 1
+    ));
+
+
+//    $queryJob = 'SELECT * FROM Jobs ORDER BY ID ASC ';
+//    $statementJob = $PDO->prepare($queryJob);
+//    $statementJob->execute();
+//    $jobs = $statementJob->fetchAll(PDO::FETCH_ASSOC);
+//
+//    for ($i=0; $i < count($jobs); $i++){
+//        $query = 'UPDATE Jobs SET count = :countJob WHERE ID = :jobId';
+//        $statement = $PDO->prepare($query);
+//        $statement->execute(array(
+//            'jobId' => $jobs[$i]['ID'],
+//            'countJob' => getCountJobByJobId($jobs[$i]['ID'])
+//        ));
+//    }
+
 }
 

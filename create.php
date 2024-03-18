@@ -76,6 +76,8 @@ showHeader("persons");
                   </h5>
 
                   <form name="newPerson" class="needs-validation" method="post" action="action/create-action.php">
+
+
                     <div class="d-lg-flex gap-lg-3 gap-xl-5">
                       <div class="form-1">
                         <div class="mb-3">

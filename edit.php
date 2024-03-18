@@ -87,6 +87,17 @@ showHeader("persons");
 
             <form name="editPerson" class="create-form needs-validation p-4 mb-5" method="post"
               action="action/edit-action.php">
+              <input
+                name="userJob"
+                type="hidden"
+                value="<?php
+                $queryJob = 'SELECT job_id FROM Persons_Jobs WHERE person_id = :personId';
+                $statement = $PDO->prepare($queryJob);
+                $statement->execute(array(
+                    'personId' => $thePerson['ID']
+                ));
+                echo $statement->fetch(PDO::FETCH_ASSOC)['job_id'];?>"
+              >
               <h5 class="form-text pb-2 mb-4">
                 Edit person data in the form below:
               </h5>
@@ -249,24 +260,27 @@ showHeader("persons");
                   <div class="mb-3">
                     <label
                       for="exampleJobInput"
-                      class="form-label">Job</label>
-                      <select
-                        name="job"
-                        id="exampleJobInput"
-                        class="form-select"
-                        aria-label="Default select example"
-                        required
-                      >
-                        <?php if ($_SESSION['dataInput']){?>
-                          <option selected value="<?php echo $_SESSION['dataInput']['jobId'];?>">
-                            <?php echo getJobById($_SESSION['dataInput']['jobId'])['job_name'];?></option>
+                      class="form-label">Job
+                    </label>
+                    <select
+                      name="job"
+                      id="exampleJobInput"
+                      class="form-select"
+                      aria-label="Default select example"
+                      required
+                    >
+<!--                        job untuk yang telah diinput-->
+                        <?php if ($_SESSION['inputData']){?>
+                          <option selected value="<?php echo $_SESSION['inputData']['jobId'];?>">
+                          <?php echo getJobById($_SESSION['inputData']['jobId'])['job_name'];?></option>
 
-                            <?php
-                            $jobs = getJobs($_SESSION['dataInput']['jobId']);
-                            for ($i = 0; $i < count($jobs); $i++){ ?>
-                              <option value="<?php echo $jobs[$i]['ID'] ?>"><?php echo $jobs[$i]['job_name'] ?></option>
-                            <?php } ?>
+                          <?php
+                          $jobs = getJobs($_SESSION['inputData']['jobId']);
+                          for ($i = 0; $i < count($jobs); $i++){ ?>
+                            <option value="<?php echo $jobs[$i]['ID'] ?>"><?php echo $jobs[$i]['job_name'] ?></option>
+                          <?php } ?>
                         <?php } else {
+//                          untuk job person sebelumnya
                             $queryJob = 'SELECT job_id FROM Persons_Jobs WHERE person_id = :personId';
                             $statement = $PDO->prepare($queryJob);
                             $statement->execute(array(
@@ -276,19 +290,19 @@ showHeader("persons");
                             ?>
                           <option selected value="<?php
                           if ($jobID == null){
-                              echo "1";
+                              echo 1;
                           }else{
                               echo $jobID;
                           }
-                          ?>"><?php $personJob = getPersonJob($thePerson['ID']);
+                          ?>"><?php $personJob = getPersonJob($thePerson['ID'])['job'];
                               echo $personJob;
                               ?></option>
-                            <?php $jobs = getJobs(1);
+                            <?php $jobs = getJobs($jobID);
                             for ($i = 0; $i < count($jobs); $i++){ ?>
                               <option value="<?php echo $jobs[$i]['ID'];?>"><?php echo $jobs[$i]['job_name'];?></option>
                             <?php } ?>
                         <?php }?>
-                      </select>
+                    </select>
                   </div>
 
                   <div class="mb-3">

@@ -328,10 +328,10 @@ showHeader("profile");
                               }else{
                                 echo $jobID;
                               }
-                            ?>"><?php $personJob = getPersonJob($user['ID']);
+                            ?>"><?php $personJob = getPersonJob($user['ID'])['job'];
                                 echo $personJob;
                             ?></option>
-                            <?php $jobs = getJobs(1);
+                            <?php $jobs = getJobs($jobID);
                             for ($i = 0; $i < count($jobs); $i++){ ?>
                               <option value="<?php echo $jobs[$i]['ID'];?>"><?php echo $jobs[$i]['job_name'];?></option>
                             <?php } ?>
