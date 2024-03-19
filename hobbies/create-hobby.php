@@ -35,7 +35,9 @@ showHeader("persons");
                   <input
                     name="hobbyName"
                     type="text"
-                    class="form-control"
+                    class="form-control <?php if (isset($_SESSION['errorHobby'])){?>
+                      is-invalid
+                    <?php }?>"
                     id="inputHobbyName"
                     placeholder="Hobby name"
                     value="<?php if (isset($_SESSION['hobbyInput'])){

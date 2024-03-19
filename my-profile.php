@@ -3,7 +3,7 @@ include("action/common-action.php");
 require_once "includes/html-head.php";
 require_once "includes/header.php";
 require_once "includes/sidebar.php";
-require_once "includes/pma-db.php";
+require_once __DIR__ . "/includes/pma-db.php";
 
 global $PDO;
 session_start();
@@ -110,6 +110,17 @@ showHeader("profile");
 
 
                 <form name="editProfile" class="create-form needs-validation p-4 mb-5" method="post" action="action/my-profile-action.php">
+                  <input
+                    name="userJob"
+                    type="hidden"
+                    value="<?php
+                    $queryJob = 'SELECT job_id FROM Persons_Jobs WHERE person_id = :personId';
+                    $statement = $PDO->prepare($queryJob);
+                    $statement->execute(array(
+                        'personId' => $user['ID']
+                    ));
+                    echo $statement->fetch(PDO::FETCH_ASSOC)['job_id'];?>"
+                  >
                   <h5 class="form-text pb-2 mb-4">EDIT PROFILE</h5>
                   <div class="mb-3 row">
                     <label
@@ -363,7 +374,7 @@ showHeader("profile");
                   <?php $personHobbies = getPersonHobby($user['ID']);
                     if ($personHobbies != null){?>
                     <div class="mb-4 row">
-                      <table class="table table-bordered mb-0">
+                      <table class="table table-hover table-bordered mb-0">
                         <thead class="thead-hobby">
                         <tr>
                           <th class="text-center p-3" scope="col">No</th>

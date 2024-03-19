@@ -166,7 +166,7 @@ showHeader("persons");
                         <?php $personHobbies = getPersonHobby($thePerson['ID']); ?>
                         <?php if ($personHobbies != null){?>
                           <div class="hobby p-4">
-                            <table class="table table-bordered mb-0">
+                            <table class="table table-hover table-bordered mb-0">
                               <thead class="thead-hobby">
                                 <tr>
                                   <th class="text-center p-3" scope="col">No</th>

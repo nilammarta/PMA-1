@@ -61,7 +61,6 @@ if (count($errorData) != 0 || count($errorPass) != 0){
     unset($_SESSION['errorPassword']);
 
     $dataInput = inputData();
-//    $saved = saveUpdateProfile($_SESSION['personId'], $dataInput, $PDO);
     saveUpdateData($_SESSION['personId'], $dataInput, $PDO);
     $queryPersonJob = 'UPDATE Persons_Jobs SET job_id = :jobId WHERE person_id = :personId';
     $statementPersonJob = $PDO->prepare($queryPersonJob);
@@ -69,7 +68,7 @@ if (count($errorData) != 0 || count($errorPass) != 0){
         'personId' => $_SESSION['personId'],
         'jobId' => inputData()['jobId']
     ));
-    updateCountOfJobs();
+    updateCountOfJobs(inputData()['jobId'], inputData()['userJob']);
 
     $_SESSION['info'] = "Your profile has been updated!";
     $_SESSION['userEmail'] = $dataInput['email'];

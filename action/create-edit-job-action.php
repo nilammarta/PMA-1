@@ -5,6 +5,11 @@ require_once __DIR__ . "/common-action.php";
 
 session_start();
 
+/**
+ * @param string $jobInput
+ * @return void
+ * function to save new job data
+ */
 function saveJob(string $jobInput): void
 {
     global $PDO;
@@ -37,6 +42,12 @@ function saveJob(string $jobInput): void
     }
 }
 
+/**
+ * @param string $job
+ * @param int|null $jobId
+ * @return bool
+ * function to check if job exists in the database or not
+ */
 function isJobExists(string $job, int|null $jobId): bool
 {
     global $PDO;
@@ -60,6 +71,12 @@ function isJobExists(string $job, int|null $jobId): bool
     }
 }
 
+/**
+ * @param string $job
+ * @param int|null $jobId
+ * @return string|null
+ * function to validate job input
+ */
 function validateJob(string $job, int|null $jobId):string|null
 {
     if (isJobExists($job, $jobId) == true) {
@@ -83,8 +100,15 @@ if ($validate == null){
 }else{
     $_SESSION['errorJob'] = $validate;
     $_SESSION['jobInput'] = $_POST['jobName'];
+
+    if ($_GET['page'] == null){
+        $page = 1;
+    }else{
+        $page = $_GET['page'];
+    }
+
     if (isset($_GET['jobId'])) {
-        redirect("../jobs/edit-job.php", "jobId=" . $_GET['jobId']);
+        redirect("../jobs/edit-job.php", "page=" . $page . "&jobId=" . $_GET['jobId']);
     }else{
         redirect("../jobs/create-job.php", "");
     }

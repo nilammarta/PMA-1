@@ -31,13 +31,15 @@ if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
     $url = "";
 }
 
+$userJob = getPersonJob($_SESSION['personId'])['jobId'];
+
 $queryPersonJob = 'DELETE FROM Persons_Jobs WHERE person_id = :personId';
 $statementPersonJob = $PDO->prepare($queryPersonJob);
 $statementPersonJob->execute(array(
     'personId' => $_SESSION['personId']
 ));
 
-updateCountOfJobs();
+updateCountOfJobs(null, $userJob);
 
 $queryHobby = 'DELETE FROM Hobbies WHERE person_id = :personId';
 $statementHobby = $PDO->prepare($queryHobby);

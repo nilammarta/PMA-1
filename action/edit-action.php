@@ -77,11 +77,8 @@ if (count($errorData) != 0 || $errorPass != null){
         'jobId' => inputData()['jobId']
     ));
 
-//    var_dump(inputData());
 //    update count of job pada database jobs
     updateCountOfJobs(inputData()['jobId'], inputData()['userJob']);
 
-//    redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId'] . "&saved=2");
     redirect("../view.php", $url . "page=" . $_SESSION['page'] . "&person=" . $_SESSION['personId']);
-
 }

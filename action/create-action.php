@@ -11,16 +11,16 @@ session_start();
  * @return int
  * function to generated id of person
  */
-function generateId($persons): int
-{
-    if ($persons == null){
-        $id = 1;
-    }else{
-        $lastPerson = $persons[count($persons) - 1];
-        $id = $lastPerson["id"] + 1;
-    }
-    return $id;
-}
+//function generateId($persons): int
+//{
+//    if ($persons == null){
+//        $id = 1;
+//    }else{
+//        $lastPerson = $persons[count($persons) - 1];
+//        $id = $lastPerson["id"] + 1;
+//    }
+//    return $id;
+//}
 
 /**
  * ['nik'] => [
@@ -69,7 +69,9 @@ function validate(string $nik, string $password, string $confirmPassword, string
 }
 
 /**
- * @return int => of personID
+ * @param array $dataInput
+ * @param $PDO
+ * @return void
  * function to save new person data
  */
 function saveData(array $dataInput, $PDO):void
@@ -116,20 +118,13 @@ function saveData(array $dataInput, $PDO):void
             "alive" => convertSwitchValue($dataInput['alive']),
             "last_logged_in" => null
         ) );
-        $newPerson = $statement->fetch(PDO::FETCH_ASSOC);
-        var_dump($newPerson);
 
-//        $queryJob = 'INSERT INTO '
         $_SESSION['info'] = "New person data has been saved!";
     } catch ( PDOException $e ) {
         $_SESSION['error'] = 'Query error: ' . $e->getMessage();
         header( 'Location: ../create.php?error=1' );
         die();
     }
-
-//    $persons [] = $newPerson;
-//    saveDataIntoJson($persons);
-//    return $newPerson['id'];
 }
 
 $errorData = validate($_POST['nik'], $_POST['password'], $_POST['confirmPassword'], $_POST['email'], $_POST['birthDate']);
@@ -148,7 +143,7 @@ if (count($errorData) != 0){
 
     $dataInput = inputData();
     $nikInput = inputData()['nik'];
-//    $personId = saveData(inputData());
+
     saveData($dataInput, $PDO);
     $query = 'SELECT ID FROM Persons WHERE nik = :nik';
     $statement = $PDO->prepare($query);
@@ -162,7 +157,7 @@ if (count($errorData) != 0){
         'jobId' => inputData()['jobId'],
     ));
 
-    updateCountOfJobs();
+    updateCountOfJobs(inputData()['jobId'], null);
 
     redirect("../view.php", "page=1&person=" . $personId['ID']);
 }

@@ -5,6 +5,12 @@ require_once "common-action.php";
 
 session_start();
 
+/**
+ * @param int $personId
+ * @param string $hobby
+ * @return void
+ * function to save new hobby data
+ */
 function saveHobby(int $personId, string $hobby):void
 {
     global $PDO;
@@ -39,6 +45,13 @@ function saveHobby(int $personId, string $hobby):void
     }
 }
 
+/**
+ * @param int $personId
+ * @param int|null $hobbyId
+ * @param string $hobby
+ * @return bool
+ * function to check if hobby exists or not in database
+ */
 function isHobbyExists(int $personId, int|null $hobbyId, string $hobby): bool
 {
     global $PDO;
@@ -62,6 +75,13 @@ function isHobbyExists(int $personId, int|null $hobbyId, string $hobby): bool
     }
 }
 
+/**
+ * @param int $personId
+ * @param int|null $hobbyId
+ * @param string $hobby
+ * @return string|null
+ * function to validate hobby input
+ */
 function hobbyValidate(int $personId, int|null $hobbyId, string $hobby):string|null
 {
     if (isHobbyExists($personId, $hobbyId, $hobby) == true){

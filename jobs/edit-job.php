@@ -37,7 +37,9 @@ showHeader('jobs');
                   <input
                     name="jobName"
                     type="text"
-                    class="form-control"
+                    class="form-control<?php if (isset($_SESSION['errorJob'])){?>
+                      is-invalid
+                    <?php }?>"
                     id="inputJobName"
                     placeholder="Job name"
                     value="<?php if (isset($_SESSION['jobInput'])){

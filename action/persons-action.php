@@ -41,13 +41,7 @@ function searchPerson(string $searchInput): array|null
 //    return null;
 
     $query = "SELECT * FROM Persons WHERE email LIKE '%$searchInput%' OR first_name LIKE '%$searchInput%' OR last_name LIKE '%$searchInput%'";
-//    $query = 'SELECT * FROM Persons WHERE email LIKE :email OR first_name LIKE :first_name OR last_name LIKE :last_name';
     $statement = $PDO->prepare($query);
-//    $statement->execute(array(
-//        'email' => $searchInput,
-//        'first_name' => $searchInput,
-//        'last_name' => $searchInput
-//    ));
     $statement->execute();
    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -158,7 +152,6 @@ function filterData(string $filterValue, int $limit, int $offset): array|null
     }else if ($filterValue == "elderly"){
         $queryFilter = "SELECT count(*) FROM Persons WHERE birth_date < :min AND alive = :alive";
         $statementFilter = $PDO ->prepare($queryFilter);
-//        $totalData = $statementFilter->fetchColumn();
         $statementFilter->execute(array(
             'min' => $min,
             'alive' => 1
@@ -258,8 +251,6 @@ function filterData(string $filterValue, int $limit, int $offset): array|null
         $queryFilter = "SELECT (*) FROM Persons";
         $statementFilter = $PDO->prepare($queryFilter);
         $totalData = $statementFilter->fetchColumn();
-//        $statementFilter->execute();
-//        $filterData = $statementFilter->fetchAll(PDO::FETCH_ASSOC);
 
         $query = "SELECT * FROM Persons LIMIT $limit OFFSET $offset";
         $statement = $PDO->prepare($query);
@@ -318,20 +309,7 @@ function getPaginatedData(int $page, int $limit, string | null $search, string |
             $pagingData = null;
             $totalData = null;
         }
-
-
-        // paginated data
-//        $query = "SELECT * FROM Persons WHERE email LIKE '%$search%' OR first_name LIKE '%$search%' OR last_name LIKE '%$search%' LIMIT $limit OFFSET $offset";
-//        $statement = $PDO->prepare($query);
-//        $statement->execute();
-//        $searchPaging = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-//        if (($offset + $limit) > count($filteredData)){
-//            $limit = count($filteredData) - $offset;
-//        }
-
-//        $pagingData = $filteredData['pagingData'];
-//        $totalData = count($filteredData['filterData']);
+        
     }else if ($search == null && $filter != null){
         $filteredData = filterData(filterValue: $filter, limit: $limit, offset: $offset);
         $pagingData = $filteredData['pagingData'];
