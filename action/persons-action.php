@@ -177,7 +177,6 @@ function filterData(string $filterValue, int $limit, int $offset): array|null
             'alive' => 1
         ));
         $totalData = $statementFilter->fetchColumn();
-//        $filterData = $statementFilter->fetchAll(PDO::FETCH_ASSOC);
 
         $query = "SELECT * FROM Persons WHERE birth_date > :date AND alive = :alive LIMIT $limit OFFSET $offset";
         $statement = $PDO->prepare($query);
@@ -197,7 +196,6 @@ function filterData(string $filterValue, int $limit, int $offset): array|null
             'sex' => "M"
         ));
         $totalData = $statementFilter->fetchColumn();
-//        $filterData = $statementFilter->fetchAll(PDO::FETCH_ASSOC);
 
         $query = "SELECT * FROM Persons WHERE sex = :sex LIMIT $limit OFFSET $offset";
         $statement = $PDO->prepare($query);
@@ -216,7 +214,6 @@ function filterData(string $filterValue, int $limit, int $offset): array|null
             'sex' => 'F'
         ));
         $totalData = $statementFilter->fetchColumn();
-//        $filterData = $statementFilter->fetchAll(PDO::FETCH_ASSOC);
 
         $query = "SELECT * FROM Persons WHERE sex = :sex LIMIT $limit OFFSET $offset";
         $statement = $PDO->prepare($query);
@@ -235,7 +232,6 @@ function filterData(string $filterValue, int $limit, int $offset): array|null
             'alive' => 0
         ));
         $totalData = $statementFilter->fetchColumn();
-//        $filterData = $statementFilter->fetchAll(PDO::FETCH_ASSOC);
 
         $query = "SELECT * FROM Persons WHERE alive = :alive LIMIT $limit OFFSET $offset";
         $statement = $PDO->prepare($query);
@@ -290,10 +286,6 @@ function getPaginatedData(int $page, int $limit, string | null $search, string |
 //        "currentPage" => $page,
 //    ];
 
-
-
-
-
     $offset = ($page - 1) * $limit;
 
     if ($search != null && $filter != null){
@@ -309,7 +301,7 @@ function getPaginatedData(int $page, int $limit, string | null $search, string |
             $pagingData = null;
             $totalData = null;
         }
-        
+
     }else if ($search == null && $filter != null){
         $filteredData = filterData(filterValue: $filter, limit: $limit, offset: $offset);
         $pagingData = $filteredData['pagingData'];
