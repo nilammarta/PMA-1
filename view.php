@@ -9,6 +9,22 @@ session_start();
 checkUserLogin($_SESSION['userEmail']);
 if ($_GET['person'] == null){
   redirect("dashboard.php", "");
+}else{
+    if (!is_numeric($_GET['person'])){
+        $thePerson = null;
+    }else {
+        $thePerson = getUserById($_GET['person']);
+    }
+}
+
+if ($_SESSION['userEmail'] == $thePerson['email']){
+  redirect("my-profile.php", "");
+}
+
+if (isset($_GET['search']) != null && isset($_GET['filter']) != null){
+  $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
+}else{
+  $url = "";
 }
 
 unset($_SESSION['page']);
@@ -68,7 +84,7 @@ showHeader("persons");
                     </div>
                   <?php } ?>
                   <!--        alert untuk validasi penghapusan jika data admin hanya ada satu       -->
-                  <?php if (isset($_GET['error']) && $_GET['error'] == 1){ ?>
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 1){ ?>
                   <div class="alert alert-danger saved mt-4" role="alert">
                     Can not delete this data, because there is only one admin in the database!
                   </div>
@@ -187,7 +203,7 @@ showHeader("persons");
                                           <a
                                             class="btn btn-outline-light btn-table p-2"
                                             type="button"
-                                            href="hobbies/edit-hobby.php?page=<?php echo $_GET['page']; ?>&person=<?php echo $_GET['person']; ?>&hobbyId=<?php echo $personHobbies[$i]['ID']?>"
+                                            href="hobbies/edit-hobby.php?<?php echo $url; ?>page=<?php echo $_GET['page']; ?>&person=<?php echo $_GET['person']; ?>&hobbyId=<?php echo $personHobbies[$i]['ID']?>"
                                           >
                                             <ion-icon
                                               class="btn-icon"
@@ -242,7 +258,7 @@ showHeader("persons");
                                                     class="btn btn-primary"
                                                   >
                                                     <a type="submit" role="button" class="btn-modal"
-                                                       href="/action/delete-hobby-action.php?page=<?php echo $_GET['page'];?>&person=<?php echo $_GET['person'];?>&hobbyId=<?php echo $personHobbies[$i]['ID']?>">YES</a>
+                                                       href="/action/delete-hobby-action.php?<?php echo $url; ?>page=<?php echo $_GET['page'];?>&person=<?php echo $_GET['person'];?>&hobbyId=<?php echo $personHobbies[$i]['ID']?>">YES</a>
                                                   </button>
                                                 </div>
                                               </div>
@@ -373,4 +389,3 @@ showHeader("persons");
 <?php
 unset($_SESSION['info']);
 require_once "includes/footer.php";
-?>

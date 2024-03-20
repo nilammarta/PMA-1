@@ -12,19 +12,19 @@ session_start();
  * @return int
  * function to get count of person that have role ADMIN in json file (database)
  */
-function getCountAdmin(array $persons): int
-{
-    $admin = [];
-    foreach ($persons as $person){
-        if ($person['role'] == "ADMIN"){
-            $admin [] = $person;
-        }
-    }
-    return count($admin);
-}
-
-$persons = getPersonsData();
-$admin = getCountAdmin($persons);
+//function getCountAdmin(array $persons): int
+//{
+//    $admin = [];
+//    foreach ($persons as $person){
+//        if ($person['role'] == "ADMIN"){
+//            $admin [] = $person;
+//        }
+//    }
+//    return count($admin);
+//}
+//
+//$persons = getPersonsData();
+//$admin = getCountAdmin($persons);
 if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
     $url = "search=" . $_SESSION['search'] . "&filter=" . $_SESSION['filter'] . "&";
 } else {

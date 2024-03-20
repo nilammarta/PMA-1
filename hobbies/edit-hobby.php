@@ -10,6 +10,12 @@ session_start();
 checkUserLogin($_SESSION['userEmail']);
 global $PDO;
 
+if (isset($_GET['search']) != null && isset($_GET['filter']) != null){
+    $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
+}else{
+    $url = "";
+}
+
 addHeadCode("create.css", "EDIT HOBBY - Person Management App");
 showHeader("persons");
 ?>
@@ -38,7 +44,7 @@ showHeader("persons");
         <div class="row justify-content-center">
           <div class="col-12 col-md-10 col-lg-11 col-xxl-7">
             <form name="addHobby" class="create-form needs-validation p-4 mb-5" method="post"
-                  action="../action/create-edit-hobby-action.php?page=<?php echo $_GET['page']; ?>&person=<?php echo $_GET['person']?>&hobbyId=<?php echo $_GET['hobbyId'];?>">
+                  action="../action/create-edit-hobby-action.php?<?php echo $url; ?>page=<?php echo $_GET['page']; ?>&person=<?php echo $_GET['person']?>&hobbyId=<?php echo $_GET['hobbyId'];?>">
               <h5 class="form-text pb-2 mb-4">Edit hobby data in the form bellow:</h5>
               <div class="mb-3 row">
                 <label
@@ -93,7 +99,7 @@ showHeader("persons");
                       href="<?php if ($_GET['page'] == null){?>
                        /my-profile.php
                       <?php }else{?>
-                      /view.php?page=<?php echo $_GET['page'];?>&person=<?php echo $_GET['person']; ?>
+                      /view.php?<?php echo $url; ?>page=<?php echo $_GET['page'];?>&person=<?php echo $_GET['person']; ?>
                       <?php }?>"
                     >
                       Cancel

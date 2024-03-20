@@ -66,7 +66,7 @@ showHeader("persons");
                         <option class="select-item" value="allPersons">All Persons Data</option>
                         <option class="select-item" value="elderly">Elderly ( > 64 y.o)</option>
                         <option class="select-item" value="productive">In Productive Age (15-64 y.o)</option>
-                        <option class="select-item" value="children">Children (0-15 y.o)</option>
+                        <option class="select-item" value="children">Children (0-14 y.o)</option>
                         <option class="select-item" value="male">Male</option>
                         <option class="select-item" value="female">Female</option>
                         <option class="select-item" value="passedAway">Passed Away</option>
@@ -153,7 +153,7 @@ showHeader("persons");
                       $next = $page + 1;
                       $number = ($page - 1) * $limit + 1;
                       ?>
-                  <?php  if ($_GET["search"] != null && $personsData == null) { ?>
+                  <?php  if ($_GET["search"] != null && $personsData == null && $_SESSION['deleteInfo'] == null) { ?>
                     <div class="alert alert-danger mx-5" role="alert">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                            class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
@@ -357,4 +357,4 @@ showHeader("persons");
 <?php
 unset($_SESSION['deleteInfo']);
 require_once "includes/footer.php";
-?>
+

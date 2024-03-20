@@ -3,22 +3,20 @@ require_once __DIR__ . "/json-helper.php";
 require_once __DIR__ . "/common-action.php";
 
 require_once __DIR__ . "/../includes/pma-db.php";
-global $PDO;
 
 session_start();
 
 //$jsonData = loadDataIntoJson("persons.json");
-$personsData = getPersonsData();
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
 
 // conditional untuk meng-redirect page contoh dari login menuju dashboard
-    if (check($personsData) != null) {
+    if (check() != null) {
         $_SESSION['userEmail'] = $_POST['email'];
-        $_SESSION['userName'] = check($personsData)['first_name'];
-        $_SESSION['logout'] = check($personsData)['last_logged_in'];
-        $_SESSION['userRole'] = check($personsData)['role'];
+        $_SESSION['userName'] = check()['first_name'];
+        $_SESSION['logout'] = check()['last_logged_in'];
+        $_SESSION['userRole'] = check()['role'];
 
         header("Location: ../dashboard.php");
         exit();
@@ -33,12 +31,20 @@ if (isset($_POST['login'])) {
  * @return array|null
  * function to check if combination of email input and password input exist in json file
  */
-function check(array $tempData): array|null
+function check(): array|null
 {
-    for ($i = 0; $i < count($tempData); $i++) {
-        if ($_POST["email"] == $tempData[$i]["email"] && password_verify($_POST["password"], $tempData[$i]["password"]) && $tempData[$i]["alive"]) {
-            return $tempData[$i];
-        }
+    global $PDO;
+
+    $query = 'SELECT * FROM Persons WHERE email = :email';
+    $statement = $PDO->prepare($query);
+    $statement->execute(array(
+        'email' => $_POST['email']
+    ));
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if (password_verify($_POST['password'], $user['password']) && $user['alive'] == 1){
+        return $user;
+    }else{
+        return null;
     }
-    return null;
 }

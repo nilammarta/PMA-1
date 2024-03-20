@@ -44,20 +44,6 @@ function redirect($url, $getParams) : void
 }
 
 /**
- * @return array
- * function to get all persons data from json file / from database
- */
-function getPersonsData(): array
-{
-    global $PDO;
-//    return loadDataIntoJson("persons.json");
-    $query = 'SELECT * FROM Persons';
-    $statement = $PDO -> prepare($query);
-    $statement -> execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/**
  * @param int $id
  * @return array
  * function to get user data based on id
@@ -236,19 +222,39 @@ function getPersonHobby(int $personId):array
  */
 function isNikExits(string $nik, int|null $id):bool
 {
-    $personsData = getPersonsData();
-    foreach ($personsData as $person){
-        if ($id == null) {
-            if ($person['nik'] == $nik) {
-                return true;
-            }
-        }else{
-            if ($person['nik'] == $nik && $person['ID'] != $id){
-                return true;
-            }
-        }
+    global $PDO;
+//    $personsData = getPersonsData();
+//    foreach ($personsData as $person){
+//        if ($id == null) {
+//            if ($person['nik'] == $nik) {
+//                return true;
+//            }
+//        }else{
+//            if ($person['nik'] == $nik && $person['ID'] != $id){
+//                return true;
+//            }
+//        }
+//    }
+//    return false;
+    $query = 'SELECT * FROM Persons WHERE nik = :nik';
+    $queryParams = array(
+        'nik' => $nik
+    );
+
+    if ($id != null){
+        $query = $query . " AND ID != :id";
+        $queryParams['id'] = $id;
     }
-    return false;
+
+    $statement = $PDO->prepare($query);
+    $statement->execute($queryParams);
+    $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($data != null){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 /**
@@ -273,19 +279,41 @@ function checkNik(string $nik): string|null
  */
 function isEmailExists(string $newEmail, int|null $id): bool
 {
-    $persons = getPersonsData();
-    foreach ($persons as $person){
-        if ($id == null) {
-            if ($person['email'] == $newEmail) {
-                return true;
-            }
-        }else{
-            if ($person['email'] == $newEmail && $person['ID'] != $id){
-                return true;
-            }
-        }
+    global $PDO;
+//    $persons = getPersonsData();
+//    foreach ($persons as $person){
+//        if ($id == null) {
+//            if ($person['email'] == $newEmail) {
+//                return true;
+//            }
+//        }else{
+//            if ($person['email'] == $newEmail && $person['ID'] != $id){
+//                return true;
+//            }
+//        }
+//    }
+//    return false;
+
+    $query = 'SELECT * FROM Persons WHERE email = :email';
+    $getParams = array(
+        'email' => $newEmail
+    );
+
+    if ($id != null){
+        $query = $query . ' AND ID != :id';
+        $getParams['id'] = $id;
     }
-    return false;
+
+    $statement = $PDO->prepare($query);
+    $statement->execute($getParams);
+    $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($data != null){
+        return true;
+    }else{
+        return false;
+    }
+
 }
 
 /**

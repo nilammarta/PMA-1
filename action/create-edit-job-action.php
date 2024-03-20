@@ -52,19 +52,21 @@ function isJobExists(string $job, int|null $jobId): bool
 {
     global $PDO;
 
-    $query = 'SELECT * FROM Jobs WHERE job_name = :job_name';
+    $query = 'SELECT * FROM Jobs WHERE  UPPER(job_name) = :jobName';
+    $queryParams = array(
+        'jobName' => strtoupper($job)
+    );
+
+    if ($jobId != null){
+        $query = $query . ' AND ID != :jobId';
+        $queryParams['jobId'] = $jobId;
+    }
+
     $statement = $PDO->prepare($query);
-    $statement->execute(array(
-        'job_name' => $job
-    ));
+    $statement->execute($queryParams);
     $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     if ($data != null) {
-        foreach ($data as $jobData){
-            if ($jobData['ID'] == $jobId){
-                return false;
-            }
-        }
         return true;
     } else {
         return false;

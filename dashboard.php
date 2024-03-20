@@ -10,7 +10,7 @@ global $PDO;
 session_start();
 checkUserLogin($_SESSION['userEmail']);
 
-$persons = getPersonsData();
+//$persons = getPersonsData();
 
 addHeadCode("dashboard.css", "DASHBOARD - Persons Management App");
 showHeader("dashboard");
@@ -40,7 +40,7 @@ showHeader("dashboard");
                         <h3 class="card-title">
                           <ion-icon class="card-icon" name="people"></ion-icon>
                           <?php
-                            echo count($persons);
+                            echo getCountPersons("allPersons");
                           ?>
                         </h3>
 

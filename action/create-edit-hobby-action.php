@@ -93,19 +93,25 @@ function hobbyValidate(int $personId, int|null $hobbyId, string $hobby):string|n
     }
 }
 
+if (isset($_GET['search']) != null && isset($_GET['filter']) != null){
+    $url = "search=" . $_GET['search'] . "&filter=" . $_GET['filter'] . "&";
+}else{
+    $url = "";
+}
+
 $validate = hobbyValidate($_GET['person'], $_GET['hobbyId'], ucfirst($_POST['hobbyName']));
 if ($validate != null){
     $_SESSION['errorHobby'] = $validate;
     $_SESSION['hobbyInput'] = $_POST['hobbyName'];
     if (isset($_GET['hobbyId'])){
-        redirect("../hobbies/edit-hobby.php", "page=" . $_GET['page'] . "&person=" . $_GET['person'] ."&hobbyId=" . $_GET['hobbyId']);
+        redirect("../hobbies/edit-hobby.php", $url . "page=" . $_GET['page'] . "&person=" . $_GET['person'] ."&hobbyId=" . $_GET['hobbyId']);
     }else {
-        redirect("../hobbies/create-hobby.php", "page=" . $_GET['page'] . "&person=" . $_GET['person']);
+        redirect("../hobbies/create-hobby.php", $url . "page=" . $_GET['page'] . "&person=" . $_GET['person']);
     }
 }else {
     saveHobby($_GET['person'], ucfirst($_POST['hobbyName']));
     if ($_GET['page'] != null) {
-        redirect('../view.php', "page=" . $_GET['page'] . "&person=" . $_GET['person']);
+        redirect('../view.php', $url . "page=" . $_GET['page'] . "&person=" . $_GET['person']);
     }else{
         redirect("../my-profile.php","");
     }
