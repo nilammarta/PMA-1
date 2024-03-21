@@ -9,7 +9,7 @@ require_once __DIR__ . "/../includes/pma-db.php";
  * @return int|null
  * function to get count of person based on filter person
  */
-function getCountPersons(string $filter):int|null
+function getCountPersonsByCategory(string $filter):int|null
 {
     global $PDO;
 //    $persons = getPersonsData();
@@ -18,13 +18,7 @@ function getCountPersons(string $filter):int|null
     $max = time() - (15 * (60 * 60 * 24 * 365));
     $min = time() - (64 * (60 * 60 * 24 * 365));
 
-    if ($filter == "adult"){
-//        $adult = [];
-//        foreach ($persons as $person){
-//            if (getAge($person["birth_date"]) > 15 && getAge($person["birth_date"]) <= 64 && $person["alive"] == 1) {
-//                $adult[] = $person;
-//            }
-//        }
+    if ($filter == "productive"){
 
         $query = "SELECT count(*) FROM Persons WHERE birth_date >= :min AND birth_date <= :max AND alive = :alive";
         $statement = $PDO->prepare($query);
@@ -35,16 +29,7 @@ function getCountPersons(string $filter):int|null
         ));
         return $statement->fetchColumn();
 
-//        return count($adult);
-
-    } elseif ($filter == "child") {
-//        $child = [];
-//        foreach ($persons as $person) {
-//            if (getAge($person["birth_date"]) <= 15 && $person["alive"] == 1) {
-//                $child [] = $person;
-//            }
-//        }
-//        return count($child);
+    } elseif ($filter == "children") {
         $query = 'SELECT count(*) FROM Persons WHERE birth_date < :time AND alive = :alive';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
@@ -54,13 +39,6 @@ function getCountPersons(string $filter):int|null
         return $statement->fetchColumn();
 
     } elseif ($filter == "male") {
-//        $male = [];
-//        foreach ($persons as $person) {
-//            if ($person["sex"] == "M") {
-//                $male [] = $person;
-//            }
-//        }
-//        return count($male);
         $query = 'SELECT count(*) FROM Persons WHERE sex = :gender';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
@@ -69,13 +47,7 @@ function getCountPersons(string $filter):int|null
         return $statement->fetchColumn();
 
     } elseif ($filter == "female") {
-//        $female = [];
-//        foreach ($persons as $person) {
-//            if ($person["sex"] == "F") {
-//                $female [] = $person;
-//            }
-//        }
-//        return count($female);
+
         $query = 'SELECT count(*) FROM Persons WHERE sex = :gender';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
@@ -84,13 +56,7 @@ function getCountPersons(string $filter):int|null
         return $statement->fetchColumn();
 
     } elseif ($filter == "passedAway") {
-//        $passed = [];
-//        foreach ($persons as $person){
-//            if ($person["alive"] == 0){
-//                $passed[] = $person;
-//            }
-//        }
-//        return count($passed);
+
         $query = 'SELECT count(*) FROM Persons WHERE alive = :alive';
         $statement = $PDO->prepare($query);
         $statement->execute(array(

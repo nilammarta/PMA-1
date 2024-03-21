@@ -40,7 +40,7 @@ showHeader("dashboard");
                         <h3 class="card-title">
                           <ion-icon class="card-icon" name="people"></ion-icon>
                           <?php
-                            echo getCountPersons("allPersons");
+                            echo getCountPersonsByCategory("allPersons");
                           ?>
                         </h3>
 
@@ -60,7 +60,7 @@ showHeader("dashboard");
                             name="accessibility"
                           ></ion-icon>
                           <?php
-                            $adult = getCountPersons("adult", $persons);
+                            $adult = getCountPersonsByCategory("productive");
                             echo $adult;
                           ?>
                         </h3>
@@ -77,7 +77,7 @@ showHeader("dashboard");
                         <h3 class="card-title">
                           <ion-icon class="card-icon" name="man"></ion-icon>
                           <?php
-                            $passed = getCountPersons("passedAway", $persons);
+                            $passed = getCountPersonsByCategory("passedAway", $persons);
                             echo $passed;
                           ?>
                         </h3>
@@ -96,7 +96,7 @@ showHeader("dashboard");
                             name="people-circle-outline"
                           ></ion-icon>
                           <?php
-                            $child = getCountPersons("child", $persons);
+                            $child = getCountPersonsByCategory("children", $persons);
                             echo $child;
                           ?>
                         </h3>
@@ -112,7 +112,7 @@ showHeader("dashboard");
                         <h3 class="card-title">
                           <ion-icon class="card-icon" name="body"></ion-icon>
                           <?php
-                            $male = getCountPersons("male", $persons);
+                            $male = getCountPersonsByCategory("male", $persons);
                             echo $male;
                           ?>
                         </h3>
@@ -128,7 +128,7 @@ showHeader("dashboard");
                         <h3 class="card-title">
                           <ion-icon class="card-icon" name="woman"></ion-icon>
                           <?php
-                            $female = getCountPersons("female", $persons);
+                            $female = getCountPersonsByCategory("female", $persons);
                             echo $female;
                           ?>
                         </h3>

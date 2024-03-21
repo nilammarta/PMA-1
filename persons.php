@@ -148,6 +148,10 @@ showHeader("persons");
                           $data = getPaginatedData($page, $limit, $_GET['search'], $_GET['filter']);
                       }
 
+                      echo "max = " . time() - (15 * (60 * 60 * 24 * 365));
+                      echo "min = " . time() - (64 * (60 * 60 * 24 * 365));
+                      echo $data['totalPage'];
+                      var_dump($data['pagingData']);
                       $personsData = $data["pagingData"];
                       $previous = $page - 1;
                       $next = $page + 1;
