@@ -7,40 +7,6 @@ require_once __DIR__ . "/../includes/pma-db.php";
 global $PDO;
 session_start();
 
-/**
- * @param int $id
- * @return bool
- * function to save update data person into json file
- */
-//function UpdateData(int $id, array $dataInput, $PDO): void
-//{
-//    $persons = getPersonsData();
-//    for ($i = 0; $i < count($persons); $i++){
-//        if ($persons[$i]['id'] == $id) {
-//            if ($_POST['newPassword'] != null){
-//                $password = encryptPassword($_POST['newPassword']);
-//            } else {
-//                $password = $persons[$i]['password'];
-//            }
-//
-//            $persons[$i]['firstName'] = ucfirst($dataInput['firstName']);
-//            $persons[$i]['lastName'] = ucfirst($dataInput['lastName']);
-//            $persons[$i]['nik'] = $dataInput['nik'];
-//            $persons[$i]['email'] = $dataInput['email'];
-//            $persons[$i]['password'] = $password;
-//            $persons[$i]['birthDate'] = convertStringIntoDate("Y-m-d", $dataInput['birthDate']);
-//            $persons[$i]['sex'] = $dataInput['sex'];
-//            $persons[$i]['role'] = $dataInput['role'];
-//            $persons[$i]['address'] = $dataInput['address'];
-//            $persons[$i]['internalNotes'] = ucfirst($dataInput['internalNotes']);
-//            $persons[$i]['alive'] = convertSwitchValue($dataInput['alive']);
-//
-//            saveDataIntoJson($persons);
-//            return true;
-//        }
-//    }
-//    return false;
-//}
 
 if (isset($_SESSION["search"]) != null && isset($_SESSION['filter']) != null) {
     $url = "search=" . $_SESSION['search'] . "&filter=" . $_SESSION['filter'] . "&";

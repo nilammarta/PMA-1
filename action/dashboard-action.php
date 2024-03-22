@@ -15,31 +15,28 @@ function getCountPersonsByCategory(string $filter):int|null
 //    $persons = getPersonsData();
 
     //    change age into timestamp
-    $max = time() - (15 * (60 * 60 * 24 * 365));
-    $min = time() - (64 * (60 * 60 * 24 * 365));
+//    $max = time() - (15 * (60 * 60 * 24 * 365));
+//    $min = time() - (64 * (60 * 60 * 24 * 365));
 
     if ($filter == "productive"){
 
-        $query = "SELECT count(*) FROM Persons WHERE birth_date >= :min AND birth_date <= :max AND alive = :alive";
+//        $query = "SELECT count(*) FROM Persons WHERE birth_date >= :min AND birth_date <= :max AND alive = :alive";
+//        $query = "SELECT count(*) FROM Persons WHERE DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), birth_date)), '%Y') >= 17 ";
+        $query = 'SELECT COUNT(*) FROM Persons WHERE YEAR(NOW()) - YEAR(birth_date) >= 17 AND YEAR(NOW()) - YEAR(birth_date) <= 65';
         $statement = $PDO->prepare($query);
-        $statement->execute(array(
-            'min' => $min,
-            'max' => $max,
-            'alive' => 1
-        ));
+        $statement->execute();
         return $statement->fetchColumn();
 
     } elseif ($filter == "children") {
-        $query = 'SELECT count(*) FROM Persons WHERE birth_date < :time AND alive = :alive';
+        $query = 'SELECT COUNT(*) FROM Persons WHERE YEAR(NOW()) - YEAR(birth_date) < 17 AND alive = :alive';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
-            'time' => $min,
             'alive' => 1
         ));
         return $statement->fetchColumn();
 
     } elseif ($filter == "male") {
-        $query = 'SELECT count(*) FROM Persons WHERE sex = :gender';
+        $query = 'SELECT COUNT(*) FROM Persons WHERE sex = :gender';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
             "gender" => "M"
@@ -48,7 +45,7 @@ function getCountPersonsByCategory(string $filter):int|null
 
     } elseif ($filter == "female") {
 
-        $query = 'SELECT count(*) FROM Persons WHERE sex = :gender';
+        $query = 'SELECT COUNT(*) FROM Persons WHERE sex = :gender';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
             'gender' => "F"
@@ -57,7 +54,7 @@ function getCountPersonsByCategory(string $filter):int|null
 
     } elseif ($filter == "passedAway") {
 
-        $query = 'SELECT count(*) FROM Persons WHERE alive = :alive';
+        $query = 'SELECT COUNT(*) FROM Persons WHERE alive = :alive';
         $statement = $PDO->prepare($query);
         $statement->execute(array(
             'alive' => 0
@@ -65,7 +62,7 @@ function getCountPersonsByCategory(string $filter):int|null
         return $statement->fetchColumn();
 
     } else if ($filter == "allPersons"){
-        $query = "SELECT count(*) FROM Persons";
+        $query = "SELECT COUNT(*) FROM Persons";
         $statement = $PDO->query($query);
         $statement->execute();
         return $statement->fetchColumn();

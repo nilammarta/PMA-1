@@ -209,7 +209,7 @@ showHeader("persons");
                       value="<?php if (isset($_SESSION['inputData'])) {
                           echo $_SESSION['inputData']['birthDate'];
                       } else if ($thePerson != null) {
-                          echo date('Y-m-d', $thePerson['birth_date']);
+                          echo $thePerson['birth_date'];
                       } ?>"
                       required
                     />

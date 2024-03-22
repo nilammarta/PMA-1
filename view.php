@@ -142,7 +142,7 @@ showHeader("persons");
                             <tr>
                               <td>Birth Date</td>
                               <td>:</td>
-                              <td><?php echo date('d F Y', $thePerson['birth_date']); ?></td>
+                              <td><?php echo date("d F Y", strtotime($thePerson['birth_date'])); ?></td>
                             </tr>
                             <tr>
                               <td>Gender</td>

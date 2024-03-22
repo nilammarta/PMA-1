@@ -110,8 +110,9 @@ function getJobs(int|null $jobID = null):array
  * @return int
  * function to get person age
  */
-function getAge(int $date): int
+function getAge(string $birthDate): int
 {
+    $date = strtotime($birthDate);
 //    untuk mendapatkan selisih timestamp dari waktu saat ini dengan timestamp tgl lahirnya
     $age = time() - $date;
 //    floor digunakan untuk pembulatan keatas
@@ -522,7 +523,7 @@ function saveUpdateData(int $id, array $dataInput, $PDO, string $flagEdit=null):
                 "nik" => $dataInput['nik'],
                 "email" => $dataInput['email'],
                 "password" => $password,
-                "birth_date" => convertStringIntoDate('Y-m-d', $dataInput['birthDate']),
+                "birth_date" => $dataInput['birthDate'],
                 "sex" => $dataInput['sex'],
                 "role" => $dataInput['role'],
                 "address" => $dataInput['address'],
@@ -560,7 +561,7 @@ function saveUpdateData(int $id, array $dataInput, $PDO, string $flagEdit=null):
                 'nik' => $dataInput['nik'],
                 'email' => $dataInput['email'],
                 'password' => $password,
-                'birth_date' => convertStringIntoDate('Y-m-d', $dataInput['birthDate']),
+                'birth_date' => $dataInput['birthDate'],
                 'sex' => $dataInput['sex'],
                 'address' => $dataInput['address'],
                 'internal_notes' => $internalNotes,

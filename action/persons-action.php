@@ -4,130 +4,74 @@ require_once __DIR__ . "/dashboard-action.php";
 require_once "includes/pma-db.php";
 global $PDO;
 
-/**
- * @param array $persons
- * @param string $searchInput
- * @return array|null
- * function to get search result based on search input
- */
-function searchPerson(string $searchInput): array|null
-{
-    global $PDO;
-//    $search = urldecode($searchInput);
-//    $results = [];
-//    $resultsLastName = [];
-//    if (isset($search)) {
-//        foreach ($persons as $value) {
-//            if (preg_match("/$search/i", $value["first_name"]) == 1) {
-//                $results [] = $value;
-//            }
-//        }
-//
-//        foreach ($persons as $value) {
-//            if (preg_match("/$search/i", $value["last_name"]) == 1) {
-//                $resultsLastName[] = $value;
-//            }
-//        }
-//
-//        foreach ($resultsLastName as $result) {
-//            if (in_array($result, $results) == 0) {
-//                $results[] = $result;
-//            }
-//        }
-//
-//        if (count($results) != null) {
-//            return $results;
-//        }
-//    }
-//    return null;
-
-    $query = "SELECT * FROM Persons WHERE email LIKE '%$searchInput%' OR first_name LIKE '%$searchInput%' OR last_name LIKE '%$searchInput%'";
-    $statement = $PDO->prepare($query);
-    $statement->execute();
-   return $statement->fetchAll(PDO::FETCH_ASSOC);
-}
 
 /**
  * @param string $filterValue
  * @return array|null
  * function to filtering the persons data based on string filter value and array of search result
  */
-function getCountSearchFilter(string $filterValue, string $searchInput): int
+function getCountSearchFilter(string $filterValue, string $searchInput): int|null
 {
     global $PDO;
-    $max = time() - (15 * (60 * 60 * 24 * 365));
-    $min = time() - (64 * (60 * 60 * 24 * 365));
-    $querySearch = "SELECT count(*) FROM Persons WHERE email LIKE '%$searchInput%' OR first_name LIKE '%$searchInput%' OR last_name LIKE '%$searchInput%'";
+    $querySearch = "SELECT COUNT(*) FROM Persons WHERE (email LIKE '%$searchInput%' OR first_name LIKE '%$searchInput%' OR last_name LIKE '%$searchInput%')";
 
     if ($filterValue == "productive") {
-//        $adult = [];
-//        foreach ($persons as $person) {
-//            if (getAge($person["birth_date"]) > 15 && getAge($person['birth_date']) <= 64 && $person['alive'] == 1) {
-//                $adult[] = $person;
-//            }
-//        }
-//        return $adult;
-
-
-        $query = "SELECT * FROM Persons WHERE birth_date = :min AND birth_date = :max AND alive = 1 AND email LIKE '%$searchInput%' OR first_name LIKE '%$searchInput%' OR last_name LIKE '%$searchInput%'";
-
+        $query = $querySearch . " AND YEAR(NOW()) - YEAR(birth_date) >= 17 AND YEAR(NOW()) - YEAR(birth_date) <= 65 AND alive = :alive";
         $statement = $PDO->prepare($query);
         $statement->execute(array(
-            'min' => $min,
-            'max' => $max
+            'alive' => 1
         ));
-//        $statement->execute();
-        return count($statement->fetchAll(PDO::FETCH_ASSOC));
+        return $statement->fetchColumn();
 
     } elseif ($filterValue == "elderly") {
-        $elderly = [];
-        foreach ($persons as $person) {
-            if (getAge($person['birth_date']) > 64 && $person['alive'] == 1) {
-                $elderly[] = $person;
-            }
-        }
-        return $elderly;
-
-//        $query =
+        $query = $querySearch . " AND YEAR(NOW()) - YEAR(birth_date) > 65 AND alive = :alive";
+        $statement = $PDO->prepare($query);
+        $statement->execute(array(
+            "alive" => 1
+        ));
+        return $statement->fetchColumn();
 
     } elseif ($filterValue == "children") {
-        $child = [];
-        foreach ($persons as $person) {
-            if (getAge($person["birth_date"]) <= 15 && $person['alive'] == 1) {
-                $child [] = $person;
-            }
-        }
-        return $child;
+
+        $query = $querySearch . " AND YEAR(NOW()) - YEAR(birth_date) < 17 AND alive = :alive";
+        $statement = $PDO->prepare($query);
+        $statement->execute(array(
+            'alive' => 1
+        ));
+
+        return $statement->fetchColumn();
 
     } elseif ($filterValue == "male") {
-        $male = [];
-        foreach ($persons as $person) {
-            if ($person["sex"] == "M") {
-                $male [] = $person;
-            }
-        }
-        return $male;
+        $query = $querySearch . " AND sex = :gender AND alive = :alive";
+        $statement = $PDO->prepare($query);
+        $statement->execute(array(
+            'gender' => "M",
+            'alive' => 1
+        ));
+        return $statement->fetchColumn();
 
     } elseif ($filterValue == "female") {
-        $female = [];
-        foreach ($persons as $person) {
-            if ($person["sex"] == "F") {
-                $female [] = $person;
-            }
-        }
-        return $female;
+        $query = $querySearch . " AND sex = :gender AND alive = :alive";
+        $statement = $PDO->prepare($query);
+        $statement->execute(array(
+            'gender' => 'F',
+            'alive' => 1
+        ));
+        return $statement->fetchColumn();
 
     } elseif ($filterValue == "passedAway") {
-        $passed = [];
-        foreach ($persons as $person) {
-            if (!$person["alive"]) {
-                $passed[] = $person;
-            }
-        }
-        return $passed;
+       $query = $querySearch . " AND alive = :alive";
+       $statement = $PDO->prepare($query);
+       $statement->execute(array(
+           'alive' => 0
+       ));
+       return $statement->fetchColumn();
 
     } elseif ($filterValue == "allPersons") {
-        return $persons;
+        $query = $querySearch;
+        $statement = $PDO->prepare($query);
+        $statement->execute();
+        return $statement->fetchColumn();
     } else {
         return null;
     }
@@ -141,40 +85,23 @@ function getCountSearchFilter(string $filterValue, string $searchInput): int
  * @return array|null
  * function to filtering data based on string of filter value
  */
-function filterData(string $filterValue, int $limit, int $offset, string|null $search): array|null
+function searchFilterData(string $filterValue, int $limit, int $offset, string|null $search): array|null
 {
     global $PDO;
 
-//    change age into timestamp
-    $max = time() - (15 * (60 * 60 * 24 * 365));
-    $min = time() - (64 * (60 * 60 * 24 * 365));
-    $querySearch = "SELECT * FROM Persons WHERE email LIKE '%$search%' OR first_name LIKE '%$search%' OR last_name LIKE '%$search%'";
+    $querySearch = "SELECT * FROM Persons WHERE (email LIKE '%$search%' OR first_name LIKE '%$search%' OR last_name LIKE '%$search%')";
 
     if ($filterValue == "productive"){
-
-//        $queryFilter = "SELECT count(*) FROM Persons WHERE birth_date >= :min AND birth_date <= :max AND alive = :alive";
-//        $statementFilter = $PDO->prepare($queryFilter);
-//        $statementFilter->execute(array(
-//            'min' => $min,
-//            'max' => $max,
-//            'alive' => 1
-//        ));
-//        $totalData = $statementFilter->fetchColumn();
-
-
         if ($search != null){
-            $query = $querySearch . " AND birth_date > :min AND birth_date < :max AND alive = :alive LIMIT $limit OFFSET $offset";
+            $query = $querySearch . " AND YEAR(NOW()) - YEAR(birth_date) >= 17 AND YEAR(NOW()) - YEAR(birth_date) <= 65 AND alive = :alive LIMIT $limit OFFSET $offset";
             $totalData = getCountSearchFilter($filterValue, $search);
         }else{
-            $queryFilter = "SELECT * FROM Persons WHERE birth_date >= :min AND birth_date <= :max AND alive = :alive";
-            $query = $queryFilter . " LIMIT $limit OFFSET $offset";
+            $query = "SELECT * FROM Persons WHERE  YEAR(NOW()) - YEAR(birth_date) >= 17 AND YEAR(NOW()) - YEAR(birth_date) <= 65 AND alive = :alive LIMIT $limit OFFSET $offset";
             $totalData = getCountPersonsByCategory($filterValue);
         }
 
         $statement = $PDO->prepare($query);
         $statement->execute(array(
-            "min" => $min,
-            "max" => $max,
             "alive" => 1
         ));
         $pageFilter = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -184,38 +111,36 @@ function filterData(string $filterValue, int $limit, int $offset, string|null $s
             'pagingData' => $pageFilter
         ];
     }else if ($filterValue == "elderly"){
-        $queryFilter = "SELECT count(*) FROM Persons WHERE birth_date < :min AND alive = :alive";
-        $statementFilter = $PDO ->prepare($queryFilter);
-        $statementFilter->execute(array(
-            'min' => $min,
-            'alive' => 1
-        ));
-        $totalData = $statementFilter->fetchColumn();
+        if ($search != null) {
+            $query = $querySearch . " AND YEAR(NOW()) - YEAR(birth_date) > 65 AND alive = :alive LIMIT $limit OFFSET $offset";
+            $totalData = getCountSearchFilter($filterValue, $search);
+        } else{
+            $query = "SELECT * FROM Persons WHERE YEAR(NOW()) - YEAR(birth_date) > 65 AND alive = :alive LIMIT $limit OFFSET $offset";
+            $totalData = getCountPersonsByCategory($filterValue);
+        }
 
-        $query = "SELECT * FROM Persons WHERE birth_date < :date AND alive = :alive LIMIT $limit OFFSET $offset";
         $statement = $PDO->prepare($query);
         $statement->execute(array(
-            'date' => $min,
-            'alive' => 1
+            "alive" => 1
         ));
         $pageFilter = $statement->fetchAll(PDO::FETCH_ASSOC);
+
         return [
             'totalData' => $totalData,
             'pagingData' => $pageFilter
         ];
-    }else if ($filterValue == "children"){
-        $queryFilter = "SELECT count(*) FROM Persons WHERE birth_date > :date AND alive = :alive";
-        $statementFilter = $PDO->prepare($queryFilter);
-        $statementFilter->execute(array(
-            'date' => $max,
-            'alive' => 1
-        ));
-        $totalData = $statementFilter->fetchColumn();
 
-        $query = "SELECT * FROM Persons WHERE birth_date > :date AND alive = :alive LIMIT $limit OFFSET $offset";
+    }else if ($filterValue == "children"){
+        if ($search != null){
+            $query = $querySearch . " AND YEAR(NOW()) - YEAR(birth_date) < 17 AND alive = :alive LIMIT $limit OFFSET $offset";
+            $totalData = getCountSearchFilter($filterValue, $search);
+        }else{
+            $query = "SELECT * FROM Persons WHERE YEAR(NOW()) - YEAR(birth_date) < 17 AND alive = :alive LIMIT $limit OFFSET $offset";
+            $totalData = getCountPersonsByCategory($filterValue);
+        }
+
         $statement = $PDO->prepare($query);
         $statement->execute(array(
-            'date' => $max,
             'alive' => 1
         ));
         $pageFilter = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -224,17 +149,18 @@ function filterData(string $filterValue, int $limit, int $offset, string|null $s
             'pagingData' => $pageFilter
         ];
     }else if ($filterValue == "male"){
-        $queryFilter = "SELECT count(*) FROM Persons WHERE sex = :sex";
-        $statementFilter = $PDO->prepare($queryFilter);
-        $statementFilter->execute(array(
-            'sex' => "M"
-        ));
-        $totalData = $statementFilter->fetchColumn();
+        if ($search != null){
+            $query = $querySearch . " AND sex = :gender AND alive = :alive LIMIT $limit OFFSET $offset";
+            $totalData = getCountSearchFilter($filterValue, $search);
+        }else{
+            $query = "SELECT * FROM Persons WHERE sex = :gender AND alive = :alive LIMIT $limit OFFSET $offset";
+            $totalData = getCountPersonsByCategory($filterValue);
+        }
 
-        $query = "SELECT * FROM Persons WHERE sex = :sex LIMIT $limit OFFSET $offset";
         $statement = $PDO->prepare($query);
         $statement->execute(array(
-            'sex' => "M"
+            'gender' => "M",
+            'alive' => 1
         ));
         $pageFilter = $statement->fetchAll(PDO::FETCH_ASSOC);
         return [
@@ -242,32 +168,34 @@ function filterData(string $filterValue, int $limit, int $offset, string|null $s
             'pagingData' => $pageFilter
         ];
     }else if ($filterValue == "female"){
-        $queryFilter = "SELECT count(*) FROM Persons WHERE sex = :sex";
-        $statementFilter = $PDO->prepare($queryFilter);
-        $statementFilter->execute(array(
-            'sex' => 'F'
-        ));
-        $totalData = $statementFilter->fetchColumn();
+        if ($search != null){
+            $query = $querySearch . " AND sex = :gender AND alive = :alive LIMIT $limit OFFSET $offset";
+            $totalData = getCountSearchFilter($filterValue, $search);
+        }else{
+            $query = "SELECT * FROM Persons WHERE sec = :gender AND alive = :alive";
+            $totalData = getCountPersonsByCategory($filterValue);
+        }
 
-        $query = "SELECT * FROM Persons WHERE sex = :sex LIMIT $limit OFFSET $offset";
         $statement = $PDO->prepare($query);
         $statement->execute(array(
-            'sex' => 'F'
+            'gender' => 'F',
+            'alive' => 1
         ));
         $pageFilter = $statement->fetchAll(PDO::FETCH_ASSOC);
+
         return [
             'totalData' => $totalData,
             'pagingData' => $pageFilter
         ];
     }else if ($filterValue == "passedAway"){
-        $queryFilter = "SELECT count(*) FROM Persons WHERE alive = :alive";
-        $statementFilter = $PDO->prepare($queryFilter);
-        $statementFilter->execute(array(
-            'alive' => 0
-        ));
-        $totalData = $statementFilter->fetchColumn();
+        if ($search != null){
+            $query = $querySearch . " AND alive = :alive";
+            $totalData = getCountSearchFilter($filterValue, $search);
+        }else{
+            $query = "SELECT * FROM Persons WHERE alive = :alive";
+            $totalData = getCountPersonsByCategory($filterValue);
+        }
 
-        $query = "SELECT * FROM Persons WHERE alive = :alive LIMIT $limit OFFSET $offset";
         $statement = $PDO->prepare($query);
         $statement->execute(array(
             'alive' => 0
@@ -278,11 +206,14 @@ function filterData(string $filterValue, int $limit, int $offset, string|null $s
             'pagingData' => $pageFilter
         ];
     }else if ($filterValue == "allPersons"){
-        $queryFilter = "SELECT (*) FROM Persons";
-        $statementFilter = $PDO->prepare($queryFilter);
-        $totalData = $statementFilter->fetchColumn();
+        if ($search != null){
+            $query = $querySearch . " LIMIT $limit OFFSET $offset";
+            $totalData = getCountSearchFilter($filterValue, $search);
+        }else{
+            $query = "SELECT * FROM Persons LIMIT $limit OFFSET $offset";
+            $totalData = getCountPersonsByCategory($filterValue);
+        }
 
-        $query = "SELECT * FROM Persons LIMIT $limit OFFSET $offset";
         $statement = $PDO->prepare($query);
         $statement->execute();
         $pageFilter = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -290,6 +221,7 @@ function filterData(string $filterValue, int $limit, int $offset, string|null $s
             'totalData' => $totalData,
             'pagingData' => $pageFilter
         ];
+
     }else{
         return null;
     }
@@ -305,43 +237,12 @@ function filterData(string $filterValue, int $limit, int $offset, string|null $s
 function getPaginatedData(int $page, int $limit, string | null $search, string | null $filter): array
 {
     global $PDO;
-////   untuk mendapatkan jumlah halaman yang di perlukan dengan membagi antara banyak data dengan limit yang di tentukan
-//    $totalPage = ceil((float)count($data) / (float)$limit);
-////   untuk mendapatkan index dari data person yang akan di mulai dari setiap halaman
-//    $indexStart = ($page - 1) * $limit;
-//    $length = $limit;
-//    if (($indexStart + $limit) > count($data)) {
-//        $length = count($data) - $indexStart;
-//    }
-//
-//    return [
-//        "totalPage" => $totalPage,
-//        "pagingData" => array_slice($data, $indexStart, $length),
-//        "currentPage" => $page,
-//    ];
 
     $offset = ($page - 1) * $limit;
 
     if ($search != null || $filter != null){
 //        // mencari search results
-//        $searchResult = searchPerson(searchInput: $search);
-//
-//        if ($searchResult != null){
-//            // melakukan filter data berdasarkan kategori
-//            $filteredData = searchFilter(filterValue: $filter, persons: $searchResult);
-//            $pagingData = array_slice($filteredData, $offset, $limit);
-//            $totalData = count($filteredData);
-//        }else{
-//            $pagingData = null;
-//            $totalData = null;
-//        }
-//
-//    }else if ($search == null && $filter != null){
-//        $filteredData = filterData(filterValue: $filter, limit: $limit, offset: $offset);
-//        $pagingData = $filteredData['pagingData'];
-//        $totalData = $filteredData['totalData'];
-
-        $searchFilter = filterData(filterValue: $filter, limit: $limit, offset: $offset,search: $search);
+        $searchFilter = searchFilterData(filterValue: $filter, limit: $limit, offset: $offset,search: $search);
         $pagingData = $searchFilter['pagingData'];
         $totalData = $searchFilter['totalData'];
     }else {
