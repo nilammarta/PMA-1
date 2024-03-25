@@ -71,7 +71,7 @@ function showHeader(string $nav) : void
                             name="file-tray-full-outline"
                             class="nav-icon"
                           ></ion-icon>
-                          Dashboard
+                          DASHBOARD
                         </a>
                       </li>
                       <li class="nav-item <?php if ($nav == "persons"){ echo "nav-open"; }?>">
@@ -80,7 +80,7 @@ function showHeader(string $nav) : void
                             name="people-outline"
                             class="nav-icon"
                           ></ion-icon>
-                          Persons
+                          PERSONS
                         </a>
                       </li>
                     </ul>
@@ -96,7 +96,7 @@ function showHeader(string $nav) : void
                               name="person-circle-outline"
                               class="nav-icon"
                             ></ion-icon>
-                            My Profile
+                            MY PROFILE
                           </a>
                         </li>
                         <li class="nav-item">
@@ -105,7 +105,7 @@ function showHeader(string $nav) : void
                               name="log-out-outline"
                               class="nav-icon"
                             ></ion-icon>
-                            Logout
+                            LOGOUT
                           </a>
                         </li>
                       </ul>

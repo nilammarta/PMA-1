@@ -22,7 +22,7 @@ $query = 'UPDATE Persons SET last_logged_in = :last_logged_in WHERE email = :ema
 $statement = $PDO ->prepare($query);
 $statement->execute(array(
     "email" => $_SESSION['userEmail'],
-    "last_logged_in" => time()
+    "last_logged_in" => date("Y-m-d H:i:s", time())
 ));
 
 session_unset();

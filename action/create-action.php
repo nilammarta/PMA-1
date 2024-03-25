@@ -7,22 +7,6 @@ global $PDO;
 session_start();
 
 /**
- * @param $persons
- * @return int
- * function to generated id of person
- */
-//function generateId($persons): int
-//{
-//    if ($persons == null){
-//        $id = 1;
-//    }else{
-//        $lastPerson = $persons[count($persons) - 1];
-//        $id = $lastPerson["id"] + 1;
-//    }
-//    return $id;
-//}
-
-/**
  * ['nik'] => [
  *   'max' => 'Panjang karakter tidak boleh lebih dari x',
  *   'duplicate' => 'NIK sudah ada'

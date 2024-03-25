@@ -51,13 +51,6 @@ function redirect($url, $getParams) : void
 function getUserById(int $id):array
 {
     global $PDO;
-//    $persons = getPersonsData();
-//    foreach ($persons as $person){
-//        if ($person['id'] == $id){
-//            return $person;
-//        }
-//    }
-//    return [];
     $query = 'SELECT * FROM Persons WHERE ID = :ID';
     $statement = $PDO->prepare($query);
     $statement->execute(array(
@@ -224,19 +217,7 @@ function getPersonHobby(int $personId):array
 function isNikExits(string $nik, int|null $id):bool
 {
     global $PDO;
-//    $personsData = getPersonsData();
-//    foreach ($personsData as $person){
-//        if ($id == null) {
-//            if ($person['nik'] == $nik) {
-//                return true;
-//            }
-//        }else{
-//            if ($person['nik'] == $nik && $person['ID'] != $id){
-//                return true;
-//            }
-//        }
-//    }
-//    return false;
+
     $query = 'SELECT * FROM Persons WHERE nik = :nik';
     $queryParams = array(
         'nik' => $nik
@@ -281,19 +262,6 @@ function checkNik(string $nik): string|null
 function isEmailExists(string $newEmail, int|null $id): bool
 {
     global $PDO;
-//    $persons = getPersonsData();
-//    foreach ($persons as $person){
-//        if ($id == null) {
-//            if ($person['email'] == $newEmail) {
-//                return true;
-//            }
-//        }else{
-//            if ($person['email'] == $newEmail && $person['ID'] != $id){
-//                return true;
-//            }
-//        }
-//    }
-//    return false;
 
     $query = 'SELECT * FROM Persons WHERE email = :email';
     $getParams = array(

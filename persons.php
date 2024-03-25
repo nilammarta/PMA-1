@@ -64,9 +64,9 @@ showHeader("persons");
                           echo "All Persons Data";
                         } ?></option>
                         <option class="select-item" value="allPersons">All Persons Data</option>
-                        <option class="select-item" value="elderly">Elderly ( > 64 y.o)</option>
-                        <option class="select-item" value="productive">In Productive Age (15-64 y.o)</option>
-                        <option class="select-item" value="children">Children (0-14 y.o)</option>
+                        <option class="select-item" value="elderly">Elderly ( > 65 y.o)</option>
+                        <option class="select-item" value="productive">In Productive Age (17-65 y.o)</option>
+                        <option class="select-item" value="children">Children (0-16 y.o)</option>
                         <option class="select-item" value="male">Male</option>
                         <option class="select-item" value="female">Female</option>
                         <option class="select-item" value="passedAway">Passed Away</option>
@@ -116,17 +116,6 @@ showHeader("persons");
               <div class="table-responsive">
 
                   <?php
-//                  if (isset($_GET["filter"]) != null && isset($_GET['search']) != null){
-//                      $persons = filter(getFilterValue($_GET["filter"]), searchPerson($_GET['search']), null, null);
-////                      var_dump($persons);
-////                      $persons = searchPerson(filter(getFilterValue($_GET['filter'])), $_GET['search']);
-//                  } else if ($_GET['search'] != null)  {
-//                      $persons = searchPerson($_GET['search']);
-//                  }else {
-//                      $persons = getPersonsData();
-//                  }
-
-
 
                       if (isset($_GET['page']) && $_GET['page'] < 1) {
                           $page = 1;
@@ -140,18 +129,12 @@ showHeader("persons");
 
                       $limit = 5;
 
-
-
-                      $data = getPaginatedData($page, $limit, $_GET['search'], $_GET['filter']);
+                      $data = getPaginatedData($page, $limit, $_GET['search'], getFilterValue($_GET['filter']));
                       if ($data['totalPage'] < $_GET['page']) {
                           $page = 1;
                           $data = getPaginatedData($page, $limit, $_GET['search'], $_GET['filter']);
                       }
 
-//                      echo "max = " . time() - (15 * (60 * 60 * 24 * 365));
-//                      echo "min = " . time() - (64 * (60 * 60 * 24 * 365));
-//                      echo $data['totalPage'];
-//                      var_dump($data['pagingData']);
                       $personsData = $data["pagingData"];
                       $previous = $page - 1;
                       $next = $page + 1;

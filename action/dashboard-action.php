@@ -12,16 +12,9 @@ require_once __DIR__ . "/../includes/pma-db.php";
 function getCountPersonsByCategory(string $filter):int|null
 {
     global $PDO;
-//    $persons = getPersonsData();
-
-    //    change age into timestamp
-//    $max = time() - (15 * (60 * 60 * 24 * 365));
-//    $min = time() - (64 * (60 * 60 * 24 * 365));
 
     if ($filter == "productive"){
 
-//        $query = "SELECT count(*) FROM Persons WHERE birth_date >= :min AND birth_date <= :max AND alive = :alive";
-//        $query = "SELECT count(*) FROM Persons WHERE DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), birth_date)), '%Y') >= 17 ";
         $query = 'SELECT COUNT(*) FROM Persons WHERE YEAR(NOW()) - YEAR(birth_date) >= 17 AND YEAR(NOW()) - YEAR(birth_date) <= 65';
         $statement = $PDO->prepare($query);
         $statement->execute();
@@ -76,10 +69,11 @@ function getCountPersonsByCategory(string $filter):int|null
  * @return string
  * function to get last logged in (last activity) of person
  */
-function lastActivity(int|null $time):string
+function lastActivity(string|null $time):string
 {
+    $date = strtotime($time);
     if ($time != null){
-        return date('l, j F Y,  H:i A', $time);
+        return date('l, j F Y,  H:i A', $date);
     }else{
         return "-";
     }

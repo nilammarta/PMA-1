@@ -20,7 +20,7 @@ function showSidebar(string $nav): void
                       name="file-tray-full-outline"
                       class="nav-icon"
               ></ion-icon>
-              Dashboard
+              DASHBOARD
             </a>
           </li>
           <li class="nav-item <?php if ($nav == "persons") {
@@ -31,7 +31,7 @@ function showSidebar(string $nav): void
                     name="people-outline"
                     class="nav-icon"
               ></ion-icon>
-              Persons
+              PERSONS
             </a>
           </li>
           <li class="nav-item <?php if ($nav == "jobs") {
@@ -46,7 +46,7 @@ function showSidebar(string $nav): void
                 0a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0M1.5 12h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1M1 14.25a.25.25 0 0 1
                 .25-.25h5.5a.25.25 0 1 1 0 .5h-5.5a.25.25 0 0 1-.25-.25"/>
               </svg>
-              Jobs
+              JOBS
             </a>
           </li>
         </ul>
@@ -64,7 +64,7 @@ function showSidebar(string $nav): void
                         name="person-circle-outline"
                         class="nav-icon"
                 ></ion-icon>
-                My Profile
+                MY PROFILE
               </a>
             </li>
             <li class="nav-item">
@@ -73,7 +73,7 @@ function showSidebar(string $nav): void
                         name="log-out-outline"
                         class="nav-icon"
                 ></ion-icon>
-                Logout
+                LOGOUT
               </a>
             </li>
           </ul>

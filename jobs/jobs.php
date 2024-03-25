@@ -175,16 +175,16 @@ showHeader("jobs");
                   <tbody>
                     <?php for ($i = 0; $i < count($jobsPaging); $i++) { ?>
                       <tr>
-                        <td class="text-center"><?php echo $number++ ?></td>
-                        <td class=""><?php echo $jobsPaging[$i]['job_name']; ?></td>
-                        <td class="text-center"><?php
+                        <td class="text-center p-3"><?php echo $number++ ?></td>
+                        <td class="p-3"><?php echo $jobsPaging[$i]['job_name']; ?></td>
+                        <td class="text-center p-3"><?php
                             $query = 'SELECT count FROM Jobs WHERE ID = :jobId';
                             $statement = $PDO->prepare($query);
                             $statement->execute(array(
                                     'jobId' => $jobsPaging[$i]['ID']
                             ));
-                            echo $statement->fetch(PDO::FETCH_ASSOC)['count'];
-//                            echo getCountJobByJobId($jobsPaging[$i]['ID'])
+                            $count = $statement->fetch(PDO::FETCH_ASSOC)['count'];
+                            echo $count;
                             ?></td>
                         <?php if ($_SESSION['userRole'] == "A") { ?>
                           <td>
@@ -203,58 +203,64 @@ showHeader("jobs");
                               </a>
 
                               <!-- delete jobs -->
-                              <button
-                                type="button"
-                                class="btn btn-danger"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal<?= $jobsPaging[$i]['ID'] ?>"
-                              >
-                                <ion-icon name="trash"></ion-icon>
-                                DELETE
-                              </button>
+                              <?php if ($count != "0") {?>
+                                  <a role="button" class="btn btn-danger" href="/action/delete-job-action.php?<?php echo $url;?>page=<?php echo $_GET['page']; ?>&jobId=<?php echo $jobsPaging[$i]['ID'];?>">
+                                    <ion-icon name="trash"></ion-icon>
+                                    DELETE
+                                  </a>
+                              <?php }else{ ?>
+                                <button
+                                  type="button"
+                                  class="btn btn-danger"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#exampleModal<?= $jobsPaging[$i]['ID'];?>"
+                                >
+                                  <ion-icon name="trash"></ion-icon>
+                                  DELETE
+                                </button>
 
-                              <!-- Delete Modal -->
-                              <div
-                                class="modal fade"
-                                id="exampleModal<?= $jobsPaging[$i]['ID'] ?>"
-                                tabindex="-1"
-                                aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
-                              >
-                                <div class="modal-dialog modal-dialog-centered">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title" id="exampleModalLabel">
-                                        Delete Job
-                                      </h4>
-                                      <button
-                                        type="button"
-                                        class="btn-close"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"
-                                      ></button>
-                                    </div>
-                                    <div class="modal-body">Are you sure want to delete this job?</div>
-                                    <div class="modal-footer">
-                                      <button
-                                        type="button"
-                                        class="btn btn-secondary"
-                                        data-bs-dismiss="modal"
-                                      >
-                                        NO
-                                      </button>
-                                      <button
-                                        type="button"
-                                        class="btn btn-primary"
-                                      >
-    <!--                                      --><?php //$_SESSION['jobId'] = $jobsPaging[$i]['ID']; ?>
-                                        <a type="submit" role="button" class="btn-modal"
-                                           href="/action/delete-job-action.php?page=<?php echo $_GET['page']; ?>&jobId=<?php echo $jobsPaging[$i]['ID']?>">YES</a>
-                                      </button>
+                                <!-- Delete Modal -->
+                                <div
+                                  class="modal fade"
+                                  id="exampleModal<?= $jobsPaging[$i]['ID'] ?>"
+                                  tabindex="-1"
+                                  aria-labelledby="exampleModalLabel"
+                                  aria-hidden="true"
+                                >
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h4 class="modal-title" id="exampleModalLabel">
+                                          Delete Job
+                                        </h4>
+                                        <button
+                                          type="button"
+                                          class="btn-close"
+                                          data-bs-dismiss="modal"
+                                          aria-label="Close"
+                                        ></button>
+                                      </div>
+                                      <div class="modal-body">Are you sure want to delete this job?</div>
+                                      <div class="modal-footer">
+                                        <button
+                                          type="button"
+                                          class="btn btn-secondary"
+                                          data-bs-dismiss="modal"
+                                        >
+                                          NO
+                                        </button>
+                                        <button
+                                          type="button"
+                                          class="btn btn-primary"
+                                        >
+                                          <a type="submit" role="button" class="btn-modal"
+                                             href="/action/delete-job-action.php?<?php echo $url;?>page=<?php echo $_GET['page']; ?>&jobId=<?php echo $jobsPaging[$i]['ID'];?>">YES</a>
+                                        </button>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              <?php } ?>
                             </div>
                           </td>
                         <?php } ?>

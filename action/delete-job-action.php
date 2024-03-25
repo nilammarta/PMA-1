@@ -12,6 +12,13 @@ $statement->execute(array(
 ));
 $count = $statement->fetch(PDO::FETCH_ASSOC)['count'];
 
+if ($_GET['search'] != null){
+    $url = "search=" . $_GET['search'] . "&";
+}else{
+    $url = "";
+}
+
+
 if ($count == "0") {
     $query = 'DELETE FROM Jobs WHERE ID = :jobId';
     $statement = $PDO->prepare($query);
@@ -19,12 +26,16 @@ if ($count == "0") {
         'jobId' => $_GET['jobId']
     ));
     $_SESSION['deleteInfo'] = "Job data has been deleted!";
+    if ($_GET['page'] == null){
+        redirect("../jobs/jobs.php", "page=1");
+    }else {
+        redirect("../jobs/jobs.php", "page=" . $_GET['page']);
+    }
 }else{
     $_SESSION['error'] = "Can not delete this job, because the job is already in use!";
-}
-
-if ($_GET['page'] == null){
-    redirect("../jobs/jobs.php", "page=1");
-}else {
-    redirect("../jobs/jobs.php", "page=" . $_GET['page']);
+    if ($_GET['page'] == null){
+        redirect("../jobs/jobs.php", $url . "page=1");
+    }else {
+        redirect("../jobs/jobs.php", $url . "page=" . $_GET['page']);
+    }
 }

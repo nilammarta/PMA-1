@@ -273,11 +273,11 @@ function getPaginatedData(int $page, int $limit, string | null $search, string |
 function getFilter(string $filterValue): string
 {
     if ($filterValue == "productive"){
-        return "In Productive Age (15-64 y.o)";
+        return "In Productive Age (17-65 y.o)";
     } elseif ($filterValue == "elderly"){
-        return "Elderly ( > 64 y.o)";
+        return "Elderly ( > 65 y.o)";
     } elseif ($filterValue == "children"){
-        return "Children (0-14 y.o)";
+        return "Children (0-16 y.o)";
     } else if ($filterValue == "male"){
         return "Male";
     } else if ($filterValue == "female"){
@@ -290,11 +290,11 @@ function getFilter(string $filterValue): string
 }
 
 /**
- * @param string $filter
+ * @param string|null $filter
  * @return string
  * function to get filter value
  */
-function getFilterValue(string $filter): string
+function getFilterValue(string|null $filter): string
 {
     if ($filter == "productive"){
         return "productive";

@@ -289,7 +289,7 @@ tbody {
 .btn-table {
   font-size: 1rem;
   font-weight: 500;
-  padding: 0.2rem 0.75rem;
+  /*padding: 0.2rem 0.75rem;*/
   background-color: #d4c6f1;
   color: #6600cc;
   border: 1px solid #a966ff;
@@ -379,4 +379,8 @@ tbody {
 }
 .tbody-hobby{
   background-color: #F6F6F4;
+}
+
+.table-background{
+  background-color: #ebebff;
 }
