@@ -25,14 +25,14 @@ if ($count == "0") {
     $statement->execute(array(
         'jobId' => $_GET['jobId']
     ));
-    $_SESSION['deleteInfo'] = "Job data has been deleted!";
+    $_SESSION['info'] = "Job data has been deleted!";
     if ($_GET['page'] == null){
         redirect("../jobs/jobs.php", "page=1");
     }else {
         redirect("../jobs/jobs.php", "page=" . $_GET['page']);
     }
 }else{
-    $_SESSION['error'] = "Can not delete this job, because the job is already in use!";
+    $_SESSION['error'] = "Can not delete this job data, because job has been used!";
     if ($_GET['page'] == null){
         redirect("../jobs/jobs.php", $url . "page=1");
     }else {

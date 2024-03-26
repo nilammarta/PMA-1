@@ -178,9 +178,10 @@ body {
 }
 
 .nav-icon {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #fff;
+  /*width: 2rem;*/
   margin-right: 1.25rem;
 }
 
@@ -271,7 +272,7 @@ body {
 .table {
   min-width: 800px;
   vertical-align: baseline;
-  border: 0.01px solid #bdbcbc99;
+  border: 1px solid #bdbcbc99;
   background-color: #fff;
 }
 

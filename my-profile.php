@@ -362,6 +362,7 @@ showHeader("profile");
                         class="form-control"
                         id="exampleFormControlTextarea1"
                         rows="3"
+                        maxlength="310"
                       ><?php if (isset($_SESSION['inputData'])) {
                             echo $_SESSION['inputData']['internalNotes'];
                         } else {

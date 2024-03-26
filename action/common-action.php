@@ -48,7 +48,7 @@ function redirect($url, $getParams) : void
  * @return array
  * function to get user data based on id
  */
-function getUserById(int $id):array
+function getUserById(int $id):array|bool
 {
     global $PDO;
     $query = 'SELECT * FROM Persons WHERE ID = :ID';
@@ -232,7 +232,7 @@ function isNikExits(string $nik, int|null $id):bool
     $statement->execute($queryParams);
     $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($data != null){
+    if ($data != []){
         return true;
     }else{
         return false;

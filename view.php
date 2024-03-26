@@ -175,7 +175,7 @@ showHeader("persons");
                         <?php if ($_SESSION['userRole'] == "A"){ ?>
                           <div class="card-body card-body-2">
                             <h6 class="card-title">Internal notes :</h6>
-                            <div class="card-text"><?php echo $thePerson['internal_notes'] ?></div>
+                            <div class="text-internal"><?php echo $thePerson['internal_notes'] ?></div>
                           </div>
                         <?php } ?>
 
@@ -196,8 +196,8 @@ showHeader("persons");
                                 <?php for ($i = 0; $i < count($personHobbies); $i++){?>
                                   <tbody class="tbody-hobby">
                                     <tr>
-                                      <td class="text-center"><?php echo $i + 1; ?></td>
-                                      <td class="text-center"><?php echo $personHobbies[$i]['hobby_name'];?></td>
+                                      <td class="text-center p-3"><?php echo $i + 1; ?></td>
+                                      <td class="text-center p-3"><?php echo $personHobbies[$i]['hobby_name'];?></td>
                                       <?php if ($thePerson['email'] == $_SESSION['userEmail'] || $_SESSION['userRole'] == "A"){ ?>
                                         <td>
                                           <div class="d-grid gap-3 d-flex justify-content-md-center">

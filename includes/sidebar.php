@@ -17,9 +17,10 @@ function showSidebar(string $nav): void
           } ?>">
             <a class="main-nav-link" href="../dashboard.php">
               <ion-icon
-                      name="file-tray-full-outline"
+                      name="file-tray-full"
                       class="nav-icon"
               ></ion-icon>
+<!--              <ion-icon name="file-tray-full"></ion-icon>-->
               DASHBOARD
             </a>
           </li>
@@ -28,8 +29,8 @@ function showSidebar(string $nav): void
           } ?>">
             <a class="main-nav-link" href="../persons.php">
               <ion-icon
-                    name="people-outline"
-                    class="nav-icon"
+                name="people"
+                class="nav-icon"
               ></ion-icon>
               PERSONS
             </a>
@@ -61,8 +62,8 @@ function showSidebar(string $nav): void
             } ?>">
               <a class="main-nav-link" href="../my-profile.php">
                 <ion-icon
-                        name="person-circle-outline"
-                        class="nav-icon"
+                    name="person-circle"
+                    class="nav-icon"
                 ></ion-icon>
                 MY PROFILE
               </a>
@@ -70,9 +71,10 @@ function showSidebar(string $nav): void
             <li class="nav-item">
               <a class="main-nav-link cta" href="../logout.php">
                 <ion-icon
-                        name="log-out-outline"
-                        class="nav-icon"
+                    name="log-out"
+                    class="nav-icon"
                 ></ion-icon>
+
                 LOGOUT
               </a>
             </li>

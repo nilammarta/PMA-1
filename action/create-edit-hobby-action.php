@@ -63,7 +63,7 @@ function isHobbyExists(int $personId, int|null $hobbyId, string $hobby): bool
     ));
     $hobbyData = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($hobbyData == null){
+    if ($hobbyData == []){
         return false;
     }else{
         foreach ($hobbyData as $hobby){
@@ -99,7 +99,7 @@ if (isset($_GET['search']) != null && isset($_GET['filter']) != null){
     $url = "";
 }
 
-$validate = hobbyValidate($_GET['person'], $_GET['hobbyId'], ucfirst($_POST['hobbyName']));
+$validate = hobbyValidate($_GET['person'], $_GET['hobbyId'], htmlspecialchars(ucfirst($_POST['hobbyName'])));
 if ($validate != null){
     $_SESSION['errorHobby'] = $validate;
     $_SESSION['hobbyInput'] = $_POST['hobbyName'];
@@ -109,7 +109,7 @@ if ($validate != null){
         redirect("../hobbies/create-hobby.php", $url . "page=" . $_GET['page'] . "&person=" . $_GET['person']);
     }
 }else {
-    saveHobby($_GET['person'], ucfirst($_POST['hobbyName']));
+    saveHobby($_GET['person'], htmlspecialchars(ucfirst($_POST['hobbyName'])));
     if ($_GET['page'] != null) {
         redirect('../view.php', $url . "page=" . $_GET['page'] . "&person=" . $_GET['person']);
     }else{

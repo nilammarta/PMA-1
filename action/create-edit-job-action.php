@@ -19,9 +19,9 @@ function saveJob(string $jobInput): void
             $statement = $PDO->prepare($query);
             $statement->execute(array(
                 'ID' => $_GET['jobId'],
-                'job_name' => ucwords($_POST['jobName'])
+                'job_name' => ucwords($jobInput)
             ));
-            $_SESSION['editInfo'] = "Job data has been updated!";
+            $_SESSION['info'] = "Job data has been updated!";
         }catch (PDOException $e){
             $_SESSION['error'] = "Query error: " . $e->getMessage();
         }
@@ -66,7 +66,7 @@ function isJobExists(string $job, int|null $jobId): bool
     $statement->execute($queryParams);
     $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($data != null) {
+    if ($data != []) {
         return true;
     } else {
         return false;
@@ -90,9 +90,9 @@ function validateJob(string $job, int|null $jobId):string|null
     }
 }
 
-$validate = validateJob($_POST['jobName'], $_GET['jobId']);
+$validate = validateJob(htmlspecialchars($_POST['jobName']), $_GET['jobId']);
 if ($validate == null){
-    saveJob($_POST['jobName']);
+    saveJob(htmlspecialchars($_POST['jobName']));
     unset($_SESSION['jobId']);
     if ($_GET['page'] == null){
         redirect("../jobs/jobs.php", "");

@@ -113,14 +113,26 @@ if (count($errorData) != 0){
     $statement->execute(array("nik" => $nikInput));
     $personId = $statement->fetch(PDO::FETCH_ASSOC);
 
-    $queryPersonJob = 'INSERT INTO Persons_Jobs(person_id, job_id) VALUES (:personId, :jobId)';
-    $statementPersonJob = $PDO->prepare($queryPersonJob);
-    $statementPersonJob->execute(array(
-        'personId' => $personId['ID'],
-        'jobId' => inputData()['jobId'],
-    ));
+    if (inputData()['alive'] == 0){
+        $queryPersonJob = 'INSERT INTO Persons_Jobs(person_id, job_id) VALUES (:personId, :jobId)';
+        $statementPersonJob = $PDO->prepare($queryPersonJob);
+        $statementPersonJob->execute(array(
+            'personId' => $personId['ID'],
+            'jobId' => 1,
+        ));
+        updateCountOfJobs(1, null);
+    }else{
+        $queryPersonJob = 'INSERT INTO Persons_Jobs(person_id, job_id) VALUES (:personId, :jobId)';
+        $statementPersonJob = $PDO->prepare($queryPersonJob);
+        $statementPersonJob->execute(array(
+            'personId' => $personId['ID'],
+            'jobId' => inputData()['jobId'],
+        ));
+        updateCountOfJobs(inputData()['jobId'], null);
+    }
 
-    updateCountOfJobs(inputData()['jobId'], null);
+
+
 
     redirect("../view.php", "page=1&person=" . $personId['ID']);
 }
