@@ -55,6 +55,12 @@ showHeader("persons");
 //                  Menampilkan banner jika terjadi error
                   if (isset($_SESSION['errorData']) || isset($_SESSION['errorPassword'])) {
                       $error = [];
+                      if (isset($_SESSION['errorData']['firstName'])){
+                          $error[] = $_SESSION['errorData']['firstName'];
+                      }
+                      if (isset($_SESSION['errorData']['lastName'])){
+                          $error[] = $_SESSION['errorData']['lastName'];
+                      }
                       if (isset($_SESSION['errorData']['nik'])) {
                           $error[] = $_SESSION['errorData']['nik'];
                       }
@@ -126,7 +132,9 @@ showHeader("persons");
                         id="FirstnameInput"
                         name="firstName"
                         type="text"
-                        class="form-control"
+                        class="form-control <?php if (isset($_SESSION['errorData']['firstName'])) { ?>
+                              is-invalid
+                            <?php } ?>"
                         placeholder="first name"
                         value="<?php if (isset($_SESSION['inputData'])) {
                             echo $_SESSION['inputData']['firstName'];
@@ -136,6 +144,9 @@ showHeader("persons");
                         aria-label="First name"
                         required
                       />
+                      <?php if (isset($_SESSION['errorData']['firstName'])) {?>
+                        <p class="error"> <?php echo $_SESSION['errorData']['firstName']; ?></p>
+                      <?php } ?>
                     </div>
 
                     <div class="mb-3">
@@ -146,7 +157,9 @@ showHeader("persons");
                         id="LastnameInput"
                         name="lastName"
                         type="text"
-                        class="form-control"
+                        class="form-control <?php if (isset($_SESSION['errorData']['lastName'])) { ?>
+                              is-invalid
+                            <?php } ?>"
                         placeholder="last name"
                         value="<?php if (isset($_SESSION['inputData'])) {
                             echo $_SESSION['inputData']['lastName'];
@@ -156,6 +169,9 @@ showHeader("persons");
                         aria-label="Last name"
                         required
                       />
+                      <?php if (isset($_SESSION['errorData']['lastName'])) {?>
+                        <p class="error"> <?php echo $_SESSION['errorData']['lastName']; ?></p>
+                      <?php } ?>
                     </div>
 
                     <div class="mb-3">

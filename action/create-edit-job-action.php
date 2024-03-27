@@ -83,9 +83,9 @@ function validateJob(string $job, int|null $jobId):string|null
 {
     if (isJobExists($job, $jobId) == true) {
         return "Job is already exists in database!";
-    } elseif (empty($job)) {
+    } elseif (empty($job) || ctype_space($job)) {
         return "Please type the correct job!";
-    } else {
+    }else {
         return null;
     }
 }

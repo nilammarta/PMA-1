@@ -409,9 +409,16 @@ function inputData ():array
  * @return array
  * function to validate data input and return array of error message
  */
-function editValidate(string $nik, string $email, int $id, string $birthDate):array
+function editValidate(string $firstName, string $lastName, string $nik, string $email, int $id, string $birthDate):array
 {
     $validate = [];
+    if (ctype_space($firstName)){
+        $validate['firstName'] = "Please type the correct first name!";
+    }
+
+    if (ctype_space($lastName)){
+        $validate['lastName'] = "Please type the correct last name!";
+    }
     if (checkNik($nik) == null){
         $validate['nik'] = "Please type the correct NIK, at least 16 characters and numeric only!";
     }

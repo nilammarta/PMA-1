@@ -21,9 +21,17 @@ session_start();
  * @param $email
  * @return array
  */
-function validate(string $nik, string $password, string $confirmPassword, string $email, string $birthDate):array
+function validate(string $firstName, string $lastName, string $nik, string $password, string $confirmPassword, string $email, string $birthDate):array
 {
     $validate = [];
+    if (ctype_space($firstName)){
+        $validate['firstName'] = "Please type the correct first name!";
+    }
+
+    if (ctype_space($lastName)){
+        $validate['lastName'] = "Please type the correct last name!";
+    }
+
     if (checkNik($nik) == null) {
         $validate['nik'] = "Please type the correct NIK, at least 16 characters and only numeric NIK is allowed!";
     }
@@ -90,7 +98,7 @@ function saveData(array $dataInput, $PDO):void
     }
 }
 
-$errorData = validate($_POST['nik'], $_POST['password'], $_POST['confirmPassword'], $_POST['email'], $_POST['birthDate']);
+$errorData = validate(firstName: $_POST['firstName'], lastName: $_POST['lastName'], nik: $_POST['nik'], password: $_POST['password'], confirmPassword: $_POST['confirmPassword'], email: $_POST['email'], birthDate: $_POST['birthDate']);
 if (count($errorData) != 0){
 
     $_SESSION['errorData'] = $errorData;

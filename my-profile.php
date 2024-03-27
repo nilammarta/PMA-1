@@ -48,6 +48,12 @@ showHeader("profile");
 
                   if (isset($_SESSION['errorData']) || isset($_SESSION['errorPassword'])){
                     $error = [];
+                    if (isset($_SESSION['errorData']['firstName'])){
+                        $error[] = $_SESSION['errorData']['firstName'];
+                    }
+                    if (isset($_SESSION['errorData']['lastName'])){
+                        $error[] = $_SESSION['errorData']['lastName'];
+                    }
                     if (isset($_SESSION['errorData']['nik'])){
                       $error[] = $_SESSION['errorData']['nik'];
                     }
@@ -131,7 +137,9 @@ showHeader("profile");
                       <input
                         name="firstName"
                         type="text"
-                        class="form-control"
+                        class="form-control <?php if (isset($_SESSION['errorData']['firstName'])) { ?>
+                              is-invalid
+                            <?php } ?>"
                         id="inputFirstname"
                         value="<?php if (isset($_SESSION['inputData'])){
                           echo $_SESSION['inputData']['firstName'];
@@ -139,6 +147,9 @@ showHeader("profile");
                           echo $user["first_name"];
                         }?>"
                       />
+                      <?php if (isset($_SESSION['errorData']['firstName'])) {?>
+                        <p class="error"> <?php echo $_SESSION['errorData']['firstName']; ?></p>
+                      <?php } ?>
                     </div>
                   </div>
 
@@ -152,7 +163,9 @@ showHeader("profile");
                       <input
                         name="lastName"
                         type="text"
-                        class="form-control"
+                        class="form-control <?php if (isset($_SESSION['errorData']['lastName'])) { ?>
+                              is-invalid
+                            <?php } ?>"
                         id="inputLastname"
                         value="<?php if (isset($_SESSION['inputData'])){
                           echo $_SESSION['inputData']['lastName'];
@@ -160,6 +173,9 @@ showHeader("profile");
                           echo $user['last_name'];
                         } ?>"
                       />
+                      <?php if (isset($_SESSION['errorData']['lastName'])) {?>
+                        <p class="error"> <?php echo $_SESSION['errorData']['lastName']; ?></p>
+                      <?php } ?>
                     </div>
                   </div>
 

@@ -48,7 +48,7 @@ if (empty($_POST['currentPassword']) && empty($_POST['newPassword']) && empty($_
     $errorPass = passwordValidate($_SESSION['personId'], $_POST['currentPassword'], $_POST['newPassword'], $_POST['confirmPassword']);
 }
 
-$errorData = editValidate($_POST['nik'], $_POST['email'], $_SESSION['personId'], $_POST['birthDate']);
+$errorData = editValidate($_POST['firstName'], $_POST['lastName'], $_POST['nik'], $_POST['email'], $_SESSION['personId'], $_POST['birthDate']);
 if (count($errorData) != 0 || count($errorPass) != 0){
     $_SESSION['errorData'] = $errorData;
     $_SESSION['inputData'] = inputData();

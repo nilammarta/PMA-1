@@ -15,9 +15,11 @@ function getCountPersonsByCategory(string $filter):int|null
 
     if ($filter == "productive"){
 
-        $query = 'SELECT COUNT(*) FROM Persons WHERE YEAR(NOW()) - YEAR(birth_date) >= 17 AND YEAR(NOW()) - YEAR(birth_date) <= 65';
+        $query = 'SELECT COUNT(*) FROM Persons WHERE YEAR(NOW()) - YEAR(birth_date) >= 17 AND YEAR(NOW()) - YEAR(birth_date) <= 65 AND alive = :alive';
         $statement = $PDO->prepare($query);
-        $statement->execute();
+        $statement->execute(array(
+            'alive' => 1
+        ));
         return $statement->fetchColumn();
 
     } elseif ($filter == "children") {

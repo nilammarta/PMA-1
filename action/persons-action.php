@@ -96,7 +96,7 @@ function searchFilterData(string $filterValue, int $limit, int $offset, string|n
             $query = $querySearch . " AND YEAR(NOW()) - YEAR(birth_date) >= 17 AND YEAR(NOW()) - YEAR(birth_date) <= 65 AND alive = :alive LIMIT $limit OFFSET $offset";
             $totalData = getCountSearchFilter($filterValue, $search);
         }else{
-            $query = "SELECT * FROM Persons WHERE  YEAR(NOW()) - YEAR(birth_date) >= 17 AND YEAR(NOW()) - YEAR(birth_date) <= 65 AND alive = :alive LIMIT $limit OFFSET $offset";
+            $query = "SELECT * FROM Persons WHERE YEAR(NOW()) - YEAR(birth_date) >= 17 AND YEAR(NOW()) - YEAR(birth_date) <= 65 AND alive = :alive LIMIT $limit OFFSET $offset";
             $totalData = getCountPersonsByCategory($filterValue);
         }
 

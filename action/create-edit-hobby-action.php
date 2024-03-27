@@ -56,21 +56,23 @@ function isHobbyExists(int $personId, int|null $hobbyId, string $hobby): bool
 {
     global $PDO;
     $query = 'SELECT * FROM Hobbies WHERE hobby_name = :hobby AND person_id = :personId';
-    $statement = $PDO->prepare($query);
-    $statement->execute(array(
-        'personId' => $personId,
+    $queryParams = array(
+        'personId' =>$personId,
         'hobby' => $hobby
-    ));
+    );
+
+    if ($hobbyId != null){
+        $query = $query . " AND ID != :hobbyId";
+        $queryParams ['hobbyId'] = $hobbyId;
+    }
+
+    $statement = $PDO->prepare($query);
+    $statement->execute($queryParams);
     $hobbyData = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     if ($hobbyData == []){
         return false;
     }else{
-        foreach ($hobbyData as $hobby){
-            if ($hobby['ID'] == $hobbyId){
-                return false;
-            }
-        }
         return true;
     }
 }
@@ -86,7 +88,7 @@ function hobbyValidate(int $personId, int|null $hobbyId, string $hobby):string|n
 {
     if (isHobbyExists($personId, $hobbyId, $hobby) == true){
         return "Hobby is already exists in database!";
-    }elseif (empty($hobby)){
+    }else if (empty($hobby) || ctype_space($hobby)){
         return "Please type the correct hobby!";
     }else{
         return null;

@@ -27,6 +27,12 @@ showHeader("persons");
 
             <?php if (isset($_SESSION['errorData'])){
               $error = [];
+              if (isset($_SESSION['errorData']['firstName'])){
+                $error[] = $_SESSION['errorData']['firstName'];
+              }
+              if (isset($_SESSION['errorData']['lastName'])){
+                $error[] = $_SESSION['errorData']['lastName'];
+              }
               if (isset($_SESSION['errorData']['nik'])){
                 $error[] = $_SESSION['errorData']['nik'];
               }
@@ -77,7 +83,6 @@ showHeader("persons");
 
                   <form name="newPerson" class="needs-validation" method="post" action="action/create-action.php">
 
-
                     <div class="d-lg-flex gap-lg-3 gap-xl-5">
                       <div class="form-1">
                         <div class="mb-3">
@@ -87,7 +92,9 @@ showHeader("persons");
                             name="firstName"
                             id="FirstnameInput"
                             type="text"
-                            class="form-control"
+                            class="form-control <?php if (isset($_SESSION['errorData']['firstName'])) { ?>
+                              is-invalid
+                            <?php } ?>"
                             placeholder="first name"
                             aria-label="First name"
                             value="<?php if (isset($_SESSION['dataInput'])) {
@@ -95,10 +102,9 @@ showHeader("persons");
                             }?>"
                             required
                           />
-
-                          <div class="valid-feedback">
-                            Looks good!
-                          </div>
+                          <?php if (isset($_SESSION['errorData']['firstName'])) {?>
+                            <p class="error"> <?php echo $_SESSION['errorData']['firstName']; ?></p>
+                          <?php } ?>
                         </div>
 
                         <div class="mb-3">
@@ -109,7 +115,9 @@ showHeader("persons");
                             name="lastName"
                             id="LastnameInput"
                             type="text"
-                            class="form-control"
+                            class="form-control <?php if (isset($_SESSION['errorData']['lastName'])) { ?>
+                              is-invalid
+                            <?php } ?>""
                             placeholder="last name"
                             aria-label="Last name"
                             value="<?php if (isset($_SESSION['dataInput'])){
@@ -117,9 +125,9 @@ showHeader("persons");
                             } ?>"
                             required
                           />
-                          <div class="invalid-feedback">
-                            Please type the correct NIK, at least 16 characters
-                          </div>
+                            <?php if (isset($_SESSION['errorData']['lastName'])) {?>
+                              <p class="error"> <?php echo $_SESSION['errorData']['lastName'];?> </p>
+                            <?php } ?>
                         </div>
 
                         <div class="mb-3">
